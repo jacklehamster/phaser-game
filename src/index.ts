@@ -1,5 +1,3 @@
-export class Hello {
-  static hello() {
-    return "Hello World!";
-  }
-}
+import { createGame } from "src/example/game";
+
+export { createGame };

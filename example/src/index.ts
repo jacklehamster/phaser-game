@@ -1,3 +1,3 @@
-import { Hello } from "bun-template";
+import { createGame } from "phaser-game";
 
-export { Hello };
+export { createGame };

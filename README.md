@@ -1,10 +1,10 @@
-# bun-template
+# phaser-game
 
-[![npm version](https://badge.fury.io/js/bun-template.svg)](https://www.npmjs.com/package/bun-template)
+[![npm version](https://badge.fury.io/js/phaser-game.svg)](https://www.npmjs.com/package/bun-template)
 
-Bun template for creating projects using bunjs
+Just went through the tutorial on https://phaser.io/
 
-![](https://jacklehamster.github.io/bun-template/icon.png)
+![](https://jacklehamster.github.io/phaser-game/icon.png)
 ## Install bun
 
 https://bun.sh/
@@ -20,8 +20,8 @@ curl -fsSL https://bun.sh/install | bash
 
 ## Run example
 
-[https://jacklehamster.github.io/bun-template/example/](https://jacklehamster.github.io/bun-template/example/)
+[https://jacklehamster.github.io/phaser-game/example/](https://jacklehamster.github.io/phaser-game/example/)
 
 ## Github Source
 
-[https://github.com/jacklehamster/bun-template/](https://github.com/jacklehamster/bun-template/)
+[https://github.com/jacklehamster/phaser-game/](https://github.com/jacklehamster/phaser-game/)
