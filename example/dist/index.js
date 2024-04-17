@@ -90,7 +90,7 @@ var C$ = function() {
     if (P)
       Z.forEach((T) => T.setPosition(P.x, P.y)), z.forEach((T) => T.setPosition(P.x, P.y + 2 * R));
   } } };
-  return new V8.default.Game(W);
+  return document.body.appendChild(document.createElement("div")).textContent = "Keys: AWSD to move, SPACE to jump", new V8.default.Game(W);
 };
 var f7 = Object.create;
 var { defineProperty: c8, getPrototypeOf: h7, getOwnPropertyNames: Z9, getOwnPropertyDescriptor: g7 } = Object;

@@ -327,5 +327,7 @@ export function createHighSchoolGame() {
     }
   };
 
+  document.body.appendChild(document.createElement("div")).textContent = "Keys: AWSD to move, SPACE to jump"
+
   return new Phaser.Game(config);
 }
