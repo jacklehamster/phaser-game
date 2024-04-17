@@ -6,11 +6,11 @@
     <div id="press-key">Press a key to start</div>
   </body>
   <script type="module">
-    import { createGame } from './dist/index.js';
+    import { createHighSchoolGame } from './dist/index.js';
 
     document.addEventListener("keydown", () => {
       document.getElementById("press-key").style.display = "none";
-      createGame();
+      window.game1 = createHighSchoolGame();
     }, { once: true });
   </script>
 </html>
