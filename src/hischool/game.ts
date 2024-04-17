@@ -81,6 +81,9 @@ function randomSprite(
   }
   bodySprites[BodyEnum.PANTS].setTint(Math.floor(rng() * 0xffffff));
   bodySprites[BodyEnum.SKIRT].setTint(Math.floor(rng() * 0xffffff));
+  bodySprites[BodyEnum.SHOES].setTint(Math.floor(rng() * 0xffffff));
+  bodySprites[BodyEnum.SMALLSHOES].setTint(Math.floor(rng() * 0xffffff));
+  bodySprites[BodyEnum.UNDERWEAR].setTint(Math.floor(rng() * 0xffffff) | 0x999999);
   const skinColor = Math.floor(rng() * 0xFFFFFF) | 0x996666;
   faceSprites[FaceEnum.SHAPE].setTint(skinColor);
   bodySprites[BodyEnum.BODY].setTint(skinColor);
