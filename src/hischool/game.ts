@@ -60,6 +60,139 @@ const ANIMATIONS_CONFIG: Record<BodyEnum | string, {
   },
 };
 
+class Elem {
+  dx: number = 0;
+
+  constructor(protected sprite: string, public player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody) {
+    this.player.setBounce(0.2);
+    this.player.setCollideWorldBounds(true);
+    this.player.body.useDamping = true;
+  }
+}
+
+class Troll extends Elem {
+  trollSprites: Phaser.GameObjects.Sprite[] = [];
+
+  constructor(scene: Phaser.Scene, x: number, y: number) {
+    super('troll', scene.physics.add.sprite(x, y, 'troll', 11));
+
+    this.trollSprites.push(
+      scene.add.sprite(0, 0, "troll", 0),
+    );
+  }
+
+  setTint(color: number) {
+    this.trollSprites.forEach(sprite => sprite.setTint(color));
+  }
+
+  setFlipX(flipX: boolean) {
+    this.trollSprites.forEach(sprite => sprite.setFlipX(flipX));
+  }
+
+  update(dt: number = 1) {
+    this.player.setDrag(this.player.body.touching.down ? .0001 : 1);
+
+    const headShift = this.trollSprites[BodyEnum.BODY]?.anims.currentFrame?.index === 1 || this.player.anims.currentFrame?.index === 3 ? -2 : 0;
+    this.trollSprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y));
+
+    if (this.dx) {
+      this.player.setVelocityX(150 * this.dx * dt);
+      const flipX = this.dx < 0;
+      this.setFlipX(flipX);
+    }
+
+    if (!this.dx) {
+      this.trollSprites.forEach((sprite, index) => sprite.anims.play(`troll_still`, true));
+    } else {
+      this.trollSprites.forEach((sprite, index) => sprite.anims.play(`troll_walk`, true));
+    }
+  }
+
+  tryJump() {
+    if (this.player.body.touching.down) {
+      this.player.setVelocityY(-1000);
+    }
+  }
+
+  setScale(scaleX: number, scaleY: number) {
+    [this.player, ...this.trollSprites].forEach(sprite => sprite.setScale(scaleX, scaleY));
+  }
+}
+
+class Human extends Elem {
+  faceSprites: Phaser.GameObjects.Sprite[] = [];
+  bodySprites: Phaser.GameObjects.Sprite[] = [];
+
+  constructor(scene: Phaser.Scene, x: number, y: number) {
+    super('hi', scene.physics.add.sprite(x, y, 'hi', 56));
+
+    this.bodySprites.push(
+      scene.add.sprite(0, 0, "hi", 10),   //  body
+      scene.add.sprite(0, 0, "hi", 71),   //  underwear
+      scene.add.sprite(0, 0, "hi", 31),  //  shirt
+      scene.add.sprite(0, 0, "hi", 15),  //  pants
+      scene.add.sprite(0, 0, "hi", 19),  //  skirt
+      scene.add.sprite(0, 0, "hi", 23),  //  smallshoes
+      scene.add.sprite(0, 0, "hi", 27),  //  shoes
+    );
+
+    this.faceSprites.push(
+      scene.add.sprite(0, 0, "hi", 36),  //  face
+      scene.add.sprite(0, 0, "hi", 41),  //  mouth
+      scene.add.sprite(0, 0, "hi", 46),  //  nose
+      scene.add.sprite(0, 0, "hi", 51),  //  eyes
+      scene.add.sprite(0, 0, "hi", 57),  //  eyelashes
+      scene.add.sprite(0, 0, "hi", 61),  //  hair
+      scene.add.sprite(0, 0, "hi", 66),  //  hat
+    );
+    this.randomize(Math.random());
+  }
+
+  randomize(seed: any = Math.random()) {
+    randomSprite(seed, this.faceSprites, this.bodySprites);
+  }
+
+  setTint(color: number) {
+    this.bodySprites.forEach(sprite => sprite.setTint(color));
+    this.faceSprites.forEach(sprite => sprite.setTint(color));
+  }
+
+  setFlipX(flipX: boolean) {
+    this.bodySprites.forEach(sprite => sprite.setFlipX(flipX));
+    this.faceSprites.forEach(sprite => sprite.setFlipX(flipX));
+  }
+
+  update(dt: number = 1) {
+    this.player.setDrag(this.player.body.touching.down ? .0001 : 1);
+
+    const headShift = this.bodySprites[BodyEnum.BODY]?.anims.currentFrame?.index === 1 || this.player.anims.currentFrame?.index === 3 ? -2 : 0;
+    this.bodySprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y));
+    this.faceSprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y + 2 * headShift));
+
+    if (this.dx) {
+      this.player.setVelocityX(150 * this.dx * dt);
+      const flipX = this.dx < 0;
+      this.setFlipX(flipX);
+    }
+
+    if (!this.dx) {
+      this.bodySprites.forEach((sprite, index) => sprite.anims.play(`still_${index}`, true));
+    } else {
+      this.bodySprites.forEach((sprite, index) => sprite.anims.play(`walk_${index}`, true));
+    }
+  }
+
+  tryJump() {
+    if (this.player.body.touching.down) {
+      this.player.setVelocityY(-1000);
+    }
+  }
+
+  setScale(scaleX: number, scaleY: number) {
+    [this.player, ...this.bodySprites, ...this.faceSprites].forEach(sprite => sprite.setScale(scaleX, scaleY));
+  }
+}
+
 function randomSprite(
   seed: any,
   faceSprites: Phaser.GameObjects.Sprite[],
@@ -110,28 +243,43 @@ function randomSprite(
   faceSprites[FaceEnum.HAT].setFrame(rng() < .5 ? 56 : 66 + Math.floor(rng() * 5));
 }
 
+let scoreText: Phaser.GameObjects.Text;
+class UI extends Phaser.Scene {
+  constructor() {
+    super({ key: 'UIScene' });
+  }
+
+  create() {
+    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', color: '#fff' });
+  }
+}
+
+//  size 400,32
+function createPlatform(platforms: Phaser.Physics.Arcade.StaticGroup,
+  key: string,
+  x: number, y: number,
+  width?: number, height?: number
+) {
+  const platform = platforms.create(x, y, key);
+  if (width && height) {
+    platform.setScale(width / 400, height / 32).refreshBody();
+  }
+  return platform;
+}
+
+
 export function createHighSchoolGame() {
-  let scoreText: Phaser.GameObjects.Text;
   let animations: Record<keyof BodyEnum | string, {
     walk: Phaser.Animations.Animation | false,
     still: Phaser.Animations.Animation | false,
   }> = {};
   let gameOver = false;
   let cursors: Phaser.Types.Input.Keyboard.CursorKeys | undefined;
-  let player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody | undefined;
+  let human: Human;
+  let troll: Troll;
   let mainCamera: Phaser.Cameras.Scene2D.Camera;
-  let flipX = false;
-  let body: Phaser.GameObjects.Sprite;
-  let underwear: Phaser.GameObjects.Sprite;
-  let shirt: Phaser.GameObjects.Sprite;
-  let pants: Phaser.GameObjects.Sprite;
-  let skirt: Phaser.GameObjects.Sprite;
-  let smallshoes: Phaser.GameObjects.Sprite;
-  let shoes: Phaser.GameObjects.Sprite;
-  const faceSprites: Phaser.GameObjects.Sprite[] = [
-  ];
-  const bodySprites: Phaser.GameObjects.Sprite[] = [
-  ];
+  let preTime: number;
+  let sky: Phaser.GameObjects.Image;
   const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
     width: 800,
@@ -139,61 +287,65 @@ export function createHighSchoolGame() {
     physics: {
       default: 'arcade',
       arcade: {
+        x: 0, y: 0, width: 1600, height: 600,
         gravity: { x: 0, y: 2000 },
         debug: false
       }
     },
-    scene: {
+    scene: [{
       preload() {
         {
           this.load.image('sky', 'assets/sky.png');
           this.load.image('ground', 'assets/platform.png');
+          this.load.image('red', 'assets/redbox.png');
           this.load.image('star', 'assets/star.png');
           this.load.image('bomb', 'assets/bomb.png');
           this.load.spritesheet('hi',
             'assets/hischooler.png',
             { frameWidth: 64, frameHeight: 64 }
           );
+          this.load.spritesheet('troll',
+            'assets/troll.png',
+            { frameWidth: 32, frameHeight: 32 }
+          );
         }
       },
       create() {
+        this.scene.launch('UIScene');
+
+
         let score: number = 0;
 
-        this.add.image(400, 300, 'sky');
+        sky = this.add.image(400, 300, 'sky');
 
         const platforms = this.physics.add.staticGroup();
 
-        platforms.create(400, 568, 'ground').setScale(2).refreshBody();
+        createPlatform(platforms, 'ground', 800, 568, 1600, 64);
+        createPlatform(platforms, 'ground', 600, 400);
+        createPlatform(platforms, 'ground', 50, 250);
+        createPlatform(platforms, 'ground', 750, 220);
+        createPlatform(platforms, 'red', 600 - 200, 400 - 10);
+        createPlatform(platforms, 'red', 600 + 200, 400 - 10);
 
-        platforms.create(600, 400, 'ground');
-        platforms.create(50, 250, 'ground');
-        platforms.create(750, 220, 'ground');
+        troll = new Troll(this, 200, 350);
+        troll.setScale(2, 2);
 
-        player = this.physics.add.sprite(100, 450, 'hi', 56);
+        human = new Human(this, 100, 450);
+        human.setScale(1, 1.5);
 
-        player.setBounce(0.2);
-        player.setCollideWorldBounds(true);
-
-        bodySprites.push(
-          body = this.add.sprite(0, 0, "hi", 10),   //  body
-          underwear = this.add.sprite(0, 0, "hi", 71),   //  underwear
-          shirt = this.add.sprite(0, 0, "hi", 31),  //  shirt
-          pants = this.add.sprite(0, 0, "hi", 15),  //  pants
-          skirt = this.add.sprite(0, 0, "hi", 19),  //  skirt
-          smallshoes = this.add.sprite(0, 0, "hi", 23),  //  smallshoes
-          shoes = this.add.sprite(0, 0, "hi", 27),  //  shoes
-        );
-
-        faceSprites.push(
-          this.add.sprite(0, 0, "hi", 36),  //  face
-          this.add.sprite(0, 0, "hi", 41),  //  mouth
-          this.add.sprite(0, 0, "hi", 46),  //  nose
-          this.add.sprite(0, 0, "hi", 51),  //  eyes
-          this.add.sprite(0, 0, "hi", 57),  //  eyelashes
-          this.add.sprite(0, 0, "hi", 61),  //  hair
-          this.add.sprite(0, 0, "hi", 66),  //  hat
-        );
-        randomSprite(Math.random(), faceSprites, bodySprites);
+        const trollAnimation = {
+          walk: this.anims.create({
+            key: `troll_walk`,
+            frames: this.anims.generateFrameNumbers('troll', { start: 1, end: 6 }),
+            frameRate: 20,
+            repeat: -1,
+          }),
+          still: this.anims.create({
+            key: `troll_still`,
+            frames: this.anims.generateFrameNumbers('troll', { start: 0, end: 0 }),
+            frameRate: 20,
+          }),
+        };
 
         for (const key in ANIMATIONS_CONFIG) {
           const config = ANIMATIONS_CONFIG[key];
@@ -212,7 +364,8 @@ export function createHighSchoolGame() {
           };
         }
 
-        this.physics.add.collider(player, platforms);
+        this.physics.add.collider(human.player, platforms);
+        this.physics.add.collider(troll.player, platforms);
         cursors = this.input.keyboard?.addKeys({
           up: Phaser.Input.Keyboard.KeyCodes.W,
           down: Phaser.Input.Keyboard.KeyCodes.S,
@@ -234,10 +387,9 @@ export function createHighSchoolGame() {
           return null;
         });
 
-        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', color: '#fff' });
 
         this.physics.add.collider(stars, platforms);
-        this.physics.add.overlap(player, stars, (player, star) => {
+        this.physics.add.overlap(troll.player, stars, (player, star) => {
           (star as any).disableBody(true, true);
 
           score += 10;
@@ -250,14 +402,14 @@ export function createHighSchoolGame() {
               return null;
             });
 
-            var x = ((player as any).x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+            const x = ((player as any).x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
 
-            var bomb = bombs.create(x, 16, 'bomb');
+            const bomb = bombs.create(x, 16, 'bomb');
             bomb.setBounce(1);
             bomb.setCollideWorldBounds(true);
             bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
 
-            randomSprite(Math.random(), faceSprites, bodySprites);
+            human.randomize();
           }
 
         }, undefined, this);
@@ -266,68 +418,48 @@ export function createHighSchoolGame() {
 
         this.physics.add.collider(bombs, platforms);
 
-        this.physics.add.collider(player, bombs, (player, bomb) => {
+        const hero = troll;
+        this.physics.add.collider(hero.player, bombs, (player, bomb) => {
           this.physics.pause();
           const p = player as any;
 
-          bodySprites.forEach(sprite => sprite?.setTint(0xff0000));
-          faceSprites.forEach(sprite => sprite?.setTint(0xFF0000));
+          hero.setTint(0xff0000);
           this.add.text(p.x - 100, p.y, 'GAME\nOVER', { fontSize: '64px', color: '#f00' });
 
           gameOver = true;
         }, undefined, this);
-        player.body.useDamping = true;
         mainCamera = this.cameras.main;
       },
       update() {
+        const now = Date.now();
+        const dt = (now - preTime) / 10;
+        preTime = now;
+
+        const hero = troll;
         if (gameOver) {
           const flipX = Math.random() < .5 ? true : false;
-          bodySprites.forEach(sprite => sprite?.setFlipX(flipX));
-          faceSprites.forEach(sprite => sprite?.setFlipX(flipX));
+          hero.setFlipX(flipX);
           return;
         }
         const dx = (cursors?.left.isDown ? -1 : 0) + (cursors?.right.isDown ? 1 : 0);
-        const dy = (cursors?.up.isDown ? -1 : 0) + (cursors?.down.isDown ? 1 : 0);
-        const headShift = body?.anims.currentFrame?.index === 1 || player?.anims.currentFrame?.index === 3 ? -1 : 0;
-        const dist = Math.max(1, Math.sqrt(dx * dx + dy * dy));
-        const speed = 2 / dist;
 
+        hero.dx = dx;
 
-        // player?.setPosition(player.x + dx * speed, player.y + dy * speed);
-        if (dx) {
-          player?.setVelocityX(320 * dx);
-          flipX = dx < 0;
-          player?.setFlipX(flipX);
-          bodySprites.forEach(sprite => sprite?.setFlipX(flipX));
-          faceSprites.forEach(sprite => sprite?.setFlipX(flipX));
+        if (cursors?.space.isDown) {
+          hero.tryJump();
         }
 
-        // if (dy) {
-        //   player?.setVelocityY(160 * dy);
-        // }
-        if (cursors?.space.isDown && player?.body.touching.down) {
-          player.setVelocityY(-1000);
-        }
-
-        player?.setDrag(player?.body.touching.down ? .0001 : 1);
-
-        if (!dx && !dy) {
-          bodySprites.forEach((sprite, index) => sprite.anims.play(`still_${index}`, true));
-        } else {
-          bodySprites.forEach((sprite, index) => sprite.anims.play(`walk_${index}`, true));
-        }
-
-        if (player) {
-          // mainCamera.setPosition(-player.x + 400, -player.y + 300);
-          bodySprites.forEach(sprite => sprite.setPosition(player!.x, player!.y));
-          faceSprites.forEach(sprite => sprite.setPosition(player!.x, player!.y + 2 * headShift));
-          // scoreText.setPosition(-mainCamera.x + 16, -mainCamera.y + 16);
-        }
+        mainCamera.scrollX = hero.player.x - 400;
+        mainCamera.scrollY = hero.player.y - 300;
+        sky.setPosition(mainCamera.scrollX + 400, mainCamera.scrollY + 300);
+        human.update(dt);
+        troll.update(dt);
       },
-    }
+    }, UI],
   };
 
   document.body.appendChild(document.createElement("div")).textContent = "Keys: AWSD to move, SPACE to jump"
 
-  return new Phaser.Game(config);
+  const game = new Phaser.Game(config);
+  return game;
 }
