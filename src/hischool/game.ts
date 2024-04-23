@@ -5,6 +5,8 @@
 
 import Phaser from "phaser";
 import { alea } from "seedrandom";
+//import { zzfx } from "zzfx";
+import { evaluate } from "mathjs";
 
 enum BodyEnum {
   BODY = 0,
@@ -60,234 +62,782 @@ const ANIMATIONS_CONFIG: Record<BodyEnum | string, {
   },
 };
 
-class Elem {
-  dx: number = 0;
-
-  constructor(protected sprite: string, public player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody) {
-    this.player.setBounce(0.2);
-    this.player.setCollideWorldBounds(true);
-    this.player.body.useDamping = true;
-  }
-}
-
-class Troll extends Elem {
-  trollSprites: Phaser.GameObjects.Sprite[] = [];
-
-  constructor(scene: Phaser.Scene, x: number, y: number) {
-    super('troll', scene.physics.add.sprite(x, y, 'troll', 11));
-
-    this.trollSprites.push(
-      scene.add.sprite(0, 0, "troll", 0),
-    );
-  }
-
-  setTint(color: number) {
-    this.trollSprites.forEach(sprite => sprite.setTint(color));
-  }
-
-  setFlipX(flipX: boolean) {
-    this.trollSprites.forEach(sprite => sprite.setFlipX(flipX));
-  }
-
-  update(dt: number = 1) {
-    this.player.setDrag(this.player.body.touching.down ? .0001 : 1);
-
-    const headShift = this.trollSprites[BodyEnum.BODY]?.anims.currentFrame?.index === 1 || this.player.anims.currentFrame?.index === 3 ? -2 : 0;
-    this.trollSprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y));
-
-    if (this.dx) {
-      this.player.setVelocityX(150 * this.dx * dt);
-      const flipX = this.dx < 0;
-      this.setFlipX(flipX);
-    }
-
-    if (!this.dx) {
-      this.trollSprites.forEach((sprite, index) => sprite.anims.play(`troll_still`, true));
+export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl: string) {
+  if (!jsonUrl) {
+    const regex = /#map=([\w\/.]+)/;
+    const [, mapFromHash] = location.hash.match(regex) ?? [];
+    console.log(location.hash, mapFromHash);
+    if (mapFromHash) {
+      jsonUrl = mapFromHash;
     } else {
-      this.trollSprites.forEach((sprite, index) => sprite.anims.play(`troll_walk`, true));
+      jsonUrl = "json/map.json";
+    }
+  }
+  console.log(jsonUrl);
+
+  location.replace("#map=" + jsonUrl);
+  const configResponse = await fetch("config.json");
+  const conf = await configResponse.json();
+
+  const res = await fetch(jsonUrl);
+  const mapJson: {
+    locked: boolean;
+    nextLevel?: string;
+    ground: Record<string, (string | number)[]>;
+    trigger: Record<string, (string | number)[]>;
+    bonus: Record<string, (string | number)[]>;
+    key: Record<string, (string | number)[]>;
+    troll: Record<string, any>;
+    door?: Record<string, any>;
+    rock?: Record<string, any>;
+    human?: Record<string, any>;
+  } = await res.json();
+
+  const canEditLevel = conf.canEdit && !mapJson.locked;
+
+  const { zzfx } = require("zzfx");
+  const idSet = new Set();
+
+
+  class Elem {
+    dx: number = 0;
+    airborne: number = 0;
+    lastFrameOnGround = false;
+
+    constructor(protected sprite: string, public player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody) {
+      this.player.setBounce(0.2);
+      this.player.setCollideWorldBounds(true);
+      this.player.body.useDamping = true;
+      this.player.setBodySize(10, this.player.body.height).refreshBody();
     }
   }
 
-  tryJump() {
-    if (this.player.body.touching.down) {
-      this.player.setVelocityY(-1000);
+  class Troll extends Elem {
+    trollSprites: Phaser.GameObjects.Sprite[] = [];
+    holdingBonus: Phaser.GameObjects.GameObject | undefined;
+    holdingTemp: Phaser.GameObjects.GameObject | undefined;
+    lastHold: number = 0;
+    lastThrow: number = 0;
+    destroyed?: boolean;
+
+    constructor(scene: Phaser.Scene, x: number, y: number) {
+      super('troll', scene.physics.add.sprite(x, y, 'troll', 1));
+
+      this.trollSprites.push(
+        scene.add.sprite(0, 0, "troll", 0),
+      );
+    }
+
+    destroy() {
+      this.destroyed = true;
+      this.player.disableBody(true, true);
+      this.player.setActive(false);
+      this.trollSprites.forEach(sprite => {
+        sprite.body?.gameObject.disableBody(true, true);
+        sprite.setVisible(false);
+        sprite.setActive(false);
+      });
+    }
+
+    setTint(color: number) {
+      this.trollSprites.forEach(sprite => sprite.setTint(color));
+    }
+
+    setFlipX(flipX: boolean) {
+      this.player.setFlipX(flipX);
+      this.trollSprites.forEach(sprite => sprite.setFlipX(flipX));
+    }
+
+    update(dt: number = 1, zzfx: any) {
+      if (this.destroyed) {
+        return;
+      }
+      this.player.setDrag(this.player.body.touching.down ? .00001 : 1);
+
+      this.trollSprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y));
+
+      if (this.dx) {
+        const speed = this.airborne ? 180 : 150;
+        this.player.setVelocityX(speed * this.dx * dt);
+        const flipX = this.dx < 0;
+        this.setFlipX(flipX);
+      }
+
+      if (this.lastThrow && Date.now() - this.lastThrow < 400) {
+        this.trollSprites.forEach((sprite, index) => sprite.anims.play('troll_throw', true));
+      } else if (!this.dx) {
+        this.trollSprites.forEach((sprite, index) => sprite.anims.play(this.holdingBonus ? 'troll_hold_still' : `troll_still`, true));
+      } else {
+        this.trollSprites.forEach((sprite, index) => sprite.anims.play(this.holdingBonus ? 'troll_hold_walk' : `troll_walk`, true));
+      }
+      const heldBonus = this.holdingTemp ?? this.holdingBonus;
+      if (heldBonus) {
+        const frame = this.trollSprites[0]?.anims.currentFrame?.index;
+        const holdShift = (frame ?? 0) % 3;
+        heldBonus.body?.gameObject.setPosition(this.player.x - (this.holdingTemp ? 30 : 0) * this.dx, this.player.y - 30 + holdShift);
+      }
+
+      if (this.airborne && Date.now() - this.airborne > 200 && this.player.body.touching.down) {
+        this.airborne = 0;
+      }
+
+      this.lastFrameOnGround = this.player.body.touching.down;
+    }
+
+    tryJump(zzfx: any, forceAllowJump: boolean = false) {
+      if (this.player.body.touching.down || forceAllowJump) {
+        this.player.setVelocityY(-1000);
+        zzfx(...[, , 198, .04, .07, .06, , 1.83, 16, , , , , , , , , .85, .04]); // Jump
+        this.airborne = Date.now();
+      }
+    }
+
+    setScale(scaleX: number, scaleY: number) {
+      [this.player, ...this.trollSprites].forEach(sprite => sprite.setScale(scaleX, scaleY));
+    }
+
+    hold(group: Phaser.Physics.Arcade.Group, zzfx: any, ui?: UI) {
+      if (Date.now() - this.lastHold < 200) {
+        return;
+      }
+      if (!this.holdingBonus) {
+        for (let item of group.getChildren()) {
+          const gameObject = item.body?.gameObject;
+          const px = gameObject.x - this.player.x;
+          const py = gameObject.y - this.player.y;
+          const dx = this.player.flipX ? -1 : 1;
+          if (Math.abs(px) <= 52 && px * dx > 0 && Math.abs(py) < 20) {
+            this.holdingBonus = item;
+            (item as any).disableBody(true, false);
+            zzfx(...[, , 763, .01, .09, .11, , 1.14, 5.9, , 176, .03, , , , , , .7, .04]); // Pickup 250
+
+            this.lastHold = Date.now();
+
+            const bonus: any = this.holdingBonus;
+            if (bonus) {
+              ui?.showPower(
+                parseInt(bonus?.frame.name) === 0 ?
+                  "Super Jump: Power to jump very high." :
+                  parseInt(bonus?.frame.name) === 1 ?
+                    "Levitate: The power to levitate." :
+                    parseInt(bonus?.frame.name) == 2 ?
+                      "Super Strength: Power of super strength." :
+                      ""
+              );
+            }
+            break;
+          }
+        }
+      } else {
+        const dx = this.player.flipX ? -1 : 1;
+        const holdingBonus = this.holdingBonus;
+        zzfx(...[2.04, , 26, .01, , .02, 4, .07, 2.9, , -24, .08, .05, , , , .09, .17, .02]); // Blip 316
+        this.lastThrow = Date.now();
+        setTimeout(() => {
+          const gameObject = holdingBonus.body?.gameObject;
+          (gameObject as any).enableBody(true, this.player.x, this.player.y - 30, true, true);
+          (holdingBonus.body as any).setVelocityX(dx * 1500);
+          (holdingBonus.body as any).setBounce(.1);
+          (gameObject as any).refreshBody();
+          this.holdingTemp = undefined;
+          zzfx(...[1.62, , 421, .04, .06, .06, , 1.62, -28, 4.3, , , , .8, , , .03, .41, .08]); // Jump 298
+        }, 100);
+
+        this.holdingTemp = this.holdingBonus;
+        this.holdingBonus = undefined;
+        this.lastHold = Date.now();
+        ui?.showPower();
+      }
     }
   }
 
-  setScale(scaleX: number, scaleY: number) {
-    [this.player, ...this.trollSprites].forEach(sprite => sprite.setScale(scaleX, scaleY));
-  }
-}
+  class Human extends Elem {
+    faceSprites: Phaser.GameObjects.Sprite[] = [];
+    bodySprites: Phaser.GameObjects.Sprite[] = [];
+    preX: number = 0;
+    lastStill: number = 0;
+    powerAcquired: number = 0;
+    holdingBonus: Phaser.GameObjects.GameObject | undefined;
+    seed: string = "";
+    born: number;
+    flyingLevel?: number;
 
-class Human extends Elem {
-  faceSprites: Phaser.GameObjects.Sprite[] = [];
-  bodySprites: Phaser.GameObjects.Sprite[] = [];
+    constructor(scene: Phaser.Scene, x: number, y: number,
+      platforms: Phaser.Physics.Arcade.StaticGroup,
+      humanGroup: Phaser.Physics.Arcade.Group) {
+      super('hi', scene.physics.add.sprite(x, y, 'hi', 56));
+      // scene.physics.add.collider(this.player, platforms);
+      humanGroup.add(this.player);
+      (this.player as any).human = this;
+      this.player.setCollideWorldBounds(true);
 
-  constructor(scene: Phaser.Scene, x: number, y: number) {
-    super('hi', scene.physics.add.sprite(x, y, 'hi', 56));
+      this.bodySprites.push(
+        scene.add.sprite(x, y, "hi", 10),   //  body
+        scene.add.sprite(x, y, "hi", 71),   //  underwear
+        scene.add.sprite(x, y, "hi", 31),  //  shirt
+        scene.add.sprite(x, y, "hi", 15),  //  pants
+        scene.add.sprite(x, y, "hi", 19),  //  skirt
+        scene.add.sprite(x, y, "hi", 23),  //  smallshoes
+        scene.add.sprite(x, y, "hi", 27),  //  shoes
+      );
 
-    this.bodySprites.push(
-      scene.add.sprite(0, 0, "hi", 10),   //  body
-      scene.add.sprite(0, 0, "hi", 71),   //  underwear
-      scene.add.sprite(0, 0, "hi", 31),  //  shirt
-      scene.add.sprite(0, 0, "hi", 15),  //  pants
-      scene.add.sprite(0, 0, "hi", 19),  //  skirt
-      scene.add.sprite(0, 0, "hi", 23),  //  smallshoes
-      scene.add.sprite(0, 0, "hi", 27),  //  shoes
-    );
-
-    this.faceSprites.push(
-      scene.add.sprite(0, 0, "hi", 36),  //  face
-      scene.add.sprite(0, 0, "hi", 41),  //  mouth
-      scene.add.sprite(0, 0, "hi", 46),  //  nose
-      scene.add.sprite(0, 0, "hi", 51),  //  eyes
-      scene.add.sprite(0, 0, "hi", 57),  //  eyelashes
-      scene.add.sprite(0, 0, "hi", 61),  //  hair
-      scene.add.sprite(0, 0, "hi", 66),  //  hat
-    );
-    this.randomize(Math.random());
-  }
-
-  randomize(seed: any = Math.random()) {
-    randomSprite(seed, this.faceSprites, this.bodySprites);
-  }
-
-  setTint(color: number) {
-    this.bodySprites.forEach(sprite => sprite.setTint(color));
-    this.faceSprites.forEach(sprite => sprite.setTint(color));
-  }
-
-  setFlipX(flipX: boolean) {
-    this.bodySprites.forEach(sprite => sprite.setFlipX(flipX));
-    this.faceSprites.forEach(sprite => sprite.setFlipX(flipX));
-  }
-
-  update(dt: number = 1) {
-    this.player.setDrag(this.player.body.touching.down ? .0001 : 1);
-
-    const headShift = this.bodySprites[BodyEnum.BODY]?.anims.currentFrame?.index === 1 || this.player.anims.currentFrame?.index === 3 ? -2 : 0;
-    this.bodySprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y));
-    this.faceSprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y + 2 * headShift));
-
-    if (this.dx) {
-      this.player.setVelocityX(150 * this.dx * dt);
-      const flipX = this.dx < 0;
-      this.setFlipX(flipX);
+      this.faceSprites.push(
+        scene.add.sprite(x, y, "hi", 36),  //  face
+        scene.add.sprite(x, y, "hi", 41),  //  mouth
+        scene.add.sprite(x, y, "hi", 46),  //  nose
+        scene.add.sprite(x, y, "hi", 51),  //  eyes
+        scene.add.sprite(x, y, "hi", 57),  //  eyelashes
+        scene.add.sprite(x, y, "hi", 61),  //  hair
+        scene.add.sprite(x, y, "hi", 66),  //  hat
+      );
+      this.randomize(Math.random());
+      this.born = Date.now();
     }
 
-    if (!this.dx) {
-      this.bodySprites.forEach((sprite, index) => sprite.anims.play(`still_${index}`, true));
+    randomize(seed: any = Math.random()) {
+      this.seed = seed;
+      randomSprite(seed, this.faceSprites, this.bodySprites);
+    }
+
+    setTint(color: number) {
+      this.bodySprites.forEach(sprite => sprite.setTint(color));
+      this.faceSprites.forEach(sprite => sprite.setTint(color));
+    }
+
+    clearTint() {
+      this.bodySprites.forEach(sprite => sprite.clearTint());
+      this.faceSprites.forEach(sprite => sprite.clearTint());
+    }
+
+    setFlipX(flipX: boolean) {
+      this.player.setFlipX(flipX);
+      this.bodySprites.forEach(sprite => sprite.setFlipX(flipX));
+      this.faceSprites.forEach(sprite => sprite.setFlipX(flipX));
+    }
+
+    update(dt: number = 1, zzfx: any) {
+      //  AI
+      if (Date.now() - this.born > 2000) {
+        if (!this.dx || this.lastStill && Date.now() - this.lastStill > 3000) {
+          this.dx = !this.dx ? 1 : -this.dx;
+        }
+      }
+
+      if (this.powerAcquired && Date.now() - this.powerAcquired < 1000) {
+        this.setTint(Math.floor(0xffffff * Math.random()));
+        this.bodySprites.forEach((sprite, index) => sprite.anims.pause());
+      } else if (this.powerAcquired) {
+        this.clearTint();
+        randomSprite(this.seed, this.faceSprites, this.bodySprites);
+
+        this.powerAcquired = 0;
+        this.bodySprites.forEach((sprite, index) => sprite.anims.resume());
+      }
+
+      this.player.setDrag(this.player.body.touching.down ? .0001 : 1);
+
+      const headShift = this.bodySprites[BodyEnum.BODY]?.anims.currentFrame?.index === 1 || this.player.anims.currentFrame?.index === 3 ? -2 : 0;
+      this.bodySprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y));
+      this.faceSprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y + 2 * headShift));
+
+      if (this.holdingBonus) {
+        this.holdingBonus.body?.gameObject.setPosition(this.player.x, this.player.y - 50);
+      }
+
+      if (this.powerAcquired) {
+        this.player.setVelocityX(0);
+      } else {
+
+        if (this.dx) {
+          const speed = this.airborne ? 160 : 80;
+          this.player.setVelocityX(speed * this.dx * dt);
+          const flipX = this.dx < 0;
+          this.setFlipX(flipX);
+        }
+
+        if (this.flyingLevel) {
+          if (this.player.y >= this.flyingLevel) {
+            this.player.setVelocityY(-10);
+          } else {
+            this.player.setVelocityY(0);
+          }
+        }
+
+        if (Math.abs(this.preX - this.player.x) < 1.5) {
+          this.bodySprites.forEach((sprite, index) => sprite.anims.play(this.flyingLevel ? `fly_${index}` : `still_${index}`, true));
+          if (!this.lastStill) {
+            this.lastStill = Date.now();
+          }
+        } else {
+          this.bodySprites.forEach((sprite, index) => sprite.anims.play(this.flyingLevel ? `fly_${index}` : `walk_${index}`, true));
+          this.lastStill = 0;
+        }
+        this.preX = this.player.x;
+      }
+      if (this.airborne && Date.now() - this.airborne > 200 && this.player.body.touching.down) {
+        this.airborne = 0;
+      }
+
+      if (!this.player.body.touching.down && this.lastFrameOnGround) {
+        if (this.holdingBonus && parseInt((this.holdingBonus as any).frame.name) === 0) {
+          this.tryJump(zzfx, true);
+        }
+      }
+
+      this.lastFrameOnGround = this.player.body.touching.down;
+    }
+
+    tryJump(zzfx: any, forceAllowJump: boolean) {
+      if (this.player.body.touching.down || forceAllowJump) {
+        this.player.setVelocityY(-800);
+        zzfx(...[.2, , 198, .04, .07, .06, , 1.83, 16, , , , , , , , , .85, .04]); // Jump 252
+        this.airborne = Date.now();
+      }
+    }
+
+    setScale(scaleX: number, scaleY: number) {
+      [this.player, ...this.bodySprites, ...this.faceSprites].forEach(sprite => sprite.setScale(scaleX, scaleY));
+    }
+
+    getPower(bonus: Phaser.GameObjects.GameObject, zzfx: any) {
+      this.powerAcquired = Date.now();
+      zzfx(...[, , 540, .04, .26, .45, , 1.56, -0.7, -0.1, -141, .07, .01, , , .1, , .9, .29, .45]); // TrollPowerup
+      if (this.holdingBonus) {
+        this.holdingBonus.destroy(true);
+      }
+
+      this.holdingBonus = bonus;
+      (bonus as any).disableBody(true, false);
+      if (parseInt((this.holdingBonus as any).frame.name) === 1) {
+        //  flying
+        this.player.body.allowGravity = false;
+        this.flyingLevel = this.player.y - 50;
+      } else {
+        this.player.body.allowGravity = true;
+        this.flyingLevel = undefined;
+      }
+    }
+  }
+
+  function randomSprite(
+    seed: any,
+    faceSprites: Phaser.GameObjects.Sprite[],
+    bodySprites: Phaser.GameObjects.Sprite[]) {
+
+    const rng = alea(seed + "");
+
+    //  PANTS
+    bodySprites[BodyEnum.PANTS].setVisible(false);
+    bodySprites[BodyEnum.SKIRT].setVisible(false);
+    if (rng() < .2) { //  no pants
+    } else if (rng() < .2) {  //  both
+      bodySprites[BodyEnum.PANTS].setVisible(true);
+      bodySprites[BodyEnum.SKIRT].setVisible(true);
+    } else if (rng() < .5) {
+      bodySprites[BodyEnum.PANTS].setVisible(true);
     } else {
-      this.bodySprites.forEach((sprite, index) => sprite.anims.play(`walk_${index}`, true));
+      bodySprites[BodyEnum.SKIRT].setVisible(true);
+    }
+    bodySprites[BodyEnum.PANTS].setTint(Math.floor(rng() * 0xffffff));
+    bodySprites[BodyEnum.SKIRT].setTint(Math.floor(rng() * 0xffffff));
+    bodySprites[BodyEnum.SHOES].setTint(Math.floor(rng() * 0xffffff));
+    bodySprites[BodyEnum.SMALLSHOES].setTint(Math.floor(rng() * 0xffffff));
+    bodySprites[BodyEnum.UNDERWEAR].setTint(Math.floor(rng() * 0xffffff) | 0x999999);
+    const skinColor = Math.floor(rng() * 0xFFFFFF) | 0xaa9999;
+    faceSprites[FaceEnum.SHAPE].setTint(skinColor);
+    bodySprites[BodyEnum.BODY].setTint(skinColor);
+
+    //  SHIRT
+    bodySprites[BodyEnum.SHIRT].setVisible(rng() < .7);
+
+    // SHOES
+    if (rng() < .5) {
+      bodySprites[BodyEnum.SHOES].setVisible(true);
+      bodySprites[BodyEnum.SMALLSHOES].setVisible(false);
+    } else {
+      bodySprites[BodyEnum.SHOES].setVisible(false);
+      bodySprites[BodyEnum.SMALLSHOES].setVisible(true);
+    }
+
+    //  FACES
+    faceSprites[FaceEnum.SHAPE].setFrame(36 + Math.floor(rng() * 5))
+    faceSprites[FaceEnum.MOUTH].setFrame(rng() < .1 ? 56 : 41 + Math.floor(rng() * 5));
+    faceSprites[FaceEnum.NOSE].setFrame(rng() < .1 ? 56 : 46 + Math.floor(rng() * 5));
+    faceSprites[FaceEnum.EYES].setFrame(51 + Math.floor(rng() * 5));
+    faceSprites[FaceEnum.EYELASHES].setFrame(56 + Math.floor(rng() * 5));
+    faceSprites[FaceEnum.HAIR].setFrame(rng() < .1 ? 56 : 61 + Math.floor(rng() * 5));
+    faceSprites[FaceEnum.HAT].setFrame(rng() < .5 ? 56 : 66 + Math.floor(rng() * 5));
+  }
+
+  let ui: UI;
+  //let scoreText: Phaser.GameObjects.Text;
+  class UI extends Phaser.Scene {
+    startTime: number;
+    endTime?: number;
+    timerText?: Phaser.GameObjects.Text;
+    powerText?: Phaser.GameObjects.Text;
+    music: any;
+
+    constructor() {
+      super({ key: 'UIScene' });
+      ui = this;
+      this.startTime = Date.now();
+    }
+
+    preload() {
+      this.load.audio('main', ['assets/troll-song.mp3']);
+      this.load.audio('power-troll', ['assets/power-troll.mp3']);
+      this.load.audio('game-over', ['assets/game-over.mp3']);
+      this.load.audio('repeat', ['assets/repeat.mp3']);
+    }
+
+    create() {
+      //  scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', color: '#fff' });
+      this.timerText = this.add.text(900, 16, '', { fontSize: '24px', color: '#fff' });
+
+      this.music = this.sound.add('main');
+      this.music.loop = true;
+      this.music.play();
+    }
+
+    update(time: number, delta: number): void {
+      const endTime = this.endTime ?? Date.now();
+      this.timerText?.setText(((endTime - this.startTime) / 1000).toFixed(1) + " s");
+    }
+
+    stopAll() {
+      this.music.stop();
+      this.endTime = Date.now();
+    }
+
+    keyToRestart(goNextLevel: boolean = false) {
+      const onRestart = (e: KeyboardEvent) => {
+        if (e.code === "Space") {
+          if (goNextLevel) {
+            nextLevel();
+          } else {
+            startOver();
+          }
+          document.removeEventListener("keydown", onRestart);
+        }
+      };
+      setTimeout(() => {
+        document.addEventListener("keydown", onRestart);
+      }, 500);
+    }
+
+    gameOver() {
+      this.stopAll();
+
+      const sound = this.sound.add('game-over', {
+        volume: 2
+      });
+
+      setTimeout(() => {
+        this.add.text(300, 200, 'GAME OVER', { fontSize: '64px', color: '#f00' });
+        sound.play();
+        setTimeout(() => {
+          this.add.text(250, 300, 'press a key to continue', { fontSize: '32px', color: '#fff' });
+          this.keyToRestart();
+        }, 1000);
+
+      }, 500);
+    }
+
+    victory() {
+      this.stopAll();
+
+      const sound = this.sound.add('power-troll', {
+        volume: 2
+      });
+
+      const loopy = this.sound.add('repeat', {
+        volume: .5,
+      });
+      loopy.loop = true;
+
+
+      setTimeout(() => {
+        this.add.text(250, 200, 'POWER TROLL!', { fontSize: '64px', color: '#0f0' })
+          .setShadow(5, 5, 'rgba(0,0,0,0.5)', 15);
+
+        sound.play();
+        setTimeout(() => {
+          this.add.text(250, 300, 'press a key to continue', { fontSize: '32px', color: '#fff' });
+          this.keyToRestart(true);
+          loopy.play();
+        }, 1000);
+      }, 2000);
+    }
+
+    showPower(power: string = "") {
+      if (power.length) {
+        this.powerText = this.add.text(50, 50, power, { fontSize: '18px', color: '#fff' });
+        this.powerText?.setVisible(true);
+      } else {
+        this.powerText?.setVisible(false);
+      }
     }
   }
 
-  tryJump() {
-    if (this.player.body.touching.down) {
-      this.player.setVelocityY(-1000);
+  async function commit(type: string, id: string, x: number, y: number, width: number, height: number, frame?: number) {
+    console.log("COMMIT", type, id, x, y, width, height, frame);
+    await fetch(saveUrl, {
+      method: "POST",
+      body: JSON.stringify({
+        jsonUrl,
+        type,
+        id,
+        x, y,
+        width, height,
+        frame,
+      }),
+    })
+  }
+
+  function movePlatform(key: string, id: string, platform: Phaser.Physics.Arcade.Image,
+    { leftEdge, rightEdge, topEdge, bottomEdge }: { leftEdge: boolean, rightEdge: boolean, topEdge: boolean, bottomEdge: boolean },
+    rect?: Phaser.GameObjects.Rectangle,
+    doneMoving?: () => void,
+  ) {
+    const posX = platform.x;
+    const posY = platform.y;
+    const preX = platform.scene.input.mousePointer.x;
+    const preY = platform.scene.input.mousePointer.y;
+    const platformW = platform.displayWidth;
+    const platformH = platform.displayHeight;
+    const onMove = (e: MouseEvent) => {
+      const mouseX = platform.scene.input.mousePointer.x;
+      const mouseY = platform.scene.input.mousePointer.y;
+      const dx = mouseX - preX, dy = mouseY - preY;
+      if (e.buttons) {
+        if (!leftEdge && !rightEdge && !topEdge && !bottomEdge) {
+          platform.setPosition(posX + dx, posY + dy).refreshBody();
+          if (rect?.active) {
+            rect?.setPosition(platform.x, platform.y);
+          }
+        } else {
+          // const mx = (leftEdge ? -1 : 0) + (rightEdge ? 1 : 0);
+          // const my = (topEdge ? -1 : 0) + (bottomEdge ? 1 : 0);
+          const left = leftEdge ? (posX - platformW / 2 + dx) : (posX - platformW / 2);
+          const right = rightEdge ? (posX + platformW / 2 + dx) : (posX + platformW / 2);
+          const top = topEdge ? (posY - platformH / 2 + dy) : (posY - platformH / 2);
+          const bottom = bottomEdge ? (posY + platformH / 2 + dy) : (posY + platformH / 2);
+          // const newWidth = platformW + mx * dx, newHeight = platformH + my * dy;
+          platform.setDisplaySize(right - left, bottom - top)
+            .setPosition((right + left) / 2, (top + bottom) / 2)
+            .refreshBody();
+          //        rect?.setDisplaySize(platform.displayWidth, platform.displayHeight);
+          if (rect?.active) {
+            rect?.setPosition(platform.x, platform.y);
+            rect?.setSize(platform.displayWidth, platform.displayHeight);
+          }
+        }
+      }
+    };
+    document.addEventListener("mousemove", onMove);
+    document.addEventListener("mouseup", () => {
+      document.removeEventListener("mousemove", onMove);
+      commit(key, id, platform.x, platform.y, platform.displayWidth, platform.displayHeight, parseInt(platform.frame.name));
+      doneMoving?.();
+    }, { once: true });
+  }
+
+
+  function createDynamic(
+    indicators: Phaser.Physics.Arcade.StaticGroup,
+    platforms: Phaser.Physics.Arcade.Group | undefined,
+    id: string,
+    key: string,
+    x: number, y: number,
+    frame?: number,
+    width?: number, height?: number,
+    subject?: Phaser.GameObjects.Image
+  ) {
+    idSet.add(id);
+    const platform: Phaser.Physics.Arcade.Image | undefined = platforms?.create(x, y, key, frame);
+    const indic = indicators.create(x, y, key, frame);
+    if (platform) {
+      (platform as any).indic = indic;
     }
+    indic.setAlpha(.3);
+    if (width && height) {
+      platform?.setDisplaySize(width, height);
+      indic.setDisplaySize(width, height);
+    }
+
+    if (canEditLevel) {
+      let startedMoving = false;
+      indic.on('pointermove', (pointer: any, localX: number, localY: number, event: any) => {
+        const cursor = "move";
+        indic.scene.input.setDefaultCursor(cursor);
+      });
+
+      indic.on('pointerdown', (pointer: any, localX: number, localY: number, event: Event) => {
+        if (startedMoving) {
+          return;
+        }
+        startedMoving = true;
+        if (cursors?.shift.isDown && platform) {
+          let id = key;
+          for (let i = 1; i < 100000; i++) {
+            if (!idSet.has(key + i)) {
+              id = key + i;
+              break;
+            }
+          }
+          const p: Phaser.Physics.Arcade.Image | undefined = createDynamic(indicators, platforms, id, key, platform.x, platform.y, frame);
+          if (p) {
+            movePlatform(key, id, (p as any).indic, {
+              leftEdge: false, rightEdge: false, topEdge: false, bottomEdge: false,
+            }, rect, () => {
+              p.setPosition((p as any).indic.x, (p as any).indic.y);
+              startedMoving = false;
+            });
+          }
+        } else {
+          movePlatform(key, id, indic, {
+            leftEdge: false, rightEdge: false, topEdge: false, bottomEdge: false,
+          }, rect, () => {
+            platform?.setPosition(indic.x, indic.y);
+            subject?.setPosition(indic.x, indic.y);
+            startedMoving = false;
+          });
+        }
+      });
+
+      let rect: Phaser.GameObjects.Rectangle | undefined;
+      indic.setInteractive().on('pointerover', function (pointer: any, localX: any, localY: any, event: any) {
+        const scene: Phaser.Scene = indic.scene;
+        rect = scene.add.rectangle(indic.x, indic.y, indic.displayWidth, indic.displayHeight);
+        rect.setStrokeStyle(4, 0xefc53f);
+
+        indic.once('pointerout', function (pointer: any, localX: any, localY: any, event: any) {
+          indic.scene.input.setDefaultCursor("auto");
+          rect?.destroy(true);
+          rect = undefined;
+        });
+      });
+    } else {
+      indic.setVisible(false);
+    }
+
+    return platform;
   }
 
-  setScale(scaleX: number, scaleY: number) {
-    [this.player, ...this.bodySprites, ...this.faceSprites].forEach(sprite => sprite.setScale(scaleX, scaleY));
+  //  size 400,32
+  function createPlatform(platforms: Phaser.Physics.Arcade.StaticGroup,
+    id: string,
+    key: string,
+    x: number, y: number,
+    width?: number, height?: number,
+  ) {
+    idSet.add(id);
+    const platform: Phaser.Physics.Arcade.Image = platforms.create(x, y, key);
+    if (width && height) {
+      platform.setScale(width / 400, height / 32).refreshBody();
+    }
+    function edges(localX: number, localY: number) {
+      const leftEdge = localX < 5;
+      const rightEdge = localX > (platform.width) - 5;
+      const topEdge = localY < 5;
+      const bottomEdge = localY > (platform.height) - 5;
+      return { leftEdge, rightEdge, topEdge, bottomEdge };
+    }
+
+    if (canEditLevel) {
+      let startedMoving = false;
+      platform.on('pointermove', (pointer: any, localX: number, localY: number, event: any) => {
+        const { leftEdge, rightEdge, topEdge, bottomEdge } = edges(localX, localY);
+
+        const cursor = leftEdge && topEdge || rightEdge && bottomEdge
+          ? "nwse-resize"
+          : rightEdge && topEdge || leftEdge && bottomEdge
+            ? "nesw-resize"
+            : leftEdge || rightEdge
+              ? "ew-resize"
+              : topEdge || bottomEdge
+                ? "ns-resize"
+                : "move";
+
+        platform.scene.input.setDefaultCursor(cursor);
+      });
+
+      platform.on('pointerdown', (pointer: any, localX: number, localY: number, event: Event) => {
+        if (startedMoving) {
+          return;
+        }
+        startedMoving = true;
+        const { leftEdge, rightEdge, topEdge, bottomEdge } = edges(localX, localY);
+        let p = platform;
+        if (cursors?.shift.isDown) {
+          let id = key;
+          for (let i = 1; i < 100000; i++) {
+            if (!idSet.has(key + i)) {
+              id = key + i;
+              break;
+            }
+          }
+          const p: Phaser.Physics.Arcade.Image = createPlatform(platforms, id, key, platform.x, platform.y, platform.displayWidth, platform.displayHeight);
+          movePlatform(key, id, p, {
+            leftEdge: false, rightEdge: false, topEdge: false, bottomEdge: false,
+          }, rect, () => startedMoving = false);
+        } else {
+          movePlatform(key, id, p, {
+            leftEdge, rightEdge, topEdge, bottomEdge,
+          }, rect, () => startedMoving = false);
+        }
+      });
+
+      let rect: Phaser.GameObjects.Rectangle | undefined;
+      platform.setInteractive().on('pointerover', function (pointer: any, localX: any, localY: any, event: any) {
+        const scene: Phaser.Scene = platform.scene;
+        rect = scene.add.rectangle(platform.x, platform.y, platform.displayWidth, platform.displayHeight);
+        rect.setStrokeStyle(4, 0xefc53f);
+
+        platform.once('pointerout', function (pointer: any, localX: any, localY: any, event: any) {
+          platform.scene.input.setDefaultCursor("auto");
+          rect?.destroy(true);
+          rect = undefined;
+        });
+      });
+    }
+
+    return platform;
   }
-}
 
-function randomSprite(
-  seed: any,
-  faceSprites: Phaser.GameObjects.Sprite[],
-  bodySprites: Phaser.GameObjects.Sprite[]) {
-
-  const rng = alea(seed + "");
-
-  //  PANTS
-  bodySprites[BodyEnum.PANTS].setVisible(false);
-  bodySprites[BodyEnum.SKIRT].setVisible(false);
-  if (rng() < .2) { //  no pants
-  } else if (rng() < .2) {  //  both
-    bodySprites[BodyEnum.PANTS].setVisible(true);
-    bodySprites[BodyEnum.SKIRT].setVisible(true);
-  } else if (rng() < .5) {
-    bodySprites[BodyEnum.PANTS].setVisible(true);
-  } else {
-    bodySprites[BodyEnum.SKIRT].setVisible(true);
-  }
-  bodySprites[BodyEnum.PANTS].setTint(Math.floor(rng() * 0xffffff));
-  bodySprites[BodyEnum.SKIRT].setTint(Math.floor(rng() * 0xffffff));
-  bodySprites[BodyEnum.SHOES].setTint(Math.floor(rng() * 0xffffff));
-  bodySprites[BodyEnum.SMALLSHOES].setTint(Math.floor(rng() * 0xffffff));
-  bodySprites[BodyEnum.UNDERWEAR].setTint(Math.floor(rng() * 0xffffff) | 0x999999);
-  const skinColor = Math.floor(rng() * 0xFFFFFF) | 0x996666;
-  faceSprites[FaceEnum.SHAPE].setTint(skinColor);
-  bodySprites[BodyEnum.BODY].setTint(skinColor);
-
-  //  SHIRT
-  bodySprites[BodyEnum.SHIRT].setVisible(rng() < .7);
-
-  // SHOES
-  if (rng() < .5) {
-    bodySprites[BodyEnum.SHOES].setVisible(true);
-    bodySprites[BodyEnum.SMALLSHOES].setVisible(false);
-  } else {
-    bodySprites[BodyEnum.SHOES].setVisible(false);
-    bodySprites[BodyEnum.SMALLSHOES].setVisible(true);
+  function num(val: string | number) {
+    return typeof (val) === "string" ? evaluate(val) : val;
   }
 
-  //  FACES
-  faceSprites[FaceEnum.SHAPE].setFrame(36 + Math.floor(rng() * 5))
-  faceSprites[FaceEnum.MOUTH].setFrame(rng() < .1 ? 56 : 41 + Math.floor(rng() * 5));
-  faceSprites[FaceEnum.NOSE].setFrame(rng() < .1 ? 56 : 46 + Math.floor(rng() * 5));
-  faceSprites[FaceEnum.EYES].setFrame(51 + Math.floor(rng() * 5));
-  faceSprites[FaceEnum.EYELASHES].setFrame(56 + Math.floor(rng() * 5));
-  faceSprites[FaceEnum.HAIR].setFrame(rng() < .1 ? 56 : 61 + Math.floor(rng() * 5));
-  faceSprites[FaceEnum.HAT].setFrame(rng() < .5 ? 56 : 66 + Math.floor(rng() * 5));
-}
-
-let scoreText: Phaser.GameObjects.Text;
-class UI extends Phaser.Scene {
-  constructor() {
-    super({ key: 'UIScene' });
-  }
-
-  create() {
-    scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', color: '#fff' });
-  }
-}
-
-//  size 400,32
-function createPlatform(platforms: Phaser.Physics.Arcade.StaticGroup,
-  key: string,
-  x: number, y: number,
-  width?: number, height?: number
-) {
-  const platform = platforms.create(x, y, key);
-  if (width && height) {
-    platform.setScale(width / 400, height / 32).refreshBody();
-  }
-  return platform;
-}
 
 
-export function createHighSchoolGame() {
   let animations: Record<keyof BodyEnum | string, {
     walk: Phaser.Animations.Animation | false,
     still: Phaser.Animations.Animation | false,
+    fly: Phaser.Animations.Animation | false,
   }> = {};
   let gameOver = false;
   let cursors: Phaser.Types.Input.Keyboard.CursorKeys | undefined;
-  let human: Human;
+  const humans: Human[] = [];
   let troll: Troll;
   let mainCamera: Phaser.Cameras.Scene2D.Camera;
-  let preTime: number;
+  let preTime: number = 0;
   let sky: Phaser.GameObjects.Image;
+  let bonusGroup: Phaser.Physics.Arcade.Group;
+  let keyGroup: Phaser.Physics.Arcade.Group;
+  let doorGroup: Phaser.Physics.Arcade.StaticGroup;
+
+  const GAMEWIDTH = 1000, GAMEHEIGHT = 600;
+
   const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
-    width: 800,
-    height: 600,
+    width: GAMEWIDTH,
+    height: GAMEHEIGHT,
     physics: {
       default: 'arcade',
       arcade: {
-        x: 0, y: 0, width: 1600, height: 600,
+        x: 0, y: 0, width: GAMEWIDTH, height: GAMEHEIGHT,
         gravity: { x: 0, y: 2000 },
         debug: false
       }
@@ -297,9 +847,12 @@ export function createHighSchoolGame() {
         {
           this.load.image('sky', 'assets/sky.png');
           this.load.image('ground', 'assets/platform.png');
-          this.load.image('red', 'assets/redbox.png');
+          this.load.image('trigger', 'assets/redbox.png');
           this.load.image('star', 'assets/star.png');
           this.load.image('bomb', 'assets/bomb.png');
+          this.load.spritesheet('bonus', 'assets/bonus.png', {
+            frameWidth: 32, frameHeight: 32,
+          });
           this.load.spritesheet('hi',
             'assets/hischooler.png',
             { frameWidth: 64, frameHeight: 64 }
@@ -308,42 +861,105 @@ export function createHighSchoolGame() {
             'assets/troll.png',
             { frameWidth: 32, frameHeight: 32 }
           );
+          this.load.spritesheet("rock",
+            'assets/rock.png',
+            { frameWidth: 64, frameHeight: 64 },
+          );
+          this.load.spritesheet("key",
+            'assets/items.png',
+            { frameWidth: 64, frameHeight: 64 },
+          );
+          this.load.spritesheet("door",
+            'assets/items.png',
+            { frameWidth: 64, frameHeight: 64 },
+          )
         }
       },
       create() {
+
         this.scene.launch('UIScene');
 
 
-        let score: number = 0;
-
-        sky = this.add.image(400, 300, 'sky');
+        sky = this.add.image(GAMEWIDTH / 2, GAMEHEIGHT / 2, 'sky').setDisplaySize(GAMEWIDTH, GAMEHEIGHT);
 
         const platforms = this.physics.add.staticGroup();
+        const indicators = this.physics.add.staticGroup();
 
-        createPlatform(platforms, 'ground', 800, 568, 1600, 64);
-        createPlatform(platforms, 'ground', 600, 400);
-        createPlatform(platforms, 'ground', 50, 250);
-        createPlatform(platforms, 'ground', 750, 220);
-        createPlatform(platforms, 'red', 600 - 200, 400 - 10);
-        createPlatform(platforms, 'red', 600 + 200, 400 - 10);
+        Object.entries(mapJson.ground).forEach(([id, params]) => {
+          if (!Array.isArray(params)) {
+            const { x, y, width, height, frame } = params;
+            createPlatform(platforms, id, 'ground', x, y, width, height);
+            return;
+          }
+          const [x, y, w, h] = params.map(p => num(p));
+          createPlatform(platforms, id, 'ground', x, y, w, h);
+        });
 
-        troll = new Troll(this, 200, 350);
-        troll.setScale(2, 2);
+        // createPlatform(platforms, 'a1', 'ground', 800, 568, 1600, 64);
+        // createPlatform(platforms, 'a2', 'ground', 600, 400);
+        // createPlatform(platforms, 'a3', 'ground', 50, 250);
+        // createPlatform(platforms, 'a4', 'ground', 750, 220);
 
-        human = new Human(this, 100, 450);
-        human.setScale(1, 1.5);
+        Object.entries(mapJson.troll ?? {}).forEach(([id, params]) => {
+          const { x, y } = params;
+          troll = new Troll(this, x, y);
+          troll.setScale(1.5, 1.5);
+          createDynamic(indicators, undefined, "troll", "troll", x, y, undefined, 48, 48, troll.player);
+        });
+        if (!troll) {
+          troll = new Troll(this, 200, 300);
+          troll.setScale(1.5, 1.5);
+        }
+
+        const humanGroup = this.physics.add.group();
+        Object.entries(mapJson.human ?? {}).forEach(([id, params]) => {
+          const { x, y } = params;
+          const human = new Human(this, x, y, platforms, humanGroup);
+          createDynamic(indicators, undefined, id, "human", x, y, undefined, undefined, undefined, human.bodySprites[BodyEnum.BODY]);
+          humans.push(human);
+        });
+
+        // humans.push(
+        //   new Human(this, 100, 450, platforms, humanGroup),
+        //   new Human(this, 300, 250, platforms, humanGroup),
+        // );
+        this.physics.add.collider(humanGroup, platforms);
+        this.physics.add.collider(humanGroup, humanGroup);
+
+
+
+
 
         const trollAnimation = {
-          walk: this.anims.create({
-            key: `troll_walk`,
-            frames: this.anims.generateFrameNumbers('troll', { start: 1, end: 6 }),
-            frameRate: 20,
-            repeat: -1,
-          }),
           still: this.anims.create({
             key: `troll_still`,
             frames: this.anims.generateFrameNumbers('troll', { start: 0, end: 0 }),
             frameRate: 20,
+          }),
+          walk: this.anims.create({
+            key: `troll_walk`,
+            frames: this.anims.generateFrameNumbers('troll', { start: 2, end: 7 }),
+            frameRate: 20,
+            repeat: -1,
+          }),
+          hold_still: this.anims.create({
+            key: `troll_hold_still`,
+            frames: this.anims.generateFrameNumbers('troll', { start: 12, end: 12 }),
+            frameRate: 20,
+            repeat: -1,
+          }),
+          hold_walk: this.anims.create({
+            key: `troll_hold_walk`,
+            frames: this.anims.generateFrameNumbers('troll', { start: 13, end: 18 }),
+            frameRate: 20,
+            repeat: -1,
+          }),
+          throw: this.anims.create({
+            key: `troll_throw`,
+            frames: this.anims.generateFrameNumbers('troll', { start: 8, end: 11 }),
+            frameRate: 10,
+            repeat: 0,
+
           }),
         };
 
@@ -361,59 +977,238 @@ export function createHighSchoolGame() {
               frames: this.anims.generateFrameNumbers('hi', { start: config.still[0], end: config.still[1] }),
               frameRate: 20,
             }),
+            fly: this.anims.create({
+              key: `fly_${key}`,
+              frames: this.anims.generateFrameNumbers('hi', { start: config.walk[0], end: config.walk[1] }),
+              frameRate: 20,
+              repeat: -1,
+            }),
           };
         }
 
-        this.physics.add.collider(human.player, platforms);
         this.physics.add.collider(troll.player, platforms);
+
         cursors = this.input.keyboard?.addKeys({
           up: Phaser.Input.Keyboard.KeyCodes.W,
           down: Phaser.Input.Keyboard.KeyCodes.S,
           left: Phaser.Input.Keyboard.KeyCodes.A,
           right: Phaser.Input.Keyboard.KeyCodes.D,
           space: Phaser.Input.Keyboard.KeyCodes.SPACE,
+          p: Phaser.Input.Keyboard.KeyCodes.P,
+          shift: Phaser.Input.Keyboard.KeyCodes.SHIFT,
         }) as Phaser.Types.Input.Keyboard.CursorKeys;
 
-
-
-        const stars = this.physics.add.group({
-          key: 'star',
-          repeat: 11,
-          setXY: { x: 12, y: 0, stepX: 70 }
+        const triggers = this.physics.add.staticGroup({
+          // key: 'red',
+          // setXY: { x: 50, y: 500 },
         });
 
-        stars.children.iterate(function (child: Phaser.GameObjects.GameObject): boolean | null {
-          (child as any).setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
-          return null;
+        const rocks = this.physics.add.group({
+          // key: 'rock',
+          //          setXY: { x: 700, y: 500 },
+          allowGravity: true,
+        });
+        Object.entries(mapJson.rock ?? {}).forEach(([id, params]) => {
+          const { x, y, frame } = params;
+          createDynamic(indicators, rocks, id, 'rock', x, y, frame);
         });
 
-
-        this.physics.add.collider(stars, platforms);
-        this.physics.add.overlap(troll.player, stars, (player, star) => {
-          (star as any).disableBody(true, true);
-
-          score += 10;
-          scoreText.setText('Score: ' + score);
-
-          if (stars.countActive(true) === 0) {
-            stars.children.iterate(function (child) {
-
-              (child as any).enableBody(true, (child as any).x, 0, true, true);
-              return null;
-            });
-
-            const x = ((player as any).x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
-
-            const bomb = bombs.create(x, 16, 'bomb');
-            bomb.setBounce(1);
-            bomb.setCollideWorldBounds(true);
-            bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
-
-            human.randomize();
+        this.physics.add.collider(rocks, platforms);
+        this.physics.add.collider(rocks, humanGroup, (rock, human) => {
+          const humanObj = (human as any).human;
+          const bonus = humanObj.holdingBonus;
+          if (bonus?.frame && parseInt(bonus?.frame.name)) {
+            (rock as any).setPushable(true);
+            clearTimeout((rock as any).timeout);
+            (rock as any).timeout = setTimeout(() => {
+              (rock as any).setPushable(false);
+            }, 500);
           }
+        });
+        this.physics.add.collider(rocks, troll.player);
+        rocks.getChildren().forEach(object => {
+          object.body?.gameObject.setPushable(false);
+          object.body?.gameObject.setDamping(true);
+          object.body?.gameObject.setDrag(.01);
+          object.body?.gameObject.setCollideWorldBounds(true);
+        });
 
+
+        Object.entries(mapJson.trigger).forEach(([id, params]) => {
+          if (!Array.isArray(params)) {
+            const { x, y, width, height, frame } = params;
+            createPlatform(triggers, id, 'trigger', x, y);
+            return;
+          }
+          const [x, y, w, h] = params.map(p => num(p));
+          createPlatform(triggers, id, 'trigger', x, y, w, h);
+        });
+
+        // createPlatform(triggers, 't1', 'red', 600 - 200, 400 - 10);
+        // createPlatform(triggers, 't2', 'red', 600 + 200, 400 - 10);
+
+
+        this.physics.add.collider(humanGroup, triggers, (human, trigger) => {
+          if ((human as any).human.holdingBonus && parseInt((human as any).human.holdingBonus.frame.name) === 0) {
+            (human as any).human.tryJump(zzfx);
+          }
+        });
+
+        bonusGroup = this.physics.add.group({
+          allowGravity: true,
+        });
+
+        Object.entries(mapJson.bonus).forEach(([id, params]) => {
+          if (!Array.isArray(params)) {
+            const { x, y, frame } = params;
+            createDynamic(indicators, bonusGroup, id, 'bonus', x, y, frame);
+            return;
+          }
+          const [x, y, frame] = params.map(p => num(p));
+          createDynamic(indicators, bonusGroup, id, 'bonus', x, y, frame);
+        });
+
+        bonusGroup.getChildren().forEach(object => {
+          object.body?.gameObject.setPushable(false);
+          object.body?.gameObject.setDamping(true);
+          object.body?.gameObject.setDrag(.01);
+          object.body?.gameObject.setCollideWorldBounds(true);
+
+        });
+        this.physics.add.collider(humanGroup, bonusGroup, (human, bonus) => {
+          // (bonus as any).disableBody(true, true);
+          const h: Human = (human as any).human;
+          h.getPower(bonus as any, zzfx);
+        });
+
+
+        this.physics.add.collider(bonusGroup, platforms, (bonus, platform) => {
         }, undefined, this);
 
+        this.physics.add.collider(troll.player, bonusGroup);
+
+
+        this.anims.create({
+          key: `key_anim`,
+          frames: this.anims.generateFrameNumbers('key', { start: 0, end: 3 }),
+          frameRate: 20,
+          repeat: -1,
+        })
+
+        this.anims.create({
+          key: `door`,
+          frames: this.anims.generateFrameNumbers('door', { start: 4, end: 4 }),
+          frameRate: 10,
+        });
+        this.anims.create({
+          key: `door_open`,
+          frames: this.anims.generateFrameNumbers('door', { start: 4, end: 6 }),
+          frameRate: 10,
+        });
+        this.anims.create({
+          key: `door_close`,
+          frames: this.anims.generateFrameNumbers('door', { frames: [6, 5, 4] }),
+          frameRate: 10,
+        });
+
+        keyGroup = this.physics.add.group({
+          allowGravity: true,
+        });
+        this.physics.add.collider(keyGroup, platforms);
+        this.physics.add.collider(troll.player, keyGroup);
+        this.physics.add.collider(keyGroup, humanGroup);
+
+        Object.entries(mapJson.key).forEach(([id, params]) => {
+          if (!Array.isArray(params)) {
+            const { x, y, frame } = params;
+            const b = createDynamic(indicators, keyGroup, id, 'key', x, y, frame, 32, 32);
+            if (b) {
+              (b as any).anims.play('key_anim');
+              (b as any).isKey = true;
+              b.setDamping(true);
+              b.setDrag(.01);
+              b.setCollideWorldBounds(true);
+            }
+            return;
+          }
+          const [x, y, frame] = params.map(p => num(p));
+          const b = createDynamic(indicators, keyGroup, id, 'key', x, y, frame, 32, 32);
+          if (b) {
+            (b as any).anims.play('key_anim');
+            (b as any).isKey = true;
+            b.setDamping(true);
+            b.setDrag(.01);
+            b.setCollideWorldBounds(true);
+          }
+        });
+
+        doorGroup = this.physics.add.staticGroup();
+        Object.entries(mapJson.door ?? {}).forEach(([id, params]) => {
+          const { x, y } = params;
+          createPlatform(doorGroup, id, 'door', x, y);
+        });
+
+
+        this.physics.add.collider(keyGroup, doorGroup, (key, door) => {
+          if (!((door as any).isOpen)) {
+            (door as any).anims.play("door_open");
+            (door as any).isOpen = true;
+            (key as any).disableBody(true, true);
+            zzfx(...[26, , 117, , , .06, 4, .08, -0.1, -6, , , , , , .6, , .04, , .33]); // Random 282
+          }
+        });
+
+        doorGroup.getChildren().forEach(object => {
+          (object as any).anims.play("door");
+        });
+
+        this.physics.add.collider(troll.player, doorGroup, (player, door) => {
+          if ((door as any).isOpen) {
+            troll.destroy();
+            (door as any).anims.play("door_close");
+            zzfx(...[1.03, , 415, .05, .3, .46, 1, 1.91, 2.7, , , , .16, , 11, .1, , .69, .24, .27]); // Powerup 271
+            ui.victory();
+          }
+        });
+
+        /*
+                const stars = this.physics.add.group({
+                  key: 'star',
+                  repeat: 11,
+                  setXY: { x: 12, y: 0, stepX: 70 }
+                });
+        
+                stars.children.iterate(function (child: Phaser.GameObjects.GameObject): boolean | null {
+                  (child as any).setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+                  return null;
+                });
+                this.physics.add.collider(stars, platforms);
+        
+                this.physics.add.overlap(troll.player, stars, (player, star) => {
+                  (star as any).disableBody(true, true);
+        
+                  score += 10;
+                  scoreText.setText('Score: ' + score);
+        
+                  if (stars.countActive(true) === 0) {
+                    stars.children.iterate(function (child) {
+        
+                      (child as any).enableBody(true, (child as any).x, 0, true, true);
+                      return null;
+                    });
+        
+                    const x = ((player as any).x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+        
+                    const bomb = bombs.create(x, 16, 'bomb');
+                    bomb.setBounce(1);
+                    bomb.setCollideWorldBounds(true);
+                    bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+        
+                    humans.forEach(human => human.randomize());
+                  }
+        
+                }, undefined, this);
+        */
         const bombs = this.physics.add.group();
 
         this.physics.add.collider(bombs, platforms);
@@ -424,15 +1219,28 @@ export function createHighSchoolGame() {
           const p = player as any;
 
           hero.setTint(0xff0000);
-          this.add.text(p.x - 100, p.y, 'GAME\nOVER', { fontSize: '64px', color: '#f00' });
+          ui.gameOver();
 
           gameOver = true;
         }, undefined, this);
+
+        this.physics.add.collider(hero.player, humanGroup, (player, human) => {
+          this.physics.pause();
+          const p = player as any;
+
+          hero.setTint(0xff0000);
+          ui.gameOver();
+          zzfx(...[1.32, , 692, .04, .21, .24, , .16, , , , , .05, , 9, .1, .03, .69, .2, .11]); // Powerup 256
+
+          gameOver = true;
+
+        }, undefined, this);
+
         mainCamera = this.cameras.main;
       },
       update() {
         const now = Date.now();
-        const dt = (now - preTime) / 10;
+        const dt = Math.max(1, (now - preTime) / 10);
         preTime = now;
 
         const hero = troll;
@@ -446,20 +1254,59 @@ export function createHighSchoolGame() {
         hero.dx = dx;
 
         if (cursors?.space.isDown) {
-          hero.tryJump();
+          hero.tryJump(zzfx);
         }
 
-        mainCamera.scrollX = hero.player.x - 400;
-        mainCamera.scrollY = hero.player.y - 300;
-        sky.setPosition(mainCamera.scrollX + 400, mainCamera.scrollY + 300);
-        human.update(dt);
-        troll.update(dt);
+        if ((cursors as any).p.isDown) {
+          hero.hold(bonusGroup, zzfx, ui);
+          hero.hold(keyGroup, zzfx);
+        }
+
+        // mainCamera.scrollX = hero.player.x - 400;
+        // mainCamera.scrollY = hero.player.y - 300;
+        sky.setPosition(mainCamera.scrollX + GAMEWIDTH / 2, mainCamera.scrollY + GAMEHEIGHT / 2);
+        humans.forEach(human => human.update(dt, zzfx));
+        troll.update(dt, zzfx);
       },
     }, UI],
   };
 
-  document.body.appendChild(document.createElement("div")).textContent = "Keys: AWSD to move, SPACE to jump"
+  let game = new Phaser.Game(config);
 
-  const game = new Phaser.Game(config);
+  const instruct = document.body.appendChild(document.createElement("div"));
+  instruct.style.whiteSpace = "pre";
+  instruct.textContent = "You are\nThe Supernatural Power Troll\nKeys: AWSD to move, SPACE to jump, P to pick up/throw\nDo NOT get in contact with a human."
+
+  let levelUi: HTMLDivElement;
+  if (conf.canEdit) {
+    levelUi = document.body.appendChild(document.createElement("div"));
+    const button = levelUi.appendChild(document.createElement("button"));
+    button.textContent = `NEXT LEVEL ${mapJson.nextLevel ?? ""}`;
+    button.addEventListener("click", () => {
+      nextLevel();
+    });
+    button.disabled = !mapJson.nextLevel;
+  }
+
+  function startOver() {
+    game.destroy(true);
+    document.body.removeChild(instruct);
+    if (levelUi) {
+      document.body.removeChild(levelUi);
+    }
+    setTimeout(() => {
+      createHighSchoolGame(jsonUrl, saveUrl);
+    }, 100);
+  }
+
+  function nextLevel() {
+    game.destroy(true);
+    document.body.removeChild(instruct);
+    document.body.removeChild(levelUi);
+    setTimeout(() => {
+      createHighSchoolGame(mapJson.nextLevel ?? jsonUrl, saveUrl);
+    }, 100);
+  }
+
   return game;
 }

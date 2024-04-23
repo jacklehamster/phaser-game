@@ -3,14 +3,22 @@
     <title>Phaser Game</title>
   </head>
   <body>
-    <div id="press-key">Press a key to start</div>
+    <div id="press-key">
+      <div style="width: 100%; text-align: center;">
+        <h3>The</h3>
+        <h1>SUPERNATURAL</h1>
+        <h2>Power</h2>
+        <h3>Troll</h3>  
+        <div>Press a key to start</div>
+      </div>
+    </div>
   </body>
   <script type="module">
     import { createHighSchoolGame } from './dist/index.js';
 
     document.addEventListener("keydown", () => {
       document.getElementById("press-key").style.display = "none";
-      window.game1 = createHighSchoolGame();
+      window.game1 = createHighSchoolGame(undefined, "save");
     }, { once: true });
   </script>
 </html>
