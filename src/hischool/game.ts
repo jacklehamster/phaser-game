@@ -62,7 +62,7 @@ const ANIMATIONS_CONFIG: Record<BodyEnum | string, {
   },
 };
 
-export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl: string) {
+export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl: string | undefined, forceLock?: boolean) {
   if (!jsonUrl) {
     const regex = /#map=([\w\/.]+)/;
     const [, mapFromHash] = location.hash.match(regex) ?? [];
@@ -70,9 +70,12 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     if (mapFromHash) {
       jsonUrl = mapFromHash;
     } else {
-      jsonUrl = "json/map.json";
+      jsonUrl = "json/map1.json";
     }
   }
+  const regex2 = /json\/map(\d+).json/;
+  const [, level] = jsonUrl.match(regex2) ?? [];
+  console.log(level);
   console.log(jsonUrl);
 
   location.replace("#map=" + jsonUrl);
@@ -93,7 +96,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     human?: Record<string, any>;
   } = await res.json();
 
-  const canEditLevel = conf.canEdit && !mapJson.locked;
+  const canEditLevel = conf.canEdit && !(forceLock ?? mapJson.locked);
 
   const { zzfx } = require("zzfx");
   const idSet = new Set();
@@ -122,6 +125,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
     constructor(scene: Phaser.Scene, x: number, y: number) {
       super('troll', scene.physics.add.sprite(x, y, 'troll', 1));
+      this.player.body.allowDrag = true;
 
       this.trollSprites.push(
         scene.add.sprite(0, 0, "troll", 0),
@@ -152,15 +156,17 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       if (this.destroyed) {
         return;
       }
-      this.player.setDrag(this.player.body.touching.down ? .00001 : 1);
+      this.player.setDrag(this.player.body.touching.down ? .0000001 : 1);
 
       this.trollSprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y));
 
       if (this.dx) {
-        const speed = this.airborne ? 180 : 150;
+        const speed = this.airborne ? 200 : 150;
         this.player.setVelocityX(speed * this.dx * dt);
         const flipX = this.dx < 0;
         this.setFlipX(flipX);
+      } else {
+        this.player.setVelocityX(this.player.body.velocity.x * .5);
       }
 
       if (this.lastThrow && Date.now() - this.lastThrow < 400) {
@@ -174,7 +180,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       if (heldBonus) {
         const frame = this.trollSprites[0]?.anims.currentFrame?.index;
         const holdShift = (frame ?? 0) % 3;
-        heldBonus.body?.gameObject.setPosition(this.player.x - (this.holdingTemp ? 30 : 0) * this.dx, this.player.y - 30 + holdShift);
+        heldBonus.body?.gameObject.setPosition(this.player.x - (this.holdingTemp ? 30 : 0) * this.dx, this.player.y - 40 + holdShift);
       }
 
       if (this.airborne && Date.now() - this.airborne > 200 && this.player.body.touching.down) {
@@ -349,7 +355,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       } else {
 
         if (this.dx) {
-          const speed = this.airborne ? 160 : 80;
+          const speed = this.airborne ? 200 : 80;
           this.player.setVelocityX(speed * this.dx * dt);
           const flipX = this.dx < 0;
           this.setFlipX(flipX);
@@ -408,6 +414,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
       this.holdingBonus = bonus;
       (bonus as any).disableBody(true, false);
+      bonus.body?.gameObject.setAlpha(.5);
+      (bonus as any).setDisplaySize(32, 32).refreshBody();
       if (parseInt((this.holdingBonus as any).frame.name) === 1) {
         //  flying
         this.player.body.allowGravity = false;
@@ -476,6 +484,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     endTime?: number;
     timerText?: Phaser.GameObjects.Text;
     powerText?: Phaser.GameObjects.Text;
+    warningText?: Phaser.GameObjects.Text;
     music: any;
 
     constructor() {
@@ -498,11 +507,31 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       this.music = this.sound.add('main');
       this.music.loop = true;
       this.music.play();
+
+      const restartButton = this.add.text(GAMEWIDTH - 100, 50, '[RESTART]', { color: '#f44' });
+      restartButton.setInteractive({ useHandCursor: true });
+      restartButton.on("pointerdown", () => {
+        startOver();
+      });
+
+      this.warningText = this.add.text(50, GAMEHEIGHT - 40, `Warning: The game has issues when running at low frame rate (${game.loop.actualFps.toFixed(1)} fps).\nThis could happen if your computer is low on battery`, { color: '#f66' });
+      this.warningText.setVisible(false);
+
+      if (level) {
+        this.add.text(20, 20, `Level ${level}`, { color: "#fff" });
+      }
     }
 
     update(time: number, delta: number): void {
       const endTime = this.endTime ?? Date.now();
       this.timerText?.setText(((endTime - this.startTime) / 1000).toFixed(1) + " s");
+
+      if (game.loop.actualFps < 35) {
+        this.warningText?.setVisible(true);
+        this.warningText?.setText(`Warning: The game has issues when running at low frame rate (${game.loop.actualFps.toFixed(1)} fps).\nThis could happen if your computer is low on battery.`);
+      } else {
+        this.warningText?.setVisible(false);
+      }
     }
 
     stopAll() {
@@ -582,18 +611,33 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
   async function commit(type: string, id: string, x: number, y: number, width: number, height: number, frame?: number) {
     console.log("COMMIT", type, id, x, y, width, height, frame);
-    await fetch(saveUrl, {
+    if (saveUrl) {
+      await fetch(saveUrl, {
+        method: "POST",
+        body: JSON.stringify({
+          jsonUrl,
+          type,
+          id,
+          x, y,
+          width, height,
+          frame,
+        }),
+      });
+    } else {
+      console.log("No saveUrl provided");
+    }
+  }
+
+  async function commitLock(locked: boolean) {
+    await fetch("lock", {
       method: "POST",
       body: JSON.stringify({
         jsonUrl,
-        type,
-        id,
-        x, y,
-        width, height,
-        frame,
+        locked,
       }),
-    })
+    });
   }
+
 
   function movePlatform(key: string, id: string, platform: Phaser.Physics.Arcade.Image,
     { leftEdge, rightEdge, topEdge, bottomEdge }: { leftEdge: boolean, rightEdge: boolean, topEdge: boolean, bottomEdge: boolean },
@@ -827,6 +871,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
   let bonusGroup: Phaser.Physics.Arcade.Group;
   let keyGroup: Phaser.Physics.Arcade.Group;
   let doorGroup: Phaser.Physics.Arcade.StaticGroup;
+  let rocks: Phaser.Physics.Arcade.Group;
 
   const GAMEWIDTH = 1000, GAMEHEIGHT = 600;
 
@@ -877,6 +922,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       },
       create() {
 
+
         this.scene.launch('UIScene');
 
 
@@ -915,7 +961,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         Object.entries(mapJson.human ?? {}).forEach(([id, params]) => {
           const { x, y } = params;
           const human = new Human(this, x, y, platforms, humanGroup);
-          createDynamic(indicators, undefined, id, "human", x, y, undefined, undefined, undefined, human.bodySprites[BodyEnum.BODY]);
+          createDynamic(indicators, undefined, id, "human", x, y, undefined, undefined, undefined, human.player);
           humans.push(human);
         });
 
@@ -989,10 +1035,14 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         this.physics.add.collider(troll.player, platforms);
 
         cursors = this.input.keyboard?.addKeys({
-          up: Phaser.Input.Keyboard.KeyCodes.W,
-          down: Phaser.Input.Keyboard.KeyCodes.S,
-          left: Phaser.Input.Keyboard.KeyCodes.A,
-          right: Phaser.Input.Keyboard.KeyCodes.D,
+          up2: Phaser.Input.Keyboard.KeyCodes.W,
+          up: Phaser.Input.Keyboard.KeyCodes.UP,
+          down2: Phaser.Input.Keyboard.KeyCodes.S,
+          down: Phaser.Input.Keyboard.KeyCodes.DOWN,
+          left2: Phaser.Input.Keyboard.KeyCodes.A,
+          left: Phaser.Input.Keyboard.KeyCodes.LEFT,
+          right2: Phaser.Input.Keyboard.KeyCodes.D,
+          right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
           space: Phaser.Input.Keyboard.KeyCodes.SPACE,
           p: Phaser.Input.Keyboard.KeyCodes.P,
           shift: Phaser.Input.Keyboard.KeyCodes.SHIFT,
@@ -1003,7 +1053,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           // setXY: { x: 50, y: 500 },
         });
 
-        const rocks = this.physics.add.group({
+        rocks = this.physics.add.group({
           // key: 'rock',
           //          setXY: { x: 700, y: 500 },
           allowGravity: true,
@@ -1013,24 +1063,27 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           createDynamic(indicators, rocks, id, 'rock', x, y, frame);
         });
 
+        this.physics.add.collider(rocks, keyGroup);
+        this.physics.add.collider(rocks, rocks);
         this.physics.add.collider(rocks, platforms);
         this.physics.add.collider(rocks, humanGroup, (rock, human) => {
           const humanObj = (human as any).human;
           const bonus = humanObj.holdingBonus;
           if (bonus?.frame && parseInt(bonus?.frame.name)) {
-            (rock as any).setPushable(true);
+            (rock as any)?.setPushable(true);
             clearTimeout((rock as any).timeout);
             (rock as any).timeout = setTimeout(() => {
-              (rock as any).setPushable(false);
+              (rock as any)?.setPushable(false);
             }, 500);
           }
         });
-        this.physics.add.collider(rocks, troll.player);
+        this.physics.add.collider(rocks, troll.player, (rock, player) => {
+        });
         rocks.getChildren().forEach(object => {
-          object.body?.gameObject.setPushable(false);
-          object.body?.gameObject.setDamping(true);
-          object.body?.gameObject.setDrag(.01);
-          object.body?.gameObject.setCollideWorldBounds(true);
+          object.body?.gameObject?.setPushable(false);
+          object.body?.gameObject?.setDamping(true);
+          object.body?.gameObject?.setDrag(.01);
+          object.body?.gameObject?.setCollideWorldBounds(true);
         });
 
 
@@ -1056,25 +1109,29 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
         bonusGroup = this.physics.add.group({
           allowGravity: true,
+          bounceY: .2,
+          allowDrag: true,
+          useDamping: true,
         });
 
         Object.entries(mapJson.bonus).forEach(([id, params]) => {
           if (!Array.isArray(params)) {
             const { x, y, frame } = params;
-            createDynamic(indicators, bonusGroup, id, 'bonus', x, y, frame);
+            createDynamic(indicators, bonusGroup, id, 'bonus', x, y, frame, 48, 48);
             return;
           }
           const [x, y, frame] = params.map(p => num(p));
-          createDynamic(indicators, bonusGroup, id, 'bonus', x, y, frame);
+          createDynamic(indicators, bonusGroup, id, 'bonus', x, y, frame, 48, 48);
         });
 
         bonusGroup.getChildren().forEach(object => {
-          object.body?.gameObject.setPushable(false);
-          object.body?.gameObject.setDamping(true);
-          object.body?.gameObject.setDrag(.01);
-          object.body?.gameObject.setCollideWorldBounds(true);
+          object.body?.gameObject?.setPushable(false);
+          object.body?.gameObject?.setDamping(true);
+          object.body?.gameObject?.setDrag(.01);
+          object.body?.gameObject?.setCollideWorldBounds(true);
 
         });
+        this.physics.add.collider(bonusGroup, bonusGroup);
         this.physics.add.collider(humanGroup, bonusGroup, (human, bonus) => {
           // (bonus as any).disableBody(true, true);
           const h: Human = (human as any).human;
@@ -1121,7 +1178,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         Object.entries(mapJson.key).forEach(([id, params]) => {
           if (!Array.isArray(params)) {
             const { x, y, frame } = params;
-            const b = createDynamic(indicators, keyGroup, id, 'key', x, y, frame, 32, 32);
+            const b = createDynamic(indicators, keyGroup, id, 'key', x, y, frame, 48, 48);
             if (b) {
               (b as any).anims.play('key_anim');
               (b as any).isKey = true;
@@ -1132,7 +1189,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
             return;
           }
           const [x, y, frame] = params.map(p => num(p));
-          const b = createDynamic(indicators, keyGroup, id, 'key', x, y, frame, 32, 32);
+          const b = createDynamic(indicators, keyGroup, id, 'key', x, y, frame, 48, 48);
           if (b) {
             (b as any).anims.play('key_anim');
             (b as any).isKey = true;
@@ -1240,7 +1297,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       },
       update() {
         const now = Date.now();
-        const dt = Math.max(1, (now - preTime) / 10);
+        const dt = 1.5;//Math.min(3, Math.max(1, (now - preTime) / 10));
+        //console.log(dt);
         preTime = now;
 
         const hero = troll;
@@ -1249,7 +1307,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           hero.setFlipX(flipX);
           return;
         }
-        const dx = (cursors?.left.isDown ? -1 : 0) + (cursors?.right.isDown ? 1 : 0);
+        const dx = (cursors?.left.isDown || (cursors as any)?.left2.isDown ? -1 : 0) + (cursors?.right.isDown || (cursors as any)?.right2.isDown ? 1 : 0);
 
         hero.dx = dx;
 
@@ -1257,10 +1315,20 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           hero.tryJump(zzfx);
         }
 
-        if ((cursors as any).p.isDown) {
+        if ((cursors as any).p.isDown || (cursors as any).shift.isDown) {
           hero.hold(bonusGroup, zzfx, ui);
           hero.hold(keyGroup, zzfx);
         }
+
+        rocks.getChildren().forEach(rock => {
+          const topMap: Map<Phaser.Types.Physics.Arcade.GameObjectWithBody | Phaser.Tilemaps.Tile, [number, number]> = (rock as any).topMap;
+          topMap?.forEach(([time, pos], player) => {
+            if (Date.now() - time < 10) {
+              (player as any).setXY((rock as any).x + pos, (player as any).y);
+            }
+          });
+        });
+
 
         // mainCamera.scrollX = hero.player.x - 400;
         // mainCamera.scrollY = hero.player.y - 300;
@@ -1277,7 +1345,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
   instruct.style.whiteSpace = "pre";
   instruct.textContent = "You are\nThe Supernatural Power Troll\nKeys: AWSD to move, SPACE to jump, P to pick up/throw\nDo NOT get in contact with a human."
 
-  let levelUi: HTMLDivElement;
+  let levelUi: HTMLDivElement | undefined;
   if (conf.canEdit) {
     levelUi = document.body.appendChild(document.createElement("div"));
     const button = levelUi.appendChild(document.createElement("button"));
@@ -1286,23 +1354,41 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       nextLevel();
     });
     button.disabled = !mapJson.nextLevel;
+
+    const lockCheck = levelUi.appendChild(document.createElement("input"));
+    lockCheck.id = "lockCheck;"
+    lockCheck.type = "checkbox";
+    lockCheck.checked = mapJson.locked;
+    const label = levelUi.appendChild(document.createElement("label"));
+    label.htmlFor = "lockCheck";
+    label.textContent = "lock";
+    lockCheck.addEventListener("change", async () => {
+      await commitLock(lockCheck.checked);
+      startOver(lockCheck.checked);
+    })
   }
 
-  function startOver() {
+  function startOver(forceLock?: boolean) {
     game.destroy(true);
-    document.body.removeChild(instruct);
+    if (instruct?.parentElement === document.body) {
+      document.body.removeChild(instruct);
+    }
     if (levelUi) {
       document.body.removeChild(levelUi);
     }
     setTimeout(() => {
-      createHighSchoolGame(jsonUrl, saveUrl);
+      createHighSchoolGame(jsonUrl, saveUrl, forceLock);
     }, 100);
   }
 
   function nextLevel() {
     game.destroy(true);
-    document.body.removeChild(instruct);
-    document.body.removeChild(levelUi);
+    if (instruct?.parentElement === document.body) {
+      document.body.removeChild(instruct);
+    }
+    if (levelUi) {
+      document.body.removeChild(levelUi);
+    }
     setTimeout(() => {
       createHighSchoolGame(mapJson.nextLevel ?? jsonUrl, saveUrl);
     }, 100);

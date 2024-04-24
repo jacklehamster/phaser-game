@@ -1,0 +1,137 @@
+{
+	"locked": true,
+	"nextLevel": "json/map2.json",
+	"troll": {
+		"troll": {
+			"x": 57,
+			"y": 289,
+			"width": 48,
+			"height": 48,
+			"frame": 0
+		}
+	},
+	"ground": {
+		"ground1": [
+			800,
+			568,
+			1600,
+			64
+		],
+		"ground2": {
+			"x": 629.5,
+			"y": 446,
+			"width": 469.00000000000006,
+			"height": 26,
+			"frame": null
+		},
+		"ground3": {
+			"x": 95.5,
+			"y": 430,
+			"width": 211,
+			"height": 32,
+			"frame": null
+		},
+		"ground4": {
+			"x": 562,
+			"y": 113,
+			"width": 592,
+			"height": 32,
+			"frame": null
+		},
+		"ground5": {
+			"x": 799.5,
+			"y": 293.5,
+			"width": 399,
+			"height": 79,
+			"frame": null
+		},
+		"ground6": {
+			"x": 926.5,
+			"y": 233,
+			"width": 43,
+			"height": 124,
+			"frame": null
+		},
+		"ground7": {
+			"x": 282,
+			"y": 326,
+			"width": 102,
+			"height": 50,
+			"frame": null
+		},
+		"ground8": {
+			"x": 470,
+			"y": 306.5,
+			"width": 44,
+			"height": 37,
+			"frame": null
+		},
+		"ground9": {
+			"x": 965,
+			"y": 173,
+			"width": 98,
+			"height": 48,
+			"frame": null
+		}
+	},
+	"trigger": {
+		"red1": {
+			"x": 602,
+			"y": 250,
+			"width": 32,
+			"height": 32,
+			"frame": null
+		},
+		"red2": {
+			"x": 629,
+			"y": 295,
+			"width": 32,
+			"height": 32,
+			"frame": null
+		}
+	},
+	"bonus": {},
+	"key": {
+		"key1": {
+			"x": 845,
+			"y": 164,
+			"width": 48,
+			"height": 48,
+			"frame": 0
+		}
+	},
+	"door": {
+		"door1": {
+			"x": 955,
+			"y": 506,
+			"width": 64,
+			"height": 64,
+			"frame": 4
+		}
+	},
+	"rock": {
+		"rock1": {
+			"x": 671,
+			"y": 506,
+			"width": 64,
+			"height": 64,
+			"frame": 0
+		},
+		"rock2": {
+			"x": 253,
+			"y": 268.00000000000006,
+			"width": 64,
+			"height": 64,
+			"frame": 0
+		}
+	},
+	"human": {
+		"human1": {
+			"x": 756,
+			"y": 143,
+			"width": 32,
+			"height": 32,
+			"frame": null
+		}
+	}
+}

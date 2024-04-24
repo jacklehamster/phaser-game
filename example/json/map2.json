@@ -1,5 +1,6 @@
 {
 	"locked": true,
+	"nextLevel": "json/map3.json",
 	"ground": {
 		"ground1": [
 			800,
@@ -8,94 +9,129 @@
 			64
 		],
 		"ground2": {
-			"x": 681,
-			"y": 407.5,
-			"width": 342,
-			"height": 75,
+			"x": 587.5,
+			"y": 456,
+			"width": 469.00000000000006,
+			"height": 26,
 			"frame": null
 		},
 		"ground3": {
-			"x": 329.5,
-			"y": 438,
-			"width": 157,
-			"height": 44,
+			"x": -15,
+			"y": 336,
+			"width": 272,
+			"height": 32,
 			"frame": null
 		},
 		"ground4": {
-			"x": 769.5,
-			"y": 95,
-			"width": 269,
-			"height": 32,
+			"x": 548.5,
+			"y": 118,
+			"width": 517,
+			"height": 82,
 			"frame": null
 		},
 		"ground5": {
-			"x": 701.5,
-			"y": 377,
-			"width": 75,
-			"height": 98,
+			"x": 797.5,
+			"y": 293,
+			"width": 107,
+			"height": 54,
 			"frame": null
 		},
 		"ground6": {
-			"x": 817.5,
-			"y": 257.5,
-			"width": 367,
-			"height": 57,
+			"x": 831.5,
+			"y": 325.5,
+			"width": 43,
+			"height": 287,
 			"frame": null
 		},
 		"ground7": {
-			"x": 317.5,
-			"y": 249,
-			"width": 133,
-			"height": 32,
+			"x": 310.5,
+			"y": 244,
+			"width": 49,
+			"height": 46,
 			"frame": null
 		},
 		"ground8": {
-			"x": 327,
-			"y": 103,
-			"width": 234,
-			"height": 42,
+			"x": 436.5,
+			"y": 296,
+			"width": 301,
+			"height": 62,
 			"frame": null
 		},
 		"ground9": {
-			"x": 225,
-			"y": 137.5,
-			"width": 38,
-			"height": 85,
+			"x": 12,
+			"y": 386,
+			"width": 272,
+			"height": 32,
 			"frame": null
 		},
 		"ground10": {
-			"x": 45.5,
-			"y": 429.5,
-			"width": 157,
-			"height": 221,
+			"x": 65,
+			"y": 435,
+			"width": 272,
+			"height": 32,
 			"frame": null
 		},
 		"ground11": {
-			"x": 165.5,
-			"y": 200,
-			"width": 157,
-			"height": 44,
+			"x": 814.5,
+			"y": 425,
+			"width": 63,
+			"height": 54,
 			"frame": null
 		},
 		"ground12": {
-			"x": 280,
-			"y": 327,
-			"width": 57.99999999999999,
-			"height": 182,
+			"x": 875.5,
+			"y": 404,
+			"width": 63,
+			"height": 54,
+			"frame": null
+		},
+		"ground13": {
+			"x": 978.5,
+			"y": 300,
+			"width": 63,
+			"height": 54,
+			"frame": null
+		},
+		"ground14": {
+			"x": 876.5,
+			"y": 209,
+			"width": 63,
+			"height": 54,
+			"frame": null
+		},
+		"ground15": {
+			"x": 990.5,
+			"y": 73,
+			"width": 63,
+			"height": 54,
+			"frame": null
+		},
+		"ground16": {
+			"x": 975.5,
+			"y": 513,
+			"width": 63,
+			"height": 54,
+			"frame": null
+		},
+		"ground17": {
+			"x": 551.5,
+			"y": 421,
+			"width": 49,
+			"height": 60,
 			"frame": null
 		}
 	},
 	"trigger": {
 		"red1": {
-			"x": 95,
-			"y": 171,
+			"x": 534,
+			"y": 133,
 			"width": 32,
 			"height": 32,
 			"frame": null
 		},
 		"red2": {
-			"x": 636,
-			"y": 225,
+			"x": 619,
+			"y": 131,
 			"width": 32,
 			"height": 32,
 			"frame": null
@@ -103,55 +139,35 @@
 	},
 	"bonus": {
 		"bonus1": {
-			"x": 353,
-			"y": 358.6497054104152,
-			"width": 32,
-			"height": 32,
+			"x": 627,
+			"y": 37.423309715646496,
+			"width": 48,
+			"height": 48,
 			"frame": 2
-		},
-		"bonus2": {
-			"x": 595.8666604722208,
-			"y": 479,
-			"width": 32,
-			"height": 32,
-			"frame": 1
-		},
-		"bonus3": {
-			"x": 783.8666604722208,
-			"y": 336,
-			"width": 32,
-			"height": 32,
-			"frame": 1
 		}
 	},
 	"key": {
 		"key1": {
-			"x": 317,
-			"y": 171,
-			"width": 32,
-			"height": 32,
+			"x": 782,
+			"y": 229,
+			"width": 48,
+			"height": 48,
 			"frame": 0
 		}
 	},
-	"troll": {
-		"troll": {
-			"x": 855,
-			"y": 52,
-			"width": 48,
-			"height": 48
+	"door": {
+		"door1": {
+			"x": 88,
+			"y": 505,
+			"width": 64,
+			"height": 64,
+			"frame": 4
 		}
 	},
 	"rock": {
 		"rock1": {
-			"x": 318,
-			"y": 496,
-			"width": 64,
-			"height": 64,
-			"frame": 0
-		},
-		"rock2": {
-			"x": 426,
-			"y": 38.00000000000006,
+			"x": 488,
+			"y": 218,
 			"width": 64,
 			"height": 64,
 			"frame": 0
@@ -159,27 +175,11 @@
 	},
 	"human": {
 		"human1": {
-			"x": 723,
-			"y": 135,
+			"x": 389,
+			"y": 199,
 			"width": 32,
 			"height": 32,
 			"frame": null
-		},
-		"human2": {
-			"x": 156,
-			"y": 100,
-			"width": 32,
-			"height": 32,
-			"frame": null
-		}
-	},
-	"door": {
-		"door1": {
-			"x": 339,
-			"y": 50,
-			"width": 64,
-			"height": 64,
-			"frame": 4
 		}
 	}
 }

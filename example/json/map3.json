@@ -1,6 +1,6 @@
 {
-	"locked": false,
-	"nextLevel": "json/map2.json",
+	"locked": true,
+	"nextLevel": "json/map4.json",
 	"ground": {
 		"ground1": [
 			800,
@@ -61,24 +61,28 @@
 	},
 	"bonus": {
 		"bonus1": {
-			"x": 639,
-			"y": 234.42330971564647,
-			"width": 32,
-			"height": 32,
+			"x": 627,
+			"y": 212.42330971564647,
+			"width": 48,
+			"height": 48,
 			"frame": 2
 		},
-		"bonus2": [
-			829.8666604722208,
-			120.514510404516,
-			0
-		]
+		"bonus2": {
+			"x": 829.8666604722208,
+			"y": 74.514510404516,
+			"width": 48,
+			"height": 48,
+			"frame": 0
+		}
 	},
 	"key": {
-		"key1": [
-			744,
-			238,
-			0
-		]
+		"key1": {
+			"x": 744,
+			"y": 204,
+			"width": 48,
+			"height": 48,
+			"frame": 0
+		}
 	},
 	"door": {
 		"door1": {
@@ -98,8 +102,8 @@
 	},
 	"human": {
 		"human1": {
-			"x": 91,
-			"y": 171,
+			"x": 76,
+			"y": 432,
 			"width": 32,
 			"height": 32,
 			"frame": null

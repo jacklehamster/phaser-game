@@ -1,5 +1,6 @@
 {
-	"locked": false,
+	"locked": true,
+	"nextLevel": "json/map5.json",
 	"ground": {
 		"ground1": [
 			800,
@@ -29,10 +30,10 @@
 			"frame": null
 		},
 		"ground5": {
-			"x": 701.5,
-			"y": 377,
+			"x": 708.5,
+			"y": 331.5,
 			"width": 75,
-			"height": 98,
+			"height": 141,
 			"frame": null
 		},
 		"ground6": {
@@ -51,7 +52,7 @@
 		},
 		"ground8": {
 			"x": 327,
-			"y": 103,
+			"y": 93,
 			"width": 234,
 			"height": 42,
 			"frame": null
@@ -65,9 +66,9 @@
 		},
 		"ground10": {
 			"x": 45.5,
-			"y": 429.5,
+			"y": 419.5,
 			"width": 157,
-			"height": 221,
+			"height": 241,
 			"frame": null
 		},
 		"ground11": {
@@ -82,6 +83,20 @@
 			"y": 327,
 			"width": 57.99999999999999,
 			"height": 182,
+			"frame": null
+		},
+		"ground13": {
+			"x": 967.5,
+			"y": 416,
+			"width": 75,
+			"height": 94,
+			"frame": null
+		},
+		"ground14": {
+			"x": 234,
+			"y": 389.5,
+			"width": 57.99999999999999,
+			"height": 51,
 			"frame": null
 		}
 	},
@@ -117,8 +132,8 @@
 			"frame": 1
 		},
 		"bonus3": {
-			"x": 698.8666604722208,
-			"y": 305,
+			"x": 783.8666604722208,
+			"y": 336,
 			"width": 32,
 			"height": 32,
 			"frame": 1
@@ -175,8 +190,8 @@
 	},
 	"door": {
 		"door1": {
-			"x": 339,
-			"y": 50,
+			"x": 338,
+			"y": 44,
 			"width": 64,
 			"height": 64,
 			"frame": 4

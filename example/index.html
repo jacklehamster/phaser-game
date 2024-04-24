@@ -16,9 +16,9 @@
   <script type="module">
     import { createHighSchoolGame } from './dist/index.js';
 
-    document.addEventListener("keydown", () => {
+    document.addEventListener("keydown", async () => {
       document.getElementById("press-key").style.display = "none";
-      window.game1 = createHighSchoolGame(undefined, "save");
+      window.game1 = await createHighSchoolGame(undefined, "save");
     }, { once: true });
   </script>
 </html>

@@ -26,6 +26,18 @@ app.get("/assets/*any", serveStatic("/", { middlewareMode: "bao" }));
 app.get("/dist/*any", serveStatic("/", { middlewareMode: "bao" }));
 app.get("/json/*any", serveStatic("/", { middlewareMode: "bao" }));
 app.get("/", serveStatic("/", { middlewareMode: "bao" }));
+app.post("/lock", async context => {
+  const payload: { jsonUrl: string; locked: boolean } = await context.req.json();
+  const mapText = fs.readFileSync(payload.jsonUrl, 'utf-8');
+  const map = JSON.parse(mapText);
+  map.locked = !!payload.locked;
+
+  fs.writeFileSync(payload.jsonUrl, JSON.stringify(map, null, "\t"));
+
+  return context.sendPrettyJson({
+    success: true,
+  });
+});
 app.post("/save", async context => {
   const payload: Payload = await context.req.json() as Payload;
   const mapText = fs.readFileSync(payload.jsonUrl, 'utf-8');
