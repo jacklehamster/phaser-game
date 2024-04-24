@@ -2395,22 +2395,24 @@ async function ZX(C, q, k) {
       }
       return null;
     }
-    hold(s, c, r) {
+    hold(s, c, r, H0) {
       if (Date.now() - this.lastHold < 200)
         return;
       if (!this.holdingBonus) {
-        const H0 = this.foreObject(s);
-        if (H0) {
-          this.holdingBonus = H0, H0.disableBody(true, false), c(...[, , 763, 0.01, 0.09, 0.11, , 1.14, 5.9, , 176, 0.03, , , , , , 0.7, 0.04]), this.lastHold = Date.now();
-          const Z0 = this.holdingBonus;
-          if (Z0)
-            r?.showPower(parseInt(Z0?.frame.name) === 0 ? "Super Jump: Power to jump very high." : parseInt(Z0?.frame.name) === 1 ? "Levitate: The power to levitate." : parseInt(Z0?.frame.name) === 2 ? "Super Strength: Power of super strength." : parseInt(Z0?.frame.name) == 3 ? "Freeze: Power to freeze other humans." : parseInt(Z0?.frame.name) == 4 ? "Ant man: The power to shrink down." : "");
+        const Z0 = this.foreObject(s);
+        if (Z0) {
+          this.holdingBonus = Z0, Z0.disableBody(true, false), c(...[, , 763, 0.01, 0.09, 0.11, , 1.14, 5.9, , 176, 0.03, , , , , , 0.7, 0.04]), this.lastHold = Date.now();
+          const Y0 = this.holdingBonus;
+          if (H0)
+            r?.showPower("Press P again to toss");
+          else if (Y0)
+            r?.showPower(parseInt(Y0?.frame.name) === 0 ? "Super Jump: The power to jump very high." : parseInt(Y0?.frame.name) === 1 ? "Levitate: The power to levitate." : parseInt(Y0?.frame.name) === 2 ? "Super Strength: The power to move heavy objects." : parseInt(Y0?.frame.name) == 3 ? "Freeze: The power to freeze other humans." : parseInt(Y0?.frame.name) == 4 ? "Ant man: The power to shrink." : "");
         }
       } else {
-        const H0 = this.player.flipX ? -1 : 1, Z0 = this.holdingBonus;
+        const Z0 = this.player.flipX ? -1 : 1, Y0 = this.holdingBonus;
         c(...[2.04, , 26, 0.01, , 0.02, 4, 0.07, 2.9, , -24, 0.08, 0.05, , , , 0.09, 0.17, 0.02]), this.lastThrow = Date.now(), setTimeout(() => {
-          const Y0 = Z0.body?.gameObject;
-          Y0.enableBody(true, this.player.x, this.player.y - 30, true, true), Z0.body.setVelocityX(H0 * 1500), Z0.body.setBounce(0.1), Y0.refreshBody(), this.holdingTemp = undefined, c(...[1.62, , 421, 0.04, 0.06, 0.06, , 1.62, -28, 4.3, , , , 0.8, , , 0.03, 0.41, 0.08]);
+          const a = Y0.body?.gameObject;
+          a.enableBody(true, this.player.x, this.player.y - 30, true, true), Y0.body.setVelocityX(Z0 * 1500), Y0.body.setBounce(0.1), a.refreshBody(), this.holdingTemp = undefined, c(...[1.62, , 421, 0.04, 0.06, 0.06, , 1.62, -28, 4.3, , , , 0.8, , , 0.03, 0.41, 0.08]);
         }, 100), this.holdingTemp = this.holdingBonus, this.holdingBonus = undefined, this.lastHold = Date.now(), r?.showPower();
       }
     }
@@ -2577,7 +2579,7 @@ async function ZX(C, q, k) {
         l();
       }), this.warningText = this.add.text(50, f - 40, `Warning: The game has issues when running at low frame rate (${y.loop.actualFps.toFixed(1)} fps).\nThis could happen if your computer is low on battery`, { color: "#f66" }), this.warningText.setVisible(false), Y)
         this.add.text(20, 20, `Level ${Y}`, { color: "#fff" });
-      this.grabText = this.add.text(30, f - 30, "Press P to pick up items / powerups", { color: "#0c0" }), this.grabText.setVisible(false), this.powerText = this.add.text(30, f - 30, "", { fontSize: "18px", color: "#fff" }), this.powerText.setVisible(false);
+      this.grabText = this.add.text(30, f - 30, "Press P to pick up", { color: "#fff" }), this.grabText.setVisible(false), this.powerText = this.add.text(30, f - 30, "", { fontSize: "18px", color: "#fff" }), this.powerText.setVisible(false);
     }
     showCanGrab(s) {
       this.grabText?.setVisible(s);
@@ -2875,7 +2877,7 @@ async function ZX(C, q, k) {
     if (r.dx = H0, x?.space.isDown)
       r.tryJump(Q);
     if (x.p.isDown || x.shift.isDown)
-      r.hold(O, Q, X), r.hold(j, Q), X.showCanGrab(false);
+      r.hold(O, Q, X), r.hold(j, Q, X, true), X.showCanGrab(false);
     else if (r.foreObject(O) ?? r.foreObject(j))
       X.showCanGrab(true);
     else

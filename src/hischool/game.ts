@@ -219,7 +219,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       return null;
     }
 
-    hold(group: Phaser.Physics.Arcade.Group, zzfx: any, ui?: UI) {
+    hold(group: Phaser.Physics.Arcade.Group, zzfx: any, ui?: UI, isKey?: boolean) {
       if (Date.now() - this.lastHold < 200) {
         return;
       }
@@ -233,18 +233,20 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           this.lastHold = Date.now();
 
           const bonus: any = this.holdingBonus;
-          if (bonus) {
+          if (isKey) {
+            ui?.showPower("Press P again to toss");
+          } else if (bonus) {
             ui?.showPower(
               parseInt(bonus?.frame.name) === 0 ?
-                "Super Jump: Power to jump very high." :
+                "Super Jump: The power to jump very high." :
                 parseInt(bonus?.frame.name) === 1 ?
                   "Levitate: The power to levitate." :
                   parseInt(bonus?.frame.name) === 2 ?
-                    "Super Strength: Power of super strength." :
+                    "Super Strength: The power to move heavy objects." :
                     parseInt(bonus?.frame.name) == 3 ?
-                      "Freeze: Power to freeze other humans." :
+                      "Freeze: The power to freeze other humans." :
                       parseInt(bonus?.frame.name) == 4 ?
-                        "Ant man: The power to shrink down." :
+                        "Ant man: The power to shrink." :
                         ""
             );
           }
@@ -598,7 +600,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         this.add.text(20, 20, `Level ${level}`, { color: "#fff" });
       }
 
-      this.grabText = this.add.text(30, GAMEHEIGHT - 30, 'Press P to pick up items / powerups', { color: "#0c0" });
+      this.grabText = this.add.text(30, GAMEHEIGHT - 30, 'Press P to pick up', { color: "#fff" });
       this.grabText.setVisible(false);
 
       this.powerText = this.add.text(30, GAMEHEIGHT - 30, "", { fontSize: '18px', color: '#fff' });
@@ -1455,7 +1457,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
         if ((cursors as any).p.isDown || (cursors as any).shift.isDown) {
           hero.hold(bonusGroup, zzfx, ui);
-          hero.hold(keyGroup, zzfx);
+          hero.hold(keyGroup, zzfx, ui, true);
           ui.showCanGrab(false);
         } else {
           const item = hero.foreObject(bonusGroup) ?? hero.foreObject(keyGroup);
