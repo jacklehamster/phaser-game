@@ -1,6 +1,5 @@
 {
-	"locked": true,
-	"overlay": "assets/overlay2.png",
+	"locked": false,
 	"nextLevel": "json/map3.json",
 	"ground": {
 		"ground1": [
@@ -94,7 +93,7 @@
 			"frame": null
 		},
 		"ground14": {
-			"x": 868.5,
+			"x": 876.5,
 			"y": 209,
 			"width": 63,
 			"height": 54,
