@@ -2440,6 +2440,7 @@ async function UX(C, q, k) {
     humanScaleX;
     humanScaleY;
     sawTroll = 0;
+    firstTimePush = 0;
     speaking = 0;
     lang;
     constructor(i, p, s, Z0, $0) {
@@ -2507,7 +2508,7 @@ async function UX(C, q, k) {
         this.player.setVelocityX(0);
       else {
         if (this.dx) {
-          const Z0 = Date.now() - this.sawTroll < 2000 || Date.now() - this.speaking < 3000, $0 = this.airborne ? 200 : Z0 ? 0 : 80;
+          const Z0 = Date.now() - this.sawTroll < 2000 || Date.now() - this.speaking < 3000 || Date.now() - this.firstTimePush < 3000 && Date.now() - this.firstTimePush > 1000, $0 = this.airborne ? 200 : Z0 ? 0 : 80;
           this.player.setVelocityX($0 * this.dx * i * this.player.scale);
           const K0 = this.dx < 0;
           this.setFlipX(K0);
@@ -2919,11 +2920,16 @@ async function UX(C, q, k) {
       j(s, y, G0, "rock", R0, F0, m0);
     }), this.physics.add.collider(y, f), this.physics.add.collider(y, y), this.physics.add.collider(y, p), this.physics.add.collider(y, Z0, (G0, M0) => {
       const R0 = M0.human, F0 = R0.holdingBonus;
-      if (F0?.frame && parseInt(F0?.frame.name) === 2)
+      if (F0?.frame && parseInt(F0?.frame.name) === 2) {
+        if (!R0.firstTimePush)
+          R0.firstTimePush = Date.now(), setTimeout(() => {
+            R0.player.setVelocityY(-300);
+          }, 1000);
         G0?.setPushable(true), R0.addHistory(K8.PUSHED_ROCK), clearTimeout(G0.timeout), G0.timeout = setTimeout(() => {
           if (G0.visible)
             G0?.setPushable(false);
         }, 200);
+      }
     }), this.physics.add.collider(y, O.player, (G0, M0) => {
     }), y.getChildren().forEach((G0) => {
       G0.body?.gameObject?.setPushable(false), G0.body?.gameObject?.setDamping(true), G0.body?.gameObject?.setDrag(0.01), G0.body?.gameObject?.setCollideWorldBounds(true);

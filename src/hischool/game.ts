@@ -303,6 +303,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     humanScaleX: number;
     humanScaleY: number;
     sawTroll: number = 0;
+    firstTimePush: number = 0;
     speaking = 0;
     lang?: string;
 
@@ -453,7 +454,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         this.player.setVelocityX(0);
       } else {
         if (this.dx) {
-          const paused = (Date.now() - this.sawTroll < 2000 || Date.now() - this.speaking < 3000);
+          const paused = (Date.now() - this.sawTroll < 2000 || Date.now() - this.speaking < 3000 || Date.now() - this.firstTimePush < 3000 && Date.now() - this.firstTimePush > 1000);
           const speed = this.airborne ? 200 : paused ? 0 : 80;
           this.player.setVelocityX(speed * this.dx * dt * this.player.scale);
           const flipX = this.dx < 0;
@@ -1474,6 +1475,12 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           const humanObj = (human as any).human;
           const bonus = humanObj.holdingBonus;
           if (bonus?.frame && parseInt(bonus?.frame.name) === 2) {
+            if (!humanObj.firstTimePush) {
+              humanObj.firstTimePush = Date.now();
+              setTimeout(() => {
+                humanObj.player.setVelocityY(-300);
+              }, 1000);
+            }
             (rock as any)?.setPushable(true);
             humanObj.addHistory(HumanEvent.PUSHED_ROCK);
             clearTimeout((rock as any).timeout);
