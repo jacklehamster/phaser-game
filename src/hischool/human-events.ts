@@ -24,6 +24,7 @@ export enum HumanEvent {
   FREEZE, //  not yet implemented
   LANG,
   LOW_BATTERY,
+  NORMAL_BATTERY,
 };
 
 export const DICO: Record<keyof HumanEvent | string, string> = {
@@ -49,5 +50,6 @@ export const DICO: Record<keyof HumanEvent | string, string> = {
   [HumanEvent.ACQUIRE_FREEZE]: "The human acquire the power to freeze but doesn't know it yet. Feels a little chill.",
   [HumanEvent.FREEZE]: "The human accidentally uses its supernatural power to freeze on another human, completely freezing that person.",
   [HumanEvent.CHAT]: "The human just had an inner monologue.",
-  [HumanEvent.LOW_BATTERY]: "The human notices that everything around is slow, because the laptop that the game is running on is low on battery. The human should advice to plug in the power cord.",
+  [HumanEvent.LOW_BATTERY]: "The human notices that the game they're in is slow, because the laptop where the game is running on is low on battery. The human advice to plug in the power cord.",
+  [HumanEvent.NORMAL_BATTERY]: "The human notices that the framerate of the game they're in is now back to normal.",
 }

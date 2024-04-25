@@ -107,7 +107,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
   const { zzfx } = require("zzfx");
   const idSet = new Set();
 
-  const voices = speechSynthesis.getVoices().filter(v => BADVOICES.some(badvoice => v.name.indexOf(badvoice) !== 0));//.filter(v => v.lang.indexOf("en") === 0);
+  let voices = speechSynthesis.getVoices().filter(v => BADVOICES.some(badvoice => v.name.indexOf(badvoice) !== 0));//.filter(v => v.lang.indexOf("en") === 0);
 
 
   class Elem {
@@ -453,8 +453,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         this.player.setVelocityX(0);
       } else {
         if (this.dx) {
-          const paused = Date.now() - this.sawTroll < 2000;
-          const speed = paused ? 0 : this.airborne ? 200 : 80;
+          const paused = (Date.now() - this.sawTroll < 2000 || Date.now() - this.speaking < 3000);
+          const speed = this.airborne ? 200 : paused ? 0 : 80;
           this.player.setVelocityX(speed * this.dx * dt * this.player.scale);
           const flipX = this.dx < 0;
           this.setFlipX(flipX);
@@ -526,6 +526,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           console.log("SPEAKSEED", this.speakSeed);
         }
         const rng = alea(this?.seed + "");
+        voices = speechSynthesis.getVoices().filter(v => BADVOICES.some(badvoice => v.name.indexOf(badvoice) !== 0));
         const voice = voices[Math.floor(rng() * voices.length)];
         fetchAI(this.history.join("."), DICO, this.speakSeed, voice.lang, true).then(result => {
           console.log("Speak", result);
@@ -799,13 +800,18 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           const rng = alea(human?.seed + "");
           this.chatText?.setText("");
           const utterance = new SpeechSynthesisUtterance(message);
+          voices = speechSynthesis.getVoices().filter(v => BADVOICES.some(badvoice => v.name.indexOf(badvoice) !== 0));
           utterance.voice = voices[Math.floor(rng() * voices.length)];
           console.log("VOICE", utterance.voice.name, utterance.voice.lang);
           if (!human.lang) {
             human.lang = utterance.voice.lang;
           }
           const preFrame = human?.faceSprites[FaceEnum.MOUTH].frame.name ?? "";
+          const tt = setTimeout(() => {
+            this.chatText?.setText(message);
+          }, 3000);
           utterance.addEventListener("boundary", (e) => {
+            clearTimeout(tt);
             this.chatText?.setText(message.slice(0, e.charIndex + e.charLength));
             human?.faceSprites[FaceEnum.MOUTH].setFrame(
               preFrame != "43" ? "43" : Math.floor(41 + Math.random() * 5),
@@ -815,6 +821,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
             }, 200);
           });
           utterance.addEventListener("end", () => {
+            this.chatText?.setText(message);
             if (human) {
               human.speaking = 0;
             }
@@ -851,7 +858,10 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         }
         this.warningText?.setText(`Warning: The game has issues when running at low frame rate (${game.loop.actualFps.toFixed(1)} fps).\nThis could happen if your computer is low on battery.`);
       } else {
-        this.warningText?.setVisible(false);
+        if (this.warningText?.visible) {
+          this.warningText?.setVisible(false);
+          humans.forEach(human => human.addHistory(HumanEvent.NORMAL_BATTERY));
+        }
       }
       if (this.chatFollow) {
         this.chatText?.setPosition(Math.min(GAMEWIDTH - this.chatText.width, Math.max(0, this.chatFollow.x - this.chatText.width / 2)), this.chatFollow.y - 50 - this.chatText.height);
