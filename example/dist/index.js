@@ -2650,7 +2650,7 @@ async function UX(C, q, k) {
       if (K.overlay)
         this.add.image(u / 2, d / 2, "overlay").setDisplaySize(u, d).preFX?.addShadow(0, 0, 0.1, 0.3, 0, 12, 0.3);
       this.timerText = this.add.text(900, 16, "", { fontSize: "20px", color: "#fff", shadow: { color: "black", fill: true, offsetX: 1, offsetY: 1 } }), this.music = this.sound.add("main"), this.music.loop = true, this.music.play();
-      const i = this.add.text(u - 100, 50, "[RESTART]", { color: "#f44", shadow: { color: "black", fill: true, offsetX: 1, offsetY: 1 } });
+      const i = this.add.text(u - 100, d - 30, "[RESTART]", { color: "#f44", shadow: { color: "black", fill: true, offsetX: 1, offsetY: 1 } });
       if (i.setInteractive({ useHandCursor: true }), i.on("pointerdown", () => {
         W0();
       }), this.warningText = this.add.text(180, 20, `Warning: The game has issues when running at low frame rate (${n.loop.actualFps.toFixed(1)} fps).\nThis could happen if your computer is low on battery`, { color: "#f66", shadow: { color: "white", fill: true, offsetX: 2, offsetY: 2 } }), this.warningText.setVisible(false), Y)
@@ -2670,7 +2670,7 @@ async function UX(C, q, k) {
             p.lang = $0.voice.lang;
           const K0 = p?.faceSprites[e6.MOUTH].frame.name ?? "", L0 = setTimeout(() => {
             this.chatText?.setText(s);
-          }, 3000);
+          }, 1000);
           $0.addEventListener("boundary", (X0) => {
             clearTimeout(L0), this.chatText?.setText(s.slice(0, X0.charIndex + X0.charLength)), p?.faceSprites[e6.MOUTH].setFrame(K0 != "43" ? "43" : Math.floor(41 + Math.random() * 5)), setTimeout(() => {
               p?.faceSprites[e6.MOUTH].setFrame(K0);

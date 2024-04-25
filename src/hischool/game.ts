@@ -715,7 +715,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       this.music.loop = true;
       this.music.play();
 
-      const restartButton = this.add.text(GAMEWIDTH - 100, 50, '[RESTART]', {
+      const restartButton = this.add.text(GAMEWIDTH - 100, GAMEHEIGHT - 30, '[RESTART]', {
         color: '#f44',
         shadow: {
           color: "black",
@@ -809,7 +809,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           const preFrame = human?.faceSprites[FaceEnum.MOUTH].frame.name ?? "";
           const tt = setTimeout(() => {
             this.chatText?.setText(message);
-          }, 3000);
+          }, 1000);
           utterance.addEventListener("boundary", (e) => {
             clearTimeout(tt);
             this.chatText?.setText(message.slice(0, e.charIndex + e.charLength));
