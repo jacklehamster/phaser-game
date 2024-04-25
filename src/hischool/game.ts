@@ -7,6 +7,10 @@ import Phaser from "phaser";
 import { alea } from "seedrandom";
 //import { zzfx } from "zzfx";
 import { evaluate } from "mathjs";
+import wrap from "word-wrap";
+import { DICO, HumanEvent } from "./human-events";
+import { OPEN_AI_URL } from "..";
+
 
 enum BodyEnum {
   BODY = 0,
@@ -78,6 +82,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
   console.log(level);
   console.log(jsonUrl);
 
+  let someoneSpeaking = 0
   location.replace("#map=" + jsonUrl);
   const configResponse = await fetch("config.json");
   const conf = await configResponse.json();
@@ -101,6 +106,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
   const { zzfx } = require("zzfx");
   const idSet = new Set();
+
+  const voices = speechSynthesis.getVoices().filter(v => BADVOICES.some(badvoice => v.name.indexOf(badvoice) !== 0));//.filter(v => v.lang.indexOf("en") === 0);
 
 
   class Elem {
@@ -193,7 +200,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
     tryJump(zzfx: any, forceAllowJump: boolean = false) {
       if (this.player.body.touching.down || forceAllowJump) {
-        this.player.setVelocityY(-1000);
+        this.player.setVelocityY(game.loop.actualFps < 35 ? -1300 : -1000);
         zzfx(...[, , 198, .04, .07, .06, , 1.83, 16, , , , , , , , , .85, .04]); // Jump
         this.airborne = Date.now();
       }
@@ -233,22 +240,25 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           this.lastHold = Date.now();
 
           const bonus: any = this.holdingBonus;
-          if (isKey) {
-            ui?.showPower("Press P again to toss");
-          } else if (bonus) {
-            ui?.showPower(
-              parseInt(bonus?.frame.name) === 0 ?
-                "Super Jump: The power to jump very high." :
-                parseInt(bonus?.frame.name) === 1 ?
-                  "Levitate: The power to levitate." :
-                  parseInt(bonus?.frame.name) === 2 ?
-                    "Super Strength: The power to move heavy objects." :
-                    parseInt(bonus?.frame.name) == 3 ?
-                      "Freeze: The power to freeze other humans." :
-                      parseInt(bonus?.frame.name) == 4 ?
-                        "Ant man: The power to shrink." :
-                        ""
-            );
+          if (bonus) {
+            if (isKey) {
+              ui?.showPower("Press P again to toss", bonus);
+            } else {
+              ui?.showPower(
+                parseInt(bonus?.frame.name) === 0 ?
+                  "Super Jump: The power to jump very high." :
+                  parseInt(bonus?.frame.name) === 1 ?
+                    "Levitate: The power to levitate." :
+                    parseInt(bonus?.frame.name) === 2 ?
+                      "Super Strength: The power to move heavy objects." :
+                      parseInt(bonus?.frame.name) == 3 ?
+                        "Freeze: The power to freeze other humans." :
+                        parseInt(bonus?.frame.name) == 4 ?
+                          "Ant man: The power to shrink." :
+                          "",
+                bonus
+              );
+            }
           }
         }
       } else {
@@ -274,6 +284,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     }
   }
 
+  let lastDialog = Date.now();
+
   class Human extends Elem {
     faceSprites: Phaser.GameObjects.Sprite[] = [];
     bodySprites: Phaser.GameObjects.Sprite[] = [];
@@ -287,6 +299,12 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     antMan?: number;
     normalMan?: number;
     frozen?: number;
+    history: HumanEvent[] = [];
+    humanScaleX: number;
+    humanScaleY: number;
+    sawTroll: number = 0;
+    speaking = 0;
+    lang?: string;
 
     constructor(scene: Phaser.Scene, x: number, y: number,
       platforms: Phaser.Physics.Arcade.StaticGroup,
@@ -318,6 +336,28 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       );
       this.randomize(Math.random());
       this.born = Date.now();
+      this.humanScaleX = Math.random() / 5 + 1;
+      this.humanScaleY = Math.random() / 5 + 1;
+      this.setScale(1, this.humanScaleX ?? 1, this.humanScaleY ?? 1);
+      if (this.faceSprites[FaceEnum.HAT].frame.name != "56") {
+        this.addHistory(HumanEvent.HAT);
+      }
+      if (level === "4") {
+        this.addHistory(HumanEvent.GOLD_CITY);
+      }
+      if (level === "6") {
+        this.addHistory(HumanEvent.PIZZA);
+      }
+      this.addHistory(HumanEvent.WALKING);
+      if (level === "4") {
+        this.addHistory(HumanEvent.STRANGE_WRITING);
+      }
+    }
+
+    addHistory(event: HumanEvent) {
+      if (this.history[this.history.length - 1] !== event) {
+        this.history.push(event);
+      }
     }
 
     getHeldBonus(): number | undefined {
@@ -354,6 +394,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       if (Date.now() - this.born > 2000) {
         if (!this.dx || this.lastStill && Date.now() - this.lastStill > 3000) {
           this.dx = !this.dx ? 1 : -this.dx;
+          this.lastStill = Date.now();
         }
       }
 
@@ -373,22 +414,19 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
       if (this.antMan && Date.now() - this.antMan < 1000) {
         const progress = (Date.now() - this.antMan) / 1000;
-        this.setScale(1 - .7 * progress, 1 - .7 * progress);
+        this.setScale(1 - .7 * progress, this.humanScaleX - .7 * progress, this.humanScaleY - .7 * progress);
         // this.player.body.setSize(20, 20);
         // this.bodySprites.forEach(sprite => sprite.setDisplaySize(20, 20));
         // this.faceSprites.forEach(sprite => sprite.setDisplaySize(20, 20));
       } else if (this.normalMan) {
         if (Date.now() - this.normalMan < 1000) {
           const progress = (Date.now() - this.normalMan) / 1000;
-          this.setScale(1 - .7 * (1 - progress), 1 - .7 * (1 - progress));
+          this.setScale(1 - .7 * progress, this.humanScaleY - .7 * (1 - progress), this.humanScaleY - .7 * (1 - progress));
         } else {
-          this.setScale(1, 1);
+          this.setScale(1, this.humanScaleX, this.humanScaleY);
           this.normalMan = 0;
         }
       }
-
-
-
 
       if (this.powerAcquired && Date.now() - this.powerAcquired < 1000) {
         this.setTint(Math.floor(0xffffff * Math.random()));
@@ -414,9 +452,9 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       if (this.powerAcquired) {
         this.player.setVelocityX(0);
       } else {
-
         if (this.dx) {
-          const speed = this.airborne ? 200 : 80;
+          const paused = Date.now() - this.sawTroll < 2000;
+          const speed = paused ? 0 : this.airborne ? 200 : 80;
           this.player.setVelocityX(speed * this.dx * dt * this.player.scale);
           const flipX = this.dx < 0;
           this.setFlipX(flipX);
@@ -452,21 +490,60 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       }
 
       this.lastFrameOnGround = this.player.body.touching.down;
+
     }
 
+    foundOutJump = 0;
     tryJump(zzfx: any, forceAllowJump: boolean) {
       if (this.player.body.touching.down || forceAllowJump) {
         this.player.setVelocityY(-800 * this.player.scale);
         zzfx(...[.2, , 198, .04, .07, .06, , 1.83, 16, , , , , , , , , .85, .04]); // Jump 252
         this.airborne = Date.now();
+        if (Date.now() - this.foundOutJump > 10000) {
+          this.foundOutJump = Date.now();
+          this.addHistory(HumanEvent.SUPER_JUMP);
+        }
       }
     }
 
-    setScale(scaleX: number, scaleY: number) {
-      [this.player, ...this.bodySprites, ...this.faceSprites].forEach(sprite => sprite.setScale(scaleX, scaleY));
+    speakSeed: number | undefined;
+    spokenHistory = 0;
+    speakAI() {
+      if (this.spokenHistory < this.history.length && !someoneSpeaking) {
+        if (this.speaking && Date.now() - this.speaking < 10000) {
+          return;
+        }
+        this.speaking = Date.now();
+        lastDialog = Date.now();
+
+
+
+        this.spokenHistory = this.history.length;
+
+        if (this.speakSeed === undefined) {
+          this.speakSeed = parseInt(localStorage.getItem("speakSeed") ?? "0");
+          localStorage.setItem("speakSeed", (this.speakSeed + 1).toString());
+          console.log("SPEAKSEED", this.speakSeed);
+        }
+        const rng = alea(this?.seed + "");
+        const voice = voices[Math.floor(rng() * voices.length)];
+        fetchAI(this.history.join("."), DICO, this.speakSeed, voice.lang, true).then(result => {
+          console.log("Speak", result);
+          this.speak(result.response);
+        });
+        this.addHistory(HumanEvent.CHAT);
+      } else {
+
+      }
+    }
+
+    setScale(playerScale: number, scaleX: number, scaleY: number) {
+      this.player.setScale(playerScale);
+      [...this.bodySprites, ...this.faceSprites].forEach(sprite => sprite.setScale(scaleX, scaleY));
     }
 
     getPower(bonus: Phaser.GameObjects.GameObject, zzfx: any) {
+      const lostPowerFrame = this.holdingBonus ? parseInt((this.holdingBonus as any).frame.name) : undefined;
       this.powerAcquired = Date.now();
       zzfx(...[, , 540, .04, .26, .45, , 1.56, -0.7, -0.1, -141, .07, .01, , , .1, , .9, .29, .45]); // TrollPowerup
       if (this.holdingBonus) {
@@ -490,6 +567,44 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       } else if (this.antMan) {
         this.normalMan = Date.now();
         this.antMan = 0;
+      }
+
+      const newPowerFrame = parseInt((this.holdingBonus as any).frame.name);
+      switch (newPowerFrame) {
+        case 0:
+          this.addHistory(HumanEvent.ACQUIRE_SUPER_JUMP);
+          break;
+        case 1:
+          this.addHistory(HumanEvent.FLY);
+          break;
+        case 2:
+          this.addHistory(HumanEvent.ACQUIRE_SUPER_STRENGTH);
+          break;
+        case 3:
+          this.addHistory(HumanEvent.ACQUIRE_FREEZE);
+          break;
+        case 4:
+          this.addHistory(HumanEvent.SHRUNK);
+          break;
+      }
+      if (newPowerFrame !== lostPowerFrame) {
+        if (lostPowerFrame === 1) {
+          this.addHistory(HumanEvent.DROP_DOWN);
+        } else if (lostPowerFrame === 4) {
+          this.addHistory(HumanEvent.EXPAND);
+        }
+      }
+    }
+
+    speak(message: string) {
+      ui.chat(message, this);
+    }
+
+    metAnotherHuman = 0;
+    meetAnotherHuman() {
+      if (Date.now() - this.metAnotherHuman > 10000) {
+        this.metAnotherHuman = Date.now();
+        this.addHistory(HumanEvent.MEET_ANOTHER_HUMAN);
       }
     }
   }
@@ -551,9 +666,12 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     endTime?: number;
     timerText?: Phaser.GameObjects.Text;
     powerText?: Phaser.GameObjects.Text;
+    powerIcon?: Phaser.GameObjects.Image;
     warningText?: Phaser.GameObjects.Text;
     grabText?: Phaser.GameObjects.Text;
     music: any;
+    chatText?: Phaser.GameObjects.Text;
+    chatFollow?: Phaser.GameObjects.Sprite;
 
     constructor() {
       super({ key: 'UIScene' });
@@ -578,34 +696,144 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     create() {
       if (mapJson.overlay) {
         const overlay = this.add.image(GAMEWIDTH / 2, GAMEHEIGHT / 2, 'overlay').setDisplaySize(GAMEWIDTH, GAMEHEIGHT);
+        overlay.preFX?.addShadow(0, 0, .1, .3, 0, 12, .3);
 
       }
       //  scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', color: '#fff' });
-      this.timerText = this.add.text(900, 16, '', { fontSize: '24px', color: '#fff' });
+      this.timerText = this.add.text(900, 16, '', {
+        fontSize: '20px', color: '#fff',
+        shadow: {
+          color: "black",
+          fill: true,
+          offsetX: 1,
+          offsetY: 1,
+        }
+      });
 
       this.music = this.sound.add('main');
       this.music.loop = true;
       this.music.play();
 
-      const restartButton = this.add.text(GAMEWIDTH - 100, 50, '[RESTART]', { color: '#f44' });
+      const restartButton = this.add.text(GAMEWIDTH - 100, 50, '[RESTART]', {
+        color: '#f44',
+        shadow: {
+          color: "black",
+          fill: true,
+          offsetX: 1,
+          offsetY: 1,
+        }
+      });
       restartButton.setInteractive({ useHandCursor: true });
       restartButton.on("pointerdown", () => {
         startOver();
       });
 
-      this.warningText = this.add.text(50, GAMEHEIGHT - 40, `Warning: The game has issues when running at low frame rate (${game.loop.actualFps.toFixed(1)} fps).\nThis could happen if your computer is low on battery`, { color: '#f66' });
+      this.warningText = this.add.text(180, 20, `Warning: The game has issues when running at low frame rate (${game.loop.actualFps.toFixed(1)} fps).\nThis could happen if your computer is low on battery`, {
+        color: '#f66',
+        shadow: {
+          color: "white",
+          fill: true,
+          offsetX: 2,
+          offsetY: 2,
+        },
+      });
       this.warningText.setVisible(false);
 
       if (level) {
-        this.add.text(20, 20, `Level ${level}`, { color: "#fff" });
+        this.add.text(20, 20, `Level ${level}`, {
+          fontSize: 32, color: "#fff",
+          shadow: {
+            color: "black",
+            fill: true,
+            offsetX: 2,
+            offsetY: 2,
+          },
+        })
       }
 
-      this.grabText = this.add.text(30, GAMEHEIGHT - 30, 'Press P to pick up', { color: "#fff" });
+      this.grabText = this.add.text(30, GAMEHEIGHT - 30, 'Press P to pick up', {
+        color: "#fff",
+        shadow: {
+          color: "black",
+          fill: true,
+          offsetX: 1,
+          offsetY: 1,
+        }
+      });
       this.grabText.setVisible(false);
 
-      this.powerText = this.add.text(30, GAMEHEIGHT - 30, "", { fontSize: '18px', color: '#fff' });
+      this.powerIcon = this.add.image(30, GAMEHEIGHT - 25, 'sky').setDisplaySize(24, 24);
+      this.powerIcon.setVisible(false);
+      this.powerText = this.add.text(50, GAMEHEIGHT - 30, "", {
+        fontSize: '18px', color: '#fff',
+        shadow: {
+          color: "black",
+          fill: true,
+          offsetX: 1,
+          offsetY: 1,
+        },
+      });
       this.powerText.setVisible(false);
 
+      this.chatText = this.add.text(0, 0, `testing`, {
+        color: "#fff", shadow: {
+          color: "black",
+          offsetX: 2, offsetY: 2,
+          fill: true,
+        }
+      });
+      this.chatText.setVisible(false);
+
+    }
+
+    chatTimeout?: Timer;
+    chat(msg: string, human?: Human) {
+      clearTimeout(this.chatTimeout);
+      speechSynthesis.cancel();
+      if (msg?.length) {
+        const message = wrap(msg, {
+          width: 30,
+        });
+        if (human) {
+          someoneSpeaking = Date.now();
+          const rng = alea(human?.seed + "");
+          this.chatText?.setText("");
+          const utterance = new SpeechSynthesisUtterance(message);
+          utterance.voice = voices[Math.floor(rng() * voices.length)];
+          console.log("VOICE", utterance.voice.name, utterance.voice.lang);
+          if (!human.lang) {
+            human.lang = utterance.voice.lang;
+          }
+          const preFrame = human?.faceSprites[FaceEnum.MOUTH].frame.name ?? "";
+          utterance.addEventListener("boundary", (e) => {
+            this.chatText?.setText(message.slice(0, e.charIndex + e.charLength));
+            human?.faceSprites[FaceEnum.MOUTH].setFrame(
+              preFrame != "43" ? "43" : Math.floor(41 + Math.random() * 5),
+            );
+            setTimeout(() => {
+              human?.faceSprites[FaceEnum.MOUTH].setFrame(preFrame);
+            }, 200);
+          });
+          utterance.addEventListener("end", () => {
+            if (human) {
+              human.speaking = 0;
+            }
+            someoneSpeaking = 0;
+            this.chatTimeout = setTimeout(() => {
+              this.chat("");
+            }, 3000);
+          });
+          speechSynthesis.speak(utterance)
+
+          this.chatText?.setPosition(human?.player.x ?? 0, human?.player.y);
+          this.chatText?.setVisible(true);
+          this.chatFollow = human?.player
+        }
+
+      } else {
+        this.chatText?.setVisible(false);
+        this.chatFollow = undefined;
+      }
     }
 
     showCanGrab(show: boolean) {
@@ -617,16 +845,23 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       this.timerText?.setText(((endTime - this.startTime) / 1000).toFixed(1) + " s");
 
       if (game.loop.actualFps < 35) {
-        this.warningText?.setVisible(true);
+        if (!this.warningText?.visible) {
+          this.warningText?.setVisible(true);
+          humans.forEach(human => human.addHistory(HumanEvent.LOW_BATTERY));
+        }
         this.warningText?.setText(`Warning: The game has issues when running at low frame rate (${game.loop.actualFps.toFixed(1)} fps).\nThis could happen if your computer is low on battery.`);
       } else {
         this.warningText?.setVisible(false);
+      }
+      if (this.chatFollow) {
+        this.chatText?.setPosition(Math.min(GAMEWIDTH - this.chatText.width, Math.max(0, this.chatFollow.x - this.chatText.width / 2)), this.chatFollow.y - 50 - this.chatText.height);
       }
     }
 
     stopAll() {
       this.music.stop();
       this.endTime = Date.now();
+      speechSynthesis.cancel();
     }
 
     keyToRestart(goNextLevel: boolean = false) {
@@ -673,6 +908,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     }
 
     victory() {
+      victory = true;
       this.stopAll();
 
       const sound = this.sound.add('power-troll', {
@@ -705,7 +941,16 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       }, 2000);
     }
 
-    showPower(power: string = "") {
+    showPower(power: string = "", gameObject?: any) {
+      const key = gameObject?.texture.key;
+      const frame = gameObject?.frame.name;
+      if (key) {
+        this.powerIcon?.setTexture(key, frame);
+        this.powerIcon?.setVisible(true);
+        this.powerIcon?.setDisplaySize(24, 24);
+      } else {
+        this.powerIcon?.setVisible(false);
+      }
       if (power.length) {
         this.powerText?.setText(power);
         this.powerText?.setVisible(true);
@@ -968,8 +1213,10 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     fly: Phaser.Animations.Animation | false,
   }> = {};
   let gameOver = false;
+  let victory = false;
   let cursors: Phaser.Types.Input.Keyboard.CursorKeys | undefined;
   const humans: Human[] = [];
+  (window as any).humans = humans;
   let troll: Troll;
   let mainCamera: Phaser.Cameras.Scene2D.Camera;
   let preTime: number = 0;
@@ -981,11 +1228,12 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
   const GAMEWIDTH = 1000, GAMEHEIGHT = 600;
 
+  let visTime = 0;
   const config: Phaser.Types.Core.GameConfig = {
     type: Phaser.AUTO,
     width: GAMEWIDTH,
     height: GAMEHEIGHT,
-    pixelArt: true,//here
+    //pixelArt: true,//here
     physics: {
       default: 'arcade',
       arcade: {
@@ -1034,12 +1282,13 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         this.scene.launch('UIScene');
 
         this.scene.setVisible(false);
-        setTimeout(() => {
-          this.scene.setVisible(true);
-        }, 500);
+        visTime = Date.now() + 500;
 
 
         sky = this.add.image(GAMEWIDTH / 2, GAMEHEIGHT / 2, 'sky').setDisplaySize(GAMEWIDTH, GAMEHEIGHT);
+        sky.setTint(0xffffff, 0xccffff, 0xcc66ff, 0xff44cc);
+
+        (window as any).sky = sky;
         const mount = this.add.image(GAMEWIDTH / 2, GAMEHEIGHT / 2, 'mountain').setDisplaySize(GAMEWIDTH, GAMEHEIGHT)
           .setAlpha(.4);
         mount.preFX?.addBlur();
@@ -1089,6 +1338,14 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         // );
         this.physics.add.collider(humanGroup, platforms);
         this.physics.add.collider(humanGroup, humanGroup, (human1: any, human2: any) => {
+          human1.human.meetAnotherHuman();
+          human2.human.meetAnotherHuman();
+          if (Math.random() < .5) {
+            human1.human.speakAI();
+          } else {
+            human2.human.speakAI();
+          }
+
           if (human1.human.frozen) {
             human2.human.dx = -human2.human.dx
           } else {
@@ -1208,10 +1465,13 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           const bonus = humanObj.holdingBonus;
           if (bonus?.frame && parseInt(bonus?.frame.name) === 2) {
             (rock as any)?.setPushable(true);
+            humanObj.addHistory(HumanEvent.PUSHED_ROCK);
             clearTimeout((rock as any).timeout);
             (rock as any).timeout = setTimeout(() => {
-              (rock as any)?.setPushable(false);
-            }, 500);
+              if ((rock as any).visible) {
+                (rock as any)?.setPushable(false);
+              }
+            }, 200);
           }
         });
         this.physics.add.collider(rocks, troll.player, (rock, player) => {
@@ -1241,8 +1501,21 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
 
         this.physics.add.collider(humanGroup, triggers, (human, trigger) => {
-          if ((human as any).human.holdingBonus && parseInt((human as any).human.holdingBonus.frame.name) === 0) {
-            (human as any).human.tryJump(zzfx);
+          const h = (human as any).human;
+          if (h.holdingBonus && parseInt(h.holdingBonus.frame.name) === 0) {
+            h.tryJump(zzfx);
+          }
+          if (!h.hitTrigger) {
+            h.hitTrigger = true;
+            if (level == "1") {
+              h.addHistory(HumanEvent.SAW_SNAIL);
+            } else if (level == "3") {
+              h.addHistory(HumanEvent.SAW_CAT);
+            } else if (level == "4" || level == "5" || level == "6") {
+              h.addHistory(HumanEvent.WEIRD_GREEN_SLIMY_CREATURE);
+            } else if (level == "7") {
+              h.addHistory(HumanEvent.DRUNK_YELLOW_CREATURE);
+            }
           }
         });
 
@@ -1442,6 +1715,11 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         preTime = now;
 
         const hero = troll;
+        if (visTime && now - visTime > 500) {
+          troll.player.scene.scene.setVisible(true);
+          visTime = 0;
+        }
+
         if (gameOver) {
           const flipX = Math.random() < .5 ? true : false;
           hero.setFlipX(flipX);
@@ -1483,6 +1761,25 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         sky.setPosition(mainCamera.scrollX + GAMEWIDTH / 2, mainCamera.scrollY + GAMEHEIGHT / 2);
         humans.forEach(human => human.update(dt, zzfx));
         troll.update(dt, zzfx);
+        humans.forEach(human => {
+          if (!human.sawTroll) {
+            const dx = Math.abs(human.player.x - troll.player.x);
+            const dy = Math.abs(human.player.y - troll.player.y);
+            if (dy < 50 && dx < 150) {
+              human.sawTroll = Date.now();
+              human.dx = Math.sign(-dx);
+              human.addHistory(HumanEvent.SAW_TROLL);
+              human.player.setVelocityY(-300);
+              human.lastStill = Date.now();
+            }
+          }
+        });
+
+
+        if (Date.now() - lastDialog > 10000 && !victory && !gameOver) {
+          humans[Math.floor(Math.random() * humans.length)].speakAI();
+        }
+
       },
     }, UI],
   };
@@ -1521,7 +1818,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     if (instruct?.parentElement === document.body) {
       document.body.removeChild(instruct);
     }
-    if (levelUi) {
+    if (levelUi?.parentElement === document.body) {
       document.body.removeChild(levelUi);
     }
     setTimeout(() => {
@@ -1534,7 +1831,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     if (instruct?.parentElement === document.body) {
       document.body.removeChild(instruct);
     }
-    if (levelUi) {
+    if (levelUi?.parentElement === document.body) {
       document.body.removeChild(levelUi);
     }
     setTimeout(() => {
@@ -1542,5 +1839,55 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     }, 100);
   }
 
+  async function fetchAI(situation: string, dictionary: Record<string, string>, seed?: number, lang?: string, forceJsonP?: boolean) {
+    const time = Date.now();
+    const dico = {
+      [HumanEvent.LANG]: `The human's native language is "${lang ?? "english."}". All replies from this human must mix words from the native language and the following language: "${navigator.language}".`,
+      ...dictionary
+    };
+    if (conf.canCallAI && !forceJsonP) {
+      const response = await fetch(`/ai?dictionary=${JSON.stringify(dico)}&situation=${HumanEvent.LANG}.${situation}&seed=${seed ?? ""}`);
+      const json = await response.json();
+      if (Date.now() - time > 9000) {
+        return {};
+      }
+      return json;
+    } else {
+      return new Promise((resolve, reject) => {
+        if (Date.now() - time > 9000) {
+          resolve({});
+          (window as any).fetchAIResponse = () => { };
+          return;
+        }
+        (window as any).fetchAIResponse = (response: any) => {
+          resolve(response);
+          (window as any).fetchAIResponse = () => { };
+        }
+        const url = `${OPEN_AI_URL}?dictionary=${JSON.stringify(dico)}&situation=${HumanEvent.LANG}.${situation}&seed=${seed ?? ""}&jsonp=fetchAIResponse`;
+        const sc = document.body.appendChild(document.createElement("script"));
+        sc.src = url;
+      });
+    }
+  }
+  (window as any).fetchAI = fetchAI;
+
   return game;
 }
+
+
+speechSynthesis.getVoices();
+
+
+const GOODVOICES = [
+  "Grandpa",
+  "Grandma",
+  "Catherine",
+  "Daniel",
+  "Shelley",
+  "Aaron",
+];
+
+const BADVOICES = [
+  "Albert",
+  "Google",
+];

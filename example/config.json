@@ -1,3 +1,4 @@
 {
-  "canEdit": false
+  "canEdit": false,
+  "canCallAI": false
 }
