@@ -1,6 +1,7 @@
 {
 	"locked": true,
 	"overlay": "assets/overlay7.png",
+	"nextLevel": "json/map8.json",
 	"ground": {
 		"ground1": {
 			"x": 800,
@@ -166,8 +167,8 @@
 			"frame": null
 		},
 		"trigger3": {
-			"x": 933,
-			"y": 542,
+			"x": 863,
+			"y": 588,
 			"width": 32,
 			"height": 32,
 			"frame": null

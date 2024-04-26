@@ -2641,7 +2641,7 @@ async function UX(C, q, k) {
       R = this, this.startTime = Date.now();
     }
     preload() {
-      if (this.load.audio("main", ["assets/troll-song.mp3"]), this.load.audio("power-troll", ["assets/power-troll.mp3"]), this.load.audio("game-over", ["assets/game-over.mp3"]), this.load.audio("repeat", ["assets/repeat.mp3"]), K.overlay)
+      if (this.load.audio("main", ["assets/troll-song.mp3"]), this.load.audio("main2", ["assets/a-nice-troll.mp3"]), this.load.audio("power-troll", ["assets/power-troll.mp3"]), this.load.audio("game-over", ["assets/game-over.mp3"]), this.load.audio("repeat", ["assets/repeat.mp3"]), K.overlay)
         this.load.image("overlay", K.overlay);
       if (!K.nextLevel)
         this.load.image("the-end", "assets/the-end.png");
@@ -2650,7 +2650,7 @@ async function UX(C, q, k) {
     create() {
       if (K.overlay)
         this.add.image(u / 2, d / 2, "overlay").setDisplaySize(u, d).preFX?.addShadow(0, 0, 0.1, 0.3, 0, 12, 0.3);
-      this.timerText = this.add.text(900, 16, "", { fontSize: "20px", color: "#fff", shadow: { color: "black", fill: true, offsetX: 1, offsetY: 1 } }), this.music = this.sound.add("main"), this.music.loop = true, this.music.play();
+      this.timerText = this.add.text(900, 16, "", { fontSize: "20px", color: "#fff", shadow: { color: "black", fill: true, offsetX: 1, offsetY: 1 } }), this.music = this.sound.add(parseInt(Y) % 2 === 1 ? "main" : "main2"), this.music.loop = true, this.music.play();
       const i = this.add.text(u - 100, d - 30, "[RESTART]", { color: "#f44", shadow: { color: "black", fill: true, offsetX: 1, offsetY: 1 } });
       if (i.setInteractive({ useHandCursor: true }), i.on("pointerdown", () => {
         W0();
@@ -2663,7 +2663,7 @@ async function UX(C, q, k) {
       if (clearTimeout(this.chatTimeout), speechSynthesis.cancel(), i?.length) {
         const s = cO.default(i, { width: 30 });
         if (p) {
-          F = Date.now();
+          this.chatText?.setFontSize(p.antMan ? 12 : 18), F = Date.now();
           const Z0 = NQ.alea(p?.seed + "");
           this.chatText?.setText("");
           const $0 = new SpeechSynthesisUtterance(s);
@@ -2699,7 +2699,7 @@ async function UX(C, q, k) {
       } else if (this.warningText?.visible)
         this.warningText?.setVisible(false), T.forEach((Z0) => Z0.addHistory(K8.NORMAL_BATTERY));
       if (this.chatFollow)
-        this.chatText?.setPosition(Math.min(u - this.chatText.width, Math.max(0, this.chatFollow.x - this.chatText.width / 2)), this.chatFollow.y - 50 - this.chatText.height);
+        this.chatText?.setPosition(Math.min(u - this.chatText.width, Math.max(0, this.chatFollow.x - this.chatText.width / 2)), Math.max(0, this.chatFollow.y - 50 - this.chatText.height));
     }
     stopAll() {
       this.music.stop(), this.endTime = Date.now(), speechSynthesis.cancel();
@@ -3027,13 +3027,16 @@ async function UX(C, q, k) {
         if (Date.now() - L0 < 10)
           G0.setXY($0.x + X0, G0.y);
       });
-    }), v.setPosition(S.scrollX + u / 2, S.scrollY + d / 2), T.forEach(($0) => $0.update(1.5, J)), O.update(1.5, J), T.forEach(($0) => {
+    }), v.setPosition(S.scrollX + u / 2, S.scrollY + d / 2), T.forEach(($0) => {
       if (!$0.sawTroll) {
         const K0 = Math.abs($0.player.x - O.player.x);
-        if (Math.abs($0.player.y - O.player.y) < 50 && K0 < 150)
-          $0.sawTroll = Date.now(), $0.dx = Math.sign(-K0), $0.addHistory(K8.SAW_TROLL), $0.player.setVelocityY(-300), $0.lastStill = Date.now();
+        if (Math.abs($0.player.y - O.player.y) < 50 && K0 < 150) {
+          $0.sawTroll = Date.now(), $0.dx = Math.sign(O.player.x - $0.player.x);
+          const X0 = $0.dx < 0;
+          $0.setFlipX(X0), $0.addHistory(K8.SAW_TROLL), $0.player.setVelocityY(-300), $0.lastStill = Date.now();
+        }
       }
-    }), Date.now() - X > 1e4 && !I && !z)
+    }), T.forEach(($0) => $0.update(1.5, J)), O.update(1.5, J), Date.now() - X > 1e4 && !I && !z)
       T[Math.floor(Math.random() * T.length)].speakAI();
   } }, P] };
   let n = new l6.default.Game(o);
@@ -3072,7 +3075,7 @@ async function UX(C, q, k) {
     }, 100);
   }
   async function Y0(i, p, s, Z0, $0) {
-    const K0 = Date.now(), L0 = { [K8.LANG]: `The human's native language is "${Z0 ?? "english."}". All replies from this human must mix words from the native language and the following language: "${navigator.language}".`, ...p };
+    const K0 = Date.now(), L0 = { [K8.LANG]: `The human's native language is "${Z0 ?? "english."}". All replies from this human must mix some words from the native language and words from the following language: "${navigator.language}".`, ...p };
     if (W.canCallAI && !$0) {
       const G0 = await (await fetch(`/ai?dictionary=${JSON.stringify(L0)}&situation=${K8.LANG}.${i}&seed=${s ?? ""}`)).json();
       if (Date.now() - K0 > 9000)
@@ -78697,7 +78700,7 @@ var K8;
   x[x["LOW_BATTERY"] = 24] = "LOW_BATTERY";
   x[x["NORMAL_BATTERY"] = 25] = "NORMAL_BATTERY";
 })(K8 || (K8 = {}));
-var mO = { [K8.HAT]: "The human is wearing a hat.", [K8.WALKING]: "The human is walking back and forth on a platform.", [K8.SAW_TROLL]: "The human thinks they saw a troll passing by, but the troll disappeared.", [K8.ACQUIRE_SUPER_JUMP]: "The human just acquired the power of super jump, but doesn't know it yet. They just feel weird.", [K8.ACQUIRE_SUPER_STRENGTH]: "The human just acquired the power of super strength, but doesn't know it yet. They feel stronger.", [K8.SUPER_JUMP]: "The human makes a giant leap, using the power of super jump.", [K8.FLY]: "The human starts to levitate a few meters in the air, and now floats around.", [K8.DROP_DOWN]: "The human just lost the ability to fly and just falls down.", [K8.MEET_ANOTHER_HUMAN]: "The human meets another human, and greets the other person.", [K8.SAW_SNAIL]: "The human saw a snail, doesn't want to get too close.", [K8.PUSHED_ROCK]: "The human pushes a heavy rock, and realizes they have super strength.", [K8.SAW_CAT]: "The human sees a cat, doesn't want to get close.", [K8.GOLD_CITY]: "The human is walking around a mysterious place where floors, walls and ceiling are covered with solid gold.", [K8.STRANGE_WRITING]: "The human sees strange writing on the wall.", [K8.SHRUNK]: "The human shrunk down the size of a small rat.", [K8.EXPAND]: "The human's size is restored from small back to normal.", [K8.PIZZA]: "The human is walking around a trippy place where floors, walls and ceiling are made of pizza.", [K8.WEIRD_GREEN_SLIMY_CREATURE]: "The human sees a green slimy creature, doesn't like to get close.", [K8.DRUNK_YELLOW_CREATURE]: "The human sees a weird drunk yellow creature, doesn't like to get close.", [K8.ACQUIRE_FREEZE]: "The human acquire the power to freeze but doesn't know it yet. Feels a little chill.", [K8.FREEZE]: "The human accidentally uses its supernatural power to freeze on another human, completely freezing that person.", [K8.CHAT]: "The human just had an inner monologue.", [K8.LOW_BATTERY]: "The human notices that the game they're in is slow, because the laptop where the game is running on is low on battery. The human advice to plug in the power cord.", [K8.NORMAL_BATTERY]: "The human notices that the framerate of the game they're in is now back to normal." };
+var mO = { [K8.HAT]: "The human is wearing a hat.", [K8.WALKING]: "The human is walking back and forth on a platform.", [K8.SAW_TROLL]: "The human thinks they saw a troll passing by, but the troll disappeared.", [K8.ACQUIRE_SUPER_JUMP]: "The human just acquired the power of super jump, but doesn't know it yet. They just feel weird.", [K8.ACQUIRE_SUPER_STRENGTH]: "The human just acquired the power of super strength, but doesn't know it yet. They feel stronger.", [K8.SUPER_JUMP]: "The human makes a giant leap, using the power of super jump.", [K8.FLY]: "The human starts to levitate a few meters in the air, and now floats around.", [K8.DROP_DOWN]: "The human just lost the ability to fly and just falls down.", [K8.MEET_ANOTHER_HUMAN]: "The human meets another human, and greets the other person.", [K8.SAW_SNAIL]: "The human saw a snail, doesn't want to get too close.", [K8.PUSHED_ROCK]: "The human pushes a heavy rock, and realizes they have super strength.", [K8.SAW_CAT]: "The human sees a cat, doesn't want to get close.", [K8.GOLD_CITY]: "The human is walking around a mysterious place where floors, walls and ceiling are covered with solid gold.", [K8.STRANGE_WRITING]: "The human sees strange writing on the wall.", [K8.SHRUNK]: "The human shrunk down the size of a small rat. Everything around looks so big.", [K8.EXPAND]: "The human's size is restored from small back to normal.", [K8.PIZZA]: "The human is walking around a trippy place where floors, walls and ceiling are made of pizza.", [K8.WEIRD_GREEN_SLIMY_CREATURE]: "The human sees a green slimy creature, doesn't like to get close.", [K8.DRUNK_YELLOW_CREATURE]: "The human sees a weird drunk yellow creature, doesn't like to get close.", [K8.ACQUIRE_FREEZE]: "The human acquire the power to freeze but doesn't know it yet. Feels a little chill.", [K8.FREEZE]: "The human accidentally uses its supernatural power to freeze on another human, completely freezing that person.", [K8.CHAT]: "The human just had an inner monologue.", [K8.LOW_BATTERY]: "The human notices that the game they're in is slow, because the laptop where the game is running on is low on battery. The human advice to plug in the power cord.", [K8.NORMAL_BATTERY]: "The human notices that the framerate of the game they're in is now back to normal." };
 var $6;
 (function(W) {
   W[W["BODY"] = 0] = "BODY";

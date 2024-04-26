@@ -42,7 +42,7 @@ export const DICO: Record<keyof HumanEvent | string, string> = {
   [HumanEvent.SAW_CAT]: "The human sees a cat, doesn't want to get close.",
   [HumanEvent.GOLD_CITY]: "The human is walking around a mysterious place where floors, walls and ceiling are covered with solid gold.",
   [HumanEvent.STRANGE_WRITING]: "The human sees strange writing on the wall.",
-  [HumanEvent.SHRUNK]: "The human shrunk down the size of a small rat.",
+  [HumanEvent.SHRUNK]: "The human shrunk down the size of a small rat. Everything around looks so big.",
   [HumanEvent.EXPAND]: "The human's size is restored from small back to normal.",
   [HumanEvent.PIZZA]: "The human is walking around a trippy place where floors, walls and ceiling are made of pizza.",
   [HumanEvent.WEIRD_GREEN_SLIMY_CREATURE]: "The human sees a green slimy creature, doesn't like to get close.",

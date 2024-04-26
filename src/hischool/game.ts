@@ -683,6 +683,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
     preload() {
       this.load.audio('main', ['assets/troll-song.mp3']);
+      this.load.audio('main2', ['assets/a-nice-troll.mp3']);
       this.load.audio('power-troll', ['assets/power-troll.mp3']);
       this.load.audio('game-over', ['assets/game-over.mp3']);
       this.load.audio('repeat', ['assets/repeat.mp3']);
@@ -712,7 +713,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         }
       });
 
-      this.music = this.sound.add('main');
+      this.music = this.sound.add(parseInt(level) % 2 === 1 ? 'main' : 'main2');
       this.music.loop = true;
       this.music.play();
 
@@ -797,6 +798,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           width: 30,
         });
         if (human) {
+          this.chatText?.setFontSize(human.antMan ? 12 : 18);
           someoneSpeaking = Date.now();
           const rng = alea(human?.seed + "");
           this.chatText?.setText("");
@@ -865,7 +867,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         }
       }
       if (this.chatFollow) {
-        this.chatText?.setPosition(Math.min(GAMEWIDTH - this.chatText.width, Math.max(0, this.chatFollow.x - this.chatText.width / 2)), this.chatFollow.y - 50 - this.chatText.height);
+        this.chatText?.setPosition(Math.min(GAMEWIDTH - this.chatText.width, Math.max(0, this.chatFollow.x - this.chatText.width / 2)), Math.max(0, this.chatFollow.y - 50 - this.chatText.height));
       }
     }
 
@@ -1776,21 +1778,24 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         // mainCamera.scrollX = hero.player.x - 400;
         // mainCamera.scrollY = hero.player.y - 300;
         sky.setPosition(mainCamera.scrollX + GAMEWIDTH / 2, mainCamera.scrollY + GAMEHEIGHT / 2);
-        humans.forEach(human => human.update(dt, zzfx));
-        troll.update(dt, zzfx);
         humans.forEach(human => {
           if (!human.sawTroll) {
             const dx = Math.abs(human.player.x - troll.player.x);
             const dy = Math.abs(human.player.y - troll.player.y);
             if (dy < 50 && dx < 150) {
               human.sawTroll = Date.now();
-              human.dx = Math.sign(-dx);
+              human.dx = Math.sign(troll.player.x - human.player.x);
+              const flipX = human.dx < 0;
+              human.setFlipX(flipX);
+
               human.addHistory(HumanEvent.SAW_TROLL);
               human.player.setVelocityY(-300);
               human.lastStill = Date.now();
             }
           }
         });
+        humans.forEach(human => human.update(dt, zzfx));
+        troll.update(dt, zzfx);
 
 
         if (Date.now() - lastDialog > 10000 && !victory && !gameOver) {
@@ -1859,7 +1864,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
   async function fetchAI(situation: string, dictionary: Record<string, string>, seed?: number, lang?: string, forceJsonP?: boolean) {
     const time = Date.now();
     const dico = {
-      [HumanEvent.LANG]: `The human's native language is "${lang ?? "english."}". All replies from this human must mix words from the native language and the following language: "${navigator.language}".`,
+      [HumanEvent.LANG]: `The human's native language is "${lang ?? "english."}". All replies from this human must mix some words from the native language and words from the following language: "${navigator.language}".`,
       ...dictionary
     };
     if (conf.canCallAI && !forceJsonP) {

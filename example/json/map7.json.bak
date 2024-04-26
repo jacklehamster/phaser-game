@@ -1,6 +1,7 @@
 {
 	"locked": false,
 	"overlay": "assets/overlay7.png",
+	"nextLevel": "json/map8.json",
 	"ground": {
 		"ground1": {
 			"x": 800,
@@ -182,8 +183,8 @@
 			"frame": 0
 		},
 		"bonus2": {
-			"x": 634,
-			"y": 61.64970541041521,
+			"x": 656,
+			"y": 255.6497054104152,
 			"width": 48,
 			"height": 48,
 			"frame": 4
