@@ -368,7 +368,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       if (mapJson.goldCity) {
         this.addHistory(HumanEvent.GOLD_CITY);
       }
-      if (level === "6") {
+      if (mapJson.pizza) {
         this.addHistory(HumanEvent.PIZZA);
       }
       this.addHistory(HumanEvent.WALKING);
