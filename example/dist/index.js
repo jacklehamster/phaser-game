@@ -2454,7 +2454,7 @@ async function UX(C, q, k) {
         this.addHistory(e0.HAT);
       if (J.goldCity)
         this.addHistory(e0.GOLD_CITY);
-      if (Y === "6")
+      if (J.pizza)
         this.addHistory(e0.PIZZA);
       if (this.addHistory(e0.WALKING), J.goldCity)
         this.addHistory(e0.STRANGE_WRITING);
