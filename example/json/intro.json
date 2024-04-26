@@ -1,0 +1,26 @@
+{
+	"locked": true,
+	"nextLevel": "json/map1.json",
+	"key": {
+		"key1": {
+			"x": 30,
+			"y": 164,
+			"width": 48,
+			"height": 48,
+			"frame": 0
+		}
+	},
+	"door": {
+		"door1": {
+			"x": 955,
+			"y": 568,
+			"width": 64,
+			"height": 64,
+			"frame": 4
+		}
+	},
+  "cutScene": {
+
+  },
+  "autoNext": true
+}

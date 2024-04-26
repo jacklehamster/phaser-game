@@ -2,6 +2,8 @@
 	"locked": true,
 	"overlay": "assets/overlay4.png",
 	"nextLevel": "json/map5.json",
+	"goldCity": true,
+	"hasSlime": true,
 	"ground": {
 		"ground1": [
 			800,

@@ -1,22 +1,53 @@
 <html>
   <head>
-    <title>Phaser Game</title>
+    <title>The SUPERNATURAL Power Troll</title>
     <style>
       body {
         margin: 0;
+      }
+      .cut-scene {
+        margin: auto;
+        width: 600px;
+        height: 360px;
+        cursor: pointer;
+        background-repeat: no-repeat;
+        background-size: 60%;
+        background-position: center;
+        display: flex;
+        transition: opacity 1s;
+        font-size: 16pt;
+        -webkit-user-select: none; /* Safari */        
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+/Edge */
+        user-select: none; /* Standard */
+        font-family: Papyrus, fantasy; 
+      }
+      .cut-scene:hover {
+        outline: 2px solid blue;
+      }
+      h4, h3, h2, h1 {
+        margin: 10;
       }
     </style>
   </head>
   <body>
     <div id="press-key">
       <div style="width: 100%; text-align: center;">
-        <h3>The</h3>
-        <h1>SUPERNATURAL</h1>
-        <h2>Power</h2>
-        <h3>Troll</h3>  
-        <img src="assets/dobukistudio.png"/>
+        <h4>The</h4>
+        <h2>SUPERNATURAL</h2>
+        <h3>Power</h3>
+        <h4>Troll</h4>
+        <div style="background-color: black; width: 600px; height: 360px; margin: auto">
+          <div class="cut-scene" id="cut-scene" style="background-image: url(assets/dobukistudio.png);">
+            <div style="display: inline-block; align-self: flex-end; background-color: #ffffffaa; text-align: center; width: 100%;">
+              <span id="exposition">
+                click here to view cutscene
+              </span>
+            </div>
+          </div>  
+        </div>
         <h3>A game by jacklehamster</h3>
-        <h1>Press a key to start</h1>
+        <h4>Click above to <span style="font-weight: bold; color: violet;">view the cutscene.</span><br>At any time, you may <span style="font-weight: bold; color: violet;">press any key to start</span>.</h4>
       </div>
     </div>
   </body>
@@ -24,10 +55,389 @@
     import { createHighSchoolGame } from './dist/index.js';
 
     document.addEventListener("keydown", async () => {
+      currentAudio?.pause();
       document.getElementById("press-key").style.display = "none";
       window.game1 = await createHighSchoolGame(undefined, "save");
     }, { once: true });
 
+    let index = 0;
+    const CUT_SCENES = [
+      ["assets/dobukistudio.png",
+        "click here to view cutscene",
+        undefined,
+        false,
+        true,
+      ],
+      ["assets/cutscene/cutscene1.jpg",
+        "Knight Exposito arrives at the castle",
+        undefined,
+        false,
+        true,
+      ],
+      ["assets/cutscene/cutscene1.jpg",
+        "to meet with the powerful wizard, Merlot the flavorful",
+      ],
+      [
+        "assets/cutscene/cutscene2.jpg",
+        "\"Step aside, vile troll!\", shouts the knight in shiny armor.",
+        "assets/trumpet.mp3",
+        false,
+        true,
+      ],
+      [
+        "assets/cutscene/cutscene2.jpg",
+        "\"I was summoned by Merlot, I'm here on an important mission\"",
+      ],
+      [
+        "assets/cutscene/cutscene2.jpg",
+        "\"Surrender, if you value your miserable life, you despicable troll\"",
+      ],
+      [
+        "assets/cutscene/cutscene2.jpg",
+        "Perplexed, the Troll responds.",
+      ],
+      [
+        "assets/cutscene/cutscene2.jpg",
+        "\"Go ahead, I'm not guarding the place\", responds the troll.",
+      ],
+      [
+        "assets/cutscene/cutscene2.jpg",
+        "\"Merlot only asked me to pose half naked in front of the gate\"",
+      ],
+      [
+        "assets/cutscene/cutscene2.jpg",
+        "\"So just pass through, and spare me the disparaging comment!\"",
+      ],
+      [
+        "assets/cutscene/cutscene2.jpg",
+        "\"Thank you, repulsive troll. You may return to your meager post.\", responds the Knight.",
+      ],
+      [
+        "assets/cutscene/cutscene3.jpg",
+        "\"I have arrived, O Powerful Wizard.\", says the Knight.",
+        "assets/darkness.mp3",
+        true,
+        true
+      ],
+      [
+        "assets/cutscene/cutscene4.jpg",
+        "\"Yes, I was waiting for you.\", responds Merlot the delectable.",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene5.jpg",
+        "\"What is it you desire, O Merlot the succulent?\", says the Knight",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene7.jpg",
+        "\"I will share my plan with you.\", says Merlot",
+        "assets/darkness.mp3",
+        true,
+        true,
+      ],
+      [
+        "assets/cutscene/cutscene6.jpg",
+        "\"Please do so, messire.\", says the Knight",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene7.jpg",
+        "\"Exposito, knight with a crispy clean armor.\", says Merlot",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene7.jpg",
+        "\"Do you know what is... a gamejam?\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene6.jpg",
+        "\"No messire. Please enlighten me.\", says the Knight",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene10.jpg",
+        "\"A gamejam... is a jam... in which you have to make a game!\"",
+        "assets/darkness.mp3",
+        true,
+        true,
+      ],
+      [
+        "assets/cutscene/cutscene9.jpg",
+        "\"A game?\", asks the Knight",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene10.jpg",
+        "\"That's right\", responds Merlot",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene10.jpg",
+        "\"We are given a theme, and we must use it to make a game!\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene10.jpg",
+        "\"This time... the theme is...\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene12.jpg",
+        "\"POWER\"",
+        "assets/darkness.mp3",
+        true,
+        true
+      ],
+      [
+        "assets/cutscene/cutscene9.jpg",
+        "\"Power, messire?\", asks the Knight",
+        "assets/darkness.mp3",
+        true,
+        true,
+      ],
+      [
+        "assets/cutscene/cutscene10.jpg",
+        "\"That's right. The theme is POWER\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene9.jpg",
+        "\"It is a perfect theme for you, sir Merlot the palatable\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene10.jpg",
+        "\"Yes it is. But do you know, Exposito, what I am going to do with the theme?\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene9.jpg",
+        "\"No messire. I am completely mystified by your plan sir.\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene10.jpg",
+        "\"Ok knight. Let me tell you, but do not repeat to anyone.\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene10.jpg",
+        "\"This must be kept secret between you and me.\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene10.jpg",
+        "\"What I am going to do with the theme, is...\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene12.jpg",
+        "\"SUMMON A SUPERNATURAL POWER TROLL!\"",
+        "assets/darkness.mp3",
+        true,
+        true
+      ],
+      [
+        "assets/cutscene/cutscene13.jpg",
+        "\"A power troll? messire\", says the knight",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene12.jpg",
+        "\"That's right, a supernatural power troll\", says Merlot",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene13.jpg",
+        "\"A supernatural power troll.\", says the knight",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene12.jpg",
+        "\"Yes. A super natural power troll.\", says Merlot",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene9.jpg",
+        "\"But messire\", asks the Knight",
+        "assets/darkness.mp3",
+        true,
+        true,
+      ],
+      [
+        "assets/cutscene/cutscene9.jpg",
+        "\"Where will you find a creature willing to risk their miserable life...\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene9.jpg",
+        "\"...to become a super natural power troll?\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene10.jpg",
+        "\"We must find a troll\", responds Merlot",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene10.jpg",
+        "\"A troll that is naïve, feeble minded, gullible...\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene12.jpg",
+        "\"MEDIOCRE, a PATSY, dupe, an absolute SUCKER...\"",
+        "assets/darkness.mp3",
+        true,
+        true,
+      ],
+      [
+        "assets/cutscene/cutscene13.jpg",
+        "\"The most MISERABLE, DISMAL, WRETCHED, CRESTFALLEN troll one can find!...\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene14.jpg",
+        "\"Shhh... quiet! I hear someone coming!\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene15.jpg",
+        "\"Greeting, sir Merlot the Indulgent.\", whispers a gentle creature",
+        "assets/darkness.mp3",
+        true,
+        true,
+      ],
+      [
+        "assets/cutscene/cutscene15.jpg",
+        "\"I couldn't help but hear you call my name out loud.\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene15.jpg",
+        "\"Is there something you desire from me, O Merlot the Opulent.\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene11.jpg",
+        "\"Oh yes, the troll... I overlooked this one.\", says Merlot",
+        "assets/darkness.mp3",
+        true,
+        true,
+      ],
+      [
+        "assets/cutscene/cutscene10.jpg",
+        "\"In fact, troll. I must say. You are the perfect candidate.\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene10.jpg",
+        "\"I will bestow upoon you, an important mission.\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene10.jpg",
+        "\"You will infiltrate the human world, and you shall become...\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene16.jpg",
+        "\"A SUPERNATURAL POWER TROLL! HAHAAAHAAaaa....\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene15.jpg",
+        "\"The perfect creature for the mission...\"",
+        "assets/darkness.mp3",
+        true,
+        true,
+      ],
+      [
+        "assets/cutscene/cutscene15.jpg",
+        "\"...go forth, venture into the human realm...\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene15.jpg",
+        "\"...and become, the SUPERNATURAL POWER TROLL\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene15.jpg",
+        "\"As you wish, sir Merlot.\", says the troll",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene15.jpg",
+        "\"I will venture into the human realm.\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene15.jpg",
+        "\"And become... the Super naturel power Troll!\"",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene15.jpg",
+        "(WTF is a power troll?), ponders the troll.",
+        "assets/darkness.mp3",
+      ],
+      [
+        "assets/cutscene/cutscene17.jpg",
+        "",
+        undefined,
+        false,
+        true
+      ],
+    ];
+
+    const ex = document.getElementById("exposition");
+    const cs = document.getElementById("cut-scene");
+    let currentBg = null;
+    let transitioning = false;
+
+    let currentAudio;
+    cs.addEventListener("click", () => {
+      if (transitioning) {
+        return;
+      }
+      index = (index + 1) % CUT_SCENES.length;
+      const [bg, text, audio, repeat, fade] = CUT_SCENES[index];
+      console.log(bg, text, audio, repeat, fade);
+      if (!currentAudio || currentAudio?.src.indexOf(audio) < 0) {
+        if (currentAudio?.loop) {
+          currentAudio?.pause();
+        }
+        currentAudio = null;
+        if (audio) {
+          currentAudio = new Audio();
+          currentAudio.src = audio;
+          currentAudio.loop = !!repeat;
+          setTimeout(() => {
+            currentAudio.play();
+          }, 2000);
+        }
+      }
+      if (fade) {
+        transitioning = true;
+        currentBg = bg;
+        cs.style.opacity = 0;
+        setTimeout(() => {
+          cs.style.backgroundImage = `url(${bg})`;
+          ex.textContent = text ?? "";
+        }, 1000);
+        setTimeout(() => {
+          cs.style.opacity = 1;
+          transitioning = false;
+        }, 1500);
+      } else {
+        currentBg = bg;
+        ex.textContent = text ?? "";
+        cs.style.backgroundImage = `url(${bg})`;
+      }
+    });
     
   </script>
 </html>

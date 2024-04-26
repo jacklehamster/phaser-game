@@ -25,6 +25,11 @@ export enum HumanEvent {
   LANG,
   LOW_BATTERY,
   NORMAL_BATTERY,
+  FOUND_KEY,
+  FOUND_DOOR_CLOSED,
+  FOUND_DOOR_OPENED,
+  BLUE,
+  SWIM,
 };
 
 export const DICO: Record<keyof HumanEvent | string, string> = {
@@ -52,4 +57,9 @@ export const DICO: Record<keyof HumanEvent | string, string> = {
   [HumanEvent.CHAT]: "The human just had an inner monologue.",
   [HumanEvent.LOW_BATTERY]: "The human notices that the game they're in is slow, because the laptop where the game is running on is low on battery. The human advice to plug in the power cord.",
   [HumanEvent.NORMAL_BATTERY]: "The human notices that the framerate of the game they're in is now back to normal.",
+  [HumanEvent.FOUND_KEY]: "The human finds a key, but is not sure where it fits.",
+  [HumanEvent.FOUND_DOOR_CLOSED]: "The human finds a door that is closed, and doesn't know what's on the other side.",
+  [HumanEvent.FOUND_DOOR_OPENED]: "The human finds a door that is opened, leading to a new world.",
+  [HumanEvent.BLUE]: "The human's skin turned completely blue.",
+  [HumanEvent.SWIM]: "The human fell into the water and is now swimming.",
 }

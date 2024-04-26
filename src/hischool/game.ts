@@ -66,6 +66,14 @@ const ANIMATIONS_CONFIG: Record<BodyEnum | string, {
   },
 };
 
+const BLUE_POWER = 3;
+const RANDOM_POWER = [
+  "Math Wiz: The power to recite all digits of PI indefinitely.",
+  "MasterChef: The power to cook delicious meal.",
+  "NoShit: The power go several months without the need to go to the restroom.",
+  "I'm blue: The power to turn completely blue.",
+];
+
 export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl: string | undefined, forceLock?: boolean) {
   if (!jsonUrl) {
     const regex = /#map=([\w\/.]+)/;
@@ -74,7 +82,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     if (mapFromHash) {
       jsonUrl = mapFromHash;
     } else {
-      jsonUrl = "json/map1.json";
+      jsonUrl = "json/intro.json";
     }
   }
   const regex2 = /json\/map(\d+).json/;
@@ -87,6 +95,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
   const configResponse = await fetch("config.json");
   const conf = await configResponse.json();
 
+  let randomPower = RANDOM_POWER[Math.floor(RANDOM_POWER.length * Math.random())];
   const res = await fetch(jsonUrl);
   const mapJson: {
     locked: boolean;
@@ -99,7 +108,15 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     door?: Record<string, any>;
     rock?: Record<string, any>;
     human?: Record<string, any>;
+    water?: Record<string, any>;
     overlay?: string;
+    goldCity?: boolean;
+    pizza?: boolean;
+    hasCat?: boolean;
+    hasSnail?: boolean;
+    hasYellowCreature?: boolean;
+    hasSlime?: boolean;
+    autoNext?: boolean;
   } = await res.json();
 
   const canEditLevel = conf.canEdit && !(forceLock ?? mapJson.locked);
@@ -199,7 +216,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     }
 
     tryJump(zzfx: any, forceAllowJump: boolean = false) {
-      if (this.player.body.touching.down || forceAllowJump) {
+      if (this.player.body.touching.down || this.player.body.onFloor() || forceAllowJump) {
         this.player.setVelocityY(game.loop.actualFps < 35 ? -1300 : -1000);
         zzfx(...[, , 198, .04, .07, .06, , 1.83, 16, , , , , , , , , .85, .04]); // Jump
         this.airborne = Date.now();
@@ -255,7 +272,9 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
                         "Freeze: The power to freeze other humans." :
                         parseInt(bonus?.frame.name) == 4 ?
                           "Ant man: The power to shrink." :
-                          "",
+                          parseInt(bonus?.frame.name) == 5 ?
+                            randomPower :
+                            "",
                 bonus
               );
             }
@@ -303,9 +322,12 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     humanScaleX: number;
     humanScaleY: number;
     sawTroll: number = 0;
+    sawKey: number = 0;
     firstTimePush: number = 0;
     speaking = 0;
     lang?: string;
+    inWater = 0;
+    imBlue = 0;
 
     constructor(scene: Phaser.Scene, x: number, y: number,
       platforms: Phaser.Physics.Arcade.StaticGroup,
@@ -343,14 +365,14 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       if (this.faceSprites[FaceEnum.HAT].frame.name != "56") {
         this.addHistory(HumanEvent.HAT);
       }
-      if (level === "4") {
+      if (mapJson.goldCity) {
         this.addHistory(HumanEvent.GOLD_CITY);
       }
       if (level === "6") {
         this.addHistory(HumanEvent.PIZZA);
       }
       this.addHistory(HumanEvent.WALKING);
-      if (level === "4") {
+      if (mapJson.goldCity) {
         this.addHistory(HumanEvent.STRANGE_WRITING);
       }
     }
@@ -399,12 +421,15 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         }
       }
 
+      if (this.inWater) {
+        this.dx = 0;
+      }
+
       if (this.frozen) {
         if (Date.now() - this.frozen < 8000) {
           this.setTint(0x0077FF);
           this.bodySprites.forEach((sprite, index) => sprite.anims.pause());
           this.player.setVelocityX(0);
-          return;
         } else {
           this.clearTint();
           randomSprite(this.seed, this.faceSprites, this.bodySprites);
@@ -412,6 +437,12 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           this.frozen = 0;
         }
       }
+
+      if (this.imBlue) {
+        this.bodySprites[BodyEnum.BODY].setTint(0x0099FF);
+        this.faceSprites[FaceEnum.SHAPE].setTint(0x0099FF);
+      }
+
 
       if (this.antMan && Date.now() - this.antMan < 1000) {
         const progress = (Date.now() - this.antMan) / 1000;
@@ -443,8 +474,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       this.player.setDrag(this.player.body.touching.down ? .0001 : 1);
 
       const headShift = this.bodySprites[BodyEnum.BODY]?.anims.currentFrame?.index === 1 || this.player.anims.currentFrame?.index === 3 ? -2 : 0;
-      this.bodySprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y));
-      this.faceSprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y + 2 * headShift * this.player.scale));
+      this.bodySprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y + (this.inWater ? -5 * Math.sin(Date.now() / 300) : 0)));
+      this.faceSprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y + (this.inWater ? -5 * Math.sin(Date.now() / 300) : 0) + 2 * headShift * this.player.scale));
 
       if (this.holdingBonus) {
         this.holdingBonus.body?.gameObject.setPosition(this.player.x, this.player.y - 50 * this.player.scale);
@@ -454,7 +485,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         this.player.setVelocityX(0);
       } else {
         if (this.dx) {
-          const paused = (Date.now() - this.sawTroll < 2000 || Date.now() - this.speaking < 3000 || Date.now() - this.firstTimePush < 3000 && Date.now() - this.firstTimePush > 1000);
+          const paused = this.frozen || (Date.now() - this.sawTroll < 2000 || this.inWater || Date.now() - this.speaking < 3000 && !this.flyingLevel || Date.now() - this.firstTimePush < 3000 && Date.now() - this.firstTimePush > 1000);
           const speed = this.airborne ? 200 : paused ? 0 : 80;
           this.player.setVelocityX(speed * this.dx * dt * this.player.scale);
           const flipX = this.dx < 0;
@@ -517,8 +548,6 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         this.speaking = Date.now();
         lastDialog = Date.now();
 
-
-
         this.spokenHistory = this.history.length;
 
         if (this.speakSeed === undefined) {
@@ -527,7 +556,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           console.log("SPEAKSEED", this.speakSeed);
         }
         const rng = alea(this?.seed + "");
-        voices = speechSynthesis.getVoices().filter(v => BADVOICES.some(badvoice => v.name.indexOf(badvoice) !== 0));
+        voices = speechSynthesis.getVoices().filter(v => v.name.indexOf("Google") !== 0);
         const voice = voices[Math.floor(rng() * voices.length)];
         fetchAI(this.history.join("."), DICO, this.speakSeed, voice.lang, true).then(result => {
           console.log("Speak", result);
@@ -559,7 +588,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       if (parseInt((this.holdingBonus as any).frame.name) === 1) {
         //  flying
         this.player.body.allowGravity = false;
-        this.flyingLevel = this.player.y - 50;
+        this.flyingLevel = (this.flyingLevel ?? this.player.y) - 50;
       } else {
         this.player.body.allowGravity = true;
         this.flyingLevel = undefined;
@@ -594,6 +623,14 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           this.addHistory(HumanEvent.DROP_DOWN);
         } else if (lostPowerFrame === 4) {
           this.addHistory(HumanEvent.EXPAND);
+        }
+      }
+      const newImBlue = newPowerFrame === 5 && randomPower === RANDOM_POWER[BLUE_POWER] ? Date.now() : 0;
+      if (newImBlue && !this.imBlue || !newImBlue && this.imBlue) {
+        this.imBlue = newImBlue;
+        randomSprite(this.seed, this.faceSprites, this.bodySprites);
+        if (this.imBlue) {
+          this.addHistory(HumanEvent.BLUE);
         }
       }
     }
@@ -687,6 +724,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       this.load.audio('power-troll', ['assets/power-troll.mp3']);
       this.load.audio('game-over', ['assets/game-over.mp3']);
       this.load.audio('repeat', ['assets/repeat.mp3']);
+      this.load.audio('trumpet', ['assets/trumpet.mp3']);
+      this.load.audio('darkness', ['assets/darkness.mp3']);
       if (mapJson.overlay) {
         this.load.image('overlay', mapJson.overlay);
       }
@@ -703,19 +742,23 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
       }
       //  scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', color: '#fff' });
-      this.timerText = this.add.text(900, 16, '', {
-        fontSize: '20px', color: '#fff',
-        shadow: {
-          color: "black",
-          fill: true,
-          offsetX: 1,
-          offsetY: 1,
-        }
-      });
+      if (level) {
+        this.timerText = this.add.text(900, 16, '', {
+          fontSize: '20px', color: '#fff',
+          shadow: {
+            color: "black",
+            fill: true,
+            offsetX: 1,
+            offsetY: 1,
+          }
+        });
+      }
 
-      this.music = this.sound.add(parseInt(level) % 2 === 1 ? 'main' : 'main2');
-      this.music.loop = true;
-      this.music.play();
+      if (level) {
+        this.music = this.sound.add(parseInt(level) % 2 === 1 ? 'main' : 'main2');
+        this.music.loop = true;
+        this.music.play();
+      }
 
       const restartButton = this.add.text(GAMEWIDTH - 100, GAMEHEIGHT - 30, '[RESTART]', {
         color: '#f44',
@@ -730,6 +773,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       restartButton.on("pointerdown", () => {
         startOver();
       });
+      restartButton.setVisible(!!level);
 
       this.warningText = this.add.text(180, 20, `Warning: The game has issues when running at low frame rate (${game.loop.actualFps.toFixed(1)} fps).\nThis could happen if your computer is low on battery`, {
         color: '#f66',
@@ -803,7 +847,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           const rng = alea(human?.seed + "");
           this.chatText?.setText("");
           const utterance = new SpeechSynthesisUtterance(message);
-          voices = speechSynthesis.getVoices().filter(v => BADVOICES.some(badvoice => v.name.indexOf(badvoice) !== 0));
+          voices = speechSynthesis.getVoices().filter(v => v.name.indexOf("Google") !== 0);
           utterance.voice = voices[Math.floor(rng() * voices.length)];
           console.log("VOICE", utterance.voice.name, utterance.voice.lang);
           if (!human.lang) {
@@ -872,7 +916,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     }
 
     stopAll() {
-      this.music.stop();
+      this.music?.stop();
       this.endTime = Date.now();
       speechSynthesis.cancel();
     }
@@ -924,6 +968,10 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       victory = true;
       this.stopAll();
 
+      if (mapJson.autoNext) {
+        nextLevel();
+        return;
+      }
       const sound = this.sound.add('power-troll', {
         volume: 2
       });
@@ -1238,6 +1286,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
   let keyGroup: Phaser.Physics.Arcade.Group;
   let doorGroup: Phaser.Physics.Arcade.StaticGroup;
   let rocks: Phaser.Physics.Arcade.Group;
+  let waterGroup: Phaser.Physics.Arcade.StaticGroup;
 
   const GAMEWIDTH = 1000, GAMEHEIGHT = 600;
 
@@ -1278,6 +1327,10 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
             'assets/rock.png',
             { frameWidth: 64, frameHeight: 64 },
           );
+          this.load.spritesheet("water",
+            'assets/items.png',
+            { frameWidth: 64, frameHeight: 64 },
+          );
           this.load.spritesheet("key",
             'assets/items.png',
             { frameWidth: 64, frameHeight: 64 },
@@ -1298,18 +1351,20 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         visTime = Date.now() + 500;
 
 
-        sky = this.add.image(GAMEWIDTH / 2, GAMEHEIGHT / 2, 'sky').setDisplaySize(GAMEWIDTH, GAMEHEIGHT);
-        sky.setTint(0xffffff, 0xccffff, 0xcc66ff, 0xff44cc);
+        if (level) {
+          sky = this.add.image(GAMEWIDTH / 2, GAMEHEIGHT / 2, 'sky').setDisplaySize(GAMEWIDTH, GAMEHEIGHT);
+          sky.setTint(0xffffff, 0xccffff, 0xcc66ff * Math.random() | 0x666699, 0xff44cc * Math.random() | 0x884488);
 
-        (window as any).sky = sky;
-        const mount = this.add.image(GAMEWIDTH / 2, GAMEHEIGHT / 2, 'mountain').setDisplaySize(GAMEWIDTH, GAMEHEIGHT)
-          .setAlpha(.4);
-        mount.preFX?.addBlur();
+          (window as any).sky = sky;
+          const mount = this.add.image(GAMEWIDTH / 2, GAMEHEIGHT / 2, 'mountain').setDisplaySize(GAMEWIDTH, GAMEHEIGHT)
+            .setAlpha(.4);
+          mount.preFX?.addBlur();
+        }
 
         const platforms = this.physics.add.staticGroup();
         const indicators = this.physics.add.staticGroup();
 
-        Object.entries(mapJson.ground).forEach(([id, params]) => {
+        Object.entries(mapJson.ground ?? {}).forEach(([id, params]) => {
           if (!Array.isArray(params)) {
             const { x, y, width, height, frame } = params;
             const p = createPlatform(platforms, id, 'ground', x, y, width, height);
@@ -1325,6 +1380,12 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         // createPlatform(platforms, 'a2', 'ground', 600, 400);
         // createPlatform(platforms, 'a3', 'ground', 50, 250);
         // createPlatform(platforms, 'a4', 'ground', 750, 220);
+        doorGroup = this.physics.add.staticGroup();
+        Object.entries(mapJson.door ?? {}).forEach(([id, params]) => {
+          const { x, y } = params;
+          const d = createPlatform(doorGroup, id, 'door', x, y);
+          d.setBodySize(40, 64);
+        });
 
         Object.entries(mapJson.troll ?? {}).forEach(([id, params]) => {
           const { x, y } = params;
@@ -1358,27 +1419,38 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           } else {
             human2.human.speakAI();
           }
-
           if (human1.human.frozen) {
-            human2.human.dx = -human2.human.dx
           } else {
             if (human2.human.getHeldBonus() === 3) {
               human1.human.frozen = Date.now();
-              human2.human.dx = -human2.human.dx;
               zzfx(...[1.52, , 1177, .23, .09, .09, 1, 1.41, 12, , , , , .4, , , .06, .25, .11, .11]); // Random 348
             }
           }
           if (human2.human.frozen) {
-            human1.human.dx = -human1.human.dx
           } else {
             if (human1.human.getHeldBonus() === 3) {
               human2.human.frozen = Date.now();
-              human1.human.dx = -human1.human.dx;
               zzfx(...[1.52, , 1177, .23, .09, .09, 1, 1.41, 12, , , , , .4, , , .06, .25, .11, .11]); // Random 348
             }
           }
         });
 
+        this.physics.add.overlap(humanGroup, humanGroup, (human1: any, human2: any) => {
+          if (human1.human.frozen) {
+          } else {
+            if (human2.human.getHeldBonus() === 3) {
+              human1.human.frozen = Date.now();
+              zzfx(...[1.52, , 1177, .23, .09, .09, 1, 1.41, 12, , , , , .4, , , .06, .25, .11, .11]); // Random 348
+            }
+          }
+          if (human2.human.frozen) {
+          } else {
+            if (human1.human.getHeldBonus() === 3) {
+              human2.human.frozen = Date.now();
+              zzfx(...[1.52, , 1177, .23, .09, .09, 1, 1.41, 12, , , , , .4, , , .06, .25, .11, .11]); // Random 348
+            }
+          }
+        });
 
 
 
@@ -1503,7 +1575,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         });
 
 
-        Object.entries(mapJson.trigger).forEach(([id, params]) => {
+        Object.entries(mapJson.trigger ?? {}).forEach(([id, params]) => {
           if (!Array.isArray(params)) {
             const { x, y, width, height, frame } = params;
             const p = createPlatform(triggers, id, 'trigger', x, y);
@@ -1526,13 +1598,13 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           }
           if (!h.hitTrigger) {
             h.hitTrigger = true;
-            if (level == "1") {
+            if (mapJson.hasSnail) {
               h.addHistory(HumanEvent.SAW_SNAIL);
-            } else if (level == "3") {
+            } else if (mapJson.hasCat) {
               h.addHistory(HumanEvent.SAW_CAT);
             } else if (level == "4" || level == "5" || level == "6") {
               h.addHistory(HumanEvent.WEIRD_GREEN_SLIMY_CREATURE);
-            } else if (level == "7") {
+            } else if (mapJson.hasYellowCreature) {
               h.addHistory(HumanEvent.DRUNK_YELLOW_CREATURE);
             }
           }
@@ -1545,7 +1617,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           useDamping: true,
         });
 
-        Object.entries(mapJson.bonus).forEach(([id, params]) => {
+        Object.entries(mapJson.bonus ?? {}).forEach(([id, params]) => {
           if (!Array.isArray(params)) {
             const { x, y, frame } = params;
             createDynamic(indicators, bonusGroup, id, 'bonus', x, y, frame, 48, 48);
@@ -1599,15 +1671,27 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           frames: this.anims.generateFrameNumbers('door', { frames: [6, 5, 4] }),
           frameRate: 10,
         });
+        this.anims.create({
+          key: `water`,
+          frames: this.anims.generateFrameNumbers('water', { start: 7, end: 10 }),
+          frameRate: 3,
+          repeat: -1,
+        });
 
         keyGroup = this.physics.add.group({
           allowGravity: true,
         });
         this.physics.add.collider(keyGroup, platforms);
         this.physics.add.collider(troll.player, keyGroup);
-        this.physics.add.collider(keyGroup, humanGroup);
+        this.physics.add.collider(keyGroup, humanGroup, (key, human) => {
+          const h: Human = (human as any).human;
+          if (!h.sawKey) {
+            h.addHistory(HumanEvent.FOUND_KEY);
+          }
+          h.sawKey = Date.now();
+        });
 
-        Object.entries(mapJson.key).forEach(([id, params]) => {
+        Object.entries(mapJson.key ?? {}).forEach(([id, params]) => {
           if (!Array.isArray(params)) {
             const { x, y, frame } = params;
             const b = createDynamic(indicators, keyGroup, id, 'key', x, y, frame, 48, 48);
@@ -1631,11 +1715,39 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           }
         });
 
-        doorGroup = this.physics.add.staticGroup();
-        Object.entries(mapJson.door ?? {}).forEach(([id, params]) => {
-          const { x, y } = params;
-          createPlatform(doorGroup, id, 'door', x, y);
+        waterGroup = this.physics.add.staticGroup();
+        Object.entries(mapJson.water ?? {}).forEach(([id, params]) => {
+          const { x, y, width, height } = params;
+          const b = createPlatform(waterGroup, id, 'water', x, y);//, width ?? 64, height ?? 64);
+          if (b) {
+            (b as any).anims.play({ key: 'water', randomFrame: true });
+            (b as any).setBodySize(64, 20);
+          }
         });
+        this.physics.add.overlap(waterGroup, troll.player, (water, player) => {
+          if (!gameOver) {
+            setTimeout(() => {
+              this.physics.pause();
+            }, 200);
+            const p = player as any;
+
+            hero.setTint(0xff0000);
+            ui.gameOver();
+
+            gameOver = true;
+          }
+        }, undefined, this);
+        this.physics.add.overlap(waterGroup, humanGroup, (water, human) => {
+          const humanObj = (human as any).human as Human;
+          if (!humanObj.inWater) {
+            humanObj.inWater = Date.now();
+            humanObj.dx = 0;
+            (human as any).setVelocityX(0);
+            zzfx(...[, , 71, .01, .05, .17, 4, .31, 5, , , , , , , .1, , .62, .05]); // Hit 370
+            humanObj.addHistory(HumanEvent.SWIM);
+          }
+        });
+
 
 
         this.physics.add.collider(keyGroup, doorGroup, (key, door) => {
@@ -1647,11 +1759,20 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           }
         });
 
+        this.physics.add.overlap(doorGroup, humanGroup, (door, human) => {
+          const humanObj = (human as any).human as Human;
+          if ((door as any).isOpen) {
+            humanObj.addHistory(HumanEvent.FOUND_DOOR_OPENED);
+          } else {
+            humanObj.addHistory(HumanEvent.FOUND_DOOR_CLOSED);
+          }
+        });
+
         doorGroup.getChildren().forEach(object => {
           (object as any).anims.play("door");
         });
 
-        this.physics.add.collider(troll.player, doorGroup, (player, door) => {
+        this.physics.add.overlap(troll.player, doorGroup, (player, door) => {
           if ((door as any).isOpen) {
             troll.destroy();
             (door as any).anims.play("door_close");
@@ -1714,6 +1835,11 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         }, undefined, this);
 
         this.physics.add.collider(hero.player, humanGroup, (player, human) => {
+          const humanObj = (human as any).human;
+          if (humanObj.frozen) {
+            return;
+          }
+
           this.physics.pause();
           const p = player as any;
 
@@ -1756,7 +1882,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           hero.hold(bonusGroup, zzfx, ui);
           hero.hold(keyGroup, zzfx, ui, true);
           ui.showCanGrab(false);
-        } else {
+        } else if (!hero.holdingBonus) {
           const item = hero.foreObject(bonusGroup) ?? hero.foreObject(keyGroup);
           if (item) {
             ui.showCanGrab(true);
@@ -1777,7 +1903,9 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
         // mainCamera.scrollX = hero.player.x - 400;
         // mainCamera.scrollY = hero.player.y - 300;
-        sky.setPosition(mainCamera.scrollX + GAMEWIDTH / 2, mainCamera.scrollY + GAMEHEIGHT / 2);
+        // if (sky) {
+        //   sky.setPosition(mainCamera.scrollX + GAMEWIDTH / 2, mainCamera.scrollY + GAMEHEIGHT / 2);
+        // }
         humans.forEach(human => {
           if (!human.sawTroll) {
             const dx = Math.abs(human.player.x - troll.player.x);
@@ -1799,7 +1927,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
 
         if (Date.now() - lastDialog > 10000 && !victory && !gameOver) {
-          humans[Math.floor(Math.random() * humans.length)].speakAI();
+          const h = humans;
+          h[Math.floor(Math.random() * h.length)]?.speakAI();
         }
 
       },

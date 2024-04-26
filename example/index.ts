@@ -63,7 +63,7 @@ app.post("/save", async context => {
     frame: payload.frame,
   };
 
-  fs.copyFileSync(payload.jsonUrl, payload.jsonUrl + ".bak");
+  //  fs.copyFileSync(payload.jsonUrl, payload.jsonUrl + ".bak");
   fs.writeFileSync(payload.jsonUrl, JSON.stringify(map, null, "\t"));
 
   return context.sendPrettyJson({
