@@ -25,3 +25,7 @@ curl -fsSL https://bun.sh/install | bash
 ## Github Source
 
 [https://github.com/jacklehamster/phaser-game/](https://github.com/jacklehamster/phaser-game/)
+
+## Game released on ITCH.io
+
+### [https://jacklehamster.itch.io/power-troll](https://jacklehamster.itch.io/power-troll)
