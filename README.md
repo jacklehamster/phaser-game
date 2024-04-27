@@ -331,8 +331,10 @@ While publishing to npmjs might not make sense for a standalone game, this is us
 
 ## Package for game portals (itch.io, Newgrounds)
 
-Game portals require a single zip file which contain the entire website of the game, starting with the "index.html" file.
-Server code is ignored by game portals, 
+Game portals require a single zip file which contain the entire website of the game, starting with the "index.html" file. That's the "example" folder.
+
+Server code is ignored by game portals, so they don't need to be removed from it.
+The "node_modules" must be deleted before zipping the "example" folder because they contain a large amount of folders, that are also not needed by the website.
 
 ## Run example from Github website
 
