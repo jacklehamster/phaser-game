@@ -2313,7 +2313,7 @@ async function WX(C, q, h) {
     else
       C = "json/intro.json";
   }
-  const k = /json\/map(\d+).json/, [, U] = C.match(k) ?? [];
+  const k = /json\/map([\d.]+).json/, [, U] = C.match(k) ?? [];
   console.log(U), console.log(C);
   let P = 0;
   location.replace("#map=" + C);
@@ -2664,14 +2664,18 @@ async function WX(C, q, h) {
       if (J.overlay)
         this.add.image(c / 2, o / 2, "overlay").setDisplaySize(c, o).preFX?.addShadow(0, 0, 0.1, 0.3, 0, 12, 0.3);
       if (U)
-        this.timerText = this.add.text(900, 16, "", { fontSize: "20px", color: "#fff", shadow: { color: "black", fill: true, offsetX: 1, offsetY: 1 } });
+        this.timerText = this.add.text(920, 6, "", { fontSize: "14pt", color: "#ddd", shadow: { color: "black", fill: true, offsetX: 1, offsetY: 1 } });
       if (U)
         this.music = this.sound.add(parseInt(U) % 2 === 1 ? "main" : "main2"), this.music.loop = true, this.music.play();
-      const s = this.add.text(c - 100, o - 30, "[RESTART]", { color: "#f44", shadow: { color: "black", fill: true, offsetX: 1, offsetY: 1 } });
+      const s = this.add.text(c - 180, 8, "[RESTART]", { color: "#f44", shadow: { color: "black", fill: true, offsetX: 1, offsetY: 1 } });
       if (s.setInteractive({ useHandCursor: true }), s.on("pointerdown", () => {
         G0();
-      }), s.setVisible(!!U), this.warningText = this.add.text(180, 20, `Warning: The game has issues when running at low frame rate (${t.loop.actualFps.toFixed(1)} fps).\nThis could happen if your computer is low on battery`, { color: "#f66", shadow: { color: "white", fill: true, offsetX: 2, offsetY: 2 } }), this.warningText.setVisible(false), U)
-        this.add.text(20, 20, `Level ${U}`, { fontSize: 32, color: "#fff", shadow: { color: "black", fill: true, offsetX: 2, offsetY: 2 } });
+      }), s.setVisible(!!U), this.warningText = this.add.text(180, 20, `Warning: The game has issues when running at low frame rate (${t.loop.actualFps.toFixed(1)} fps).\nThis could happen if your computer is low on battery`, { color: "#f66", shadow: { color: "white", fill: true, offsetX: 2, offsetY: 2 } }), this.warningText.setVisible(false), U) {
+        const Z0 = this.add.text(c / 2 - 50, 20, `Level ${U}`, { fontSize: 28, color: "#fff", shadow: { color: "black", fill: true, offsetX: 2, offsetY: 2 } });
+        setTimeout(() => {
+          Z0.setVisible(false);
+        }, 8000);
+      }
       this.grabText = this.add.text(30, o - 30, "Press P to pick up", { color: "#fff", shadow: { color: "black", fill: true, offsetX: 1, offsetY: 1 } }), this.grabText.setVisible(false), this.powerIcon = this.add.image(30, o - 25, "sky").setDisplaySize(24, 24), this.powerIcon.setVisible(false), this.powerText = this.add.text(50, o - 30, "", { fontSize: "18px", color: "#fff", shadow: { color: "black", fill: true, offsetX: 1, offsetY: 1 } }), this.powerText.setVisible(false), this.chatText = this.add.text(0, 0, "testing", { color: "#fff", shadow: { color: "black", offsetX: 2, offsetY: 2, fill: true } }), this.chatText.setVisible(false);
     }
     chatTimeout;
@@ -2982,7 +2986,7 @@ async function WX(C, q, h) {
           z0.addHistory(e0.SAW_SNAIL);
         else if (J.hasCat)
           z0.addHistory(e0.SAW_CAT);
-        else if (U == "4" || U == "5" || U == "6")
+        else if (J.hasSlime)
           z0.addHistory(e0.WEIRD_GREEN_SLIMY_CREATURE);
         else if (J.hasYellowCreature)
           z0.addHistory(e0.DRUNK_YELLOW_CREATURE);

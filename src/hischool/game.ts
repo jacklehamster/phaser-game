@@ -85,7 +85,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       jsonUrl = "json/intro.json";
     }
   }
-  const regex2 = /json\/map(\d+).json/;
+  const regex2 = /json\/map([\d.]+).json/;
   const [, level] = jsonUrl.match(regex2) ?? [];
   console.log(level);
   console.log(jsonUrl);
@@ -743,8 +743,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       }
       //  scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', color: '#fff' });
       if (level) {
-        this.timerText = this.add.text(900, 16, '', {
-          fontSize: '20px', color: '#fff',
+        this.timerText = this.add.text(920, 6, '', {
+          fontSize: '14pt', color: '#ddd',
           shadow: {
             color: "black",
             fill: true,
@@ -760,7 +760,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         this.music.play();
       }
 
-      const restartButton = this.add.text(GAMEWIDTH - 100, GAMEHEIGHT - 30, '[RESTART]', {
+      const restartButton = this.add.text(GAMEWIDTH - 180, 8, '[RESTART]', {
         color: '#f44',
         shadow: {
           color: "black",
@@ -787,8 +787,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       this.warningText.setVisible(false);
 
       if (level) {
-        this.add.text(20, 20, `Level ${level}`, {
-          fontSize: 32, color: "#fff",
+        const levelText = this.add.text(GAMEWIDTH / 2 - 50, 20, `Level ${level}`, {
+          fontSize: 28, color: "#fff",
           shadow: {
             color: "black",
             fill: true,
@@ -796,6 +796,9 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
             offsetY: 2,
           },
         })
+        setTimeout(() => {
+          levelText.setVisible(false);
+        }, 8000);
       }
 
       this.grabText = this.add.text(30, GAMEHEIGHT - 30, 'Press P to pick up', {
@@ -1602,7 +1605,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
               h.addHistory(HumanEvent.SAW_SNAIL);
             } else if (mapJson.hasCat) {
               h.addHistory(HumanEvent.SAW_CAT);
-            } else if (level == "4" || level == "5" || level == "6") {
+            } else if (mapJson.hasSlime) {
               h.addHistory(HumanEvent.WEIRD_GREEN_SLIMY_CREATURE);
             } else if (mapJson.hasYellowCreature) {
               h.addHistory(HumanEvent.DRUNK_YELLOW_CREATURE);

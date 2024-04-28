@@ -1,174 +1,104 @@
 {
 	"locked": true,
-	"overlay": "assets/emerald.png",
+	"overlay": "assets/overlay5.png",
 	"nextLevel": "json/map9.json",
 	"ground": {
 		"ground1": {
-			"x": 424,
-			"y": 563.5,
-			"width": 470,
-			"height": 85,
+			"x": 800,
+			"y": 586,
+			"width": 1600,
+			"height": 64,
 			"frame": null
 		},
 		"ground2": {
-			"x": 219.5,
-			"y": 325.5,
-			"width": 49,
-			"height": 225,
+			"x": 795,
+			"y": 411.5,
+			"width": 166,
+			"height": 103,
 			"frame": null
 		},
 		"ground3": {
-			"x": 337.5,
-			"y": 410,
-			"width": 223,
-			"height": 54,
+			"x": 468.5,
+			"y": 321,
+			"width": 71,
+			"height": 44,
 			"frame": null
 		},
 		"ground4": {
-			"x": 819,
-			"y": 121,
-			"width": 278,
-			"height": 46,
+			"x": 323.5,
+			"y": 153,
+			"width": 269,
+			"height": 32,
 			"frame": null
 		},
 		"ground5": {
-			"x": 932,
-			"y": 107,
-			"width": 42,
-			"height": 40,
+			"x": 654.5,
+			"y": 378,
+			"width": 167,
+			"height": 86,
 			"frame": null
 		},
 		"ground6": {
-			"x": 110.5,
-			"y": 342,
-			"width": 43,
-			"height": 152,
+			"x": 822.5,
+			"y": 140.5,
+			"width": 367,
+			"height": 57,
 			"frame": null
 		},
 		"ground7": {
-			"x": 473,
-			"y": 144.5,
-			"width": 50,
-			"height": 147,
+			"x": 707.5,
+			"y": 253.5,
+			"width": 119,
+			"height": 213,
 			"frame": null
 		},
 		"ground8": {
-			"x": 387,
-			"y": 312.5,
-			"width": 44,
-			"height": 29,
+			"x": 271,
+			"y": 442,
+			"width": 234,
+			"height": 36,
 			"frame": null
 		},
 		"ground9": {
-			"x": 608.5,
-			"y": 398.5,
-			"width": 69,
-			"height": 131,
+			"x": 173,
+			"y": 126.5,
+			"width": 38,
+			"height": 85,
 			"frame": null
 		},
 		"ground10": {
-			"x": 469,
-			"y": 285.5,
-			"width": 208,
-			"height": 27,
+			"x": 79.5,
+			"y": 363,
+			"width": 157,
+			"height": 140,
 			"frame": null
 		},
 		"ground11": {
-			"x": 714.5,
-			"y": 496,
-			"width": 151,
-			"height": 52,
+			"x": 79.5,
+			"y": 77,
+			"width": 157,
+			"height": 44,
 			"frame": null
 		},
 		"ground12": {
-			"x": 276.5,
-			"y": 390.5,
-			"width": 85,
-			"height": 67,
-			"frame": null
-		},
-		"ground13": {
-			"x": 579,
-			"y": 540.5,
-			"width": 102,
-			"height": 31,
-			"frame": null
-		},
-		"ground14": {
-			"x": 733.5,
-			"y": 224,
-			"width": 56.99999999999999,
-			"height": 164,
-			"frame": null
-		},
-		"ground15": {
-			"x": 870.5,
-			"y": 388,
-			"width": 56.99999999999999,
-			"height": 52,
-			"frame": null
-		},
-		"ground16": {
-			"x": 994,
-			"y": 250,
-			"width": 64,
-			"height": 52,
-			"frame": null
-		},
-		"ground17": {
-			"x": 378,
-			"y": 182.5,
-			"width": 54,
-			"height": 61,
-			"frame": null
-		},
-		"ground18": {
-			"x": 31,
-			"y": 538.5,
-			"width": 54,
-			"height": 61,
-			"frame": null
-		},
-		"ground19": {
-			"x": 260,
-			"y": 65,
-			"width": 384,
-			"height": 30,
-			"frame": null
-		},
-		"ground20": {
-			"x": 68.5,
-			"y": 232,
-			"width": 43,
-			"height": 368,
-			"frame": null
-		},
-		"ground21": {
-			"x": 931,
-			"y": 28,
-			"width": 42,
-			"height": 56,
+			"x": 327,
+			"y": 327,
+			"width": 57.99999999999999,
+			"height": 62,
 			"frame": null
 		}
 	},
 	"trigger": {
 		"red1": {
-			"x": 448,
-			"y": 392,
+			"x": 173,
+			"y": 70,
 			"width": 32,
-			"height": 32,
+			"height": 38,
 			"frame": null
 		},
 		"red2": {
-			"x": 377,
-			"y": 101,
-			"width": 32,
-			"height": 32,
-			"frame": null
-		},
-		"trigger1": {
-			"x": 268,
-			"y": 563,
+			"x": 157,
+			"y": 294,
 			"width": 32,
 			"height": 32,
 			"frame": null
@@ -176,114 +106,63 @@
 	},
 	"bonus": {
 		"bonus1": {
-			"x": 603,
-			"y": 487.4233097156465,
-			"width": 48,
-			"height": 48,
-			"frame": 4
-		},
-		"bonus3": {
-			"x": 283,
-			"y": 491.4233097156465,
+			"x": 609,
+			"y": 288.6497054104152,
 			"width": 48,
 			"height": 48,
 			"frame": 2
+		},
+		"bonus2": {
+			"x": 493.8666604722208,
+			"y": 166,
+			"width": 48,
+			"height": 48,
+			"frame": 0
+		},
+		"bonus3": {
+			"x": 767.8666604722208,
+			"y": 34,
+			"width": 48,
+			"height": 48,
+			"frame": 1
 		}
 	},
 	"key": {
 		"key1": {
-			"x": 783,
-			"y": 444,
+			"x": 340,
+			"y": 16,
+			"width": 32,
+			"height": 32,
+			"frame": 0
+		}
+	},
+	"troll": {
+		"troll": {
+			"x": 256,
+			"y": 280,
 			"width": 48,
 			"height": 48,
 			"frame": 0
 		}
 	},
-	"door": {
-		"door1": {
-			"x": 24,
-			"y": 477,
-			"width": 64,
-			"height": 64,
-			"frame": 4
-		}
-	},
-	"water": {
-		"water1": {
-			"x": 753,
-			"y": 587,
-			"width": 64,
-			"height": 64,
-			"frame": 7
-		},
-		"water2": {
-			"x": 689,
-			"y": 587,
-			"width": 64,
-			"height": 64,
-			"frame": 7
-		},
-		"water3": {
-			"x": 159,
-			"y": 601,
-			"width": 64,
-			"height": 64,
-			"frame": 10
-		},
-		"water4": {
-			"x": 96,
-			"y": 600,
-			"width": 64,
-			"height": 64,
-			"frame": 10
-		},
-		"water5": {
-			"x": 35,
-			"y": 600,
-			"width": 64,
-			"height": 64,
-			"frame": 9
-		},
-		"water6": {
-			"x": 803,
-			"y": 587,
-			"width": 64,
-			"height": 64,
-			"frame": 10
-		},
-		"water7": {
-			"x": 864,
-			"y": 587,
-			"width": 64,
-			"height": 64,
-			"frame": 7
-		},
-		"water8": {
-			"x": 925,
-			"y": 587,
-			"width": 64,
-			"height": 64,
-			"frame": 9
-		},
-		"water9": {
-			"x": 987,
-			"y": 587.5,
-			"width": 64,
-			"height": 65,
-			"frame": 7
-		}
-	},
 	"rock": {
 		"rock1": {
-			"x": 705,
-			"y": 50,
+			"x": 92,
+			"y": 507,
 			"width": 64,
 			"height": 64,
 			"frame": 0
 		},
 		"rock2": {
-			"x": 282,
-			"y": 100,
+			"x": 788,
+			"y": 504,
+			"width": 64,
+			"height": 64,
+			"frame": 0
+		},
+		"rock3": {
+			"x": 536,
+			"y": 473,
 			"width": 64,
 			"height": 64,
 			"frame": 0
@@ -291,27 +170,27 @@
 	},
 	"human": {
 		"human1": {
-			"x": 826,
-			"y": 70,
+			"x": 89,
+			"y": 203,
 			"width": 32,
 			"height": 32,
 			"frame": null
 		},
 		"human2": {
-			"x": 425,
-			"y": 192,
+			"x": 395,
+			"y": 440,
 			"width": 32,
 			"height": 32,
 			"frame": null
 		}
 	},
-	"troll": {
-		"troll": {
-			"x": 120,
-			"y": 133,
-			"width": 48,
-			"height": 48,
-			"frame": 0
+	"door": {
+		"door1": {
+			"x": 843,
+			"y": 328,
+			"width": 64,
+			"height": 64,
+			"frame": 4
 		}
 	}
 }

@@ -4,6 +4,7 @@
     <style>
       body {
         margin: 0;
+        background-color: #befc97;
       }
       .cut-scene {
         margin: auto;
@@ -53,10 +54,19 @@
           </div>  
         </div>
         <h3>A game by jacklehamster</h3>
-        <h4>Click above to <span class="important">view the cutscene.</span><br>At any time, you may <span class="important">press any key to start the game</span>.</h4>
+        <div style="background-color: aquamarine;">
+          <h4>Click above to <span class="important">view the cutscene.</span><br>At any time, you may <span class="important">press any key to start the game</span>.</h4>
+        </div>
       </div>
     </div>
   </body>
+  <script src="https://cdn.jsdelivr.net/npm/newgrounds.js/dist/newgrounds.js"></script>
+  <script>
+    function unlockMedal(medal) {
+      ng.unlockMedal(medal);
+    }
+  </script>
+
   <script type="module">
     import { createHighSchoolGame } from './dist/index.js';
 
@@ -394,7 +404,8 @@
         "",
         undefined,
         false,
-        true
+        true,
+        () => unlockMedal("View cutscene"),
       ],
     ];
 
