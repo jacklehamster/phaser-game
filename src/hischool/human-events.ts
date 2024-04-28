@@ -30,6 +30,13 @@ export enum HumanEvent {
   FOUND_DOOR_OPENED,
   BLUE,
   SWIM,
+  MATH_WIZ,
+  MASTER_CHEF,
+  NOSHIT,
+  UPSIDE_DOWN,
+  BURBERRY_MAN,
+  WEATHER_MAN,
+  INSECT_MAN,
 };
 
 export const DICO: Record<keyof HumanEvent | string, string> = {
@@ -62,4 +69,11 @@ export const DICO: Record<keyof HumanEvent | string, string> = {
   [HumanEvent.FOUND_DOOR_OPENED]: "The human finds a door that is opened, leading to a new world.",
   [HumanEvent.BLUE]: "The human's skin turned completely blue.",
   [HumanEvent.SWIM]: "The human fell into the water and is now swimming.",
+  [HumanEvent.MATH_WIZ]: "The human acquired the useless power to recite all digits of PI indefinitely.",
+  [HumanEvent.MASTER_CHEF]: "The human acquired the useless power to cook delicious meal with snails.",
+  [HumanEvent.NOSHIT]: "The human acquired the useless power to go several months without the need to go to the toilet.",
+  [HumanEvent.UPSIDE_DOWN]: "The human is now walking on his head, upside down.",
+  [HumanEvent.BURBERRY_MAN]: "The human's clothes instantly disappear. The human is now in their underwear.",
+  [HumanEvent.WEATHER_MAN]: "The human acquired the useless power to predict the weather exactly one year from now.",
+  [HumanEvent.INSECT_MAN]: "The human acquired the useless power to read the mind of an insect.",
 }

@@ -60,15 +60,13 @@
       </div>
     </div>
   </body>
-  <script src="https://cdn.jsdelivr.net/npm/newgrounds.js/dist/newgrounds.js"></script>
-  <script>
-    function unlockMedal(medal) {
-      ng.unlockMedal(medal);
-    }
-  </script>
 
   <script type="module">
-    import { createHighSchoolGame } from './dist/index.js';
+    import { createHighSchoolGame, newgrounds } from './dist/index.js';
+
+    function unlockMedal(medal) {
+      newgrounds.unlockMedal(medal);
+    }
 
     document.addEventListener("keydown", async () => {
       currentAudio?.pause();
@@ -420,7 +418,8 @@
         return;
       }
       index = (index + 1) % CUT_SCENES.length;
-      const [bg, text, audio, repeat, fade] = CUT_SCENES[index];
+      const [bg, text, audio, repeat, fade, callback] = CUT_SCENES[index];
+      callback?.();
       console.log(bg, text, audio, repeat, fade);
       if (!currentAudio || currentAudio?.src.indexOf(audio) < 0) {
         if (currentAudio?.loop) {
@@ -432,7 +431,7 @@
           currentAudio.src = audio;
           currentAudio.loop = !!repeat;
           setTimeout(() => {
-            currentAudio.play();
+            currentAudio?.play();
           }, 2000);
         }
       }

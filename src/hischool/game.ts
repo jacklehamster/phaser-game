@@ -10,7 +10,7 @@ import { evaluate } from "mathjs";
 import wrap from "word-wrap";
 import { DICO, HumanEvent } from "./human-events";
 import { OPEN_AI_URL } from "..";
-
+import { Newgrounds } from "medal-popup";
 
 enum BodyEnum {
   BODY = 0,
@@ -66,15 +66,39 @@ const ANIMATIONS_CONFIG: Record<BodyEnum | string, {
   },
 };
 
-const BLUE_POWER = 3;
+enum UselessPowers {
+  MATH_WIZ,
+  MASTER_CHEF,
+  NOSHIT,
+  BLUE,
+  UPSIDE_DOWN,
+  BURBERRY_MAN,
+  WEATHER_MAN,
+  INSECT_MAN,
+}
+
 const RANDOM_POWER = [
   "Math Wiz: The power to recite all digits of PI indefinitely.",
-  "MasterChef: The power to cook delicious meal.",
-  "NoShit: The power go several months without the need to go to the restroom.",
+  "MasterChef: The power to cook delicious meals with snails.",
+  "NoShit: The power to go several months without the need to go to the toilet.",
   "I'm blue: The power to turn completely blue.",
+  "Upside down: The power to walk upside down.",
+  "Burberry Man: The power to make their clothes disappear.",
+  "Weather Man: The power to predict the weather exactly one year from now.",
+  "Insect Man: The power to read the mind of an insect."
 ];
 
+
+export const newgrounds = new Newgrounds({
+  game: "The Supernatural Power Troll",
+  url: "https://www.newgrounds.com/projects/games/5648862/preview",
+  key: "58158:bSvU8TQ3",
+  skey: "eguVfU6jxSWQKxgYbSV8FA==",
+});
+
 export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl: string | undefined, forceLock?: boolean) {
+
+
   if (!jsonUrl) {
     const regex = /#map=([\w\/.]+)/;
     const [, mapFromHash] = location.hash.match(regex) ?? [];
@@ -328,6 +352,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     lang?: string;
     inWater = 0;
     imBlue = 0;
+    upsideDown = 0;
+    naked = 0;
 
     constructor(scene: Phaser.Scene, x: number, y: number,
       platforms: Phaser.Physics.Arcade.StaticGroup,
@@ -392,8 +418,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     }
 
     randomize(seed: any = Math.random()) {
-      this.seed = seed;
-      randomSprite(seed, this.faceSprites, this.bodySprites);
+      this.seed = seed + "";
+      randomSprite(this.seed, this.faceSprites, this.bodySprites, this.naked);
     }
 
     setTint(color: number) {
@@ -432,7 +458,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           this.player.setVelocityX(0);
         } else {
           this.clearTint();
-          randomSprite(this.seed, this.faceSprites, this.bodySprites);
+          this.randomize(this.seed);
           this.bodySprites.forEach((sprite, index) => sprite.anims.resume());
           this.frozen = 0;
         }
@@ -443,8 +469,9 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         this.faceSprites[FaceEnum.SHAPE].setTint(0x0099FF);
       }
 
-
-      if (this.antMan && Date.now() - this.antMan < 1000) {
+      if (this.upsideDown) {
+        this.setScale(1, this.humanScaleX, -this.humanScaleY);
+      } else if (this.antMan && Date.now() - this.antMan < 1000) {
         const progress = (Date.now() - this.antMan) / 1000;
         this.setScale(1 - .7 * progress, this.humanScaleX - .7 * progress, this.humanScaleY - .7 * progress);
         // this.player.body.setSize(20, 20);
@@ -465,7 +492,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         this.bodySprites.forEach((sprite, index) => sprite.anims.pause());
       } else if (this.powerAcquired) {
         this.clearTint();
-        randomSprite(this.seed, this.faceSprites, this.bodySprites);
+        this.randomize(this.seed);
 
         this.powerAcquired = 0;
         this.bodySprites.forEach((sprite, index) => sprite.anims.resume());
@@ -625,12 +652,40 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           this.addHistory(HumanEvent.EXPAND);
         }
       }
-      const newImBlue = newPowerFrame === 5 && randomPower === RANDOM_POWER[BLUE_POWER] ? Date.now() : 0;
-      if (newImBlue && !this.imBlue || !newImBlue && this.imBlue) {
-        this.imBlue = newImBlue;
-        randomSprite(this.seed, this.faceSprites, this.bodySprites);
-        if (this.imBlue) {
-          this.addHistory(HumanEvent.BLUE);
+
+      if (newPowerFrame === 5) {
+        newgrounds.unlockMedal("Useless superpower");
+        console.log(randomPower);
+        switch (randomPower) {
+          case RANDOM_POWER[UselessPowers.MATH_WIZ]:
+            this.addHistory(HumanEvent.MATH_WIZ);
+            break;
+          case RANDOM_POWER[UselessPowers.MASTER_CHEF]:
+            this.addHistory(HumanEvent.MASTER_CHEF);
+            break;
+          case RANDOM_POWER[UselessPowers.NOSHIT]:
+            this.addHistory(HumanEvent.NOSHIT);
+            break;
+          case RANDOM_POWER[UselessPowers.BLUE]:
+            this.addHistory(HumanEvent.BLUE);
+            this.imBlue = Date.now();
+            this.randomize(this.seed);
+            break;
+          case RANDOM_POWER[UselessPowers.UPSIDE_DOWN]:
+            this.addHistory(HumanEvent.UPSIDE_DOWN);
+            this.upsideDown = Date.now();
+            break;
+          case RANDOM_POWER[UselessPowers.BURBERRY_MAN]:
+            this.addHistory(HumanEvent.BURBERRY_MAN);
+            this.naked = Date.now();
+            this.randomize(this.seed);
+            break;
+          case RANDOM_POWER[UselessPowers.WEATHER_MAN]:
+            this.addHistory(HumanEvent.WEATHER_MAN);
+            break;
+          case RANDOM_POWER[UselessPowers.INSECT_MAN]:
+            this.addHistory(HumanEvent.INSECT_MAN);
+            break;
         }
       }
     }
@@ -651,7 +706,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
   function randomSprite(
     seed: any,
     faceSprites: Phaser.GameObjects.Sprite[],
-    bodySprites: Phaser.GameObjects.Sprite[]) {
+    bodySprites: Phaser.GameObjects.Sprite[],
+    naked: any = false) {
 
     const rng = alea(seed + "");
 
@@ -672,6 +728,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     bodySprites[BodyEnum.SHOES].setTint(Math.floor(rng() * 0xffffff));
     bodySprites[BodyEnum.SMALLSHOES].setTint(Math.floor(rng() * 0xffffff));
     bodySprites[BodyEnum.UNDERWEAR].setTint(Math.floor(rng() * 0xffffff) | 0x999999);
+    bodySprites[BodyEnum.SHIRT].setTint(Math.floor(rng() * 0xffffff));
     const skinColor = Math.floor(rng() * 0xFFFFFF) | 0xaa9999;
     faceSprites[FaceEnum.SHAPE].setTint(skinColor);
     bodySprites[BodyEnum.BODY].setTint(skinColor);
@@ -680,7 +737,10 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     bodySprites[BodyEnum.SHIRT].setVisible(rng() < .7);
 
     // SHOES
-    if (rng() < .5) {
+    if (rng() < .1) {
+      bodySprites[BodyEnum.SHOES].setVisible(false);
+      bodySprites[BodyEnum.SMALLSHOES].setVisible(false);
+    } else if (rng() < .5) {
       bodySprites[BodyEnum.SHOES].setVisible(true);
       bodySprites[BodyEnum.SMALLSHOES].setVisible(false);
     } else {
@@ -696,6 +756,14 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     faceSprites[FaceEnum.EYELASHES].setFrame(56 + Math.floor(rng() * 5));
     faceSprites[FaceEnum.HAIR].setFrame(rng() < .1 ? 56 : 61 + Math.floor(rng() * 5));
     faceSprites[FaceEnum.HAT].setFrame(rng() < .5 ? 56 : 66 + Math.floor(rng() * 5));
+
+    if (naked) {
+      bodySprites[BodyEnum.PANTS].setVisible(false);
+      bodySprites[BodyEnum.SKIRT].setVisible(false);
+      bodySprites[BodyEnum.SHOES].setVisible(false);
+      bodySprites[BodyEnum.SMALLSHOES].setVisible(false);
+      bodySprites[BodyEnum.SHIRT].setVisible(false);
+    }
   }
 
   let ui: UI;
@@ -1000,6 +1068,16 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
             this.add.text(250, 300, 'press a key to continue', { fontSize: '32px', color: '#fff' });
             this.keyToRestart(true);
           }
+
+          if (!mapJson.nextLevel) {
+            setTimeout(() => {
+              newgrounds.unlockMedal("Beat the game!");
+            }, 3000);
+          }
+          newgrounds.unlockMedal("Level " + level);
+          newgrounds.postScore((this.endTime ?? Date.now()) - this.startTime, "Level " + (parseInt(level) < 10 ? " " : "") + level);
+
+
           loopy.play();
         }, 1000);
       }, 2000);
@@ -1439,6 +1517,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         });
 
         this.physics.add.overlap(humanGroup, humanGroup, (human1: any, human2: any) => {
+          human1.human.meetAnotherHuman();
+          human2.human.meetAnotherHuman();
           if (human1.human.frozen) {
           } else {
             if (human2.human.getHeldBonus() === 3) {
@@ -2024,6 +2104,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     }
   }
   (window as any).fetchAI = fetchAI;
+  (game as any).newgrounds = newgrounds;
 
   return game;
 }

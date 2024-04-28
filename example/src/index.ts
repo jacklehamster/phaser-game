@@ -1,3 +1,3 @@
-import { createGame, createHighSchoolGame } from "phaser-game";
+import { createHighSchoolGame, newgrounds } from "phaser-game";
 
-export { createGame, createHighSchoolGame };
+export { createHighSchoolGame, newgrounds };
