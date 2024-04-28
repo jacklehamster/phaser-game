@@ -2444,7 +2444,7 @@ async function DL(C, j, q) {
     }
     update(s = 1, K0) {
       if (Date.now() - this.born > 2000) {
-        if (!this.dx || this.lastStill && Date.now() - this.lastStill > 3000)
+        if (!this.dx || this.lastStill && Date.now() - this.lastStill > 3000 && !(Date.now() - this.firstTimePush < 5000))
           this.dx = !this.dx ? 1 : -this.dx, this.lastStill = Date.now();
       }
       if (this.inWater)
