@@ -7,9 +7,11 @@
 This is the repo for the game:
 ## [The Supernatural Power Troll](https://jacklehamster.itch.io/power-troll)
 
-![](https://img.itch.zone/aW1hZ2UvMjY2NDY2Ny8xNTkxNTgyNS5qcGc=/250x600/ixSuyA.jpg)
+[![](https://img.itch.zone/aW1hZ2UvMjY2NDY2Ny8xNTkxNTgyNS5qcGc=/250x600/ixSuyA.jpg)](https://jacklehamster.itch.io/power-troll)
 
 Produced for [Gamedev.js Jam 2024](https://itch.io/jam/gamedevjs-2024)
+
+[![Rate here](screenshots/ezzz.gif)](https://itch.io/jam/gamedevjs-2024/rate/2664667)
 
 - This is the first game I built using [Phaser](https://phaser.io)
 - Coded using [VisualStudio Code](https://code.visualstudio.com/)
