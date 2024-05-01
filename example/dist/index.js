@@ -2292,7 +2292,7 @@ async function VL(C, j, q, S) {
   location.replace("#map=" + C);
   const Z = await (await fetch("config.json")).json();
   let W = K7[Math.floor(K7.length * Math.random())];
-  const G = { [p8.JUMP]: "Super Jump: The power to jump very high, over ledges or small animals.", [p8.LEVITATE]: "Levitate: The power to levitate.", [p8.STRENGTH]: "Super Strength: The power to move heavy objects.", [p8.FREEZE]: "Freeze: The power to freeze other humans.", [p8.SHRINK]: "Ant man: The power to shrink.", [p8.RANDOM]: W, [p8.SWAP]: "Swap man: The power to swap position with the closest human or troll.", [p8.EJECT_POWER]: "Eject Power: Existing power will be ejected out, back into a power-up.", [p8.UPSIDE_DOWN]: "Upside down: The power to walk upside down.", [p8.CLIMB]: "Wall climber: The ability to climb walls with ease." }, L = await (await fetch(C)).json();
+  const G = { [p8.JUMP]: "Super Jump: The power to jump very high, over ledges or small animals.", [p8.LEVITATE]: "Levitate: The power to levitate.", [p8.STRENGTH]: "Super Strength: The power to move heavy objects.", [p8.FREEZE]: "Freeze: The power to freeze other humans.", [p8.SHRINK]: "Ant man: The power to shrink.", [p8.RANDOM]: W, [p8.SWAP]: "Switcharoo: The power to swap position with the closest human or troll.", [p8.EJECT_POWER]: "Eject Power: Existing power will be ejected out, back into a power-up.", [p8.UPSIDE_DOWN]: "Upside down: The power to walk upside down.", [p8.CLIMB]: "Wall climber: The ability to climb walls with ease." }, L = await (await fetch(C)).json();
   if (!S && L)
     U(K);
   const R = Z.canEdit && !(q ?? L.locked), { zzfx: V } = (aO(), fQ(iO)), D = new Set;
