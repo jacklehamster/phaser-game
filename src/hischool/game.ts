@@ -161,7 +161,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     [Bonus.FREEZE]: "Freeze: The power to freeze other humans.",
     [Bonus.SHRINK]: "Ant man: The power to shrink.",
     [Bonus.RANDOM]: randomPower,
-    [Bonus.SWAP]: "Swap man: The power to swap position with the closest human or troll.",
+    [Bonus.SWAP]: "Switcharoo: The power to swap position with the closest human or troll.",
     [Bonus.EJECT_POWER]: "Eject Power: Existing power will be ejected out, back into a power-up.",
     [Bonus.UPSIDE_DOWN]: "Upside down: The power to walk upside down.",
 

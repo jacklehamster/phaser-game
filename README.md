@@ -109,6 +109,13 @@ Here are the different powerups available:
   - "MasterChef: The power to cook delicious meal.".
   - "NoShit: The power go several months without the need to go to the restroom.".
   - "I'm blue: The power to turn completely blue.". (This is the only useless power that shows an effect in the game. The NPC skin turns blue and they complain about it.).
+  - "Burberry Man: The power to make their clothes disappear.",
+  - "Weather Man: The power to predict the weather exactly one year from now.",
+  - "Insect Man: The power to read the mind of an insect.",
+- **Switcharoo**: This power swaps position with the closest human or troll.
+- **Climb power**: Power to climb walls
+- **Eject power**: Power to remove the current power and turn it back into a power-up, which will be thrown towards the troll.
+- **Upside down**: Gravity is inverted for that human.
 
 ### AI Generated NPC dialog
 
@@ -207,7 +214,11 @@ When a NPC collides with a power up, that powerup is attached to the NPC (shown 
 - SuperStrength: This powerup doesn't have the best implementation, but it's one that works enough. This simply causes a rock to become "pushable" if an NPC with superstrength comes in contact with that rock. Once the rock stop being touched, the pushable flag is turned off. Note that this sometimes causes a problem: If two NPCs are pushing a rock against each other, sometimes the NPC without superstrength pushes the rock further. Another problem is that an NPC with superstrength could land on top of the rock, and another NPC without superstrength collides with that rock, the rock gets pushed.
 - Ice Touch: Upon overlap or collision, if one human has Ice Touch, the other human will have a "frozen" tag set, causing movement to stop and tint to be blue. This is not used in any level yet.
 - Ant Man: The scale of an NPC gets reduced to `INITIAL_SCALE - .7`. Initial scale is around 1, so the eventual size becomes roughly 1/3. That value gets restored when the NPC loses that power.
-- Useless power: This is mainly used to remove another power. However, "I am blue" power causes a blue tint on skin (face shape and body.)
+- Useless power: This is mainly used to remove another power. However, "I am blue" power causes a blue tint on skin (face shape and body.), and "burberry man" causes all clothes to disappear (except underwear).
+- Switcharoo: First look for closest human or troll, then hide each, along with a "Vanish" animation. Then swap coordinates, and make them reappear. This is useful when the human swapped has a needed superpower.
+- Climb: Currently not implemented.
+- Eject power: Power gets turned back into a bonus, and thrown towards the troll. During the duration in which the human acquires a new powerup, the bonus doesn't interact with the human. This is to avoid the power ejected to be captured by the human immediately. However, if the powerup is still in contact with the human after being ejected (due to surrounding walls bouncing it back), the powerup will get re-acquired afterwards. (Note: For game design, I'm considering changing logic to make it so no powerup can be acquired by human with "eject power". Not yet sure which one would make more sense)
+- Anti gravity power: Gravity and acceleration gets inverted (towards the top).
 
 ### AI generated dialog
 
