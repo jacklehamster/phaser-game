@@ -3,8 +3,17 @@
 	"nextLevel": "json/map1.json",
 	"key": {
 		"key1": {
-			"x": 30,
-			"y": 164,
+			"x": 28,
+			"y": 521,
+			"width": 48,
+			"height": 48,
+			"frame": 0
+		}
+	},
+	"troll": {
+		"troll": {
+			"x": 100,
+			"y": 566,
 			"width": 48,
 			"height": 48,
 			"frame": 0
@@ -17,10 +26,208 @@
 			"width": 64,
 			"height": 64,
 			"frame": 4
+		},
+		"door2": {
+			"x": 51,
+			"y": 402,
+			"width": 64,
+			"height": 64,
+			"frame": 4,
+			"label": "2",
+			"lockedByLevel": "2",
+			"nextLevel": "json/map2.json"
+		},
+		"door3": {
+			"x": 180,
+			"y": 401,
+			"width": 64,
+			"height": 64,
+			"frame": 4,
+			"label": "3",
+			"lockedByLevel": "3",
+			"nextLevel": "json/map3.json"
+		},
+		"door4": {
+			"x": 320,
+			"y": 270,
+			"width": 64,
+			"height": 64,
+			"frame": 4,
+			"label": "4",
+			"lockedByLevel": "4",
+			"nextLevel": "json/map4.json"
+		},
+		"door5": {
+			"x": 452,
+			"y": 270,
+			"width": 64,
+			"height": 64,
+			"frame": 4,
+			"label": "5",
+			"lockedByLevel": "5",
+			"nextLevel": "json/map5.json"
+		},
+		"door6": {
+			"x": 487,
+			"y": 401,
+			"width": 64,
+			"height": 64,
+			"frame": 4,
+			"label": "6",
+			"lockedByLevel": "6",
+			"nextLevel": "json/map6.json"
+		},
+		"door7": {
+			"x": 605,
+			"y": 401,
+			"width": 64,
+			"height": 64,
+			"frame": 4,
+			"label": "7",
+			"lockedByLevel": "7",
+			"nextLevel": "json/map7.json"
+		},
+		"door8": {
+			"x": 713,
+			"y": 402,
+			"width": 64,
+			"height": 64,
+			"frame": 4,
+			"label": "8",
+			"lockedByLevel": "8",
+			"nextLevel": "json/map8.json"
+		},
+		"door9": {
+			"x": 821,
+			"y": 265,
+			"width": 64,
+			"height": 64,
+			"frame": 4,
+			"label": "9",
+			"lockedByLevel": "9",
+			"nextLevel": "json/map9.json"
+		},
+		"door10": {
+			"x": 961,
+			"y": 266,
+			"width": 64,
+			"height": 64,
+			"frame": 6,
+			"label": "10",
+			"lockedByLevel": "10",
+			"nextLevel": "json/map10.json"
+		},
+		"door11": {
+			"x": 708,
+			"y": 151,
+			"width": 64,
+			"height": 64,
+			"frame": 0,
+			"label": "11",
+			"lockedByLevel": "11",
+			"nextLevel": "json/map11.json"
+		},
+		"door12": {
+			"x": 574,
+			"y": 150,
+			"width": 64,
+			"height": 64,
+			"frame": 0,
+			"label": "12",
+			"lockedByLevel": "12",
+			"nextLevel": "json/map12.json"
+		},
+		"door13": {
+			"x": 442,
+			"y": 149,
+			"width": 64,
+			"height": 64,
+			"frame": 4,
+			"label": "13",
+			"lockedByLevel": "13",
+			"nextLevel": "json/map13.json"
+		},
+		"door14": {
+			"x": 318,
+			"y": 149,
+			"width": 64,
+			"height": 64,
+			"frame": 4,
+			"label": "14",
+			"lockedByLevel": "14",
+			"nextLevel": "json/map14.json"
+		},
+		"door15": {
+			"x": 136,
+			"y": 206,
+			"width": 64,
+			"height": 64,
+			"frame": 4,
+			"label": "15",
+			"lockedByLevel": "15",
+			"nextLevel": "json/map15.json"
+		},
+		"door16": {
+			"x": 33,
+			"y": 206,
+			"width": 64,
+			"height": 64,
+			"frame": 4,
+			"label": "16",
+			"lockedByLevel": "16",
+			"nextLevel": "json/map16.json"
 		}
 	},
-  "cutScene": {
-
-  },
-  "autoNext": true
+	"ground": {
+		"ground1": {
+			"x": 106.5,
+			"y": 446,
+			"width": 223,
+			"height": 26,
+			"frame": null,
+			"lockedByLevel": "2"
+		},
+		"ground2": {
+			"x": 382.5,
+			"y": 315,
+			"width": 223,
+			"height": 26,
+			"frame": null,
+			"lockedByLevel": "4"
+		},
+		"ground3": {
+			"x": 598.5,
+			"y": 446,
+			"width": 269,
+			"height": 26,
+			"frame": null,
+			"lockedByLevel": "6"
+		},
+		"ground4": {
+			"x": 890.5,
+			"y": 310,
+			"width": 223,
+			"height": 26,
+			"frame": null,
+			"lockedByLevel": "9"
+		},
+		"ground5": {
+			"x": 511.5,
+			"y": 194,
+			"width": 467,
+			"height": 26,
+			"frame": null,
+			"lockedByLevel": "11"
+		},
+		"ground6": {
+			"x": 86,
+			"y": 251,
+			"width": 172,
+			"height": 26,
+			"frame": null,
+			"lockedByLevel": "15"
+		}
+	},
+	"cutScene": {},
+	"autoNext": true
 }

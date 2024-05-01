@@ -1,4 +1,4 @@
-import { createGame } from "src/example/game";
+import { createGame } from "@/example/ex";
 import { createHighSchoolGame, newgrounds } from "src/hischool/game"
 import { OPEN_AI_URL } from "./config/constants";
 

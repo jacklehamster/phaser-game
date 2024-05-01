@@ -34,9 +34,13 @@ export enum HumanEvent {
   MASTER_CHEF,
   NOSHIT,
   UPSIDE_DOWN,
+  NOT_UPSIDE_DOWN,
   BURBERRY_MAN,
   WEATHER_MAN,
   INSECT_MAN,
+  TELEPORT,
+  HELL,
+  RED_VELVET,
 };
 
 export const DICO: Record<keyof HumanEvent | string, string> = {
@@ -72,8 +76,12 @@ export const DICO: Record<keyof HumanEvent | string, string> = {
   [HumanEvent.MATH_WIZ]: "The human acquired the useless power to recite all digits of PI indefinitely.",
   [HumanEvent.MASTER_CHEF]: "The human acquired the useless power to cook delicious meal with snails.",
   [HumanEvent.NOSHIT]: "The human acquired the useless power to go several months without the need to go to the toilet.",
-  [HumanEvent.UPSIDE_DOWN]: "The human is now walking on his head, upside down.",
+  [HumanEvent.UPSIDE_DOWN]: "The human is now upside down, walking feet on the ceiling. They see the whole world upside down.",
+  [HumanEvent.NOT_UPSIDE_DOWN]: "The human is no longer upside down, feet on the ceiling. Gravity is restored back to normal.",
   [HumanEvent.BURBERRY_MAN]: "The human's clothes instantly disappear. The human is now in their underwear.",
   [HumanEvent.WEATHER_MAN]: "The human acquired the useless power to predict the weather exactly one year from now.",
   [HumanEvent.INSECT_MAN]: "The human acquired the useless power to read the mind of an insect.",
+  [HumanEvent.TELEPORT]: "The human just instantly teleported to another location, along with all their clothes.",
+  [HumanEvent.HELL]: "The human is walking around a scary looking place they looks like hell, with rocky red walls and intense heat.",
+  [HumanEvent.RED_VELVET]: "The human is walking around a strangely deliciously looking place, where the walls look like red velvet cake with icing on top."
 }

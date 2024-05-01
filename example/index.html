@@ -13,7 +13,8 @@
         cursor: pointer;
         background-repeat: no-repeat;
         background-size: 60%;
-        background-position: center;
+        background-position-x: center;
+        background-position-y: 34px;
         display: flex;
         transition: opacity 1s;
         font-size: 16pt;
@@ -22,9 +23,10 @@
         -ms-user-select: none; /* IE10+/Edge */
         user-select: none; /* Standard */
         font-family: Papyrus, fantasy; 
+        border-radius: 25px; 
       }
       .cut-scene:hover {
-        outline: 2px solid blue;
+        outline: 2px solid green;
       }
       h4, h3, h2, h1 {
         margin: 10;
@@ -44,12 +46,12 @@
         <h2>SUPERNATURAL</h2>
         <h3>Power</h3>
         <h4>Troll</h4>
-        <div style="background-color: black; width: 600px; height: 360px; margin: auto">
+        <div style="border-radius: 25px; background-color: black; width: 600px; height: 360px; margin: auto">
           <div class="cut-scene" id="cut-scene" style="background-image: url(assets/dobukistudio.png);">
-            <div style="display: inline-block; align-self: flex-end; background-color: #ffffffaa; text-align: center; width: 100%;">
-              <span id="exposition">
+            <div style="margin-bottom: 15px; display: inline-block; align-self: flex-end; background-color: #ffffffaa; text-align: center; width: 100%;">
+              <div id="exposition" style="padding: 2px;">
                 click here to view cutscene
-              </span>
+              </div>
             </div>
           </div>  
         </div>
@@ -441,6 +443,7 @@
         cs.style.opacity = 0;
         setTimeout(() => {
           cs.style.backgroundImage = `url(${bg})`;
+          ex.style.display = text.length ? "" : "none";
           ex.textContent = text ?? "";
         }, 1000);
         setTimeout(() => {
@@ -449,6 +452,7 @@
         }, 1500);
       } else {
         currentBg = bg;
+        ex.style.display = text.length ? "" : "none";
         ex.textContent = text ?? "";
         cs.style.backgroundImage = `url(${bg})`;
       }

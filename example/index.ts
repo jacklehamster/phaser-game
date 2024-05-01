@@ -8,7 +8,7 @@ import { MD5 } from "bun";
 const OPEN_AI_URL = "https://open-ai-npc.onrender.com/comment/";
 const app = new Bao();
 
-app.get("/config.json", async context => {
+app.get("/config.json", async (context: any) => {
   const configText = fs.readFileSync('config.json', 'utf-8');
   const config = JSON.parse(configText);
   config.canEdit = true;
@@ -22,9 +22,11 @@ interface Payload {
   jsonUrl: string;
   type: string;
   id: string;
-  x: number; y: number;
-  width: number; height: number;
-  frame?: number;
+  item: {
+    x: number; y: number;
+    width: number; height: number;
+    frame?: number;
+  };
 }
 
 app.get("/assets/*any", serveStatic("/", { middlewareMode: "bao" }));
@@ -32,8 +34,8 @@ app.get("/dist/*any", serveStatic("/", { middlewareMode: "bao" }));
 app.get("/json/*any", serveStatic("/", { middlewareMode: "bao" }));
 app.get("/", serveStatic("/", { middlewareMode: "bao" }));
 app.get("/favicon.ico", serveStatic("/", { middlewareMode: "bao" }));
-app.post("/lock", async context => {
-  const payload: { jsonUrl: string; locked: boolean } = await context.req.json();
+app.post("/lock", async (context: any) => {
+  const payload: { jsonUrl: string; locked: boolean } = await context.req.json() as { jsonUrl: string; locked: boolean };
   const mapText = fs.readFileSync(payload.jsonUrl, 'utf-8');
   const map = JSON.parse(mapText);
   map.locked = !!payload.locked;
@@ -44,10 +46,12 @@ app.post("/lock", async context => {
     success: true,
   });
 });
-app.post("/save", async context => {
+app.post("/save", async (context: any) => {
   const payload: Payload = await context.req.json() as Payload;
   const mapText = fs.readFileSync(payload.jsonUrl, 'utf-8');
   const map = JSON.parse(mapText);
+
+  //  console.log(payload);
 
   map[payload.type] = map[payload.type] ?? {};
   // map[payload.type][payload.id] = [
@@ -57,11 +61,7 @@ app.post("/save", async context => {
   //   payload.height,
   // ];
   map[payload.type][payload.id] = {
-    x: payload.x,
-    y: payload.y,
-    width: payload.width,
-    height: payload.height,
-    frame: payload.frame,
+    ...payload.item,
   };
 
   //  fs.copyFileSync(payload.jsonUrl, payload.jsonUrl + ".bak");
@@ -74,7 +74,7 @@ app.post("/save", async context => {
 
 storage.init().then(() => {
   console.log("initialized storage");
-  app.get("/ai", async (context) => {
+  app.get("/ai", async (context: any) => {
     const situation = context.query.get("situation");
     const seed = context.query.get("seed");
     const model = context.query.get("model");
