@@ -4,8 +4,8 @@ import fs from "fs";
 import storage from "node-persist";
 import { MD5 } from "bun";
 
-const OPEN_AI_URL = "http://localhost:3001/comment/";
-// const OPEN_AI_URL = "https://open-ai-npc.onrender.com/comment/";
+// const OPEN_AI_URL = "http://localhost:3001/comment/";
+const OPEN_AI_URL = "https://open-ai-npc.onrender.com/comment/";
 const app = new Bao();
 
 app.get("/config.json", async (context: any) => {

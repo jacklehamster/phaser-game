@@ -2689,12 +2689,21 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     const dico = {
       ...dictionary
     };
-    const customFields = {
+    let customFields: undefined | Record<string, { type: string; value: number | boolean | string }> = {
       "nativeLang": { value: lang ?? "en-US", type: "lang" },
       "lang": { value: navigator.language, type: "lang" },
     };
+
+    //  WIP
+    Object.entries(customFields).forEach(([key, field]) => {
+      dico[HumanEvent.LANG] = dico[HumanEvent.LANG].replaceAll(`\${${key}}`, field.value.toString());
+    });
+    customFields = undefined;
+
+
+
     if (conf.canCallAI && !forceJsonP) {
-      const response = await fetch(`/ai?dictionary=${JSON.stringify(dico)}&situation=${HumanEvent.LANG}.${situation}&seed=${seed ?? ""}&customFields=${JSON.stringify(customFields)}`);
+      const response = await fetch(`/ai?dictionary=${JSON.stringify(dico)}&situation=${HumanEvent.LANG}.${situation}&seed=${seed ?? ""}${customFields ? `&customFields=${JSON.stringify(customFields)}` : ""}`);
       const json = await response.json();
       if (Date.now() - time > 9000) {
         return {};
@@ -2711,7 +2720,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           resolve(response);
           (window as any).fetchAIResponse = () => { };
         }
-        const url = `${OPEN_AI_URL}?dictionary=${JSON.stringify(dico)}&situation=${HumanEvent.LANG}.${situation}&seed=${seed ?? ""}&customFields=${JSON.stringify(customFields)}&jsonp=fetchAIResponse`;
+        const url = `${OPEN_AI_URL}?dictionary=${JSON.stringify(dico)}&situation=${HumanEvent.LANG}.${situation}&seed=${seed ?? ""}${customFields ? `&customFields=${JSON.stringify(customFields)}` : ""}&jsonp=fetchAIResponse`;
         const sc = document.body.appendChild(document.createElement("script"));
         sc.src = url;
       });

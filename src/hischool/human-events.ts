@@ -1,4 +1,5 @@
 export enum HumanEvent {
+  LANG,
   CHAT,
   HAT,
   WALKING,
@@ -22,7 +23,6 @@ export enum HumanEvent {
   DRUNK_YELLOW_CREATURE,
   ACQUIRE_FREEZE,
   FREEZE, //  not yet implemented
-  LANG,
   LOW_BATTERY,
   NORMAL_BATTERY,
   FOUND_KEY,

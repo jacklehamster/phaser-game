@@ -1,5 +1,5 @@
 {
-	"locked": false,
+	"locked": true,
 	"overlay": "assets/overlay1.png",
 	"nextLevel": "json/map2.json",
 	"hasSnail": true,
