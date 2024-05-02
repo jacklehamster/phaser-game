@@ -1,5 +1,5 @@
 {
-	"locked": true,
+	"locked": false,
 	"overlay": "assets/overlay5.png",
 	"nextLevel": "json/map10.json",
 	"ground": {
@@ -97,7 +97,7 @@
 			"frame": null
 		},
 		"red2": {
-			"x": 157,
+			"x": 147.00000061035155,
 			"y": 294,
 			"width": 32,
 			"height": 32,

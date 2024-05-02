@@ -41,6 +41,7 @@ export enum HumanEvent {
   TELEPORT,
   HELL,
   RED_VELVET,
+  INVISIBLE_MAN,
 };
 
 export const DICO: Record<keyof HumanEvent | string, string> = {
@@ -72,7 +73,7 @@ export const DICO: Record<keyof HumanEvent | string, string> = {
   [HumanEvent.FOUND_DOOR_CLOSED]: "The human finds a door that is closed, and doesn't know what's on the other side.",
   [HumanEvent.FOUND_DOOR_OPENED]: "The human finds a door that is opened, leading to a new world.",
   [HumanEvent.BLUE]: "The human's skin turned completely blue.",
-  [HumanEvent.SWIM]: "The human fell into the water and is now swimming.",
+  [HumanEvent.SWIM]: "The human accidentally fell into the water and is now swimming.",
   [HumanEvent.MATH_WIZ]: "The human acquired the useless power to recite all digits of PI indefinitely.",
   [HumanEvent.MASTER_CHEF]: "The human acquired the useless power to cook delicious meal with snails.",
   [HumanEvent.NOSHIT]: "The human acquired the useless power to go several months without the need to go to the toilet.",
@@ -83,5 +84,7 @@ export const DICO: Record<keyof HumanEvent | string, string> = {
   [HumanEvent.INSECT_MAN]: "The human acquired the useless power to read the mind of an insect.",
   [HumanEvent.TELEPORT]: "The human just instantly teleported to another location, along with all their clothes.",
   [HumanEvent.HELL]: "The human is walking around a scary looking place they looks like hell, with rocky red walls and intense heat.",
-  [HumanEvent.RED_VELVET]: "The human is walking around a strangely deliciously looking place, where the walls look like red velvet cake with icing on top."
+  [HumanEvent.RED_VELVET]: "The human is walking around a strangely deliciously looking place, where the walls look like red velvet cake with icing on top.",
+  [HumanEvent.INVISIBLE_MAN]: "The human's body is invisible, but their clothes they are wearing are still visible.",
+  [HumanEvent.LANG]: "The human's native language is ${nativeLang}. All replies from this human must mix some words from the native language and words from the following language: ${lang}",
 }

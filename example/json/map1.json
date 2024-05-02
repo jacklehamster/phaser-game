@@ -1,5 +1,5 @@
 {
-	"locked": true,
+	"locked": false,
 	"overlay": "assets/overlay1.png",
 	"nextLevel": "json/map2.json",
 	"hasSnail": true,
@@ -79,8 +79,8 @@
 	},
 	"trigger": {
 		"red1": {
-			"x": 602,
-			"y": 250,
+			"x": 615.9999991455079,
+			"y": 248,
 			"width": 32,
 			"height": 32,
 			"frame": null
