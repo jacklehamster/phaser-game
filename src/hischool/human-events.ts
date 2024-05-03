@@ -42,9 +42,22 @@ export enum HumanEvent {
   HELL,
   RED_VELVET,
   INVISIBLE_MAN,
+  BIB,
+  GOLD_CHAIN,
+  SCARF,
+  HEADPHONES,
+  BUNNY_EAR,
+  FLOWER,
+  RETRO_SHUTTER_SHADES,
+  EYE_PATCH,
+  GLASSES,
+  VR_HEADSET,
 };
 
-export const DICO: Record<keyof HumanEvent | string, string> = {
+
+
+export const DICO: Record<HumanEvent, string> = {
+  [HumanEvent.LANG]: "The human's native language is <nativeLang>. All replies from this human must mix some words from the native language and words from the following language: <lang>",
   [HumanEvent.HAT]: "The human is wearing a hat.",
   [HumanEvent.WALKING]: "The human is walking back and forth on a platform.",
   [HumanEvent.SAW_TROLL]: "The human thinks they saw a troll passing by, but the troll disappeared.",
@@ -86,5 +99,15 @@ export const DICO: Record<keyof HumanEvent | string, string> = {
   [HumanEvent.HELL]: "The human is walking around a scary looking place they looks like hell, with rocky red walls and intense heat.",
   [HumanEvent.RED_VELVET]: "The human is walking around a strangely deliciously looking place, where the walls look like red velvet cake with icing on top.",
   [HumanEvent.INVISIBLE_MAN]: "The human's body is invisible, but their clothes they are wearing are still visible.",
-  [HumanEvent.LANG]: "The human's native language is ${nativeLang}. All replies from this human must mix some words from the native language and words from the following language: ${lang}",
+  [HumanEvent.SAW_FLYING_HUMAN]: "The human saw another human flying around.",
+  [HumanEvent.BIB]: "The human is wearing a bib.",
+  [HumanEvent.GOLD_CHAIN]: "The human is wearing a gold chain.",
+  [HumanEvent.SCARF]: "The human is wearing a scarf.",
+  [HumanEvent.HEADPHONES]: "The human is wearing earmuffs.",
+  [HumanEvent.BUNNY_EAR]: "The human is wearing bunny ear.",
+  [HumanEvent.FLOWER]: "The human is wearing a flower on their head.",
+  [HumanEvent.RETRO_SHUTTER_SHADES]: "The human is wearing retro shutter shades.",
+  [HumanEvent.EYE_PATCH]: "The human is wearing a black eye patch like a pirate.",
+  [HumanEvent.GLASSES]: "The human is wearing glasses.",
+  [HumanEvent.VR_HEADSET]: "The human is wearing a VR headset."
 }

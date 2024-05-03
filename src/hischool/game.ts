@@ -38,14 +38,43 @@ enum BodyEnum {
 };
 
 enum FaceEnum {
-  SHAPE = 0,
-  MOUTH = 1,
-  NOSE = 2,
-  EYES = 3,
-  EYELASHES = 4,
-  HAIR = 5,
-  HAT = 6,
+  BIB,
+  GOLD_CHAIN,
+  SCARF,
+  HEADPHONES_RIGHT,
+  SHAPE,
+  MOUTH,
+  NOSE,
+  EYES,
+  EYELASHES,
+  GLASSES,
+  HAIR,
+  HAT,
+  HEADPHONES_LEFT,
+  BUNNY_EAR,
+  FLOWER,
 };
+
+const FACE_ACCESSORIES = [
+  FaceEnum.BIB,
+  FaceEnum.GOLD_CHAIN,
+  FaceEnum.SCARF,
+  FaceEnum.HEADPHONES_RIGHT,
+  FaceEnum.HEADPHONES_LEFT,
+  FaceEnum.BUNNY_EAR,
+  FaceEnum.FLOWER,
+];
+
+const ACCESORY_TO_EVENT: Record<keyof FaceEnum | string, HumanEvent> = {
+  [FaceEnum.BIB]: HumanEvent.BIB,
+  [FaceEnum.GOLD_CHAIN]: HumanEvent.GOLD_CHAIN,
+  [FaceEnum.SCARF]: HumanEvent.SCARF,
+  [FaceEnum.HEADPHONES_LEFT]: HumanEvent.HEADPHONES,
+  [FaceEnum.BUNNY_EAR]: HumanEvent.BUNNY_EAR,
+  [FaceEnum.FLOWER]: HumanEvent.FLOWER,
+}
+
+const EMPTY_FACE_ENUM = 56;
 
 const ANIMATIONS_CONFIG: Record<BodyEnum | string, {
   walk: [number, number];
@@ -116,6 +145,7 @@ const BONUS_SIZE = 48;
 
 
 export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl: string | undefined, forceLock?: boolean, skippedThrough?: boolean) {
+  speechSynthesis.cancel();
   let nextLevelOverride: string | undefined;
   function getUnlockedStorage() {
     return JSON.parse(localStorage.getItem("troll-levels-unlocked") ?? "{}");
@@ -126,7 +156,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       return false;
     }
     const levelsUnlocked = getUnlockedStorage();
-    console.log(levelsUnlocked, `level-${level}`, levelsUnlocked[`level-${level}`]);
+    //    console.log(levelsUnlocked, `level-${level}`, levelsUnlocked[`level-${level}`]);
     return levelsUnlocked[`level-${level}`];
   }
 
@@ -441,7 +471,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     constructor(scene: Phaser.Scene, x: number, y: number,
       platforms: Phaser.Physics.Arcade.StaticGroup,
       humanGroup: Phaser.Physics.Arcade.Group) {
-      super('hi', scene.physics.add.sprite(x, y, 'hi', 56));
+      super('hi', scene.physics.add.sprite(x, y, 'hi', EMPTY_FACE_ENUM));
       // scene.physics.add.collider(this.player, platforms);
       humanGroup.add(this.player);
       (this.player as any).human = this;
@@ -458,22 +488,59 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       );
 
       this.faceSprites.push(
+        scene.add.sprite(x, y, "hi", 81),  //  bib
+        scene.add.sprite(x, y, "hi", 82),  //  gold_chain
+        scene.add.sprite(x, y, "hi", 85),  //  scarf
+        scene.add.sprite(x, y, "hi", 87),  //  headphones_right
+
         scene.add.sprite(x, y, "hi", 36),  //  face
         scene.add.sprite(x, y, "hi", 41),  //  mouth
         scene.add.sprite(x, y, "hi", 46),  //  nose
         scene.add.sprite(x, y, "hi", 51),  //  eyes
         scene.add.sprite(x, y, "hi", 57),  //  eyelashes
+        scene.add.sprite(x, y, "hi", 76),  //  glasses
         scene.add.sprite(x, y, "hi", 61),  //  hair
+
         scene.add.sprite(x, y, "hi", 66),  //  hat
+
+        scene.add.sprite(x, y, "hi", 86),  //  headphones_left
+        scene.add.sprite(x, y, "hi", 83),  //  bunny_ear
+        scene.add.sprite(x, y, "hi", 84),  //  flower
+
       );
       this.randomize(Math.random());
       this.born = Date.now();
       this.humanScaleX = Math.random() / 5 + 1;
       this.humanScaleY = Math.random() / 5 + 1;
       this.setScale(1, this.humanScaleX ?? 1, this.humanScaleY ?? 1);
-      if (this.faceSprites[FaceEnum.HAT].frame.name != "56") {
+      if (this.faceSprites[FaceEnum.HAT].frame.name != EMPTY_FACE_ENUM.toString()) {
         this.addHistory(HumanEvent.HAT);
       }
+
+      FACE_ACCESSORIES.forEach(accessory => {
+        const h = ACCESORY_TO_EVENT[accessory];
+        if (h && this.faceSprites[accessory].visible && this.faceSprites[accessory].frame.name != EMPTY_FACE_ENUM.toString()) {
+          this.addHistory(h);
+        }
+      });
+
+      switch (this.faceSprites[FaceEnum.GLASSES].frame.name + "") {
+        case "76":  //  retro
+          this.addHistory(HumanEvent.RETRO_SHUTTER_SHADES);
+          break;
+        case "77":  //  eyepatch
+          this.addHistory(HumanEvent.EYE_PATCH);
+          break;
+        case "78":  //  glasses
+        case "79":
+          this.addHistory(HumanEvent.GLASSES);
+          break;
+        case "80":  //  VR
+          this.addHistory(HumanEvent.VR_HEADSET);
+          break;
+      }
+
+
       if (mapJson.goldCity) {
         this.addHistory(HumanEvent.GOLD_CITY);
       }
@@ -764,7 +831,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         const voices = getVoices();
         const voice = voices[Math.floor(rng() * voices.length)];
         fetchAI(this.history.join("."), DICO, this.speakSeed, voice.lang, true).then(result => {
-          console.log("Speak", result);
+          //          console.log("Speak", result);
           this.speak(result.response);
         });
         this.addHistory(HumanEvent.CHAT);
@@ -947,6 +1014,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     const skinColor = Math.floor(rng() * 0xFFFFFF) | 0xaa9999;
     faceSprites[FaceEnum.SHAPE].setTint(skinColor);
     bodySprites[BodyEnum.BODY].setTint(skinColor);
+    //    faceSprites[FaceEnum.HAT].setTint(Math.floor(rng() * 0xffffff));
 
     //  SHIRT
     bodySprites[BodyEnum.SHIRT].setVisible(rng() < .7);
@@ -965,12 +1033,18 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
     //  FACES
     faceSprites[FaceEnum.SHAPE].setFrame(36 + Math.floor(rng() * 5))
-    faceSprites[FaceEnum.MOUTH].setFrame(rng() < .1 ? 56 : 41 + Math.floor(rng() * 5));
-    faceSprites[FaceEnum.NOSE].setFrame(rng() < .1 ? 56 : 46 + Math.floor(rng() * 5));
+    faceSprites[FaceEnum.MOUTH].setFrame(rng() < .1 ? EMPTY_FACE_ENUM : 41 + Math.floor(rng() * 5));
+    faceSprites[FaceEnum.NOSE].setFrame(rng() < .1 ? EMPTY_FACE_ENUM : 46 + Math.floor(rng() * 5));
     faceSprites[FaceEnum.EYES].setFrame(51 + Math.floor(rng() * 5));
-    faceSprites[FaceEnum.EYELASHES].setFrame(56 + Math.floor(rng() * 5));
-    faceSprites[FaceEnum.HAIR].setFrame(rng() < .1 ? 56 : 61 + Math.floor(rng() * 5));
-    faceSprites[FaceEnum.HAT].setFrame(rng() < .5 ? 56 : 66 + Math.floor(rng() * 5));
+    faceSprites[FaceEnum.EYELASHES].setFrame(EMPTY_FACE_ENUM + Math.floor(rng() * 5));
+    faceSprites[FaceEnum.GLASSES].setFrame(rng() < .7 ? EMPTY_FACE_ENUM : 76 + Math.floor(rng() * 5));
+    faceSprites[FaceEnum.HAIR].setFrame(rng() < .1 ? EMPTY_FACE_ENUM : 61 + Math.floor(rng() * 5));
+    faceSprites[FaceEnum.HAT].setFrame(rng() < .5 ? EMPTY_FACE_ENUM : 66 + Math.floor(rng() * 5));
+
+    FACE_ACCESSORIES.forEach(accessory => {
+      faceSprites[accessory].setVisible(rng() < .05);
+    });
+    faceSprites[FaceEnum.HEADPHONES_RIGHT].setVisible(faceSprites[FaceEnum.HEADPHONES_LEFT].visible);
 
     if (naked) {
       bodySprites[BodyEnum.PANTS].setVisible(false);
@@ -979,6 +1053,10 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       bodySprites[BodyEnum.SMALLSHOES].setVisible(false);
       bodySprites[BodyEnum.SHIRT].setVisible(false);
       faceSprites[FaceEnum.HAT].setVisible(false);
+
+      FACE_ACCESSORIES.forEach(accessory => {
+        faceSprites[accessory].setVisible(false);
+      });
     }
     if (invisible) {
       faceSprites[FaceEnum.SHAPE].setVisible(false);
@@ -1207,6 +1285,9 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         });
         if (human) {
           clearTimeout(this.tt);
+          if (!this.chatText?.active) {
+            return;
+          }
           this.chatText?.setFontSize(human.antMan ? 12 : 18);
           someoneSpeaking = Date.now();
           const rng = alea(human?.seed + "");
@@ -1218,6 +1299,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           if (!human.lang) {
             human.lang = utterance.voice.lang;
           }
+          human.randomize(human.seed);
           const preFrame = human?.faceSprites[FaceEnum.MOUTH].frame.name ?? "";
           this.tt = setTimeout(() => {
             this.chatText?.setText(message);
@@ -2694,16 +2776,13 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       "lang": { value: navigator.language, type: "lang" },
     };
 
-    //  WIP
+    let customFieldsParams = "";
     Object.entries(customFields).forEach(([key, field]) => {
-      dico[HumanEvent.LANG] = dico[HumanEvent.LANG].replaceAll(`\${${key}}`, field.value.toString());
+      customFieldsParams += `&${key}${field.type ? `:${field.type}` : ""}=${field.value}`;
     });
-    customFields = undefined;
-
-
 
     if (conf.canCallAI && !forceJsonP) {
-      const response = await fetch(`/ai?dictionary=${JSON.stringify(dico)}&situation=${HumanEvent.LANG}.${situation}&seed=${seed ?? ""}${customFields ? `&customFields=${JSON.stringify(customFields)}` : ""}`);
+      const response = await fetch(`/ai?dictionary=${JSON.stringify(dico)}&situation=${HumanEvent.LANG}.${situation}&seed=${seed ?? ""}${customFieldsParams}`);
       const json = await response.json();
       if (Date.now() - time > 9000) {
         return {};
@@ -2720,7 +2799,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           resolve(response);
           (window as any).fetchAIResponse = () => { };
         }
-        const url = `${OPEN_AI_URL}?dictionary=${JSON.stringify(dico)}&situation=${HumanEvent.LANG}.${situation}&seed=${seed ?? ""}${customFields ? `&customFields=${JSON.stringify(customFields)}` : ""}&jsonp=fetchAIResponse`;
+        const url = `${OPEN_AI_URL}?dictionary=${JSON.stringify(dico)}&situation=${HumanEvent.LANG}.${situation}&seed=${seed ?? ""}${customFieldsParams}&jsonp=fetchAIResponse`;
         const sc = document.body.appendChild(document.createElement("script"));
         sc.src = url;
       });
