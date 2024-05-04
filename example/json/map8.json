@@ -20,16 +20,16 @@
 		},
 		"ground3": {
 			"x": 256,
-			"y": 143.5,
+			"y": 143,
 			"width": 330,
-			"height": 19,
+			"height": 16,
 			"frame": null
 		},
 		"ground4": {
 			"x": 753.5,
-			"y": 141.5,
+			"y": 142.5,
 			"width": 497,
-			"height": 17,
+			"height": 11,
 			"frame": null
 		},
 		"ground5": {
@@ -62,9 +62,9 @@
 		},
 		"ground9": {
 			"x": 204.5,
-			"y": 559.5,
+			"y": 561.5,
 			"width": 417,
-			"height": 87,
+			"height": 83,
 			"frame": null
 		},
 		"ground10": {

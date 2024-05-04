@@ -1,5 +1,6 @@
 {
 	"locked": true,
+	"nextLevel": "json/map15.json",
 	"overlay": "assets/hell.png",
 	"hell": true,
 	"troll": {
@@ -9,6 +10,25 @@
 			"width": 48,
 			"height": 48,
 			"frame": 0
+		}
+	},
+	"button": {
+		"button1": {
+			"x": 666.4999178161671,
+			"y": 69.5,
+			"width": 32,
+			"height": 13,
+			"frame": 11,
+			"trigger": "gate1"
+		}
+	},
+	"gate": {
+		"gate1": {
+			"x": 364.49996554565644,
+			"y": 94.5,
+			"width": 103.99999560546905,
+			"height": 27,
+			"frame": 14
 		}
 	},
 	"water": {
@@ -271,8 +291,8 @@
 			"frame": 6
 		},
 		"bonus2": {
-			"x": 557.8666604722208,
-			"y": 220.51451040451593,
+			"x": 361.86667243511073,
+			"y": 29.51451040451593,
 			"width": 48,
 			"height": 48,
 			"frame": 1
@@ -328,8 +348,8 @@
 	},
 	"human": {
 		"human1": {
-			"x": 359,
-			"y": 71,
+			"x": 350.0000005493164,
+			"y": 163,
 			"width": 32,
 			"height": 32,
 			"frame": null

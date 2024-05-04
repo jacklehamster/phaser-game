@@ -176,6 +176,76 @@
 			"label": "16",
 			"lockedByLevel": "16",
 			"nextLevel": "json/map16.json"
+		},
+		"door17": {
+			"x": 36.99999975585939,
+			"y": 59,
+			"width": 64,
+			"height": 64,
+			"frame": 4,
+			"label": "17",
+			"lockedByLevel": "17",
+			"nextLevel": "json/map17.json"
+		},
+		"door18": {
+			"x": 129.4999941101078,
+			"y": 57,
+			"width": 63.000000061035166,
+			"height": 64,
+			"frame": 4,
+			"label": "18",
+			"lockedByLevel": "18",
+			"nextLevel": "json/map18.json"
+		},
+		"door19": {
+			"x": 410.4999769592299,
+			"y": 39,
+			"width": 64,
+			"height": 64,
+			"frame": 0,
+			"label": "19",
+			"lockedByLevel": "19",
+			"nextLevel": "json/map19.json"
+		},
+		"door20": {
+			"x": 545.4999687194844,
+			"y": 39,
+			"width": 64,
+			"height": 64,
+			"frame": 4,
+			"label": "20",
+			"lockedByLevel": "20",
+			"nextLevel": "json/map20.json"
+		},
+		"door21": {
+			"x": 680.4999604797388,
+			"y": 39,
+			"width": 64,
+			"height": 64,
+			"frame": 0,
+			"label": "21",
+			"lockedByLevel": "21",
+			"nextLevel": "json/map21.json"
+		},
+		"door22": {
+			"x": 816.499952178958,
+			"y": 39,
+			"width": 64,
+			"height": 64,
+			"frame": 4,
+			"label": "22",
+			"lockedByLevel": "22",
+			"nextLevel": "json/map22.json"
+		},
+		"door23": {
+			"x": 956.4999436340366,
+			"y": 41,
+			"width": 64,
+			"height": 64,
+			"frame": 4,
+			"label": "23",
+			"lockedByLevel": "23",
+			"nextLevel": "json/map23.json"
 		}
 	},
 	"ground": {
@@ -226,6 +296,22 @@
 			"height": 26,
 			"frame": null,
 			"lockedByLevel": "15"
+		},
+		"ground7": {
+			"x": 83.00000018310547,
+			"y": 104,
+			"width": 172,
+			"height": 26,
+			"frame": null,
+			"lockedByLevel": "17"
+		},
+		"ground8": {
+			"x": 681.4999636535667,
+			"y": 86,
+			"width": 636.9999716186541,
+			"height": 26,
+			"frame": null,
+			"lockedByLevel": "19"
 		}
 	},
 	"cutScene": {},
