@@ -2774,7 +2774,7 @@ async function PL(C, j, q, S) {
     preload() {
       if (this.load.audio("main", ["assets/troll-song.mp3"]), this.load.audio("main2", ["assets/a-nice-troll.mp3"]), this.load.audio("power-troll", ["assets/power-troll.mp3"]), this.load.audio("game-over", ["assets/game-over.mp3"]), this.load.audio("repeat", ["assets/repeat.mp3"]), this.load.audio("trumpet", ["assets/trumpet.mp3"]), this.load.audio("darkness", ["assets/darkness.mp3"]), L.overlay)
         this.load.image("overlay", L.overlay);
-      if (!L.nextLevel)
+      if (L.theEnd)
         this.load.image("the-end", "assets/the-end.png");
       this.load.image("santa", "assets/santa.png");
     }
@@ -2944,12 +2944,12 @@ async function PL(C, j, q, S) {
       }
       const l = this.sound.add("power-troll", { volume: 2 }), r = this.sound.add("repeat", { volume: 0.5 });
       r.loop = true, setTimeout(() => {
-        if (!L.nextLevel)
+        if (L.theEnd)
           this.theEnd();
         this.add.text(250, 200, "POWER TROLL!", { fontSize: "64px", color: "#0f0" }).setShadow(5, 5, "rgba(0,0,0,0.5)", 15).postFX.addGlow(), l.play(), setTimeout(() => {
-          if (L.nextLevel)
+          if (!L.theEnd)
             this.add.text(250, 300, "press space to continue", { fontSize: "32px", color: "#fff" }), this.keyToRestart(true);
-          if (!L.nextLevel)
+          if (L.theEnd)
             setTimeout(() => {
               cJ.unlockMedal("Beat the game!");
             }, 3000);
@@ -3393,9 +3393,9 @@ async function PL(C, j, q, S) {
   if (Z.canEdit) {
     B0 = document.body.appendChild(document.createElement("div"));
     const l = B0.appendChild(document.createElement("button"));
-    l.textContent = `NEXT LEVEL ${L.nextLevel ?? ""}`, l.addEventListener("click", () => {
+    l.textContent = `NEXT LEVEL ${parseInt(K ?? 0) + 1}`, l.addEventListener("click", () => {
       _0(true);
-    }), l.disabled = !L.nextLevel;
+    }), l.disabled = !!L.theEnd;
     const r = B0.appendChild(document.createElement("input"));
     r.id = "lockCheck;", r.type = "checkbox", r.checked = L.locked;
     const $0 = B0.appendChild(document.createElement("label"));
@@ -3418,7 +3418,7 @@ async function PL(C, j, q, S) {
     if (B0?.parentElement === document.body)
       document.body.removeChild(B0);
     setTimeout(() => {
-      PL(Y ?? L.nextLevel ?? C, j, l);
+      PL(Y ?? (L.theEnd ? undefined : `json/map${parseInt(K ?? 0) + 1}.json`) ?? C, j, l);
     }, 100);
   }
   async function _(l, r, $0, Q0, F0) {

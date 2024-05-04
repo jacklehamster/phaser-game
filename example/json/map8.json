@@ -1,140 +1,114 @@
 {
 	"locked": true,
-	"overlay": "assets/pier.png",
-	"nextLevel": "json/map9.json",
-	"hasYellowCreature": true,
+	"overlay": "assets/wood.png",
+	"nextLevel": "json/map8.json",
+	"hasSnail": true,
+	"troll": {
+		"troll": {
+			"x": 776.9999560546902,
+			"y": 291,
+			"width": 48,
+			"height": 48,
+			"frame": 0
+		}
+	},
 	"ground": {
 		"ground1": {
-			"x": 1160.5,
-			"y": 557.5,
-			"width": 878.9999999999999,
-			"height": 85,
+			"x": 800,
+			"y": 568,
+			"width": 1600,
+			"height": 64,
 			"frame": null
 		},
 		"ground2": {
-			"x": 293.5,
-			"y": 410,
-			"width": 295,
+			"x": 458.0000104675287,
+			"y": 455,
+			"width": 376.00000567626927,
 			"height": 26,
 			"frame": null
 		},
 		"ground3": {
-			"x": 256,
-			"y": 143,
-			"width": 330,
-			"height": 16,
-			"frame": null
-		},
-		"ground4": {
-			"x": 753.5,
-			"y": 142.5,
-			"width": 497,
-			"height": 11,
-			"frame": null
-		},
-		"ground5": {
-			"x": 443,
-			"y": 327.5,
-			"width": 42,
-			"height": 31,
-			"frame": null
-		},
-		"ground6": {
-			"x": 154.5,
-			"y": 345.5,
-			"width": 43,
-			"height": 153,
-			"frame": null
-		},
-		"ground7": {
-			"x": 96,
-			"y": 289,
-			"width": 88,
+			"x": 158.49999615478538,
+			"y": 373,
+			"width": 402.9999882812507,
 			"height": 32,
 			"frame": null
 		},
+		"ground4": {
+			"x": 520.0000025634763,
+			"y": 115,
+			"width": 508.00000512695266,
+			"height": 32,
+			"frame": null
+		},
+		"ground5": {
+			"x": 784.000000946045,
+			"y": 368.5,
+			"width": 457.999996398926,
+			"height": 29,
+			"frame": null
+		},
+		"ground6": {
+			"x": 772.5000093994134,
+			"y": 185.5,
+			"width": 43,
+			"height": 39,
+			"frame": null
+		},
+		"ground7": {
+			"x": 458.99998919677796,
+			"y": 256,
+			"width": 102,
+			"height": 24,
+			"frame": null
+		},
 		"ground8": {
-			"x": 354,
-			"y": 234.5,
+			"x": 562.9999943237308,
+			"y": 4.5,
 			"width": 44,
-			"height": 63,
+			"height": 37,
 			"frame": null
 		},
 		"ground9": {
-			"x": 204.5,
-			"y": 561.5,
-			"width": 417,
-			"height": 83,
+			"x": 938.5000016174315,
+			"y": 203.5,
+			"width": 53.000002746581686,
+			"height": 53,
 			"frame": null
 		},
 		"ground10": {
-			"x": 456.5,
-			"y": 217.5,
-			"width": 159,
-			"height": 27,
-			"frame": null
-		},
-		"ground11": {
-			"x": 798.5,
-			"y": 194,
-			"width": 56.99999999999999,
-			"height": 52,
-			"frame": null
-		},
-		"ground12": {
-			"x": 694,
-			"y": 321.5,
-			"width": 42,
-			"height": 31,
-			"frame": null
-		},
-		"ground13": {
-			"x": 579,
-			"y": 540.5,
-			"width": 102,
-			"height": 31,
-			"frame": null
-		},
-		"ground14": {
-			"x": 976.5,
-			"y": 405,
-			"width": 56.99999999999999,
-			"height": 52,
-			"frame": null
-		},
-		"ground15": {
-			"x": 869.5,
-			"y": 341,
-			"width": 56.99999999999999,
-			"height": 52,
-			"frame": null
-		},
-		"ground16": {
-			"x": 994,
-			"y": 250,
-			"width": 64,
-			"height": 52,
+			"x": 70.50005459594385,
+			"y": 179,
+			"width": 168.99999566650416,
+			"height": 48,
 			"frame": null
 		}
 	},
 	"trigger": {
 		"red1": {
-			"x": 448,
-			"y": 392,
+			"x": 698.9999940795902,
+			"y": 578,
 			"width": 32,
 			"height": 32,
 			"frame": null
 		},
 		"red2": {
-			"x": 743,
-			"y": 68,
+			"x": 507.0000074462886,
+			"y": 571,
 			"width": 32,
 			"height": 32,
 			"frame": null
 		},
 		"trigger1": {
-			"x": 416,
-			"y": 513,
+			"x": 429.0000122070305,
+			"y": 563,
+			"width": 32,
+			"height": 32,
+			"frame": null
+		},
+		"trigger2": {
+			"x": 584.0000010986328,
+			"y": 568,
 			"width": 32,
 			"height": 32,
 			"frame": null
@@ -142,31 +116,66 @@
 	},
 	"bonus": {
 		"bonus1": {
-			"x": 654,
-			"y": 70.42330971564647,
+			"x": 836.9999658322364,
+			"y": 490,
 			"width": 48,
 			"height": 48,
 			"frame": 1
 		},
 		"bonus2": {
-			"x": 964.8666604722208,
-			"y": 465.514510404516,
-			"width": 48,
-			"height": 48,
-			"frame": 5
-		},
-		"bonus3": {
-			"x": 871,
-			"y": 283.4233097156465,
+			"x": 251.9869476793066,
+			"y": 321.7505555277777,
 			"width": 48,
 			"height": 48,
 			"frame": 1
+		},
+		"bonus3": {
+			"x": 468.9869344346786,
+			"y": 147,
+			"width": 48,
+			"height": 48,
+			"frame": 1
+		},
+		"bonus4": {
+			"x": 659.0608031819718,
+			"y": 312.66749997222206,
+			"width": 48,
+			"height": 48,
+			"frame": 1
+		},
+		"bonus5": {
+			"x": -173.9999887695319,
+			"y": 400.7574999722221,
+			"width": 32,
+			"height": 32,
+			"frame": 1
+		},
+		"bonus6": {
+			"x": -26.999997741699303,
+			"y": 203.7574999722221,
+			"width": 32,
+			"height": 32,
+			"frame": 1
+		},
+		"bonus7": {
+			"x": 510.0608122762095,
+			"y": 505,
+			"width": 32,
+			"height": 32,
+			"frame": 1
+		},
+		"bonus8": {
+			"x": 468.95665769449903,
+			"y": 57,
+			"width": 48,
+			"height": 48,
+			"frame": 2
 		}
 	},
 	"key": {
 		"key1": {
-			"x": 698,
-			"y": 261,
+			"x": 14.000050720211732,
+			"y": 118,
 			"width": 48,
 			"height": 48,
 			"frame": 0
@@ -174,61 +183,24 @@
 	},
 	"door": {
 		"door1": {
-			"x": 982,
-			"y": 192,
+			"x": 941.0000008544922,
+			"y": 145,
 			"width": 64,
 			"height": 64,
 			"frame": 4
 		}
 	},
-	"water": {
-		"water1": {
-			"x": 628,
-			"y": 587,
-			"width": 64,
-			"height": 64,
-			"frame": 8
-		},
-		"water2": {
-			"x": 689,
-			"y": 587,
-			"width": 64,
-			"height": 64,
-			"frame": 7
-		},
-		"water3": {
-			"x": 566,
-			"y": 587,
-			"width": 64,
-			"height": 64,
-			"frame": 10
-		},
-		"water4": {
-			"x": 503,
-			"y": 587,
-			"width": 64,
-			"height": 64,
-			"frame": 10
-		},
-		"water5": {
-			"x": 444,
-			"y": 587,
-			"width": 64,
-			"height": 64,
-			"frame": 7
-		}
-	},
 	"rock": {
 		"rock1": {
-			"x": 551,
-			"y": 77,
+			"x": 463.00001269531174,
+			"y": 208,
 			"width": 64,
 			"height": 64,
 			"frame": 0
 		},
 		"rock2": {
-			"x": 37,
-			"y": 396,
+			"x": 766.9999686279316,
+			"y": 60.00000000000006,
 			"width": 64,
 			"height": 64,
 			"frame": 0
@@ -236,27 +208,11 @@
 	},
 	"human": {
 		"human1": {
-			"x": 238,
-			"y": 314,
+			"x": 419.0000205688463,
+			"y": 382,
 			"width": 32,
 			"height": 32,
 			"frame": null
-		},
-		"human2": {
-			"x": 111,
-			"y": 448,
-			"width": 32,
-			"height": 32,
-			"frame": null
-		}
-	},
-	"troll": {
-		"troll": {
-			"x": 133,
-			"y": 61,
-			"width": 48,
-			"height": 48,
-			"frame": 0
 		}
 	}
 }

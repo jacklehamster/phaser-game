@@ -205,7 +205,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
   const res = await fetch(jsonUrl);
   const mapJson: {
     locked: boolean;
-    nextLevel?: string;
+    theEnd?: boolean;
     ground: Record<string, (string | number)[]>;
     trigger: Record<string, (string | number)[]>;
     bonus: Record<string, (string | number)[]>;
@@ -1104,7 +1104,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       if (mapJson.overlay) {
         this.load.image('overlay', mapJson.overlay);
       }
-      if (!mapJson.nextLevel) {
+      if (mapJson.theEnd) {
         this.load.image('the-end', 'assets/the-end.png');
       }
       this.load.image('santa', 'assets/santa.png');
@@ -1553,7 +1553,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
 
       setTimeout(() => {
-        if (!mapJson.nextLevel) {
+        if (mapJson.theEnd) {
           this.theEnd();
         }
         this.add.text(250, 200, 'POWER TROLL!', { fontSize: '64px', color: '#0f0' })
@@ -1562,12 +1562,12 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
         sound.play();
         setTimeout(() => {
-          if (mapJson.nextLevel) {
+          if (!mapJson.theEnd) {
             this.add.text(250, 300, 'press space to continue', { fontSize: '32px', color: '#fff' });
             this.keyToRestart(true);
           }
 
-          if (!mapJson.nextLevel) {
+          if (mapJson.theEnd) {
             setTimeout(() => {
               newgrounds.unlockMedal("Beat the game!");
             }, 3000);
@@ -2792,11 +2792,11 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
   if (conf.canEdit) {
     levelUi = document.body.appendChild(document.createElement("div"));
     const button = levelUi.appendChild(document.createElement("button"));
-    button.textContent = `NEXT LEVEL ${mapJson.nextLevel ?? ""}`;
+    button.textContent = `NEXT LEVEL ${parseInt(level ?? 0) + 1}`;
     button.addEventListener("click", () => {
       nextLevel(true);
     });
-    button.disabled = !mapJson.nextLevel;
+    button.disabled = !!mapJson.theEnd;
 
     const lockCheck = levelUi.appendChild(document.createElement("input"));
     lockCheck.id = "lockCheck;"
@@ -2833,7 +2833,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       document.body.removeChild(levelUi);
     }
     setTimeout(() => {
-      createHighSchoolGame(nextLevelOverride ?? mapJson.nextLevel ?? jsonUrl, saveUrl, skippedThrough);
+      createHighSchoolGame(nextLevelOverride ?? (mapJson.theEnd ? undefined : `json/map${parseInt(level ?? 0) + 1}.json`) ?? jsonUrl, saveUrl, skippedThrough);
     }, 100);
   }
 

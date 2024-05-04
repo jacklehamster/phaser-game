@@ -1,8 +1,9 @@
 {
 	"locked": true,
-	"overlay": "assets/overlay7.png",
-	"nextLevel": "json/map13.json",
-	"hasYellowCreature": "true",
+	"overlay": "assets/overlay6.png",
+	"nextLevel": "json/map12.json",
+	"pizza": true,
+	"hasSlime": true,
 	"ground": {
 		"ground1": {
 			"x": 800,
@@ -12,43 +13,43 @@
 			"frame": null
 		},
 		"ground2": {
-			"x": 891.5,
-			"y": 312,
-			"width": 39,
+			"x": 930.5,
+			"y": 343,
+			"width": 195,
 			"height": 30,
 			"frame": null
 		},
 		"ground3": {
-			"x": 907.5,
+			"x": 851.5,
 			"y": 464,
-			"width": 183,
+			"width": 71,
 			"height": 44,
 			"frame": null
 		},
 		"ground4": {
-			"x": 515,
+			"x": 517.5,
 			"y": 417,
-			"width": 115.99999999999999,
+			"width": 121,
 			"height": 32,
 			"frame": null
 		},
 		"ground5": {
-			"x": 367,
-			"y": 254,
+			"x": 784,
+			"y": 143,
 			"width": 57.99999999999999,
 			"height": 34,
 			"frame": null
 		},
 		"ground6": {
-			"x": 712.5,
-			"y": 128.5,
-			"width": 193,
+			"x": 854.5,
+			"y": 100.5,
+			"width": 339,
 			"height": 57,
 			"frame": null
 		},
 		"ground7": {
-			"x": 577.5,
-			"y": 318,
+			"x": 490.5,
+			"y": 224,
 			"width": 213,
 			"height": 46,
 			"frame": null
@@ -62,15 +63,15 @@
 		},
 		"ground9": {
 			"x": 9,
-			"y": 87,
+			"y": 133.5,
 			"width": 38,
-			"height": 178,
+			"height": 85,
 			"frame": null
 		},
 		"ground10": {
-			"x": -21.5,
-			"y": 518.5,
-			"width": 139,
+			"x": -6.5,
+			"y": 393.5,
+			"width": 157,
 			"height": 73,
 			"frame": null
 		},
@@ -82,59 +83,31 @@
 			"frame": null
 		},
 		"ground12": {
-			"x": 712,
-			"y": 325,
+			"x": 901,
+			"y": 492,
 			"width": 57.99999999999999,
 			"height": 34,
 			"frame": null
 		},
 		"ground13": {
-			"x": 239.5,
-			"y": 416.5,
-			"width": 91,
-			"height": 131,
+			"x": -134.5,
+			"y": 254,
+			"width": 365,
+			"height": 64,
 			"frame": null
 		},
 		"ground14": {
-			"x": 270.5,
-			"y": 503,
+			"x": 46.5,
+			"y": 514,
 			"width": 157,
 			"height": 44,
 			"frame": null
 		},
 		"ground15": {
-			"x": -5.5,
-			"y": 370,
-			"width": 105,
+			"x": 214.5,
+			"y": 292,
+			"width": 157,
 			"height": 44,
-			"frame": null
-		},
-		"ground16": {
-			"x": 346,
-			"y": 319,
-			"width": 57.99999999999999,
-			"height": 34,
-			"frame": null
-		},
-		"ground17": {
-			"x": 435,
-			"y": 226,
-			"width": 57.99999999999999,
-			"height": 34,
-			"frame": null
-		},
-		"ground18": {
-			"x": 588,
-			"y": 117,
-			"width": 57.99999999999999,
-			"height": 34,
-			"frame": null
-		},
-		"ground19": {
-			"x": 855.5,
-			"y": 183.5,
-			"width": 143,
-			"height": 57,
 			"frame": null
 		}
 	},
@@ -147,29 +120,29 @@
 			"frame": null
 		},
 		"red2": {
-			"x": 63,
-			"y": 550,
+			"x": 712,
+			"y": 552,
 			"width": 32,
 			"height": 32,
 			"frame": null
 		},
 		"trigger1": {
-			"x": 240,
-			"y": 76,
+			"x": 191,
+			"y": 548,
 			"width": 32,
 			"height": 32,
 			"frame": null
 		},
 		"trigger2": {
-			"x": 579,
-			"y": 317,
+			"x": 498,
+			"y": 554,
 			"width": 32,
 			"height": 32,
 			"frame": null
 		},
 		"trigger3": {
-			"x": 863,
-			"y": 588,
+			"x": 933,
+			"y": 542,
 			"width": 32,
 			"height": 32,
 			"frame": null
@@ -177,31 +150,24 @@
 	},
 	"bonus": {
 		"bonus1": {
-			"x": 879,
-			"y": 363.6497054104152,
+			"x": 545,
+			"y": 152.6497054104152,
 			"width": 48,
 			"height": 48,
 			"frame": 0
 		},
 		"bonus2": {
-			"x": 656,
-			"y": 255.6497054104152,
+			"x": 419,
+			"y": 126.64970541041521,
 			"width": 48,
 			"height": 48,
-			"frame": 4
-		},
-		"bonus3": {
-			"x": 184,
-			"y": 74,
-			"width": 48,
-			"height": 48,
-			"frame": 2
+			"frame": 0
 		}
 	},
 	"key": {
 		"key1": {
-			"x": 839,
-			"y": 129,
+			"x": 501,
+			"y": 238,
 			"width": 48,
 			"height": 48,
 			"frame": 0
@@ -209,8 +175,8 @@
 	},
 	"troll": {
 		"troll": {
-			"x": 888,
-			"y": 273,
+			"x": 878,
+			"y": 249,
 			"width": 48,
 			"height": 48,
 			"frame": 0
@@ -218,22 +184,22 @@
 	},
 	"rock": {
 		"rock1": {
-			"x": 732,
-			"y": 51,
+			"x": 218,
+			"y": 210,
 			"width": 64,
 			"height": 64,
 			"frame": 0
 		},
 		"rock2": {
-			"x": 509,
-			"y": 253,
+			"x": 31,
+			"y": 43,
 			"width": 64,
 			"height": 64,
 			"frame": 0
 		},
 		"rock3": {
-			"x": 653,
-			"y": 518,
+			"x": 986,
+			"y": 4,
 			"width": 64,
 			"height": 64,
 			"frame": 0
@@ -257,8 +223,8 @@
 	},
 	"door": {
 		"door1": {
-			"x": 528,
-			"y": 522,
+			"x": 958,
+			"y": 298,
 			"width": 64,
 			"height": 64,
 			"frame": 4
