@@ -145,9 +145,9 @@
 		},
 		"ground21": {
 			"x": 931,
-			"y": 16.5,
+			"y": 28,
 			"width": 42,
-			"height": 33,
+			"height": 56,
 			"frame": null
 		}
 	},

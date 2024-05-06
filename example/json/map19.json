@@ -2,23 +2,22 @@
 	"locked": true,
 	"overlay": "assets/rbeach.png",
 	"theEnd": true,
-	"hasCrab": true,
 	"button": {
 		"button1": {
 			"x": 361.4999364318886,
-			"y": 125.5,
+			"y": 123.5,
 			"width": 32,
 			"height": 13,
-			"frame": 24,
+			"frame": 13,
 			"label": "A",
 			"trigger": "gate1"
 		},
 		"button2": {
 			"x": 551.4999248352095,
-			"y": 125.5,
+			"y": 124.5,
 			"width": 32,
 			"height": 13,
-			"frame": 24,
+			"frame": 11,
 			"label": "B",
 			"trigger": "gate2"
 		}
@@ -51,9 +50,9 @@
 		},
 		"ground2": {
 			"x": 342.9999969787599,
-			"y": 331,
+			"y": 329,
 			"width": 327.99999798583997,
-			"height": 22,
+			"height": 26,
 			"frame": null
 		},
 		"ground3": {
@@ -93,9 +92,9 @@
 		},
 		"ground8": {
 			"x": 368.99999908447273,
-			"y": 223.5,
+			"y": 223,
 			"width": 44,
-			"height": 43,
+			"height": 42,
 			"frame": null
 		},
 		"ground9": {
@@ -113,8 +112,8 @@
 			"frame": null
 		},
 		"ground11": {
-			"x": 298.49998919677796,
-			"y": 578,
+			"x": 975.499989196778,
+			"y": 13,
 			"width": 56.99999999999999,
 			"height": 52,
 			"frame": null
@@ -163,9 +162,9 @@
 		},
 		"ground18": {
 			"x": 632.0000101623527,
-			"y": 231,
+			"y": 233.5,
 			"width": 487.99997369384914,
-			"height": 10,
+			"height": 15,
 			"frame": null
 		},
 		"ground19": {
