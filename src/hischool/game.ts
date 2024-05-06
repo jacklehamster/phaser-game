@@ -25,6 +25,7 @@ enum Bonus {
   CLIMB,
   EJECT_POWER,
   UPSIDE_DOWN,
+  GEMINI,
 }
 
 enum BodyEnum {
@@ -194,9 +195,10 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     [Bonus.FREEZE]: "Freeze: The power to freeze other humans.",
     [Bonus.SHRINK]: "Ant man: The power to shrink.",
     [Bonus.RANDOM]: randomPower,
-    [Bonus.SWAP]: "Switcharoo: The power to swap position with the closest human or troll.",
-    [Bonus.EJECT_POWER]: "Eject Power: Existing power will be ejected out, back into a power-up.",
+    [Bonus.SWAP]: "Switcharoo: The power to swap position with the closest person.",
+    [Bonus.EJECT_POWER]: "Eject Power: Existing power will be ejected back out into a power-up.",
     [Bonus.UPSIDE_DOWN]: "Upside down: The power to walk upside down.",
+    [Bonus.GEMINI]: "Gemini: The power to duplicate the body into two.",
 
     //  needs implementation
     [Bonus.CLIMB]: "Wall climber: The ability to climb walls with ease.",
@@ -470,8 +472,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     surprised: number = 0;
 
     constructor(scene: Phaser.Scene, x: number, y: number,
-      platforms: Phaser.Physics.Arcade.StaticGroup,
-      humanGroup: Phaser.Physics.Arcade.Group) {
+      private humanGroup: Phaser.Physics.Arcade.Group, seed?: any) {
       super('hi', scene.physics.add.sprite(x, y, 'hi', EMPTY_FACE_ENUM));
       // scene.physics.add.collider(this.player, platforms);
       humanGroup.add(this.player);
@@ -509,10 +510,11 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         scene.add.sprite(x, y, "hi", 84),  //  flower
 
       );
-      this.randomize(Math.random());
+      this.randomize(seed ?? Math.random());
       this.born = Date.now();
-      this.humanScaleX = Math.random() / 5 + 1;
-      this.humanScaleY = Math.random() / 5 + 1;
+      const rng = alea(this.seed + "");
+      this.humanScaleX = rng() / 3 + 1;
+      this.humanScaleY = rng() / 3 + 1;
       this.setScale(1, this.humanScaleX ?? 1, this.humanScaleY ?? 1);
       if (this.faceSprites[FaceEnum.HAT].frame.name != EMPTY_FACE_ENUM.toString()) {
         this.addHistory(HumanEvent.HAT);
@@ -574,7 +576,10 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       return undefined;
     }
 
-    randomize(seed: any = Math.random()) {
+    randomize(seed: any) {
+      if (this.vanishing) {
+        return;
+      }
       this.seed = seed + "";
       randomSprite(this.seed, this.faceSprites, this.bodySprites, this.naked, this.invisible);
     }
@@ -611,8 +616,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       this.bodySprites.forEach(sprite => sprite.setVisible(true));
       this.faceSprites.forEach(sprite => sprite.setVisible(true));
       this.holdingBonus?.body?.gameObject?.setVisible(true);
-      this.randomize(this.seed);
       this.vanishing = 0;
+      this.randomize(this.seed);
       if (this.flyingLevel) {
         this.flyingLevel = this.player.y - 50;
       }
@@ -902,6 +907,23 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         this.addHistory(HumanEvent.NOT_UPSIDE_DOWN);
       }
 
+      if (newPowerFrame === Bonus.GEMINI) {
+        setTimeout(() => {
+          const { x, y } = this.player;
+          this.dx = -1;
+          const human = new Human(this.player.scene, x + 20, y, this.humanGroup, this.seed);
+          human.dx = 1;
+          humans.push(human);
+
+          const newBonus = createDynamic(undefined, bonusGroup, undefined, 'bonus', x, y, Bonus.GEMINI, BONUS_SIZE, BONUS_SIZE);
+          human.holdingBonus = newBonus;
+          newBonus?.disableBody(true, false);
+          newBonus?.setAlpha(.5);
+          newBonus?.setDisplaySize(32, 32).refreshBody();
+
+        }, 1000);
+      }
+
       switch (newPowerFrame) {
         case Bonus.JUMP:
           this.addHistory(HumanEvent.ACQUIRE_SUPER_JUMP);
@@ -977,10 +999,10 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     }
 
     metAnotherHuman = 0;
-    meetAnotherHuman() {
+    meetAnotherHuman(human: Human) {
       if (Date.now() - this.metAnotherHuman > 10000) {
         this.metAnotherHuman = Date.now();
-        this.addHistory(HumanEvent.MEET_ANOTHER_HUMAN);
+        this.addHistory(this.seed === human.seed ? HumanEvent.TWIN : HumanEvent.MEET_ANOTHER_HUMAN);
       }
     }
   }
@@ -1101,9 +1123,6 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       this.load.audio('repeat', ['assets/repeat.mp3']);
       this.load.audio('trumpet', ['assets/trumpet.mp3']);
       this.load.audio('darkness', ['assets/darkness.mp3']);
-      if (mapJson.overlay) {
-        this.load.image('overlay', mapJson.overlay);
-      }
       if (mapJson.theEnd) {
         this.load.image('the-end', 'assets/the-end.png');
       }
@@ -1111,11 +1130,6 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     }
 
     create() {
-      if (mapJson.overlay) {
-        const overlay = this.add.image(GAMEWIDTH / 2, GAMEHEIGHT / 2, 'overlay').setDisplaySize(GAMEWIDTH, GAMEHEIGHT);
-        overlay.preFX?.addShadow(0, 0, .1, .3, 0, 12, .3);
-
-      }
       //  scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', color: '#fff' });
       if (level) {
         this.timerText = this.add.text(920, 6, '', {
@@ -1703,28 +1717,30 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
 
   function createDynamic(
-    indicators: Phaser.Physics.Arcade.StaticGroup,
+    indicators: Phaser.Physics.Arcade.StaticGroup | undefined,
     platforms: Phaser.Physics.Arcade.Group | undefined,
-    id: string,
+    id: string | undefined,
     key: string,
     x: number, y: number,
     frame?: number,
     width?: number, height?: number,
     subject?: Phaser.GameObjects.Image
   ) {
-    idSet.add(id);
+    if (id) {
+      idSet.add(id);
+    }
     const platform: Phaser.Physics.Arcade.Image | undefined = platforms?.create(x, y, key, frame);
-    const indic = indicators.create(x, y, key, frame);
+    const indic = indicators?.create(x, y, key, frame);
     if (platform) {
       (platform as any).indic = indic;
     }
-    indic.setAlpha(.3);
+    indic?.setAlpha(.3);
     if (width && height) {
       platform?.setDisplaySize(width, height);
-      indic.setDisplaySize(width, height);
+      indic?.setDisplaySize(width, height);
     }
 
-    if (canEditLevel) {
+    if (canEditLevel && indic) {
       let startedMoving = false;
       indic.on('pointermove', (pointer: any, localX: number, localY: number, event: any) => {
         const cursor = "move";
@@ -1753,7 +1769,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
               startedMoving = false;
             });
           }
-        } else {
+        } else if (id) {
           movePlatform(key, id, indic, {
             leftEdge: false, rightEdge: false, topEdge: false, bottomEdge: false,
           }, rect, () => {
@@ -1777,7 +1793,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         });
       });
     } else {
-      indic.setVisible(false);
+      indic?.setVisible(false);
     }
 
     return platform;
@@ -1926,7 +1942,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           });
           this.load.spritesheet('hi',
             'assets/hischooler.png',
-            { frameWidth: 64, frameHeight: 64 }
+            { frameWidth: 68, frameHeight: 68 }
           );
           this.load.spritesheet('troll',
             'assets/troll.png',
@@ -1957,6 +1973,9 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
             { frameWidth: 64, frameHeight: 64 },
           );
           this.load.image('mountain', 'assets/mountainbg.png');
+          if (mapJson.overlay) {
+            this.load.image('overlay', mapJson.overlay);
+          }
         }
       },
       create() {
@@ -1966,6 +1985,12 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
         this.scene.setVisible(false);
         visTime = Date.now() + 500;
+
+
+        if (mapJson.overlay) {
+          const overlay = ui.add.image(GAMEWIDTH / 2, GAMEHEIGHT / 2, 'overlay').setDisplaySize(GAMEWIDTH, GAMEHEIGHT);
+          overlay.preFX?.addShadow(0, 0, .1, .3, 0, 12, .3);
+        }
 
 
         if (level) {
@@ -2026,14 +2051,14 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           const d = createPlatform(doorGroup, id, 'door', x, y);
           d.setBodySize(40, 64);
           if (label) {
-            const labelText = this.add.text(x, y, label, {
+            const labelText = ui.add.text(x, y, label, {
               fontSize: '16pt', color: '#fff',
               shadow: {
                 color: "black",
                 fill: true,
                 offsetX: 1,
                 offsetY: 1,
-              }
+              },
             });
             labelText.setPosition(x - labelText.width / 2, y - labelText.height / 2 - 10);
           }
@@ -2060,19 +2085,15 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         const humanGroup = this.physics.add.group();
         Object.entries(mapJson.human ?? {}).forEach(([id, params]) => {
           const { x, y } = params;
-          const human = new Human(this, x, y, platforms, humanGroup);
+          const human = new Human(this, x, y, humanGroup);
           createDynamic(indicators, undefined, id, "human", x, y, undefined, undefined, undefined, human.player);
           humans.push(human);
         });
 
-        // humans.push(
-        //   new Human(this, 100, 450, platforms, humanGroup),
-        //   new Human(this, 300, 250, platforms, humanGroup),
-        // );
         this.physics.add.collider(humanGroup, platforms);
         this.physics.add.collider(humanGroup, humanGroup, (human1: any, human2: any) => {
-          human1.human.meetAnotherHuman();
-          human2.human.meetAnotherHuman();
+          human1.human.meetAnotherHuman(human2.human);
+          human2.human.meetAnotherHuman(human1.human);
           if (Math.random() < .5) {
             human1.human.speakAI();
           } else {
@@ -2095,8 +2116,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         });
 
         this.physics.add.overlap(humanGroup, humanGroup, (human1: any, human2: any) => {
-          human1.human.meetAnotherHuman();
-          human2.human.meetAnotherHuman();
+          human1.human.meetAnotherHuman(human2.human);
+          human2.human.meetAnotherHuman(human1.human);
           if (human1.human.frozen) {
           } else {
             if (human2.human.getHeldBonus() === Bonus.FREEZE) {
@@ -2219,21 +2240,23 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           const bonus = humanObj.holdingBonus;
           if (bonus?.frame && parseInt(bonus?.frame.name) === Bonus.STRENGTH) {
             if (humanObj.player.body.touching.left || humanObj.player.body.touching.right) {
-              if (!humanObj.firstTimePush) {
-                humanObj.firstTimePush = Date.now();
-                setTimeout(() => {
-                  humanObj.surprised = Date.now();
-                  humanObj.player.setVelocityY(-300);
-                }, 1000);
-              }
-              (rock as any)?.setPushable(true);
-              humanObj.addHistory(HumanEvent.PUSHED_ROCK);
-              clearTimeout((rock as any).timeout);
-              (rock as any).timeout = setTimeout(() => {
-                if ((rock as any).visible) {
-                  (rock as any)?.setPushable(false);
+              if (!(rock as any).pushable) {
+                if (!humanObj.firstTimePush) {
+                  humanObj.firstTimePush = Date.now();
+                  setTimeout(() => {
+                    humanObj.surprised = Date.now();
+                    humanObj.player.setVelocityY(-300);
+                  }, 1000);
                 }
-              }, 200);
+                (rock as any)?.setPushable(true);
+                humanObj.addHistory(HumanEvent.PUSHED_ROCK);
+                clearTimeout((rock as any).timeout);
+                (rock as any).timeout = setTimeout(() => {
+                  if ((rock as any).visible) {
+                    (rock as any)?.setPushable(false);
+                  }
+                }, 200);
+              }
             }
           }
         });
@@ -2318,7 +2341,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
               t.setFillStyle(0xFF0000);
             });
             t.on('pointerdown', () => {
-              (bonus as any).setFrame((parseInt((bonus as any).frame.name) + 1) % 10);
+              (bonus as any).setFrame((parseInt((bonus as any).frame.name) + 1) % 11);
               const p = (bonus as any);
               commit("bonus", id, p.x, p.y, p.displayWidth, p.displayHeight, parseInt(p.frame.name),
                 {
@@ -2465,7 +2488,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           const { x, y, width, height, trigger, label } = params;
           const b = createPlatform(buttonGroup, id, 'button', x, y, width, height);
           if (label) {
-            const labelText = this.add.text(x, y, label, {
+            console.log("ADD LABEL TEXT");
+            const labelText = ui.add.text(x, y, label, {
               fontSize: '14pt', color: '#fff',
               shadow: {
                 color: "black",
@@ -2490,7 +2514,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           const horizontal = width > height;
           const b = createPlatform(gateGroup, id, 'gate', x, y, width, height);
           if (label) {
-            const labelText = this.add.text(x, y, label, {
+            const labelText = ui.add.text(x, y, label, {
               fontSize: '14pt', color: '#fff',
               shadow: {
                 color: "black",
@@ -2591,14 +2615,17 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           humanObj.inWater = Date.now();
         });
 
-        this.physics.add.collider(keyGroup, doorGroup, (key, door) => {
+        const keyToDoor = (key: Phaser.GameObjects.GameObject | Phaser.Tilemaps.Tile, door: Phaser.GameObjects.GameObject | Phaser.Tilemaps.Tile) => {
           if (!((door as any).isOpen)) {
             (door as any).anims.play("door_open");
             (door as any).isOpen = true;
             (key as any).disableBody(true, true);
             zzfx(...[26, , 117, , , .06, 4, .08, -0.1, -6, , , , , , .6, , .04, , .33]); // Random 282
           }
-        });
+        };
+
+        this.physics.add.collider(keyGroup, doorGroup, keyToDoor);
+        this.physics.add.overlap(keyGroup, doorGroup, keyToDoor);
 
         this.physics.add.overlap(doorGroup, humanGroup, (door, human) => {
           const humanObj = (human as any).human as Human;

@@ -1,6 +1,5 @@
 {
 	"locked": true,
-	"nextLevel": "json/map1.json",
 	"key": {
 		"key1": {
 			"x": 28,
@@ -25,7 +24,8 @@
 			"y": 568,
 			"width": 64,
 			"height": 64,
-			"frame": 4
+			"frame": 4,
+			"nextLevel": "json/map1.json"
 		},
 		"door2": {
 			"x": 51,

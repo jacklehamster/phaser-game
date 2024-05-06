@@ -1,8 +1,8 @@
 {
 	"locked": true,
 	"overlay": "assets/overlay3.png",
-	"nextLevel": "json/map5.json",
 	"hasCat": true,
+	"originalLevel": 3,
 	"ground": {
 		"ground1": [
 			800,
@@ -16,10 +16,13 @@
 			469.00000000000006,
 			26
 		],
-		"ground3": [
-			50,
-			350
-		],
+		"ground3": {
+			"x": 52.49999984741213,
+			"y": 350,
+			"width": 404.9999996948243,
+			"height": 32,
+			"frame": null
+		},
 		"ground4": [
 			746.5,
 			153,
@@ -38,12 +41,13 @@
 			43,
 			153
 		],
-		"ground7": [
-			474,
-			250,
-			102,
-			32
-		],
+		"ground7": {
+			"x": 477.499999786377,
+			"y": 250,
+			"width": 95.0000004272461,
+			"height": 32,
+			"frame": null
+		},
 		"ground8": [
 			503,
 			203.5,
@@ -52,10 +56,13 @@
 		]
 	},
 	"trigger": {
-		"red1": [
-			"600-200",
-			"400-10"
-		],
+		"red1": {
+			"x": 409.99999938964845,
+			"y": 388.5,
+			"width": 32,
+			"height": 32,
+			"frame": null
+		},
 		"red2": [
 			"600+200",
 			"400-10"

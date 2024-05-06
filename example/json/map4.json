@@ -1,7 +1,6 @@
 {
 	"locked": true,
 	"overlay": "assets/rockbeach.png",
-	"nextLevel": "json/map5.json",
 	"hasSnail": true,
 	"troll": {
 		"troll": {

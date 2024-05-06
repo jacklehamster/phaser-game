@@ -1,7 +1,7 @@
 {
 	"locked": true,
 	"overlay": "assets/overlay2.png",
-	"nextLevel": "json/map3.json",
+	"originalLevel": 2,
 	"ground": {
 		"ground1": [
 			800,

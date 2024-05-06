@@ -1,7 +1,6 @@
 {
 	"locked": true,
 	"overlay": "assets/overlay-rocky.png",
-	"nextLevel": "json/map4.json",
 	"troll": {
 		"troll": {
 			"x": 118,

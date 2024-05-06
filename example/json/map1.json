@@ -1,8 +1,8 @@
 {
 	"locked": true,
 	"overlay": "assets/overlay1.png",
-	"nextLevel": "json/map2.json",
 	"hasSnail": true,
+	"originalLevel": 1,
 	"troll": {
 		"troll": {
 			"x": 57,

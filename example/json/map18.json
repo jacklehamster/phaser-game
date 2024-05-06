@@ -1,0 +1,297 @@
+{
+	"locked": true,
+	"overlay": "assets/bubbleland.png",
+	"troll": {
+		"troll": {
+			"x": 95.99999761962896,
+			"y": 497,
+			"width": 48,
+			"height": 48,
+			"frame": 0
+		}
+	},
+	"gate": {
+		"gate1": {
+			"x": 558.4999537048368,
+			"y": 197.5,
+			"width": 32,
+			"height": 77,
+			"frame": 14,
+			"label": "A"
+		},
+		"gate2": {
+			"x": 111.49998098754986,
+			"y": 234.5,
+			"width": 221.99998840332097,
+			"height": 27,
+			"frame": 21,
+			"label": "B"
+		}
+	},
+	"button": {
+		"button1": {
+			"x": 780.4999523620634,
+			"y": 234,
+			"width": 32,
+			"height": 10,
+			"frame": 11,
+			"label": "A",
+			"trigger": "gate1"
+		},
+		"button2": {
+			"x": 453.49997232055824,
+			"y": 231,
+			"width": 32,
+			"height": 10,
+			"frame": 13,
+			"trigger": "gate2",
+			"label": "B"
+		},
+		"button3": {
+			"x": 382.4999766540539,
+			"y": 71,
+			"width": 32,
+			"height": 10,
+			"frame": 11,
+			"label": "B",
+			"trigger": "gate2"
+		}
+	},
+	"ground": {
+		"ground1": [
+			800,
+			568,
+			1600,
+			64
+		],
+		"ground2": {
+			"x": 659.9999955749515,
+			"y": 385,
+			"width": 382.00000531005827,
+			"height": 26,
+			"frame": null
+		},
+		"ground3": {
+			"x": 20.999997802734512,
+			"y": 91,
+			"width": 272,
+			"height": 32,
+			"frame": null
+		},
+		"ground4": {
+			"x": 572.9999985046389,
+			"y": 118,
+			"width": 480.00000225830064,
+			"height": 82,
+			"frame": null
+		},
+		"ground5": {
+			"x": 795.5000001220703,
+			"y": 257.5,
+			"width": 107,
+			"height": 39,
+			"frame": null
+		},
+		"ground6": {
+			"x": 831.5,
+			"y": 186,
+			"width": 43,
+			"height": 234,
+			"frame": null
+		},
+		"ground7": {
+			"x": 380.49999572753933,
+			"y": 431.5,
+			"width": 49,
+			"height": 41,
+			"frame": null
+		},
+		"ground8": {
+			"x": 497.49999627685577,
+			"y": 267,
+			"width": 281.0000012207031,
+			"height": 62,
+			"frame": null
+		},
+		"ground9": {
+			"x": 152.9999913940435,
+			"y": 325.5,
+			"width": 192.00000488281225,
+			"height": 33,
+			"frame": null
+		},
+		"ground10": {
+			"x": 194.99999206543018,
+			"y": 444,
+			"width": 411.9999914550786,
+			"height": 32,
+			"frame": null
+		},
+		"ground11": {
+			"x": 597.5000132446281,
+			"y": 544.5,
+			"width": 63,
+			"height": 63,
+			"frame": null
+		},
+		"ground12": {
+			"x": 530.5000210571275,
+			"y": 369,
+			"width": 63,
+			"height": 34,
+			"frame": null
+		},
+		"ground13": {
+			"x": 821.500009582519,
+			"y": 579,
+			"width": 63,
+			"height": 54,
+			"frame": null
+		},
+		"ground14": {
+			"x": 882.4999991455079,
+			"y": 209,
+			"width": 90.99999829101569,
+			"height": 54,
+			"frame": null
+		},
+		"ground15": {
+			"x": 507.50002947997865,
+			"y": 122,
+			"width": 63,
+			"height": 54,
+			"frame": null
+		},
+		"ground16": {
+			"x": 972.5000001831055,
+			"y": 488,
+			"width": 63,
+			"height": 104,
+			"frame": null
+		},
+		"ground17": {
+			"x": 827.4999831542979,
+			"y": 380,
+			"width": 49,
+			"height": 34,
+			"frame": null
+		},
+		"ground18": {
+			"x": 238.50000439453095,
+			"y": 252,
+			"width": 31.000001098632733,
+			"height": 114,
+			"frame": null
+		}
+	},
+	"trigger": {
+		"red1": {
+			"x": 623.9999945068364,
+			"y": 129,
+			"width": 32,
+			"height": 32,
+			"frame": null
+		},
+		"red2": {
+			"x": 758.9999914550785,
+			"y": 118,
+			"width": 32,
+			"height": 32,
+			"frame": null
+		}
+	},
+	"bonus": {
+		"bonus1": {
+			"x": 606.1355536261829,
+			"y": 211,
+			"width": 48,
+			"height": 48,
+			"frame": 5
+		},
+		"bonus2": {
+			"x": 430.1355643683695,
+			"y": 53,
+			"width": 48,
+			"height": 48,
+			"frame": 6
+		},
+		"bonus4": {
+			"x": 531.1355582038191,
+			"y": 329,
+			"width": 48,
+			"height": 48,
+			"frame": 6
+		},
+		"bonus5": {
+			"x": 39.13558823311416,
+			"y": 512,
+			"width": 48,
+			"height": 48,
+			"frame": 9
+		},
+		"bonus3": {
+			"x": 29.135588843465655,
+			"y": 37,
+			"width": 32,
+			"height": 32,
+			"frame": 6
+		}
+	},
+	"key": {
+		"key1": {
+			"x": 744.0000023193359,
+			"y": 25,
+			"width": 48,
+			"height": 48,
+			"frame": 0
+		}
+	},
+	"door": {
+		"door1": {
+			"x": 116.99999822998058,
+			"y": 43,
+			"width": 64,
+			"height": 64,
+			"frame": 6
+		}
+	},
+	"rock": {
+		"rock1": {
+			"x": 486.0000001220702,
+			"y": 43,
+			"width": 64,
+			"height": 64,
+			"frame": 0
+		},
+		"rock2": {
+			"x": 967.9999707031269,
+			"y": 333,
+			"width": 64,
+			"height": 64,
+			"frame": 0
+		}
+	},
+	"human": {
+		"human1": {
+			"x": 691.9999815063488,
+			"y": 283,
+			"width": 32,
+			"height": 32,
+			"frame": null
+		},
+		"human2": {
+			"x": 36.000021545408835,
+			"y": 375,
+			"width": 32,
+			"height": 32,
+			"frame": null
+		},
+		"human3": {
+			"x": 620.9999858398446,
+			"y": 41,
+			"width": 32,
+			"height": 32,
+			"frame": null
+		}
+	}
+}
