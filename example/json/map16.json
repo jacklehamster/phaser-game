@@ -1,6 +1,6 @@
 {
 	"locked": true,
-	"overlay": "assets/overlay8.png",
+	"overlay": "assets/castle.png",
 	"originalLevel": 10,
 	"ground": {
 		"ground1": {
@@ -53,10 +53,10 @@
 			"frame": null
 		},
 		"ground8": {
-			"x": 381,
-			"y": 26.5,
-			"width": 268,
-			"height": 51,
+			"x": 426,
+			"y": 58.5,
+			"width": 192,
+			"height": 23,
 			"frame": null
 		},
 		"ground9": {
@@ -74,7 +74,7 @@
 			"frame": null
 		},
 		"ground11": {
-			"x": 195.5,
+			"x": 190.5,
 			"y": 82.5,
 			"width": 125,
 			"height": 143,
@@ -103,9 +103,9 @@
 		},
 		"ground15": {
 			"x": 449.5,
-			"y": 133,
+			"y": 139.5,
 			"width": 105,
-			"height": 44,
+			"height": 29,
 			"frame": null
 		},
 		"ground16": {
@@ -167,22 +167,22 @@
 			"frame": null
 		},
 		"trigger1": {
-			"x": 240,
-			"y": 76,
+			"x": 222,
+			"y": 75,
 			"width": 32,
 			"height": 32,
 			"frame": null
 		},
 		"trigger2": {
-			"x": 579,
-			"y": 317,
+			"x": 581,
+			"y": 415,
 			"width": 32,
 			"height": 32,
 			"frame": null
 		},
 		"trigger3": {
-			"x": 933,
-			"y": 542,
+			"x": 864,
+			"y": 579,
 			"width": 32,
 			"height": 32,
 			"frame": null

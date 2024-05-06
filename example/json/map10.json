@@ -14,9 +14,9 @@
 	"ground": {
 		"ground1": {
 			"x": 800,
-			"y": 578.5,
+			"y": 581,
 			"width": 1600,
-			"height": 43,
+			"height": 38,
 			"frame": null
 		},
 		"ground2": {
@@ -42,9 +42,9 @@
 		},
 		"ground5": {
 			"x": 559.5,
-			"y": 349,
+			"y": 350.5,
 			"width": 49,
-			"height": 36,
+			"height": 33,
 			"frame": null
 		},
 		"ground6": {
@@ -70,9 +70,9 @@
 		},
 		"ground9": {
 			"x": 632.5,
-			"y": 255.5,
+			"y": 257,
 			"width": 105,
-			"height": 25,
+			"height": 22,
 			"frame": null
 		},
 		"ground10": {
