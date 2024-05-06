@@ -53,6 +53,7 @@ export enum HumanEvent {
   GLASSES,
   VR_HEADSET,
   TWIN,
+  DANGEROUS_CRAB,
 };
 
 
@@ -112,4 +113,5 @@ export const DICO: Record<HumanEvent, string> = {
   [HumanEvent.GLASSES]: "The human is wearing glasses.",
   [HumanEvent.VR_HEADSET]: "The human is wearing a VR headset.",
   [HumanEvent.TWIN]: "The human just met another human that looks exactly like them, the twin they never new existed. They greet.",
+  [HumanEvent.DANGEROUS_CRAB]: "The human sees a dangerous looking crab, doesn't want to get close."
 }

@@ -1,7 +1,5 @@
 {
-	"locked": true,
-	"overlay": "assets/overlay5.png",
-	"originalLevel": 6,
+	"locked": false,
 	"ground": {
 		"ground1": {
 			"x": 800,
@@ -11,8 +9,8 @@
 			"frame": null
 		},
 		"ground2": {
-			"x": 795,
-			"y": 411.5,
+			"x": 851,
+			"y": 285.5,
 			"width": 166,
 			"height": 103,
 			"frame": null
@@ -90,10 +88,10 @@
 	},
 	"trigger": {
 		"red1": {
-			"x": 173,
+			"x": 174.5,
 			"y": 70,
-			"width": 32,
-			"height": 38,
+			"width": 37,
+			"height": 36,
 			"frame": null
 		},
 		"red2": {
@@ -106,25 +104,25 @@
 	},
 	"bonus": {
 		"bonus1": {
-			"x": 609,
-			"y": 288.6497054104152,
-			"width": 48,
-			"height": 48,
+			"x": 636,
+			"y": 48.64970541041521,
+			"width": 40,
+			"height": 40,
 			"frame": 2
 		},
 		"bonus2": {
-			"x": 493.8666604722208,
-			"y": 166,
-			"width": 48,
-			"height": 48,
-			"frame": 0
+			"x": 424.8666604722208,
+			"y": 116.99999999999999,
+			"width": 40,
+			"height": 40,
+			"frame": 3
 		},
 		"bonus3": {
 			"x": 767.8666604722208,
-			"y": 34,
-			"width": 48,
-			"height": 48,
-			"frame": 1
+			"y": 97,
+			"width": 40,
+			"height": 40,
+			"frame": 6
 		}
 	},
 	"key": {
@@ -138,6 +136,13 @@
 	},
 	"troll": {
 		"troll": {
+			"x": 239,
+			"y": 76,
+			"width": 48,
+			"height": 48,
+			"frame": 0
+		},
+		"troll2": {
 			"x": 256,
 			"y": 280,
 			"width": 48,
@@ -186,8 +191,8 @@
 	},
 	"door": {
 		"door1": {
-			"x": 843,
-			"y": 328,
+			"x": 892,
+			"y": 44,
 			"width": 64,
 			"height": 64,
 			"frame": 4

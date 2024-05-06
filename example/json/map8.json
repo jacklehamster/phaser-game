@@ -27,9 +27,9 @@
 		},
 		"ground4": {
 			"x": 769.5,
-			"y": 95,
+			"y": 94.5,
 			"width": 269,
-			"height": 32,
+			"height": 17,
 			"frame": null
 		},
 		"ground5": {
@@ -57,7 +57,7 @@
 			"x": 332,
 			"y": 93,
 			"width": 224.00000000000003,
-			"height": 42,
+			"height": 32,
 			"frame": null
 		},
 		"ground9": {
