@@ -1,5 +1,5 @@
 {
-	"locked": false,
+	"locked": true,
 	"overlay": "assets/rockbeach.png",
 	"hasSnail": true,
 	"troll": {
