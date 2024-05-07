@@ -268,14 +268,17 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     destroyed?: boolean;
     vanishing: number = 0;
     onPlatform?: Phaser.Types.Physics.Arcade.GameObjectWithBody;
+    isTroll = true;
 
-    constructor(scene: Phaser.Scene, x: number, y: number) {
+    constructor(scene: Phaser.Scene, x: number, y: number, trollGroup: Phaser.Physics.Arcade.Group) {
       super('troll', scene.physics.add.sprite(x, y, 'troll', 1));
       this.player.body.allowDrag = true;
+      (this.player as any).troll = this;
 
       this.trollSprites.push(
         scene.add.sprite(0, 0, "troll", 0),
       );
+      trollGroup.add(this.player);
     }
 
     destroy() {
@@ -335,7 +338,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       if (heldBonus) {
         const frame = this.trollSprites[0]?.anims.currentFrame?.index;
         const holdShift = (frame ?? 0) % 3;
-        heldBonus.body?.gameObject.setPosition(this.player.x - (this.holdingTemp ? 30 : 0) * this.dx, this.player.y - 40 + holdShift);
+        heldBonus.body?.gameObject.setPosition(this.player.x - (this.holdingTemp ? 30 : 0) * this.dx, this.player.y - ((heldBonus as any).isKey ? 15 : 30) + holdShift);
       }
 
       if (this.airborne && Date.now() - this.airborne > 200 && this.player.body.touching.down) {
@@ -383,7 +386,11 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         if (item) {
           this.holdingBonus = item;
           (item as any).disableBody(true, false);
+          (item as any).isKey = isKey;
           zzfx(...[, , 763, .01, .09, .11, , 1.14, 5.9, , 176, .03, , , , , , .7, .04]); // Pickup 250
+          if (isKey) {
+            (item as any).setFrame(43);
+          }
 
           this.lastHold = Date.now();
 
@@ -392,9 +399,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
             if (isKey) {
               ui?.showPower("Press P again to toss", bonus);
             } else {
-              ui?.showPower(
-                POWER_DESC[parseInt(bonus.frame.name) as Bonus],
-                bonus);
+              ui?.showPower(POWER_DESC[parseInt(bonus.frame.name) as Bonus], bonus);
             }
           }
         }
@@ -471,6 +476,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     vanishing = 0;
     groundY: number | undefined;
     surprised: number = 0;
+    isTroll = false;
 
     constructor(scene: Phaser.Scene, x: number, y: number,
       private humanGroup: Phaser.Physics.Arcade.Group, seed?: any) {
@@ -628,7 +634,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     closestHuman() {
       let min = Number.MAX_SAFE_INTEGER;
       let closest: Human | Troll | undefined;
-      const elems = [...humans, troll];
+      const elems = [...humans, ...trolls];
       for (const h of elems) {
         if (h !== this) {
           const dx = h.player.x - this.player.x;
@@ -716,7 +722,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
                 ch.vanish();
                 const { x, y } = this.player;
                 setTimeout(() => {
-                  const offsetY = ch === troll ? 48 / 2 - 64 / 2 : 0
+                  const offsetY = ch.isTroll ? 48 / 2 - 64 / 2 : 0
                   this.player.setPosition(ch.player.x, ch.player.y + offsetY);
                   this.reappear();
                 }, 200);
@@ -863,8 +869,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           (this.holdingBonus as any).enableBody(true, (this.holdingBonus as any).x, (this.holdingBonus as any).y, true, true);
           this.holdingBonus.body?.gameObject.setAlpha(1);
           (this.holdingBonus as any).setDisplaySize(BONUS_SIZE, BONUS_SIZE).refreshBody();
-          const trollDirection = troll.player.x - (bonus as any).x;
-          (this.holdingBonus as any).setVelocity(800 * Math.sign(trollDirection), -200);
+          (this.holdingBonus as any).setVelocity(800 * Math.sign(this.dx), -200);
         } else {
           this.holdingBonus.destroy(true);
         }
@@ -1900,7 +1905,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
   let cursors: Phaser.Types.Input.Keyboard.CursorKeys | undefined;
   const humans: Human[] = [];
   (window as any).humans = humans;
-  let troll: Troll;
+  // let trollo: Troll;
+  const trolls: Troll[] = [];
   let mainCamera: Phaser.Cameras.Scene2D.Camera;
   let preTime: number = 0;
   let sky: Phaser.GameObjects.Image;
@@ -1982,6 +1988,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         }
       },
       create() {
+        //        this.physics.world.drawDebug = false;
+
         gameScene = this.scene;
 
         this.scene.launch('UIScene');
@@ -1999,11 +2007,12 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         if (level) {
           sky = this.add.image(GAMEWIDTH / 2, GAMEHEIGHT / 2, 'sky').setDisplaySize(GAMEWIDTH, GAMEHEIGHT);
           sky.setTint(0xffffff, 0xccffff, 0xcc66ff * Math.random() | 0x666699, 0xff44cc * Math.random() | 0x884488);
+          sky.preFX?.addBlur(2);  //  high quality blur
 
           (window as any).sky = sky;
           const mount = this.add.image(GAMEWIDTH / 2, GAMEHEIGHT / 2, 'mountain').setDisplaySize(GAMEWIDTH, GAMEHEIGHT)
             .setAlpha(.4);
-          mount.preFX?.addBlur();
+          mount.preFX?.addBlur(2);  //  high quality blur
         }
 
         const platforms = this.physics.add.staticGroup();
@@ -2074,15 +2083,25 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           }
         });
 
+        const trollGroup = this.physics.add.group({
+          collideWorldBounds: true,
+          allowGravity: true,
+          bounceY: .2,
+          bounceX: .2,
+          allowDrag: true,
+          useDamping: true,
+        });
         Object.entries(mapJson.troll ?? {}).forEach(([id, params]) => {
           const { x, y } = params;
-          troll = new Troll(this, x, y);
+          const troll = new Troll(this, x, y, trollGroup);
           troll.setScale(1.5, 1.5);
-          createDynamic(indicators, undefined, "troll", "troll", x, y, undefined, 48, 48, troll.player);
+          createDynamic(indicators, undefined, id, "troll", x, y, undefined, 48, 48, troll.player);
+          trolls.push(troll);
         });
-        if (!troll) {
-          troll = new Troll(this, 200, 300);
+        if (!trolls.length) {
+          const troll = new Troll(this, 200, 300, trollGroup);
           troll.setScale(1.5, 1.5);
+          trolls.push(troll);
         }
 
         const humanGroup = this.physics.add.group();
@@ -2196,11 +2215,12 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           };
         }
 
-        this.physics.add.collider(troll.player, platforms, (player, platform) => {
+        this.physics.add.collider(trollGroup, platforms, (player, platform) => {
           const p = (player as Phaser.Types.Physics.Arcade.GameObjectWithBody);
+          const troll = (p as any).troll;
           if (p.body.touching.down) {
-            if (!hero.onPlatform) {
-              hero.onPlatform = platform as Phaser.Types.Physics.Arcade.GameObjectWithBody;
+            if (!troll.onPlatform) {
+              troll.onPlatform = platform as Phaser.Types.Physics.Arcade.GameObjectWithBody;
             }
           }
         });;
@@ -2263,11 +2283,12 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
             }
           }
         });
-        this.physics.add.collider(troll.player, rocks, (player, rock) => {
+        this.physics.add.collider(trollGroup, rocks, (player, rock) => {
           const p = (player as Phaser.Types.Physics.Arcade.GameObjectWithBody);
+          const troll = (p as any).troll as Troll;
           if (p.body.touching.down) {
-            if (!hero.onPlatform) {
-              hero.onPlatform = rock as Phaser.Types.Physics.Arcade.GameObjectWithBody;
+            if (!troll.onPlatform) {
+              troll.onPlatform = rock as Phaser.Types.Physics.Arcade.GameObjectWithBody;
             }
           }
         });
@@ -2369,7 +2390,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           object.body?.gameObject?.setDamping(true);
           object.body?.gameObject?.setDrag(.01);
           object.body?.gameObject?.setCollideWorldBounds(true);
-          object.body?.gameObject?.preFX.addGlow(0xccffff, 1);
+          object.body?.gameObject?.preFX.addGlow(0xffffcc, 1);
         });
         //        this.physics.add.collider(bonusGroup, bonusGroup);
         this.physics.add.collider(humanGroup, bonusGroup, (human, bonus) => {
@@ -2385,7 +2406,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         this.physics.add.collider(bonusGroup, platforms, (bonus, platform) => {
         }, undefined, this);
 
-        this.physics.add.collider(troll.player, bonusGroup);
+        this.physics.add.collider(trollGroup, bonusGroup);
 
 
         this.anims.create({
@@ -2456,7 +2477,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           allowGravity: true,
         });
         this.physics.add.collider(keyGroup, platforms);
-        this.physics.add.collider(troll.player, keyGroup);
+        this.physics.add.collider(trollGroup, keyGroup);
         this.physics.add.collider(rocks, keyGroup);
         this.physics.add.collider(keyGroup, humanGroup, (key, human) => {
           const h: Human = (human as any).human;
@@ -2469,18 +2490,20 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         Object.entries(mapJson.key ?? {}).forEach(([id, params]) => {
           if (!Array.isArray(params)) {
             const { x, y, frame } = params;
-            const b = createDynamic(indicators, keyGroup, id, 'key', x, y, frame, 48, 48);
+            const b = createDynamic(indicators, keyGroup, id, 'key', x, y, frame, 45, 45);
             if (b) {
               (b as any).anims.play('key_anim');
               (b as any).isKey = true;
               b.setDamping(true);
               b.setDrag(.01);
               b.setCollideWorldBounds(true);
+              b.preFX?.addGlow(0xccffff, 1);
+
             }
             return;
           }
           const [x, y, frame] = params.map(p => num(p));
-          const b = createDynamic(indicators, keyGroup, id, 'key', x, y, frame, 48, 48);
+          const b = createDynamic(indicators, keyGroup, id, 'key', x, y, frame, 45, 45);
           if (b) {
             (b as any).anims.play('key_anim');
             (b as any).isKey = true;
@@ -2556,7 +2579,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
             };
           }
         });
-        this.physics.add.collider(troll.player, gateGroup);
+        this.physics.add.collider(trollGroup, gateGroup);
         this.physics.add.collider(humanGroup, gateGroup);
         this.physics.add.collider(rocks, gateGroup);
         this.physics.add.collider(keyGroup, gateGroup);
@@ -2582,7 +2605,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
             }
           }
         };
-        this.physics.add.collider(troll.player, buttonGroup, onCollidePushButton);
+        this.physics.add.collider(trollGroup, buttonGroup, onCollidePushButton);
         this.physics.add.collider(humanGroup, buttonGroup, onCollidePushButton);
         this.physics.add.collider(rocks, buttonGroup, onCollidePushButton);
         this.physics.add.collider(keyGroup, buttonGroup, onCollidePushButton);
@@ -2598,14 +2621,14 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
             (b as any).setBodySize(64, 20);
           }
         });
-        this.physics.add.overlap(waterGroup, troll.player, (water, player) => {
+        this.physics.add.overlap(waterGroup, trollGroup, (water, player) => {
           if (!gameOver) {
             setTimeout(() => {
               this.physics.pause();
             }, 200);
             const p = player as any;
 
-            hero.setTint(0xff0000);
+            p.troll.setTint(0xff0000);
             ui.gameOver();
 
             gameOver = true;
@@ -2647,9 +2670,9 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           (object as any).anims.play("door");
         });
 
-        this.physics.add.overlap(troll.player, doorGroup, (player, door) => {
+        this.physics.add.overlap(trollGroup, doorGroup, (player, door) => {
           if ((door as any).isOpen) {
-            troll.destroy();
+            (player as any).troll.destroy();
             (door as any).anims.play("door_close");
             zzfx(...[1.03, , 415, .05, .3, .46, 1, 1.91, 2.7, , , , .16, , 11, .1, , .69, .24, .27]); // Powerup 271
             ui.victory();
@@ -2699,27 +2722,28 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
         this.physics.add.collider(bombs, platforms);
 
-        const hero = troll;
-        this.physics.add.collider(hero.player, bombs, (player, bomb) => {
+        //        const hero = trollo;
+        this.physics.add.collider(trollGroup, bombs, (player, bomb) => {
           this.physics.pause();
           const p = player as any;
 
-          hero.setTint(0xff0000);
+          p.troll.setTint(0xff0000);
           ui.gameOver();
 
           gameOver = true;
         }, undefined, this);
 
-        this.physics.add.collider(hero.player, humanGroup, (player, human) => {
-          const humanObj = (human as any).human;
-          if (humanObj.frozen || humanObj.vanishing || troll.vanishing) {
+        this.physics.add.collider(trollGroup, humanGroup, (player, human) => {
+          const humanObj = (human as any).human as Human;
+          const trollObj = (player as any).troll as Troll;
+          if (humanObj.frozen || humanObj.vanishing || trollObj.vanishing) {
             return;
           }
 
           this.physics.pause();
           const p = player as any;
 
-          hero.setTint(0xff0000);
+          trollObj.setTint(0xff0000);
           ui.gameOver();
           zzfx(...[1.32, , 692, .04, .21, .24, , .16, , , , , .05, , 9, .1, .03, .69, .2, .11]); // Powerup 256
 
@@ -2735,36 +2759,42 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         //console.log(dt);
         preTime = now;
 
-        const hero = troll;
+        //        const hero = trollo;
         if (visTime && now - visTime > 500) {
-          troll.player.scene.scene.setVisible(true);
+          trolls[0].player.scene.scene.setVisible(true);
           visTime = 0;
         }
 
         if (gameOver) {
           const flipX = Math.random() < .5 ? true : false;
-          hero.setFlipX(flipX);
+          trolls.forEach(troll => troll.setFlipX(flipX));
           return;
         }
         const dx = (cursors?.left.isDown || (cursors as any)?.left2.isDown ? -1 : 0) + (cursors?.right.isDown || (cursors as any)?.right2.isDown ? 1 : 0);
 
-        hero.dx = dx;
+        trolls.forEach(troll => troll.dx = dx);
 
         if (cursors?.space.isDown || cursors?.up.isDown) {
-          hero.tryJump(zzfx);
+          trolls.forEach(troll => troll.tryJump(zzfx));
         }
 
         if ((cursors as any).p.isDown || (cursors as any).shift.isDown) {
-          hero.hold(bonusGroup, zzfx, ui);
-          hero.hold(keyGroup, zzfx, ui, true);
-          ui.showCanGrab(false);
-        } else if (!hero.holdingBonus) {
-          const item = hero.foreObject(bonusGroup) ?? hero.foreObject(keyGroup);
-          if (item) {
-            ui.showCanGrab(true);
-          } else {
+          trolls.forEach(troll => {
+            troll.hold(bonusGroup, zzfx, ui);
+            troll.hold(keyGroup, zzfx, ui, true);
             ui.showCanGrab(false);
-          }
+          });
+        } else {
+          trolls.forEach(troll => {
+            if (!troll.holdingBonus) {
+              const item = troll.foreObject(bonusGroup) ?? troll.foreObject(keyGroup);
+              if (item) {
+                ui.showCanGrab(true);
+              } else {
+                ui.showCanGrab(false);
+              }
+            }
+          });
         }
 
         rocks.getChildren().forEach(rock => {
@@ -2783,26 +2813,28 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         //   sky.setPosition(mainCamera.scrollX + GAMEWIDTH / 2, mainCamera.scrollY + GAMEHEIGHT / 2);
         // }
         humans.forEach(human => {
-          if (!human.sawTroll) {
-            const dx = Math.abs(human.player.x - troll.player.x);
-            const dy = Math.abs(human.player.y - troll.player.y);
-            if (dy < 50 && dx < 150) {
-              human.sawTroll = Date.now();
-              human.dx = Math.sign(troll.player.x - human.player.x);
-              const flipX = human.dx < 0;
-              human.setFlipX(flipX);
+          trolls.forEach(troll => {
+            if (!human.sawTroll) {
+              const dx = Math.abs(human.player.x - troll.player.x);
+              const dy = Math.abs(human.player.y - troll.player.y);
+              if (dy < 50 && dx < 150) {
+                human.sawTroll = Date.now();
+                human.dx = Math.sign(troll.player.x - human.player.x);
+                const flipX = human.dx < 0;
+                human.setFlipX(flipX);
 
-              human.addHistory(HumanEvent.SAW_TROLL);
-              human.surprised = Date.now();
-              if (!human.inWater && human.player.body.touching.down) {
-                human.player.setVelocityY(-300);
+                human.addHistory(HumanEvent.SAW_TROLL);
+                human.surprised = Date.now();
+                if (!human.inWater && human.player.body.touching.down) {
+                  human.player.setVelocityY(-300);
+                }
+                human.lastStill = Date.now();
               }
-              human.lastStill = Date.now();
             }
-          }
+          });
         });
         humans.forEach(human => human.update(dt, zzfx));
-        troll.update(dt, zzfx);
+        trolls.forEach(troll => troll.update(dt, zzfx));
 
 
         if (Date.now() - lastDialog > 10000 && !victory && !gameOver) {
