@@ -270,7 +270,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     onPlatform?: Phaser.Types.Physics.Arcade.GameObjectWithBody;
     isTroll = true;
 
-    constructor(scene: Phaser.Scene, x: number, y: number, trollGroup: Phaser.Physics.Arcade.Group) {
+    constructor(scene: Phaser.Scene, x: number, y: number, trollGroup: Phaser.Physics.Arcade.Group, hue: number = 0) {
       super('troll', scene.physics.add.sprite(x, y, 'troll', 1));
       this.player.body.allowDrag = true;
       (this.player as any).troll = this;
@@ -278,6 +278,11 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       this.trollSprites.push(
         scene.add.sprite(0, 0, "troll", 0),
       );
+      if (hue) {
+        this.trollSprites.forEach(sprite => {
+          sprite.preFX?.addColorMatrix().hue(hue);
+        });
+      }
       trollGroup.add(this.player);
     }
 
@@ -338,7 +343,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       if (heldBonus) {
         const frame = this.trollSprites[0]?.anims.currentFrame?.index;
         const holdShift = (frame ?? 0) % 3;
-        heldBonus.body?.gameObject.setPosition(this.player.x - (this.holdingTemp ? 30 : 0) * this.dx, this.player.y - ((heldBonus as any).isKey ? 15 : 30) + holdShift);
+        heldBonus.body?.gameObject.setPosition(this.player.x - (this.holdingTemp ? 30 : 0) * this.dx, this.player.y - ((heldBonus as any).isKey ? 20 : 30) + holdShift);
       }
 
       if (this.airborne && Date.now() - this.airborne > 200 && this.player.body.touching.down) {
@@ -746,8 +751,9 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       this.player.setDrag(this.player.body.touching.down ? .0001 : 1);
 
       const headShift = this.bodySprites[BodyEnum.BODY]?.anims.currentFrame?.index === 1 || this.player.anims.currentFrame?.index === 3 ? -2 : 0;
-      this.bodySprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y + (this.inWater ? -5 * Math.sin(Date.now() / 300) : 0)));
-      this.faceSprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y + (this.inWater ? -5 * Math.sin(Date.now() / 300) : 0) + 2 * headShift * this.player.scale));
+      const scaleShift = -(this.humanScaleY - 1) * 10;
+      this.bodySprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y + scaleShift + (this.inWater ? -5 * Math.sin(Date.now() / 300) : 0)));
+      this.faceSprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y + scaleShift + (this.inWater ? -5 * Math.sin(Date.now() / 300) : 0) + 2 * headShift * this.player.scale));
 
       if (this.holdingBonus) {
         this.holdingBonus.body?.gameObject.setPosition(this.player.x, this.player.y - 50 * this.player.scale);
@@ -855,7 +861,9 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
     setScale(playerScale: number, scaleX: number, scaleY: number) {
       this.player.setScale(playerScale);
-      [...this.bodySprites, ...this.faceSprites].forEach(sprite => sprite.setScale(scaleX, scaleY));
+      [...this.bodySprites, ...this.faceSprites].forEach(sprite => {
+        sprite.setScale(scaleX, scaleY);
+      });
     }
 
     getPower(bonus: Phaser.GameObjects.GameObject, zzfx: any) {
@@ -1034,19 +1042,27 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     } else {
       bodySprites[BodyEnum.SKIRT].setVisible(true);
     }
-    bodySprites[BodyEnum.PANTS].setTint(Math.floor(rng() * 0xffffff));
-    bodySprites[BodyEnum.SKIRT].setTint(Math.floor(rng() * 0xffffff));
-    bodySprites[BodyEnum.SHOES].setTint(Math.floor(rng() * 0xffffff));
-    bodySprites[BodyEnum.SMALLSHOES].setTint(Math.floor(rng() * 0xffffff));
+    // bodySprites[BodyEnum.PANTS].postFX.addColorMatrix().hue(rng() * 360);
+    // bodySprites[BodyEnum.SKIRT].postFX.addColorMatrix().hue(rng() * 360);
+    // bodySprites[BodyEnum.SHOES].postFX.addColorMatrix().hue(rng() * 360);
+    // bodySprites[BodyEnum.SMALLSHOES].postFX.addColorMatrix().hue(rng() * 360);
+    // bodySprites[BodyEnum.SHIRT].postFX.addColorMatrix().hue(rng() * 360);
+
+    bodySprites[BodyEnum.PANTS].setTint(rng() * 0xffffff);
+    bodySprites[BodyEnum.SKIRT].setTint(rng() * 0xffffff);
+    bodySprites[BodyEnum.SHOES].setTint(rng() * 0xffffff);
+    bodySprites[BodyEnum.SMALLSHOES].setTint(rng() * 0xffffff);
+    bodySprites[BodyEnum.SHIRT].setTint(rng() * 0xffffff);
+
+
     bodySprites[BodyEnum.UNDERWEAR].setTint(Math.floor(rng() * 0xffffff) | 0x999999);
-    bodySprites[BodyEnum.SHIRT].setTint(Math.floor(rng() * 0xffffff));
     const skinColor = Math.floor(rng() * 0xFFFFFF) | 0xaa9999;
     faceSprites[FaceEnum.SHAPE].setTint(skinColor);
     bodySprites[BodyEnum.BODY].setTint(skinColor);
     //    faceSprites[FaceEnum.HAT].setTint(Math.floor(rng() * 0xffffff));
 
     //  SHIRT
-    bodySprites[BodyEnum.SHIRT].setVisible(rng() < .7);
+    bodySprites[BodyEnum.SHIRT].setVisible(rng() < .7 || !bodySprites[BodyEnum.PANTS].visible);
 
     // SHOES
     if (rng() < .1) {
@@ -2099,7 +2115,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         });
         Object.entries(mapJson.troll ?? {}).forEach(([id, params]) => {
           const { x, y } = params;
-          const troll = new Troll(this, x, y, trollGroup);
+          const troll = new Troll(this, x, y, trollGroup, trolls.length === 0 ? 0 : -100);
           troll.setScale(1.5, 1.5);
           createDynamic(indicators, undefined, id, "troll", x, y, undefined, 48, 48, troll.player);
           trolls.push(troll);
@@ -2242,6 +2258,8 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           right: Phaser.Input.Keyboard.KeyCodes.RIGHT,
           space: Phaser.Input.Keyboard.KeyCodes.SPACE,
           p: Phaser.Input.Keyboard.KeyCodes.P,
+          e: Phaser.Input.Keyboard.KeyCodes.E,
+          f: Phaser.Input.Keyboard.KeyCodes.F,
           shift: Phaser.Input.Keyboard.KeyCodes.SHIFT,
           r: Phaser.Input.Keyboard.KeyCodes.R,
         }) as Phaser.Types.Input.Keyboard.CursorKeys;
@@ -2776,37 +2794,48 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           trolls.forEach(troll => troll.setFlipX(flipX));
           return;
         }
-        const dx = (cursors?.left.isDown || (cursors as any)?.left2.isDown ? -1 : 0) + (cursors?.right.isDown || (cursors as any)?.right2.isDown ? 1 : 0);
 
-        trolls.forEach(troll => troll.dx = dx);
+        const dxKeys = [
+          ((cursors as any)?.left2.isDown ? -1 : 0) + ((cursors as any)?.right2.isDown ? 1 : 0),
+          (cursors?.left.isDown ? -1 : 0) + (cursors?.right.isDown ? 1 : 0)];
+        const jumpKeys = [cursors?.space.isDown || (cursors as any)?.up2.isDown, cursors?.up.isDown];
+        const pickingUpKeys = [(cursors as any).f.isDown, (cursors as any).p.isDown];
 
-        //  player 1 jump
-        if (cursors?.space.isDown || (cursors as any)?.up2.isDown) {
-          trolls[0].tryJump(zzfx);
-        }
-        //  player 2 jump
-        if (cursors?.up.isDown) {
-          trolls[trolls.length - 1].tryJump(zzfx);
-        }
-
-        if ((cursors as any).p.isDown || (cursors as any).shift.isDown) {
-          trolls.forEach(troll => {
+        if (trolls.length > 1) {
+          trolls.forEach((troll, index) => {
+            troll.dx = dxKeys[index];
+            if (jumpKeys[index]) {
+              troll.tryJump(zzfx);
+            }
+            if (pickingUpKeys[index]) {
+              troll.hold(bonusGroup, zzfx, ui);
+              troll.hold(keyGroup, zzfx, ui, true);
+              ui.showCanGrab(false);
+            }
+          });
+        } else {
+          const troll = trolls[0];
+          troll.dx = dxKeys[0] || dxKeys[1];
+          if (jumpKeys[0] || jumpKeys[1]) {
+            troll.tryJump(zzfx);
+          }
+          if (pickingUpKeys[0] || pickingUpKeys[1]) {
             troll.hold(bonusGroup, zzfx, ui);
             troll.hold(keyGroup, zzfx, ui, true);
             ui.showCanGrab(false);
-          });
-        } else {
-          trolls.forEach(troll => {
-            if (!troll.holdingBonus) {
-              const item = troll.foreObject(bonusGroup) ?? troll.foreObject(keyGroup);
-              if (item) {
-                ui.showCanGrab(true);
-              } else {
-                ui.showCanGrab(false);
-              }
-            }
-          });
+          }
         }
+
+        trolls.forEach(troll => {
+          if (!troll.holdingBonus) {
+            const item = troll.foreObject(bonusGroup) ?? troll.foreObject(keyGroup);
+            if (item) {
+              ui.showCanGrab(true);
+            } else {
+              ui.showCanGrab(false);
+            }
+          }
+        });
 
         rocks.getChildren().forEach(rock => {
           const topMap: Map<Phaser.Types.Physics.Arcade.GameObjectWithBody | Phaser.Tilemaps.Tile, [number, number]> = (rock as any).topMap;
