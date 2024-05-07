@@ -14,6 +14,21 @@ import { DICO, HumanEvent } from "./human-events";
 import { OPEN_AI_URL } from "..";
 import { Newgrounds } from "medal-popup";
 
+enum Icons {
+  KEY = 0,
+  DOOR = 4,
+  BLUE_FRAME = 42,
+  GREEN_FRAME = 43,
+  ARROW = 44,
+  TRASH = 47,
+  TRASH_OPENED = 48,
+  POINTER = 49,
+  DUPLICATE = 50,
+  PLATFORM = 51,
+  HUMAN = 54,
+  CANCEL = 55,
+};
+
 enum Bonus {
   JUMP,
   LEVITATE,
@@ -239,11 +254,58 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
   const canEditLevel = conf.canEdit && !(forceLock ?? mapJson.locked);
 
-  const { zzfx } = require("zzfx");
+  const { zzfx: zz } = require("zzfx");
+  const zzfx = (...params: any[]) => {
+    if (game.sound.mute) {
+      return;
+    }
+    zz(...params);
+  };
   const idSet = new Set();
 
   function getVoices() {
     return speechSynthesis.getVoices().filter(v => v.name.indexOf("Google") !== 0);
+  }
+
+  let selectedElement: Phaser.GameObjects.GameObject | undefined;
+  let onDeselect: (() => void) | undefined;
+  let onDeleteSelected: (() => void) | undefined;
+
+  function setUiIndex(index: number) {
+    uiIndex = index;
+    uiBacks.forEach((back, idx) => back.setFrame(uiIndex === idx ? Icons.GREEN_FRAME : Icons.BLUE_FRAME));
+  }
+
+  let cancelButtonIndex = -1;
+  let uiIndex = -1;
+  const uiBacks: Phaser.GameObjects.Image[] = [];
+  function createUIButton(scene: Phaser.Scene, index: number, key: string, icon: Icons | number, cursor: string, desc: string, cancelButton: boolean = false) {
+    const px = 50 + index * 48;
+    const py = GAMEHEIGHT - 64;
+    const iconBack = scene.add.image(px, py, 'items', Icons.BLUE_FRAME);
+    uiBacks[index] = iconBack;
+    iconBack.preFX?.addShadow();
+    iconBack.setDisplaySize(40, 40);
+    iconBack.setInteractive({ useHandCursor: true });
+    iconBack.setFrame(uiIndex === index ? Icons.GREEN_FRAME : Icons.BLUE_FRAME);
+    const button = scene.add.image(px, py, key, icon);
+    button.setDisplaySize(40, 40);
+    iconBack.on('pointerover', () => {
+      iconBack.postFX.addGlow(0xffffff, 2);
+      ui?.showPower(desc, button);
+    });
+    iconBack.on('pointerout', () => {
+      iconBack.postFX.clear();
+      ui?.showPower();
+    });
+    iconBack.on('pointerdown', () => {
+      gameScene?.scene.input.setDefaultCursor(cursor);
+      setUiIndex(!cancelButton ? index : -1);
+    });
+    const arrow = scene.add.sprite(GAMEWIDTH / 2, GAMEHEIGHT - 24, 'items', Icons.ARROW);
+    arrow.play('yellow_arrow');
+    arrow.setVisible(false);
+
   }
 
   class Elem {
@@ -288,12 +350,9 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
     destroy() {
       this.destroyed = true;
-      this.player.disableBody(true, true);
-      this.player.setActive(false);
+      this.player.destroy(true);
       this.trollSprites.forEach(sprite => {
-        sprite.body?.gameObject.disableBody(true, true);
-        sprite.setVisible(false);
-        sprite.setActive(false);
+        sprite.destroy(true);
       });
     }
 
@@ -394,7 +453,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           (item as any).isKey = isKey;
           zzfx(...[, , 763, .01, .09, .11, , 1.14, 5.9, , 176, .03, , , , , , .7, .04]); // Pickup 250
           if (isKey) {
-            (item as any).setFrame(43);
+            (item as any).setFrame(41);
           }
 
           this.lastHold = Date.now();
@@ -1019,6 +1078,16 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         this.addHistory(this.seed === human.seed ? HumanEvent.TWIN : HumanEvent.MEET_ANOTHER_HUMAN);
       }
     }
+
+    destroy() {
+      this.player.destroy(true);
+      this.faceSprites.forEach(sprite => {
+        sprite.destroy(true);
+      });
+      this.bodySprites.forEach(sprite => {
+        sprite.destroy(true);
+      });
+    }
   }
 
   function randomSprite(
@@ -1152,6 +1221,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     }
 
     create() {
+
       //  scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', color: '#fff' });
       if (level) {
         this.timerText = this.add.text(920, 6, '', {
@@ -1170,6 +1240,33 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         this.music.loop = true;
         this.music.play();
       }
+
+      if (canEditLevel) {
+        createUIButton(this, 0, "items", Icons.PLATFORM, "", "Add platform");
+        createUIButton(this, 1, "items", Icons.HUMAN, "", "Add human");
+        createUIButton(this, 2, "items", Icons.KEY, "", "Add key");
+        createUIButton(this, 3, "items", Icons.DOOR, "", "Add door");
+        createUIButton(this, 4, "bonus", 0, "", "Add powerup");
+        createUIButton(this, 5, "items", Icons.TRASH, "url(cursor/trash-icon.cur), pointer", "Delete elements");
+        createUIButton(this, 6, "items", Icons.CANCEL, "", "Cancel", true);
+      }
+
+      const mute = localStorage.getItem("mute") === "mute";
+      game.sound.mute = mute;
+      const muteButton = this.add.image(GAMEWIDTH - 110, GAMEHEIGHT - 20, "items", mute ? 53 : 52);
+      muteButton.setDisplaySize(30, 30);
+      muteButton.preFX?.addShadow();
+      muteButton.setInteractive({ useHandCursor: true }).on('pointerdown', () => {
+        const newMute = !game.sound.mute;
+        game.sound.mute = newMute;
+        localStorage.setItem("mute", newMute ? "mute" : "");
+        muteButton.setFrame(newMute ? 53 : 52)
+      }).on('pointerover', () => {
+        muteButton.postFX.addGlow(0xffffff, 1);
+      }).on('pointerout', () => {
+        muteButton.postFX.clear();
+      });
+
 
       const restartButton = this.add.text(GAMEWIDTH - 85, GAMEHEIGHT - 30, 'RESTART', {
         color: '#9cf',
@@ -1330,6 +1427,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           const rng = alea(human?.seed + "");
           this.chatText?.setText("");
           const utterance = new SpeechSynthesisUtterance(message);
+          utterance.volume = game.sound.mute ? 0 : 1;
           const voices = getVoices();
           utterance.voice = voices[Math.floor(rng() * voices.length)];
           console.log("VOICE", utterance.voice.name, utterance.voice.lang);
@@ -1422,7 +1520,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       if (this.chatFollow) {
         this.chatText?.setPosition(Math.min(GAMEWIDTH - this.chatText.width, Math.max(0, this.chatFollow.x - this.chatText.width / 2)), Math.max(30, this.chatFollow.y - 50 - this.chatText.height));
       }
-      if ((cursors as any).r.isDown) {
+      if (Phaser.Input.Keyboard.JustDown((cursors as any).r)) {
         this.showRestart();
       }
     }
@@ -1643,6 +1741,39 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     }
   }
 
+  function makeBonusChangeTriangle(scene: Phaser.Scene, bonus: any, id?: string) {
+    if (!bonus) {
+      return;
+    }
+    const t = (bonus as any).triangle = scene.add.triangle((bonus as any).indic.x, (bonus as any).indic.y + 8, 0, 0, 16, 8, 0, 16, 0xFF0000);
+    t.setInteractive({ useHandCursor: true });
+    t.on('pointerover', () => {
+      t.setFillStyle(0xFFFF00);
+    });
+    t.on('pointerout', () => {
+      t.setFillStyle(0xFF0000);
+      ui?.showPower();
+    });
+    t.on('pointerdown', () => {
+      const frame = (parseInt((bonus as any).frame.name) + 1) % 11;
+      (bonus as any).setFrame(frame);
+      (bonus as any).indic.setFrame(frame);
+      ui?.showPower(POWER_DESC[parseInt(bonus.frame.name) as Bonus], bonus);
+
+      const p = (bonus as any);
+      if (id) {
+        commit("bonus", id, p.x, p.y, p.displayWidth, p.displayHeight, parseInt(p.frame.name),
+          {
+            label: p.label,
+            lockedByLevel: p.lockedByLevel,
+            nextLevel: p.nextLevel,
+            trigger: p.trigger,
+            horizontal: p.horizontal,
+          });
+      }
+    });
+  }
+
   async function commit(type: string, id: string, x: number, y: number, width: number, height: number, frame?: number,
     extra?: any,
   ) {
@@ -1654,6 +1785,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           jsonUrl,
           type,
           id,
+          deleted: extra?.deleted,
           item: {
             x, y,
             width, height,
@@ -1681,7 +1813,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
   function movePlatform(key: string, id: string, platform: Phaser.Physics.Arcade.Image,
     { leftEdge, rightEdge, topEdge, bottomEdge }: { leftEdge?: boolean, rightEdge?: boolean, topEdge?: boolean, bottomEdge?: boolean },
     rect?: Phaser.GameObjects.Rectangle,
-    doneMoving?: () => void,
+    doneMoving?: (didMove: boolean) => void,
   ) {
     const posX = platform.x;
     const posY = platform.y;
@@ -1689,7 +1821,9 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     const preY = platform.scene.input.mousePointer.y;
     const platformW = platform.displayWidth;
     const platformH = platform.displayHeight;
+    let didMove = false;
     const onMove = (e: MouseEvent) => {
+      didMove = true;
       const mouseX = platform.scene.input.mousePointer.x;
       const mouseY = platform.scene.input.mousePointer.y;
       const dx = mouseX - preX, dy = mouseY - preY;
@@ -1722,15 +1856,17 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     document.addEventListener("mouseup", () => {
       document.removeEventListener("mousemove", onMove);
       const p = (platform as any);
-      commit(key, id, platform.x, platform.y, platform.displayWidth, platform.displayHeight, parseInt(platform.frame.name),
-        {
-          label: p.label,
-          lockedByLevel: p.lockedByLevel,
-          nextLevel: p.nextLevel,
-          trigger: p.trigger,
-          horizontal: p.horizontal,
-        });
-      doneMoving?.();
+      if (didMove) {
+        commit(key, id, platform.x, platform.y, platform.displayWidth, platform.displayHeight, parseInt(platform.frame.name),
+          {
+            label: p.label,
+            lockedByLevel: p.lockedByLevel,
+            nextLevel: p.nextLevel,
+            trigger: p.trigger,
+            horizontal: p.horizontal,
+          });
+      }
+      doneMoving?.(didMove);
     }, { once: true });
   }
 
@@ -1748,13 +1884,21 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     x: number, y: number,
     frame?: number,
     width?: number, height?: number,
-    subject?: Phaser.GameObjects.Image
+    subject?: Phaser.GameObjects.Image,
+    options: {
+      indicKey?: string;
+      canDelete?: (t: any) => boolean;
+      canCopy?: () => boolean;
+      onDelete?: (gameObject?: Phaser.GameObjects.GameObject, indic?: Phaser.GameObjects.GameObject) => void;
+      onCopy?: (result?: Phaser.GameObjects.GameObject, id?: string) => void;
+      onCreate?: (oldIndic?: Phaser.GameObjects.GameObject, id?: string) => any;
+    } = {}
   ) {
     if (id) {
       idSet.add(id);
     }
     const platform: Phaser.Physics.Arcade.Image | undefined = platforms?.create(x, y, key, frame);
-    const indic = indicators?.create(x, y, key, frame);
+    const indic = indicators?.create(x, y, options.indicKey ?? key, frame);
     if (platform) {
       (platform as any).indic = indic;
     }
@@ -1767,16 +1911,47 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     if (canEditLevel && indic) {
       let startedMoving = false;
       indic.on('pointermove', (pointer: any, localX: number, localY: number, event: any) => {
-        const cursor = "move";
+        const moveOrPointer = selectedElement !== indic ? "pointer" : "move";
+        const cursor = startedMoving ? "grab" : moveOrPointer;
         indic.scene.input.setDefaultCursor(cursor);
       });
+
+      let rect: Phaser.GameObjects.Rectangle | undefined;
+      function setSelected(selected: boolean) {
+        if (selected) {
+          const scene: Phaser.Scene = indic.scene;
+          rect = scene.add.rectangle(indic.x, indic.y, indic.displayWidth, indic.displayHeight);
+          rect.setStrokeStyle(4, 0xefc53f);
+          onDeselect = () => setSelected(false);
+          onDeleteSelected = options.canDelete && !options.canDelete?.(indic) ? undefined : () => {
+            indic?.destroy(true);
+            platform?.destroy(true);
+            options?.onDelete?.(platform, indic);
+            if (id) {
+              commit(key, id, 0, 0, 0, 0, undefined, {
+                deleted: true
+              });
+              idSet.delete(id);
+            }
+          };
+          selectedElement = indic;
+        } else {
+          rect?.destroy(true);
+          rect = undefined;
+          onDeselect = undefined;
+          onDeleteSelected = undefined;
+          selectedElement = undefined;
+        }
+      }
 
       indic.on('pointerdown', (pointer: any, localX: number, localY: number, event: Event) => {
         if (startedMoving) {
           return;
         }
+        onDeselect?.();
+        setSelected(true);
         startedMoving = true;
-        if (cursors?.shift.isDown && platform) {
+        if (cursors?.shift.isDown && (!options.canCopy || options.canCopy())) {
           let id = key;
           for (let i = 1; i < 100000; i++) {
             if (!idSet.has(key + i)) {
@@ -1784,43 +1959,61 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
               break;
             }
           }
-          const p: Phaser.Physics.Arcade.Image | undefined = createDynamic(indicators, platforms, id, key, platform.x, platform.y, frame);
-          if (p) {
-            movePlatform(key, id, (p as any).indic, {
+          if (platforms) {
+            const p: Phaser.Physics.Arcade.Image | undefined = createDynamic(indicators, platforms, id, key, indic.x, indic.y, frame, width, height, undefined, options);
+            if (p) {
+              movePlatform(key, id, (p as any).indic, {
+                leftEdge: false, rightEdge: false, topEdge: false, bottomEdge: false,
+              }, rect, (didMove: boolean) => {
+                if (didMove) {
+                  p.setPosition((p as any).indic.x, (p as any).indic.y);
+                }
+                startedMoving = false;
+              });
+              options.onCopy?.(p, id);
+            }
+          } else {
+            const p: any = options.onCreate?.(indic, id);
+            movePlatform(key, id, p.indic, {
               leftEdge: false, rightEdge: false, topEdge: false, bottomEdge: false,
-            }, rect, () => {
-              p.setPosition((p as any).indic.x, (p as any).indic.y);
+            }, rect, (didMove: boolean) => {
+              if (didMove) {
+                p.setPosition((p as any).indic.x, (p as any).indic.y);
+              }
               startedMoving = false;
             });
           }
         } else if (id) {
           movePlatform(key, id, indic, {
             leftEdge: false, rightEdge: false, topEdge: false, bottomEdge: false,
-          }, rect, () => {
-            platform?.setPosition(indic.x, indic.y);
-            subject?.setPosition(indic.x, indic.y);
+          }, rect, (didMove: boolean) => {
+            if (didMove) {
+              platform?.setPosition(indic.x, indic.y);
+              if ((subject as any)?.human) {
+                (subject as any).human.dx = 0;
+                (subject as any).human.born = Date.now();
+                subject?.body?.gameObject.setVelocityX(0);
+              }
+              subject?.setPosition(indic.x, indic.y);
+            }
             startedMoving = false;
           });
         }
       });
 
-      let rect: Phaser.GameObjects.Rectangle | undefined;
       indic.setInteractive().on('pointerover', function (pointer: any, localX: any, localY: any, event: any) {
-        const scene: Phaser.Scene = indic.scene;
-        rect = scene.add.rectangle(indic.x, indic.y, indic.displayWidth, indic.displayHeight);
-        rect.setStrokeStyle(4, 0xefc53f);
+        indic.postFX.addGlow(0xffffff, 1);
 
         indic.once('pointerout', function (pointer: any, localX: any, localY: any, event: any) {
+          indic.postFX.clear();
           indic.scene.input.setDefaultCursor("auto");
-          rect?.destroy(true);
-          rect = undefined;
         });
       });
     } else {
       indic?.setVisible(false);
     }
 
-    return platform;
+    return platform ?? indic;
   }
 
   //  size 400,32
@@ -1849,26 +2042,58 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
     if (canEditLevel) {
       let startedMoving = false;
-      platform.on('pointermove', (pointer: any, localX: number, localY: number, event: any) => {
+      function updateSelection(localX: number, localY: number) {
         const { leftEdge, rightEdge, topEdge, bottomEdge } = edges(localX, localY, options.noResize);
-
-        const cursor = options.noResize ? "move" : leftEdge && topEdge || rightEdge && bottomEdge
-          ? "nwse-resize"
-          : rightEdge && topEdge || leftEdge && bottomEdge
-            ? "nesw-resize"
-            : leftEdge || rightEdge
-              ? "ew-resize"
-              : topEdge || bottomEdge
-                ? "ns-resize"
-                : "move";
+        const moveOrPointer = selectedElement !== platform ? "pointer" : "move";
+        const cursor = startedMoving && (!leftEdge && !rightEdge && !topEdge && !bottomEdge)
+          ? "grab"
+          : options.noResize ? moveOrPointer : leftEdge && topEdge || rightEdge && bottomEdge
+            ? "nwse-resize"
+            : rightEdge && topEdge || leftEdge && bottomEdge
+              ? "nesw-resize"
+              : leftEdge || rightEdge
+                ? "ew-resize"
+                : topEdge || bottomEdge
+                  ? "ns-resize"
+                  : moveOrPointer;
 
         platform.scene.input.setDefaultCursor(cursor);
+      }
+      platform.on('pointermove', (pointer: Phaser.Input.Pointer, localX: number, localY: number, event: any) => {
+        updateSelection(localX, localY);
       });
 
+      let rect: Phaser.GameObjects.Rectangle | undefined;
+      function setSelected(selected: boolean) {
+        if (selected) {
+          const scene: Phaser.Scene = platform.scene;
+          rect = scene.add.rectangle(platform.x, platform.y, platform.displayWidth, platform.displayHeight);
+          rect.setStrokeStyle(4, 0xefc53f);
+          onDeselect = () => setSelected(false);
+          onDeleteSelected = () => {
+            commit(key, id, 0, 0, 0, 0, undefined, {
+              deleted: true
+            });
+            idSet.delete(id);
+            platform.destroy(true);
+          };
+          selectedElement = platform;
+          scene.children.bringToTop(selectedElement);
+        } else {
+          rect?.destroy(true);
+          rect = undefined;
+          onDeselect = undefined;
+          onDeleteSelected = undefined;
+          selectedElement = undefined;
+        }
+      }
       platform.on('pointerdown', (pointer: any, localX: number, localY: number, event: Event) => {
         if (startedMoving) {
           return;
         }
+        onDeselect?.();
+        setSelected(true);
+        updateSelection(localX, localY);
         startedMoving = true;
         const { leftEdge, rightEdge, topEdge, bottomEdge } = edges(localX, localY, options.noResize);
         let p = platform;
@@ -1891,16 +2116,11 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         }
       });
 
-      let rect: Phaser.GameObjects.Rectangle | undefined;
       platform.setInteractive().on('pointerover', function (pointer: any, localX: any, localY: any, event: any) {
-        const scene: Phaser.Scene = platform.scene;
-        rect = scene.add.rectangle(platform.x, platform.y, platform.displayWidth, platform.displayHeight);
-        rect.setStrokeStyle(4, 0xefc53f);
-
+        platform.postFX.addGlow(0xffffff, 1);
         platform.once('pointerout', function (pointer: any, localX: any, localY: any, event: any) {
+          platform.postFX.clear();
           platform.scene.input.setDefaultCursor("auto");
-          rect?.destroy(true);
-          rect = undefined;
         });
       });
     }
@@ -2021,6 +2241,9 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         if (mapJson.overlay) {
           const overlay = ui.add.image(GAMEWIDTH / 2, GAMEHEIGHT / 2, 'overlay').setDisplaySize(GAMEWIDTH, GAMEHEIGHT);
           overlay.preFX?.addShadow(0, 0, .1, .3, 0, 12, .3);
+          if (canEditLevel) {
+            overlay.setAlpha(.5);
+          }
         }
 
 
@@ -2028,6 +2251,9 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           sky = this.add.image(GAMEWIDTH / 2, GAMEHEIGHT / 2, 'sky').setDisplaySize(GAMEWIDTH, GAMEHEIGHT);
           sky.setTint(0xffffff, 0xccffff, 0xcc66ff * Math.random() | 0x666699, 0xff44cc * Math.random() | 0x884488);
           sky.preFX?.addBlur(2);  //  high quality blur
+          if (canEditLevel) {
+            sky.setInteractive().on("pointerdown", () => onDeselect?.());
+          }
 
           (window as any).sky = sky;
           const mount = this.add.image(GAMEWIDTH / 2, GAMEHEIGHT / 2, 'mountain').setDisplaySize(GAMEWIDTH, GAMEHEIGHT)
@@ -2046,8 +2272,11 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
             }
             const p = createPlatform(platforms, id, 'ground', x, y, width, height);
             (p as any).lockedByLevel = lockedByLevel;
-            p.setAlpha(.3);
-
+            if (!canEditLevel) {
+              p.setAlpha(.3);
+            } else {
+              p.preFX?.addGlow(0x000000, 0, 1, false);
+            }
             if (lockedByLevel && !unlockedLevel(lockedByLevel)) {
               p.setAlpha(.2);
               p.setActive(false);
@@ -2115,9 +2344,39 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         });
         Object.entries(mapJson.troll ?? {}).forEach(([id, params]) => {
           const { x, y } = params;
-          const troll = new Troll(this, x, y, trollGroup, trolls.length === 0 ? 0 : -100);
+          const hue = trolls.length === 0 ? 0 : -100;
+          const troll = new Troll(this, x, y, trollGroup, hue);
           troll.setScale(1.5, 1.5);
-          createDynamic(indicators, undefined, id, "troll", x, y, undefined, 48, 48, troll.player);
+          const indicOptions = {
+            canDelete(indic: any) {
+              return trolls.length > 1 && trolls.indexOf(indic.troll) === 1;
+            },
+            onDelete(_: any, indic: any) {
+              const troll = indic.troll;
+              const index = trolls.findIndex(t => t === troll);
+              if (index >= 0) {
+                trolls.splice(index, 1);
+                troll.destroy();
+              }
+            },
+            canCopy() {
+              return trolls.length < 2;
+            },
+            onCreate: (oldIndic: any, id?: string) => {
+              const hue = -100;
+              const troll = new Troll(this, oldIndic.x, oldIndic.y, trollGroup, -100);
+              troll.setScale(1.5, 1.5);
+              const indic = createDynamic(indicators, undefined, id, "troll", x, y, undefined, 48, 48, troll.player, indicOptions);
+              indic?.preFX?.addColorMatrix().hue(hue);
+              (indic as any).troll = troll;
+              trolls.push(troll);
+              (troll.player as any).indic = indic;
+              return troll.player;
+            }
+          };
+          const indic = createDynamic(indicators, undefined, id, "troll", x, y, undefined, 48, 48, troll.player, indicOptions);
+          indic?.preFX?.addColorMatrix().hue(hue);
+          (indic as any).troll = troll;
           trolls.push(troll);
         });
         if (!trolls.length) {
@@ -2130,7 +2389,18 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         Object.entries(mapJson.human ?? {}).forEach(([id, params]) => {
           const { x, y } = params;
           const human = new Human(this, x, y, humanGroup);
-          createDynamic(indicators, undefined, id, "human", x, y, undefined, undefined, undefined, human.player);
+          createDynamic(indicators, undefined, id, "human", x, y, 54, undefined, undefined, human.player, {
+            indicKey: "items",
+            onDelete(obj: any) {
+              const human = obj.human;
+              human.destroy();
+              const index = humans.findIndex(h => h === human);
+              humans.splice(index, 1);
+            },
+            onCopy(result: any, id) {
+              humans.push(result.human);
+            },
+          });
           humans.push(human);
         });
 
@@ -2262,6 +2532,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           f: Phaser.Input.Keyboard.KeyCodes.F,
           shift: Phaser.Input.Keyboard.KeyCodes.SHIFT,
           r: Phaser.Input.Keyboard.KeyCodes.R,
+          delete: Phaser.Input.Keyboard.KeyCodes.BACKSPACE,
         }) as Phaser.Types.Input.Keyboard.CursorKeys;
 
         const triggers = this.physics.add.staticGroup({
@@ -2373,38 +2644,39 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         });
 
         Object.entries(mapJson.bonus ?? {}).forEach(([id, params]) => {
-          let bonus;
+          let bonus: any;
           if (!Array.isArray(params)) {
             const { x, y, frame } = params;
-            bonus = createDynamic(indicators, bonusGroup, id, 'bonus', x, y, frame, BONUS_SIZE, BONUS_SIZE);
+            bonus = createDynamic(indicators, bonusGroup, id, 'bonus', x, y, frame, BONUS_SIZE, BONUS_SIZE, undefined, {
+              onDelete(bonus) {
+                (bonus as any).triangle?.destroy(true);
+              },
+              onCopy: (result, id) => {
+                makeBonusChangeTriangle(this, result, id);
+                bonuses.push(result);
+              },
+            });
           } else {
             const [x, y, frame] = params.map(p => num(p));
-            bonus = createDynamic(indicators, bonusGroup, id, 'bonus', x, y, frame, BONUS_SIZE, BONUS_SIZE);
+            bonus = createDynamic(indicators, bonusGroup, id, 'bonus', x, y, frame, BONUS_SIZE, BONUS_SIZE, undefined, {
+              onDelete(bonus) {
+                (bonus as any).triangle?.destroy(true);
+              },
+              onCopy: (result, id) => {
+                makeBonusChangeTriangle(this, result, id);
+                bonuses.push(result);
+
+                result?.body?.gameObject?.setPushable(false);
+                result?.body?.gameObject?.setDamping(true);
+                result?.body?.gameObject?.setDrag(.01);
+                result?.body?.gameObject?.setCollideWorldBounds(true);
+                result?.body?.gameObject?.preFX.addGlow(0xffffcc, 1);
+
+              },
+            });
           }
           if (canEditLevel) {
-            const t = (bonus as any).triangle = this.add.triangle((bonus as any).indic.x, (bonus as any).indic.y + 8, 0, 0, 16, 8, 0, 16, 0xFF0000);
-            t.setInteractive({ useHandCursor: true });
-            t.on('pointerover', () => {
-              t.setFillStyle(0xFFFF00);
-            });
-            t.on('pointerout', () => {
-              t.setFillStyle(0xFF0000);
-            });
-            t.on('pointerdown', () => {
-              const frame = (parseInt((bonus as any).frame.name) + 1) % 11;
-              (bonus as any).setFrame(frame);
-              (bonus as any).indic.setFrame(frame);
-              const p = (bonus as any);
-              commit("bonus", id, p.x, p.y, p.displayWidth, p.displayHeight, parseInt(p.frame.name),
-                {
-                  label: p.label,
-                  lockedByLevel: p.lockedByLevel,
-                  nextLevel: p.nextLevel,
-                  trigger: p.trigger,
-                  horizontal: p.horizontal,
-                });
-
-            });
+            makeBonusChangeTriangle(this, bonus, id);
           }
           bonuses.push(bonus);
         });
@@ -2496,6 +2768,12 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           frames: this.anims.generateFrameNumbers('items', { frames: [40, 39, 38, 37, 36, 35, 34] }),
           frameRate: 25,
         });
+        this.anims.create({
+          key: `yellow_arrow`,
+          frames: this.anims.generateFrameNumbers('items', { frames: [44, 45, 46, 45] }),
+          frameRate: 10,
+          repeat: -1,
+        });
 
         keyGroup = this.physics.add.group({
           allowGravity: true,
@@ -2514,7 +2792,16 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         Object.entries(mapJson.key ?? {}).forEach(([id, params]) => {
           if (!Array.isArray(params)) {
             const { x, y, frame } = params;
-            const b = createDynamic(indicators, keyGroup, id, 'key', x, y, frame, 45, 45);
+            const b = createDynamic(indicators, keyGroup, id, 'key', x, y, frame, 45, 45, undefined, {
+              onCopy(b: any) {
+                (b as any).anims.play('key_anim');
+                (b as any).isKey = true;
+                b.setDamping(true);
+                b.setDrag(.01);
+                b.setCollideWorldBounds(true);
+                b.preFX?.addGlow(0xccffff, 1);
+              },
+            });
             if (b) {
               (b as any).anims.play('key_anim');
               (b as any).isKey = true;
@@ -2522,12 +2809,20 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
               b.setDrag(.01);
               b.setCollideWorldBounds(true);
               b.preFX?.addGlow(0xccffff, 1);
-
             }
             return;
           }
           const [x, y, frame] = params.map(p => num(p));
-          const b = createDynamic(indicators, keyGroup, id, 'key', x, y, frame, 45, 45);
+          const b = createDynamic(indicators, keyGroup, id, 'key', x, y, frame, 45, 45, undefined, {
+            onCopy(b: any) {
+              (b as any).anims.play('key_anim');
+              (b as any).isKey = true;
+              b.setDamping(true);
+              b.setDrag(.01);
+              b.setCollideWorldBounds(true);
+              b.preFX?.addGlow(0xccffff, 1);
+            },
+          });
           if (b) {
             (b as any).anims.play('key_anim');
             (b as any).isKey = true;
@@ -2795,11 +3090,21 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           return;
         }
 
+        if (canEditLevel) {
+          if (Phaser.Input.Keyboard.JustDown((cursors as any).delete)) {
+            onDeleteSelected?.();
+            onDeselect?.();
+          }
+        }
+
         const dxKeys = [
           ((cursors as any)?.left2.isDown ? -1 : 0) + ((cursors as any)?.right2.isDown ? 1 : 0),
           (cursors?.left.isDown ? -1 : 0) + (cursors?.right.isDown ? 1 : 0)];
         const jumpKeys = [cursors?.space.isDown || (cursors as any)?.up2.isDown, cursors?.up.isDown];
-        const pickingUpKeys = [(cursors as any).f.isDown, (cursors as any).p.isDown];
+        const pickingUpKeys = [
+          Phaser.Input.Keyboard.JustDown((cursors as any).f),
+          Phaser.Input.Keyboard.JustDown((cursors as any).p),
+        ];
 
         if (trolls.length > 1) {
           trolls.forEach((troll, index) => {

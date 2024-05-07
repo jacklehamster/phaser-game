@@ -22,6 +22,7 @@ interface Payload {
   jsonUrl: string;
   type: string;
   id: string;
+  deleted?: boolean;
   item: {
     x: number; y: number;
     width: number; height: number;
@@ -29,13 +30,14 @@ interface Payload {
   };
 }
 
+app.get("/cursor/*any", serveStatic("/", { middlewareMode: "bao" }));
 app.get("/assets/*any", serveStatic("/", { middlewareMode: "bao" }));
 app.get("/dist/*any", serveStatic("/", { middlewareMode: "bao" }));
 app.get("/json/*any", serveStatic("/", { middlewareMode: "bao" }));
 app.get("/", serveStatic("/", { middlewareMode: "bao" }));
 app.get("/favicon.ico", serveStatic("/", { middlewareMode: "bao" }));
 app.post("/lock", async (context: any) => {
-  const payload: { jsonUrl: string; locked: boolean } = await context.req.json() as { jsonUrl: string; locked: boolean };
+  const payload: { jsonUrl: string; locked: boolean; } = await context.req.json() as { jsonUrl: string; locked: boolean };
   const mapText = fs.readFileSync(payload.jsonUrl, 'utf-8');
   const map = JSON.parse(mapText);
   map.locked = !!payload.locked;
@@ -60,9 +62,13 @@ app.post("/save", async (context: any) => {
   //   payload.width,
   //   payload.height,
   // ];
-  map[payload.type][payload.id] = {
-    ...payload.item,
-  };
+  if (payload.deleted) {
+    delete map[payload.type][payload.id];
+  } else {
+    map[payload.type][payload.id] = {
+      ...payload.item,
+    };
+  }
 
   //  fs.copyFileSync(payload.jsonUrl, payload.jsonUrl + ".bak");
   fs.writeFileSync(payload.jsonUrl, JSON.stringify(map, null, "\t"));
@@ -70,7 +76,7 @@ app.post("/save", async (context: any) => {
   return context.sendPrettyJson({
     success: true,
   });
-})
+});
 
 storage.init().then(() => {
   console.log("initialized storage");
