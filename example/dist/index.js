@@ -3379,8 +3379,10 @@ async function PL(C, j, q, S) {
       return;
     }
     const $0 = (m?.left.isDown || m?.left2.isDown ? -1 : 0) + (m?.right.isDown || m?.right2.isDown ? 1 : 0);
-    if (p.forEach((Q0) => Q0.dx = $0), m?.space.isDown || m?.up.isDown)
-      p.forEach((Q0) => Q0.tryJump(V));
+    if (p.forEach((Q0) => Q0.dx = $0), m?.space.isDown || m?.up2.isDown)
+      p[0].tryJump(V);
+    if (m?.up.isDown)
+      p[p.length - 1].tryJump(V);
     if (m.p.isDown || m.shift.isDown)
       p.forEach((Q0) => {
         Q0.hold(n, V, x), Q0.hold(s, V, x, true), x.showCanGrab(false);

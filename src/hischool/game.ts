@@ -2780,8 +2780,13 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
         trolls.forEach(troll => troll.dx = dx);
 
-        if (cursors?.space.isDown || cursors?.up.isDown) {
-          trolls.forEach(troll => troll.tryJump(zzfx));
+        //  player 1 jump
+        if (cursors?.space.isDown || (cursors as any)?.up2.isDown) {
+          trolls[0].tryJump(zzfx);
+        }
+        //  player 2 jump
+        if (cursors?.up.isDown) {
+          trolls[trolls.length - 1].tryJump(zzfx);
         }
 
         if ((cursors as any).p.isDown || (cursors as any).shift.isDown) {
