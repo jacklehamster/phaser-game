@@ -1663,7 +1663,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
 
 
   function movePlatform(key: string, id: string, platform: Phaser.Physics.Arcade.Image,
-    { leftEdge, rightEdge, topEdge, bottomEdge }: { leftEdge: boolean, rightEdge: boolean, topEdge: boolean, bottomEdge: boolean },
+    { leftEdge, rightEdge, topEdge, bottomEdge }: { leftEdge?: boolean, rightEdge?: boolean, topEdge?: boolean, bottomEdge?: boolean },
     rect?: Phaser.GameObjects.Rectangle,
     doneMoving?: () => void,
   ) {
@@ -1813,6 +1813,9 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
     key: string,
     x: number, y: number,
     width?: number, height?: number,
+    options: {
+      noResize?: boolean;
+    } = {}
   ) {
     idSet.add(id);
     const platform: Phaser.Physics.Arcade.Image = platforms.create(x, y, key);
@@ -1820,20 +1823,20 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
       platform.setSize(width, height).refreshBody();
       platform.setDisplaySize(width, height).refreshBody();
     }
-    function edges(localX: number, localY: number) {
-      const leftEdge = localX < 5;
-      const rightEdge = localX > (platform.width) - 5;
-      const topEdge = localY < 5;
-      const bottomEdge = localY > (platform.height) - 5;
+    function edges(localX: number, localY: number, noResize?: boolean) {
+      const leftEdge = !noResize && localX < 5 / platform.scaleX;
+      const rightEdge = !noResize && localX > (platform.width) - 5 / platform.scaleX;
+      const topEdge = !noResize && localY < 5 / platform.scaleY;
+      const bottomEdge = !noResize && localY > (platform.height) - 5 / platform.scaleY;
       return { leftEdge, rightEdge, topEdge, bottomEdge };
     }
 
     if (canEditLevel) {
       let startedMoving = false;
       platform.on('pointermove', (pointer: any, localX: number, localY: number, event: any) => {
-        const { leftEdge, rightEdge, topEdge, bottomEdge } = edges(localX, localY);
+        const { leftEdge, rightEdge, topEdge, bottomEdge } = edges(localX, localY, options.noResize);
 
-        const cursor = leftEdge && topEdge || rightEdge && bottomEdge
+        const cursor = options.noResize ? "move" : leftEdge && topEdge || rightEdge && bottomEdge
           ? "nwse-resize"
           : rightEdge && topEdge || leftEdge && bottomEdge
             ? "nesw-resize"
@@ -1851,7 +1854,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           return;
         }
         startedMoving = true;
-        const { leftEdge, rightEdge, topEdge, bottomEdge } = edges(localX, localY);
+        const { leftEdge, rightEdge, topEdge, bottomEdge } = edges(localX, localY, options.noResize);
         let p = platform;
         if (cursors?.shift.isDown) {
           let id = key;
@@ -1936,6 +1939,7 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
         gravity: { x: 0, y: 2000 },
         debug: !mapJson.locked,
         fps: 60,
+        debugShowStaticBody: false,
       },
     },
     scene: [{
@@ -2060,7 +2064,9 @@ export async function createHighSchoolGame(jsonUrl: string | undefined, saveUrl:
           }
 
 
-          const d = createPlatform(doorGroup, id, 'door', x, y);
+          const d = createPlatform(doorGroup, id, 'door', x, y, undefined, undefined, {
+            noResize: true,
+          });
           d.setBodySize(40, 64);
           if (label) {
             const labelText = ui.add.text(x, y, label, {
