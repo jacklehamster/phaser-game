@@ -2,7 +2,7 @@
   "name": "@dobuki/phaser-game",
   "module": "src/index.ts",
   "description": "Just a game built in Phaser",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "keywords": [
     "bun",
     "bunjs",
