@@ -7,12 +7,12 @@
     "build": "rm -rf node_modules && bun i --verbose && bun build --target=node ./src/index.ts --outfile=dist/index.js"
   },
   "peerDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "@dobuki/phaser-game": "link:@dobuki/phaser-game"
   },
   "dependencies": {
     "baojs": "^0.2.1",
     "node-persist": "^4.0.1",
-    "phaser-game": "file:..",
     "serve-static-bun": "^0.5.3"
   },
   "devDependencies": {

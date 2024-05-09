@@ -5,31 +5,32 @@
 	"hasSlime": true,
 	"originalLevel": 4,
 	"ground": {
-		"ground1": [
-			800,
-			568,
-			1600,
-			64
-		],
+		"ground1": {
+			"x": 800,
+			"y": 565.5,
+			"width": 1600,
+			"height": 69,
+			"frame": null
+		},
 		"ground2": {
 			"x": 668.5,
-			"y": 407.5,
+			"y": 408,
 			"width": 317,
-			"height": 75,
+			"height": 74,
 			"frame": null
 		},
 		"ground3": {
 			"x": 329.5,
-			"y": 438,
+			"y": 436,
 			"width": 157,
-			"height": 44,
+			"height": 48,
 			"frame": null
 		},
 		"ground4": {
 			"x": 769.5,
-			"y": 94.5,
+			"y": 93.5,
 			"width": 269,
-			"height": 17,
+			"height": 19,
 			"frame": null
 		},
 		"ground5": {
@@ -41,29 +42,29 @@
 		},
 		"ground6": {
 			"x": 817.5,
-			"y": 257.5,
+			"y": 258,
 			"width": 367,
-			"height": 57,
+			"height": 56,
 			"frame": null
 		},
 		"ground7": {
 			"x": 317.5,
-			"y": 249,
+			"y": 250,
 			"width": 133,
-			"height": 32,
+			"height": 30,
 			"frame": null
 		},
 		"ground8": {
 			"x": 332,
-			"y": 93,
+			"y": 92.5,
 			"width": 224.00000000000003,
-			"height": 32,
+			"height": 33,
 			"frame": null
 		},
 		"ground9": {
-			"x": 225,
+			"x": 226.5,
 			"y": 137.5,
-			"width": 38,
+			"width": 35,
 			"height": 85,
 			"frame": null
 		},

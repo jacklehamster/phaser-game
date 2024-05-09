@@ -30,12 +30,12 @@ interface Payload {
   };
 }
 
-app.get("/cursor/*any", serveStatic("/", { middlewareMode: "bao" }));
-app.get("/assets/*any", serveStatic("/", { middlewareMode: "bao" }));
-app.get("/dist/*any", serveStatic("/", { middlewareMode: "bao" }));
-app.get("/json/*any", serveStatic("/", { middlewareMode: "bao" }));
-app.get("/", serveStatic("/", { middlewareMode: "bao" }));
-app.get("/favicon.ico", serveStatic("/", { middlewareMode: "bao" }));
+app.get("/cursor/*any", serveStatic("/", { middlewareMode: "bao", handleErrors: true }));
+app.get("/assets/*any", serveStatic("/", { middlewareMode: "bao", handleErrors: true }));
+app.get("/dist/*any", serveStatic("/", { middlewareMode: "bao", handleErrors: true }));
+app.get("/json/*any", serveStatic("/", { middlewareMode: "bao", handleErrors: true }));
+app.get("/", serveStatic("/", { middlewareMode: "bao", handleErrors: true }));
+app.get("/favicon.ico", serveStatic("/", { middlewareMode: "bao", handleErrors: true }));
 app.post("/lock", async (context: any) => {
   const payload: { jsonUrl: string; locked: boolean; } = await context.req.json() as { jsonUrl: string; locked: boolean };
   const mapText = fs.readFileSync(payload.jsonUrl, 'utf-8');

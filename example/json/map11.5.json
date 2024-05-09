@@ -1,5 +1,5 @@
 {
-	"locked": true,
+	"locked": false,
 	"ground": {
 		"ground1": {
 			"x": 501,
@@ -13,13 +13,6 @@
 			"y": 285.5,
 			"width": 219,
 			"height": 103,
-			"frame": null
-		},
-		"ground3": {
-			"x": 468.5,
-			"y": 321,
-			"width": 71,
-			"height": 44,
 			"frame": null
 		},
 		"ground4": {
@@ -78,9 +71,16 @@
 			"height": 50,
 			"frame": null
 		},
+		"ground3": {
+			"x": 445,
+			"y": 279,
+			"width": 57.99999999999999,
+			"height": 62,
+			"frame": null
+		},
 		"ground12": {
-			"x": 326,
-			"y": 312,
+			"x": 321,
+			"y": 288,
 			"width": 57.99999999999999,
 			"height": 62,
 			"frame": null
@@ -118,11 +118,11 @@
 			"frame": 1
 		},
 		"bonus4": {
-			"x": 331.8666604722208,
-			"y": 199,
+			"x": 333.8666604722208,
+			"y": 237,
 			"width": 40,
 			"height": 40,
-			"frame": 1
+			"frame": 3
 		},
 		"bonus1": {
 			"x": 471.8666604722208,
@@ -130,18 +130,18 @@
 			"width": 40,
 			"height": 40,
 			"frame": 1
+		},
+		"bonus5": {
+			"x": 835.8666604722208,
+			"y": 42,
+			"width": 40,
+			"height": 40,
+			"frame": 10
 		}
 	},
 	"key": {
 		"key1": {
 			"x": 387,
-			"y": 40,
-			"width": 45,
-			"height": 45,
-			"frame": 0
-		},
-		"key2": {
-			"x": 695,
 			"y": 40,
 			"width": 45,
 			"height": 45,
@@ -152,13 +152,6 @@
 		"troll1": {
 			"x": 244,
 			"y": 216,
-			"width": 48,
-			"height": 48,
-			"frame": 0
-		},
-		"troll2": {
-			"x": 286,
-			"y": 72,
 			"width": 48,
 			"height": 48,
 			"frame": 0
@@ -173,15 +166,15 @@
 			"frame": 0
 		},
 		"rock2": {
-			"x": 840,
-			"y": 438,
+			"x": 195,
+			"y": 370,
 			"width": 64,
 			"height": 64,
 			"frame": 0
 		},
 		"rock3": {
-			"x": 630,
-			"y": 491,
+			"x": 951,
+			"y": 430,
 			"width": 64,
 			"height": 64,
 			"frame": 0
@@ -189,8 +182,8 @@
 	},
 	"human": {
 		"human1": {
-			"x": 36,
-			"y": 187,
+			"x": 182,
+			"y": 495,
 			"width": 64,
 			"height": 64,
 			"frame": 54

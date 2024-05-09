@@ -173,6 +173,13 @@
 			"width": 32,
 			"height": 32,
 			"frame": null
+		},
+		"trigger4": {
+			"x": 279,
+			"y": 353,
+			"width": 32,
+			"height": 32,
+			"frame": null
 		}
 	},
 	"bonus": {
