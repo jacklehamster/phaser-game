@@ -2,11 +2,17 @@
 <html>
   <head>
     <title>The SUPERNATURAL Power Troll</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <style>
       body {
         margin: 0;
         background-color: #befc97;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
+      }
+      h1, h2, h3, h4 {
+        font-family: 'Times New Roman';
+      }
+      .title {
+        text-shadow: #FC0 1px 0 10px;
       }
       .cut-scene {
         margin: auto;
@@ -42,14 +48,21 @@
     </style>
   </head>
   <body>
+    <div id="progress-bar" style="display: none; position: absolute; bottom: 0; width: 100%;">
+      <div class="w3-light-grey">
+        <div id="progress" class="w3-container w3-green w3-center" style="width:0%; transition: width .5s;">0%</div>
+      </div>  
+    </div>
     <div id="press-key">
       <div style="width: 100%; text-align: center;">
-        <h4>The</h4>
-        <h2>SUPERNATURAL</h2>
-        <h3>Power</h3>
-        <h4>Troll</h4>
+        <div class="title">
+          <h4>The</h4>
+          <h2>SUPERNATURAL</h2>
+          <h3>Power</h3>
+          <h4>Troll</h4>  
+        </div>
         <div style="border-radius: 25px; background-color: black; width: 600px; height: 360px; margin: auto">
-          <div class="cut-scene" id="cut-scene" style="background-image: url(assets/dobukistudio.png);">
+          <div class="cut-scene" id="cut-scene" style="opacity: 0; background-image: url(assets/dobukistudio.png);">
             <div style="margin-bottom: 15px; display: inline-block; align-self: flex-end; background-color: #ffffffaa; text-align: center; width: 100%;">
               <div id="exposition" style="padding: 2px;">
                 click here to view cutscene
@@ -57,26 +70,20 @@
             </div>
           </div>  
         </div>
-        <h3>A game by jacklehamster</h3>
+        <h3>by jacklehamster</h3>
         <div style="background-color: aquamarine;">
-          <h4>Click above to <span class="important">view the cutscene.</span><br>At any time, you may <span class="important">press any key to start the game</span>.</h4>
+          <h4 id="instruct" style="opacity: 0">Click above to <span class="important">view the cutscene.</span><br>At any time, you may <span class="important">press any key to start the game</span>.</h4>
         </div>
       </div>
     </div>
   </body>
 
   <script type="module">
-    import { createHighSchoolGame, newgrounds } from './dist/index.js';
+    import { createHighSchoolGame, newgrounds, prepareUrls, u, revoke } from './dist/index.js';
 
     function unlockMedal(medal) {
       newgrounds.unlockMedal(medal);
     }
-
-    document.addEventListener("keydown", async () => {
-      currentAudio?.pause();
-      document.getElementById("press-key").style.display = "none";
-      window.game1 = await createHighSchoolGame(undefined, "save");
-    }, { once: true });
 
     let index = 0;
     const CUT_SCENES = [
@@ -411,9 +418,38 @@
       ],
     ];
 
+    const blobs = await prepareUrls([
+    'assets/troll-song.mp3',
+    'assets/a-nice-troll.mp3',
+    'assets/power-troll.mp3',
+    'assets/game-over.mp3',
+    'assets/repeat.mp3',
+    'assets/trumpet.mp3',
+    'assets/darkness.mp3',
+    'assets/the-end.png',
+    'assets/santa.png',
+
+    'assets/sky.png',
+    'assets/platform.png',
+    'assets/trigger.png',
+    'assets/star.png',
+    'assets/bomb.png',
+    'assets/bonus.png',
+    'assets/hischooler.png',
+    'assets/troll.png',
+    'assets/rock.png',
+    'assets/items.png',
+    'assets/sfx.png',
+    'assets/mountainbg.png',
+    'config.json',
+    ...CUT_SCENES.map(([url]) => url),
+    ...CUT_SCENES.map(([_,__,audio]) => audio),
+  ], 0, undefined);    
+
     const ex = document.getElementById("exposition");
     const cs = document.getElementById("cut-scene");
-    let currentBg = null;
+    cs.style.opacity = 1;
+    document.getElementById('instruct').style.opacity = 1;
     let transitioning = false;
 
     let currentAudio;
@@ -422,7 +458,8 @@
         return;
       }
       index = (index + 1) % CUT_SCENES.length;
-      const [bg, text, audio, repeat, fade, callback] = CUT_SCENES[index];
+      const [bg, text, u_audio, repeat, fade, callback] = CUT_SCENES[index];
+      const audio = u(u_audio, blobs);
       callback?.();
       console.log(bg, text, audio, repeat, fade);
       if (!currentAudio || currentAudio?.src.indexOf(audio) < 0) {
@@ -441,10 +478,9 @@
       }
       if (fade) {
         transitioning = true;
-        currentBg = bg;
         cs.style.opacity = 0;
         setTimeout(() => {
-          cs.style.backgroundImage = `url(${bg})`;
+          cs.style.backgroundImage = `url(${u(bg, blobs)})`;
           ex.style.display = text.length ? "" : "none";
           ex.textContent = text ?? "";
         }, 1000);
@@ -453,12 +489,21 @@
           transitioning = false;
         }, 1500);
       } else {
-        currentBg = bg;
         ex.style.display = text.length ? "" : "none";
         ex.textContent = text ?? "";
-        cs.style.backgroundImage = `url(${bg})`;
+        cs.style.backgroundImage = `url(${u(bg, blobs)})`;
       }
+
     });
-    
+
+    document.addEventListener("keydown", async () => {
+      currentAudio?.pause();
+      document.getElementById("press-key").style.display = "none";
+
+      CUT_SCENES.map(([url]) => url).forEach(u => revoke(u, blobs));
+      CUT_SCENES.map(([_,__,audio]) => audio).forEach(u => revoke(u, blobs));
+
+      window.game = await createHighSchoolGame(undefined, "save", undefined, undefined, blobs);
+    }, { once: true });
   </script>
 </html>

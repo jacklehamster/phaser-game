@@ -1,3 +1,3 @@
-import { createHighSchoolGame, newgrounds } from "@dobuki/phaser-game";
+import { createHighSchoolGame, newgrounds, prepareUrls, u, revoke } from "@dobuki/phaser-game";
 
-export { createHighSchoolGame, newgrounds };
+export { createHighSchoolGame, newgrounds, prepareUrls, u, revoke };

@@ -11,8 +11,8 @@
 	},
 	"troll": {
 		"troll": {
-			"x": 125,
-			"y": 496,
+			"x": 179,
+			"y": 535,
 			"width": 48,
 			"height": 48,
 			"frame": 0
@@ -29,7 +29,7 @@
 		},
 		"door2": {
 			"x": 51,
-			"y": 402,
+			"y": 432,
 			"width": 64,
 			"height": 64,
 			"frame": 4,
@@ -39,7 +39,7 @@
 		},
 		"door3": {
 			"x": 180,
-			"y": 401,
+			"y": 432,
 			"width": 64,
 			"height": 64,
 			"frame": 4,
@@ -48,8 +48,8 @@
 			"nextLevel": "json/map3.json"
 		},
 		"door4": {
-			"x": 320,
-			"y": 270,
+			"x": 319,
+			"y": 297,
 			"width": 64,
 			"height": 64,
 			"frame": 4,
@@ -58,8 +58,8 @@
 			"nextLevel": "json/map4.json"
 		},
 		"door5": {
-			"x": 452,
-			"y": 270,
+			"x": 453,
+			"y": 299,
 			"width": 64,
 			"height": 64,
 			"frame": 4,
@@ -69,7 +69,7 @@
 		},
 		"door6": {
 			"x": 487,
-			"y": 401,
+			"y": 428,
 			"width": 64,
 			"height": 64,
 			"frame": 4,
@@ -78,8 +78,8 @@
 			"nextLevel": "json/map6.json"
 		},
 		"door7": {
-			"x": 605,
-			"y": 401,
+			"x": 606,
+			"y": 428,
 			"width": 64,
 			"height": 64,
 			"frame": 4,
@@ -88,8 +88,8 @@
 			"nextLevel": "json/map7.json"
 		},
 		"door8": {
-			"x": 713,
-			"y": 402,
+			"x": 714,
+			"y": 428,
 			"width": 64,
 			"height": 64,
 			"frame": 4,
@@ -98,8 +98,8 @@
 			"nextLevel": "json/map8.json"
 		},
 		"door9": {
-			"x": 821,
-			"y": 265,
+			"x": 822,
+			"y": 293,
 			"width": 64,
 			"height": 64,
 			"frame": 4,
@@ -109,37 +109,37 @@
 		},
 		"door10": {
 			"x": 961,
-			"y": 266,
+			"y": 293,
 			"width": 64,
 			"height": 64,
-			"frame": 6,
+			"frame": 4,
 			"label": "10",
 			"lockedByLevel": "10",
 			"nextLevel": "json/map10.json"
 		},
 		"door11": {
 			"x": 708,
-			"y": 151,
+			"y": 158,
 			"width": 64,
 			"height": 64,
-			"frame": 0,
+			"frame": 4,
 			"label": "11",
 			"lockedByLevel": "11",
 			"nextLevel": "json/map11.json"
 		},
 		"door12": {
 			"x": 574,
-			"y": 150,
+			"y": 160,
 			"width": 64,
 			"height": 64,
-			"frame": 0,
+			"frame": 4,
 			"label": "12",
 			"lockedByLevel": "12",
 			"nextLevel": "json/map12.json"
 		},
 		"door13": {
 			"x": 442,
-			"y": 149,
+			"y": 158,
 			"width": 64,
 			"height": 64,
 			"frame": 4,
@@ -148,8 +148,8 @@
 			"nextLevel": "json/map13.json"
 		},
 		"door14": {
-			"x": 318,
-			"y": 149,
+			"x": 319,
+			"y": 159,
 			"width": 64,
 			"height": 64,
 			"frame": 4,
@@ -189,8 +189,8 @@
 		},
 		"door18": {
 			"x": 129.4999941101078,
-			"y": 57,
-			"width": 63.000000061035166,
+			"y": 60,
+			"width": 64,
 			"height": 64,
 			"frame": 4,
 			"label": "18",
@@ -199,17 +199,17 @@
 		},
 		"door19": {
 			"x": 410.4999769592299,
-			"y": 39,
+			"y": 41,
 			"width": 64,
 			"height": 64,
-			"frame": 0,
+			"frame": 4,
 			"label": "19",
 			"lockedByLevel": "19",
 			"nextLevel": "json/map19.json"
 		},
 		"door20": {
 			"x": 545.4999687194844,
-			"y": 39,
+			"y": 43,
 			"width": 64,
 			"height": 64,
 			"frame": 4,
@@ -218,18 +218,18 @@
 			"nextLevel": "json/map20.json"
 		},
 		"door21": {
-			"x": 680.4999604797388,
-			"y": 39,
+			"x": 681.4999604797388,
+			"y": 41,
 			"width": 64,
 			"height": 64,
-			"frame": 0,
+			"frame": 4,
 			"label": "21",
 			"lockedByLevel": "21",
 			"nextLevel": "json/map21.json"
 		},
 		"door22": {
 			"x": 816.499952178958,
-			"y": 39,
+			"y": 41,
 			"width": 64,
 			"height": 64,
 			"frame": 4,
@@ -251,7 +251,7 @@
 	"ground": {
 		"ground1": {
 			"x": 106.5,
-			"y": 446,
+			"y": 477,
 			"width": 223,
 			"height": 26,
 			"frame": null,
@@ -259,31 +259,31 @@
 		},
 		"ground2": {
 			"x": 382.5,
-			"y": 315,
+			"y": 343,
 			"width": 223,
-			"height": 26,
+			"height": 24,
 			"frame": null,
 			"lockedByLevel": "4"
 		},
 		"ground3": {
 			"x": 598.5,
-			"y": 446,
+			"y": 473,
 			"width": 269,
 			"height": 26,
 			"frame": null,
 			"lockedByLevel": "6"
 		},
 		"ground4": {
-			"x": 890.5,
-			"y": 310,
+			"x": 889.5,
+			"y": 338,
 			"width": 223,
 			"height": 26,
 			"frame": null,
 			"lockedByLevel": "9"
 		},
 		"ground5": {
-			"x": 511.5,
-			"y": 194,
+			"x": 510.5,
+			"y": 203,
 			"width": 467,
 			"height": 26,
 			"frame": null,
