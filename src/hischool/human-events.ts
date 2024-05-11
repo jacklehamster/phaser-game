@@ -56,6 +56,8 @@ export enum HumanEvent {
   VR_HEADSET,
   TWIN,
   DANGEROUS_CRAB,
+  TROLL_BRAIN,
+  RESTORED_HUMAN_BRAIN,
 };
 
 
@@ -117,5 +119,7 @@ export const DICO: Record<HumanEvent, string> = {
   [HumanEvent.GLASSES]: "The human is wearing glasses.",
   [HumanEvent.VR_HEADSET]: "The human is wearing a VR headset.",
   [HumanEvent.TWIN]: "The human just met another human that looks exactly like them, the twin they never new existed. They greet.",
-  [HumanEvent.DANGEROUS_CRAB]: "The human sees a dangerous looking crab, doesn't want to get close."
+  [HumanEvent.DANGEROUS_CRAB]: "The human sees a dangerous looking crab, doesn't want to get close.",
+  [HumanEvent.TROLL_BRAIN]: "The human's mind is now inside the body of a troll.",
+  [HumanEvent.RESTORED_HUMAN_BRAIN]: "The human is now restored back into their human body.",
 }

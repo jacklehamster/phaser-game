@@ -369,7 +369,7 @@ export async function createHighSchoolGame(
         ghostPlatform = gameScene?.scene.add.image(0, 0, 'rock');
         break;
       case UIButton.NewPowerup:
-        ghostPlatform = gameScene?.scene.add.image(0, 0, 'bonus');
+        ghostPlatform = gameScene?.scene.add.image(0, 0, 'bonus', powerUpButton?.frame.name);
         ghostPlatform?.setDisplaySize(BONUS_SIZE, BONUS_SIZE);
         break;
       default:
@@ -474,6 +474,7 @@ export async function createHighSchoolGame(
                   b.setDrag(.01);
                   b.setCollideWorldBounds(true);
                   b.preFX?.addGlow(0xccffff, 1);
+                  b.indic.key = b;
                 },
               });
               if (b) {
@@ -483,6 +484,7 @@ export async function createHighSchoolGame(
                 b.setDrag(.01);
                 b.setCollideWorldBounds(true);
                 b.preFX?.addGlow(0xccffff, 1);
+                b.indic.key = b;
               }
               movePlatform(key, id, b.indic, {
                 leftEdge: false, rightEdge: false, topEdge: false, bottomEdge: false,
@@ -505,6 +507,8 @@ export async function createHighSchoolGame(
               object.body?.gameObject?.setDamping(true);
               object.body?.gameObject?.setDrag(.01);
               object.body?.gameObject?.setCollideWorldBounds(true);
+              (object as any).indic.rock = object;
+
               movePlatform(key, id, object.indic, {
                 leftEdge: false, rightEdge: false, topEdge: false, bottomEdge: false,
               }, undefined, (didMove) => {
@@ -539,9 +543,10 @@ export async function createHighSchoolGame(
             {
               const key = 'bonus';
               const id = makeId(key);
-              const bonus = createDynamic(indicators, bonusGroup, id, 'bonus', mouseX, mouseY, 0, BONUS_SIZE, BONUS_SIZE, undefined, {
+              const bonus = createDynamic(indicators, bonusGroup, id, 'bonus', mouseX, mouseY, ghostPlatform?.frame.name, BONUS_SIZE, BONUS_SIZE, undefined, {
                 onDelete(bonus) {
                   (bonus as any).triangle?.destroy(true);
+                  (bonus as any).triangle_back?.destroy(true);
                 },
                 onCopy: (result, id) => {
                   const scene = gameScene?.scene;
@@ -554,6 +559,9 @@ export async function createHighSchoolGame(
                   result?.body?.gameObject?.setDrag(.01);
                   result?.body?.gameObject?.setCollideWorldBounds(true);
                   result?.body?.gameObject?.preFX.addGlow(0xffffcc, 1);
+                  if (result) {
+                    (result as any).indic.bonus = result;
+                  }
                 },
               });
               const scene = gameScene?.scene;
@@ -566,6 +574,7 @@ export async function createHighSchoolGame(
               bonus.body?.gameObject?.setDrag(.01);
               bonus.body?.gameObject?.setCollideWorldBounds(true);
               bonus.body?.gameObject?.preFX.addGlow(0xffffcc, 1);
+              bonus.indic.bonus = bonus;
               bonuses.push(bonus);
 
               movePlatform(key, id, bonus.indic, {
@@ -608,6 +617,7 @@ export async function createHighSchoolGame(
     ["url(cursor/trash-icon.cur), pointer", "url(cursor/trash-icon-open.cur), pointer"],
     undefined,
   ];
+  let powerUpButton: Phaser.GameObjects.Image | undefined;
   function createUIButton(
     scene: Phaser.Scene,
     index: number,
@@ -628,6 +638,9 @@ export async function createHighSchoolGame(
     iconBack.setInteractive({ useHandCursor: true });
     iconBack.setFrame(cancelButton ? Icons.CANCEL : uiIndex === index ? Icons.GREEN_FRAME : Icons.BLUE_FRAME);
     const button = scene.add.image(px, py, key, icon);
+    if (index === UIButton.NewPowerup) {
+      powerUpButton = button;
+    }
     button.setDisplaySize(30, 30);
     iconBack.on('pointerover', () => {
       iconBack.postFX.addGlow(0xffffff, 2);
@@ -658,17 +671,29 @@ export async function createHighSchoolGame(
     lastFrameOnGround = false;
     carriedBy?: Troll;
     thrownDx = 0;
+    preX: number = 0;
+    lastStill: number = 0;
+    frozen?: number;
+    surprised: number = 0;
 
     constructor(protected sprite: string, public player: Phaser.Types.Physics.Arcade.SpriteWithDynamicBody) {
       this.player.setBounce(0.2);
       this.player.setCollideWorldBounds(true);
       this.player.body.useDamping = true;
-      this.player.setBodySize(20, this.player.body.height).refreshBody();
+      this.player.setBodySize(20, this.player.body.height);
+    }
+
+    getSurprised(jumpStrength: number = 300) {
+      this.surprised = Date.now();
+      if (jumpStrength && this.player.body.touching.down && !this.frozen) {
+        this.player.setVelocity(0, -jumpStrength);
+      }
     }
   }
 
   class Troll extends Elem {
     trollSprites: Phaser.GameObjects.Sprite[] = [];
+    mouthSprites: Phaser.GameObjects.Sprite[] = [];
     holdingBonus: Phaser.GameObjects.GameObject | undefined;
     holdingTemp: Phaser.GameObjects.GameObject | undefined;
     lastHold: number = 0;
@@ -677,7 +702,30 @@ export async function createHighSchoolGame(
     vanishing: number = 0;
     onPlatform?: Phaser.Types.Physics.Arcade.GameObjectWithBody;
     isTroll = true;
-    humanBrain = false;
+    humanBrain?: Human;
+    #crouch = false;
+    initialHeight: number;
+
+    set crouch(value: boolean) {
+      if (this.#crouch !== value) {
+        if (value && this.holdingBonus) {
+          return;
+        }
+        if (!value) {
+          const playerBounds = this.player.getBounds();
+          playerBounds.y -= 16;
+          playerBounds.height = this.initialHeight;
+          for (const platform of platforms.getChildren()) {
+            if (Phaser.Geom.Intersects.RectangleToRectangle(playerBounds, platform.body?.gameObject.getBounds())) {
+              return;
+            }
+          }
+        }
+        this.#crouch = value;
+        this.player.setPosition(this.player.x, this.player.y + (this.#crouch ? 16 : -16));
+        this.player.setBodySize(20, this.initialHeight * (this.#crouch ? .3 : 1));
+      }
+    }
 
     constructor(scene: Phaser.Scene, x: number, y: number, public trollGroup: Phaser.Physics.Arcade.Group, hue: number = 0, private playerId: number = 1) {
       super('troll', scene.physics.add.sprite(x, y, 'troll', 1));
@@ -688,21 +736,29 @@ export async function createHighSchoolGame(
 
       (this.player as any).troll = this;
 
-      this.trollSprites.push(
-        scene.add.sprite(0, 0, "troll", 0),
-      );
+      this.trollSprites.push(scene.add.sprite(0, 0, "troll", 0));
+      this.mouthSprites.push(scene.add.sprite(0, 0, 'troll', 31));
+      this.mouthSprites.forEach(sprite => sprite.setVisible(false));
       this.trollSprites.forEach(sprite => {
         if (hue) {
           sprite.preFX?.addColorMatrix().hue(hue);
         }
       });
       trollGroup.add(this.player);
+      this.initialHeight = this.player.body.height;
     }
 
     destroy() {
+      if (this.humanBrain) {
+        this.humanBrain.trollBrain = undefined;
+        this.humanBrain = undefined;
+      }
       this.destroyed = true;
       this.player.destroy(true);
       this.trollSprites.forEach(sprite => {
+        sprite.destroy(true);
+      });
+      this.mouthSprites.forEach(sprite => {
         sprite.destroy(true);
       });
     }
@@ -714,6 +770,7 @@ export async function createHighSchoolGame(
     setFlipX(flipX: boolean) {
       this.player.setFlipX(flipX);
       this.trollSprites.forEach(sprite => sprite.setFlipX(flipX));
+      this.mouthSprites.forEach(sprite => sprite.setFlipX(flipX));
       this.holdingBonus?.body?.gameObject.setFlipX(flipX);
       const h = (this.holdingBonus as any)?.troll ?? (this.holdingBonus as any)?.human;
       h?.setFlipX(flipX);
@@ -729,11 +786,33 @@ export async function createHighSchoolGame(
       if (this.destroyed) {
         return;
       }
+      let notMoving = false;
+      const now = Date.now();
+      if (this.humanBrain) {
+        if (!this.dx || this.lastStill && now - this.lastStill > 3000) {
+          if (now - this.surprised > 3000) {
+            this.dx = !this.dx ? 1 : -this.dx;
+          }
+          this.lastStill = now;
+        }
+
+        if (Math.abs(this.preX - this.player.x) < 1 * this.player.scale) {
+          if (!this.lastStill) {
+            this.lastStill = now;
+          }
+          notMoving = true;
+        } else {
+          this.lastStill = 0;
+        }
+      }
+
+
       this.player.setDrag(this.grounded() ? .0000001 : 1);
 
-      this.trollSprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y - 6));
+      this.trollSprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y - 6 - (this.#crouch ? 16 : 0)));
+      this.mouthSprites.forEach(sprite => sprite.setPosition(this.player.x, this.player.y - 6));
 
-      if (this.thrownDx && !this.dx) {
+      if (this.thrownDx && (!this.dx || this.humanBrain)) {
         this.player.setVelocityX(this.thrownDx);
         this.thrownDx *= .9;
         if (Math.abs(this.thrownDx) < .1) {
@@ -741,7 +820,7 @@ export async function createHighSchoolGame(
         }
       } else if (this.dx && !this.carriedBy) {
         this.thrownDx = 0;
-        const speed = this.airborne ? 200 : 150;
+        const speed = this.humanBrain ? 80 : this.airborne ? 200 : this.#crouch ? 50 : 150;
         this.player.setVelocityX(speed * this.dx * dt);
         const flipX = this.dx < 0;
         this.setFlipX(flipX);
@@ -760,7 +839,7 @@ export async function createHighSchoolGame(
       if (this.lastThrow && Date.now() - this.lastThrow < 400) {
         this.trollSprites.forEach((sprite, index) => sprite.anims.play('troll_throw', true));
       } else if (this.airborne) {
-        if (Date.now() - this.airborne < 100) {
+        if (now - this.airborne < 100) {
           this.trollSprites.forEach((sprite, index) => sprite.anims.play(this.holdingBonus ? 'troll_hold_jump' : 'troll_jump', true));
         } else if (this.player.body.velocity.y <= 0) {
           this.trollSprites.forEach((sprite, index) => sprite.anims.play(this.holdingBonus ? 'troll_hold_air' : 'troll_air', true));
@@ -769,10 +848,24 @@ export async function createHighSchoolGame(
         }
       } else if (Date.now() - this.landed < 200) {
         this.trollSprites.forEach((sprite, index) => sprite.anims.play(this.holdingBonus ? 'troll_hold_landed' : `troll_landed`, true));
-      } else if (!this.dx) {
-        this.trollSprites.forEach((sprite, index) => sprite.anims.play(this.holdingBonus ? 'troll_hold_still' : `troll_still`, true));
+      } else if (!this.dx || notMoving) {
+        if (this.#crouch && !this.holdingBonus) {
+          this.trollSprites.forEach((sprite, index) => {
+            if (sprite.anims.currentAnim?.key !== 'troll_crouch') {
+              sprite.anims.play('troll_crouch', true);
+            }
+          });
+        } else {
+          this.trollSprites.forEach((sprite, index) => sprite.anims.play(this.holdingBonus ? 'troll_hold_still' : `troll_still`, true));
+        }
+        this.mouthSprites.forEach((sprite, index) => sprite.anims.play('troll_talk_still', true));
       } else {
-        this.trollSprites.forEach((sprite, index) => sprite.anims.play(this.holdingBonus ? 'troll_hold_walk' : `troll_walk`, true));
+        if (this.#crouch && !this.holdingBonus) {
+          this.trollSprites.forEach((sprite, index) => sprite.anims.play('troll_crouch_walk', true));
+        } else {
+          this.trollSprites.forEach((sprite, index) => sprite.anims.play(this.holdingBonus ? 'troll_hold_walk' : `troll_walk`, true));
+        }
+        this.mouthSprites.forEach((sprite, index) => sprite.anims.play('troll_talk_walk', true));
       }
       const heldBonus = this.holdingTemp ?? this.holdingBonus;
       if (heldBonus) {
@@ -787,7 +880,7 @@ export async function createHighSchoolGame(
             holdShift = -1 * trollSprite.scaleY;
             break;
         }
-        heldBonus.body?.gameObject.setPosition(this.player.x - (this.holdingTemp ? 30 : 0) * this.dx, this.player.y - ((heldBonus as any).isKey ? 20 : (heldBonus as any).human ? 40 : 30) + holdShift);
+        heldBonus.body?.gameObject.setPosition(this.player.x - (this.holdingTemp ? 30 : 0) * this.dx, this.player.y - ((heldBonus as any).isKey ? 20 : (heldBonus as any).human ? 40 : 40) + holdShift);
       }
 
       const touchingDown = this.grounded();
@@ -797,11 +890,16 @@ export async function createHighSchoolGame(
       }
 
       this.lastFrameOnGround = touchingDown;
+      this.preX = this.player.x;
     }
 
     tryJump(zzfx: any, forceAllowJump: boolean = false) {
       if (this.grounded() || forceAllowJump) {
         if (!this.airborne) {
+          this.crouch = false;
+          if (this.#crouch) {
+            return;
+          }
           zzfx(...[, , 198, .04, .07, .06, , 1.83, 16, , , , , , , , , .85, .04]); // Jump
           this.airborne = Date.now();
           if (this.carriedBy) {
@@ -820,6 +918,7 @@ export async function createHighSchoolGame(
     setScale(scaleX: number, scaleY: number, displayScaleX: number, displayScaleY: number) {
       this.player.setScale(scaleX, scaleY);
       this.trollSprites.forEach(sprite => sprite.setScale(displayScaleX, displayScaleY));
+      this.mouthSprites.forEach(sprite => sprite.setScale(displayScaleX, displayScaleY));
     }
 
     foreObject(group: Phaser.Physics.Arcade.Group, condition?: (item: Phaser.GameObjects.GameObject) => boolean) {
@@ -828,11 +927,20 @@ export async function createHighSchoolGame(
         if (!item.active || (condition && !condition(item))) {
           continue;
         }
-        const px = gameObject.x - this.player.x;
-        const py = gameObject.y - this.player.y;
-        const dx = this.player.flipX ? -1 : 1;
-        if (Math.abs(px) <= 60 && px * dx > 0 && Math.abs(py) < 30) {
-          return item;
+        if (this.#crouch) {
+          const px = gameObject.x - this.player.x;
+          const py = gameObject.y - this.player.y;
+          const dx = this.player.flipX ? -1 : 1;
+          if (Math.abs(py) <= 60 && py > 0 && Math.abs(px) < 30) {
+            return item;
+          }
+        } else {
+          const px = gameObject.x - this.player.x;
+          const py = gameObject.y - this.player.y;
+          const dx = this.player.flipX ? -1 : 1;
+          if (Math.abs(px) <= 60 && px * dx > 0 && Math.abs(py) < 30) {
+            return item;
+          }
         }
       }
       return null;
@@ -840,6 +948,7 @@ export async function createHighSchoolGame(
 
     setRotation(angle: number) {
       this.trollSprites.forEach(sprite => sprite.setRotation(this.player.flipX ? -angle : angle));
+      this.mouthSprites.forEach(sprite => sprite.setRotation(this.player.flipX ? -angle : angle));
     }
 
     get tossKey() {
@@ -860,6 +969,7 @@ export async function createHighSchoolGame(
         const item = this.foreObject(group, condition);
         if (item) {
           this.holdingBonus = item;
+          this.crouch = false;
           (item as any).disableBody(true, false);
           (item as any).isKey = isKey;
           (item as any).debugShowBody = false;
@@ -921,6 +1031,7 @@ export async function createHighSchoolGame(
       createVanishEffect(this.player.scene, this.player.x, this.player.y);
       zzfx(...[, , 119, .02, .08, .06, , 1.4, -22, -3.2, , , , 1.4, , , , .87, .01]); // Jump 455
       this.trollSprites.forEach(sprite => sprite.setVisible(false));
+      this.mouthSprites.forEach(sprite => sprite.setVisible(false));
       this.holdingBonus?.body?.gameObject?.setVisible(false);
       this.vanishing = Date.now();
     }
@@ -933,7 +1044,10 @@ export async function createHighSchoolGame(
       this.vanishing = 0;
     }
 
-    addHistory() {
+    addHistory(event: HumanEvent) {
+      if (this.humanBrain && this.humanBrain.history[this.humanBrain.history.length - 1] !== event) {
+        this.humanBrain.history.push(event);
+      }
     }
   }
 
@@ -942,8 +1056,6 @@ export async function createHighSchoolGame(
   class Human extends Elem {
     faceSprites: Phaser.GameObjects.Sprite[] = [];
     bodySprites: Phaser.GameObjects.Sprite[] = [];
-    preX: number = 0;
-    lastStill: number = 0;
     powerAcquired: number = 0;
     holdingBonus: Phaser.GameObjects.GameObject | undefined;
     seed: string = "";
@@ -951,7 +1063,6 @@ export async function createHighSchoolGame(
     flyingLevel?: number;
     antMan?: number;
     normalMan?: number;
-    frozen?: number;
     unfrozen: number = 0;
     history: HumanEvent[] = [];
     humanScaleX: number;
@@ -968,10 +1079,10 @@ export async function createHighSchoolGame(
     invisible = 0;
     vanishing = 0;
     groundY: number | undefined;
-    surprised: number = 0;
     isTroll = false;
     humansFrozen: Set<Human> = new Set();
     forceMouth?: number;
+    trollBrain?: Troll;
 
     constructor(scene: Phaser.Scene, x: number, y: number,
       private humanGroup: Phaser.Physics.Arcade.Group, seed?: any) {
@@ -1067,7 +1178,7 @@ export async function createHighSchoolGame(
     }
 
     addHistory(event: HumanEvent) {
-      if (this.history[this.history.length - 1] !== event) {
+      if (!this.trollBrain && this.history[this.history.length - 1] !== event) {
         this.history.push(event);
       }
     }
@@ -1137,10 +1248,10 @@ export async function createHighSchoolGame(
       this.getSurprised(0);
     }
 
-    closestHuman() {
+    closestHuman(forceElems?: any[]) {
       let min = Number.MAX_SAFE_INTEGER;
       let closest: Human | Troll | undefined;
-      const elems = [...humans, ...trolls];
+      const elems = forceElems ?? [...humans, ...trolls];
       for (const h of elems) {
         if (h !== this) {
           const dx = h.player.x - this.player.x;
@@ -1189,13 +1300,6 @@ export async function createHighSchoolGame(
       this.getSurprised();
     }
 
-    getSurprised(jumpStrength: number = 300) {
-      this.surprised = Date.now();
-      if (jumpStrength && this.player.body.touching.down && !this.frozen) {
-        this.player.setVelocity(0, -jumpStrength);
-      }
-    }
-
     setRotation(angle: number) {
       this.bodySprites.forEach(sprite => sprite.setRotation(this.player.flipX ? -angle : angle));
       this.faceSprites.forEach(sprite => sprite.setRotation(this.player.flipX ? -angle : angle));
@@ -1204,15 +1308,17 @@ export async function createHighSchoolGame(
     update(dt: number = 1, zzfx: any) {
       const now = Date.now();
       //  AI
-      if (now - this.born > 2000) {
-        if (!this.dx || this.lastStill && now - this.lastStill > 3000 && !(now - this.firstTimePush < 5000)) {
-          this.dx = !this.dx ? 1 : -this.dx;
-          this.lastStill = now;
+      if (!this.trollBrain) {
+        if (now - this.born > 2000) {
+          if (!this.dx || this.lastStill && now - this.lastStill > 3000 && !(now - this.firstTimePush < 5000)) {
+            this.dx = !this.dx ? 1 : -this.dx;
+            this.lastStill = now;
+          }
         }
       }
 
       if (this.inWater) {
-        this.dx = 0;
+        // this.dx = 0;
         if (now - this.inWater > 500) {
           this.inWater = 0;
         }
@@ -1299,7 +1405,7 @@ export async function createHighSchoolGame(
           }
         } else if (this.dx) {
           const paused = this.frozen || now - this.unfrozen < 3000 || (now - this.sawTroll < 2000 || this.inWater || now - this.firstTimePush < 3000 && now - this.firstTimePush > 1000);
-          const speed = this.airborne ? 200 : paused ? 0 : 80;
+          const speed = this.airborne ? (this.trollBrain ? 100 : 200) : paused ? 0 : 80;
           this.player.setVelocityX(speed * this.dx * dt * this.player.scale);
           if (!this.frozen) {
             const flipX = this.dx < 0;
@@ -1309,6 +1415,8 @@ export async function createHighSchoolGame(
           if (paused) {
             this.lastStill = now;
           }
+        } else {
+          this.player.setVelocityX(this.player.body.velocity.x * .5);
         }
 
         if (this.flyingLevel) {
@@ -1337,9 +1445,11 @@ export async function createHighSchoolGame(
         this.landed = now;
       }
 
-      if (!this.player.body.touching.down && this.lastFrameOnGround) {
-        if (this.holdingBonus && parseInt((this.holdingBonus as any).frame.name) === 0) {
-          this.tryJump(zzfx, true);
+      if (!this.trollBrain) {
+        if (!this.player.body.touching.down && this.lastFrameOnGround) {
+          if (this.holdingBonus && parseInt((this.holdingBonus as any).frame.name) === 0) {
+            this.tryJump(zzfx, true);
+          }
         }
       }
 
@@ -1348,22 +1458,24 @@ export async function createHighSchoolGame(
         this.groundY = this.player.y;
       }
 
-      if (this.surprised) {
-        this.faceSprites[FaceEnum.MOUTH].setFrame(OPEN_MOUTH);
-        if (now - this.surprised > 2000 && !this.frozen) {
-          this.surprised = 0;
-          this.randomize(this.seed);
+      if (!this.trollBrain) {
+        if (this.surprised) {
+          this.faceSprites[FaceEnum.MOUTH].setFrame(OPEN_MOUTH);
+          if (now - this.surprised > 2000 && !this.frozen) {
+            this.surprised = 0;
+            this.randomize(this.seed);
+          }
         }
       }
     }
 
     foundOutJump = 0;
-    tryJump(zzfx: any, forceAllowJump: boolean) {
+    tryJump(zzfx: any, forceAllowJump?: boolean, strength?: number) {
       if (this.player.body.touching.down || forceAllowJump) {
-        this.player.setVelocityY(-800 * this.player.scale);
+        this.player.setVelocityY((strength ?? -800) * this.player.scale);
         zzfx(...[.2, , 198, .04, .07, .06, , 1.83, 16, , , , , , , , , .85, .04]); // Jump 252
         this.airborne = Date.now();
-        if (Date.now() - this.foundOutJump > 10000) {
+        if (!this.trollBrain && Date.now() - this.foundOutJump > 10000) {
           this.foundOutJump = Date.now();
           this.addHistory(HumanEvent.SUPER_JUMP);
         }
@@ -1430,10 +1542,34 @@ export async function createHighSchoolGame(
       bonus.body?.gameObject.setAlpha(.5);
       (bonus as any).setDisplaySize(32, 32).refreshBody();
       (bonus as any).debugShowBody = false;
+
+
+      if (newPowerFrame !== lostPowerFrame) {
+        if (lostPowerFrame === Bonus.LEVITATE) {
+          this.addHistory(HumanEvent.DROP_DOWN);
+        } else if (lostPowerFrame === Bonus.SHRINK) {
+          this.addHistory(HumanEvent.EXPAND);
+        } else if (lostPowerFrame === Bonus.FREEZE) {
+          if (this.humansFrozen.size) {
+            setTimeout(() => {
+              zzfx(...[1.52, , 1177, .23, .09, .09, 1, 1.41, 12, , , , , .4, , , .06, .25, .11, .11]); // Random 348
+              this.humansFrozen.forEach(human => human.unFreeze());
+              this.humansFrozen.clear();
+            }, 1000);
+          }
+        } else if (lostPowerFrame === Bonus.BRAIN_SWAP && this.trollBrain) {
+          this.trollBrain.humanBrain = undefined;
+          this.trollBrain = undefined;
+          this.addHistory(HumanEvent.RESTORED_HUMAN_BRAIN);
+          this.getSurprised();
+        }
+      }
+
       if (newPowerFrame === Bonus.LEVITATE) {
         //  flying
         this.player.body.setAllowGravity(false);
         this.flyingLevel = (this.flyingLevel ?? (this.groundY ? Math.max(this.groundY, this.player.y) : undefined) ?? this.player.y) - 50;
+        console.log(this.flyingLevel);
         setTimeout(() => {
           this.getSurprised(0);
         }, 1000);
@@ -1466,29 +1602,6 @@ export async function createHighSchoolGame(
         this.addHistory(HumanEvent.NOT_UPSIDE_DOWN);
       }
 
-      if (newPowerFrame === Bonus.GEMINI) {
-        setTimeout(() => {
-          const { x, y } = this.player;
-          this.dx = -1;
-          const human = new Human(this.player.scene, x + 20, y, this.humanGroup, this.seed);
-          human.dx = 1;
-          this.randomize(this.seed);
-          human.forceMouth = this.faceSprites[FaceEnum.MOUTH].frame.name === HUMAN_ANIM.FACE_MOUTH_SMILE[0].toString()
-            ? HUMAN_ANIM.FACE_MOUTH_NEUTRAL[0]
-            : HUMAN_ANIM.FACE_MOUTH_SMILE[0];
-          human.randomize(human.seed);
-          humans.push(human);
-
-          const newBonus = createDynamic(undefined, bonusGroup, undefined, 'bonus', x, y, Bonus.GEMINI, BONUS_SIZE, BONUS_SIZE);
-          human.holdingBonus = newBonus;
-          newBonus.disableBody(true, false);
-          newBonus.setAlpha(.5);
-          newBonus.setDisplaySize(32, 32).refreshBody();
-          newBonus.debugShowBody = false;
-
-        }, 1000);
-      }
-
       switch (newPowerFrame) {
         case Bonus.JUMP:
           this.addHistory(HumanEvent.ACQUIRE_SUPER_JUMP);
@@ -1505,21 +1618,44 @@ export async function createHighSchoolGame(
         case Bonus.SHRINK:
           this.addHistory(HumanEvent.SHRUNK);
           break;
-      }
-      if (newPowerFrame !== lostPowerFrame) {
-        if (lostPowerFrame === Bonus.LEVITATE) {
-          this.addHistory(HumanEvent.DROP_DOWN);
-        } else if (lostPowerFrame === Bonus.SHRINK) {
-          this.addHistory(HumanEvent.EXPAND);
-        } else if (lostPowerFrame === Bonus.FREEZE) {
-          if (this.humansFrozen.size) {
-            setTimeout(() => {
-              zzfx(...[1.52, , 1177, .23, .09, .09, 1, 1.41, 12, , , , , .4, , , .06, .25, .11, .11]); // Random 348
-              this.humansFrozen.forEach(human => human.unFreeze());
-              this.humansFrozen.clear();
-            }, 1000);
-          }
-        }
+        case Bonus.BRAIN_SWAP:
+          const closestTroll = this.closestHuman(trolls) as Troll;
+          closestTroll.humanBrain = this;
+          closestTroll.dx = 0;
+          closestTroll.player.setVelocityX(0);
+          closestTroll.getSurprised(0);
+          setTimeout(() => {
+            closestTroll.dx = 0;
+            closestTroll.getSurprised();
+          }, 500);
+          this.trollBrain = closestTroll;
+          this.player.setVelocityX(0);
+          // this.history.length = 0;
+          // this.spokenHistory = 0;
+          closestTroll.addHistory(HumanEvent.TROLL_BRAIN);
+          break;
+        case Bonus.GEMINI:
+          setTimeout(() => {
+            const { x, y } = this.player;
+            this.dx = -1;
+            const human = new Human(this.player.scene, x + 20, y, this.humanGroup, this.seed);
+            human.dx = 1;
+            this.randomize(this.seed);
+            human.forceMouth = this.faceSprites[FaceEnum.MOUTH].frame.name === HUMAN_ANIM.FACE_MOUTH_SMILE[0].toString()
+              ? HUMAN_ANIM.FACE_MOUTH_NEUTRAL[0]
+              : HUMAN_ANIM.FACE_MOUTH_SMILE[0];
+            human.randomize(human.seed);
+            humans.push(human);
+
+            const newBonus = createDynamic(undefined, bonusGroup, undefined, 'bonus', x, y, Bonus.GEMINI, BONUS_SIZE, BONUS_SIZE);
+            human.holdingBonus = newBonus;
+            newBonus.disableBody(true, false);
+            newBonus.setAlpha(.5);
+            newBonus.setDisplaySize(32, 32).refreshBody();
+            newBonus.debugShowBody = false;
+
+          }, 1000);
+          break;
       }
 
       if (newPowerFrame === Bonus.RANDOM) {
@@ -1569,7 +1705,7 @@ export async function createHighSchoolGame(
     }
 
     speak(message: string) {
-      ui.chat(message, this);
+      ui.chat(message, this, this.trollBrain);
     }
 
     metAnotherHuman = 0;
@@ -1888,40 +2024,42 @@ export async function createHighSchoolGame(
 
     tt?: Timer;
     chatTimeout?: Timer;
-    chat(msg: string, human?: Human) {
+    chat(msg: string, human?: Human, troll?: Troll) {
       clearTimeout(this.chatTimeout);
       speechSynthesis.cancel();
       if (msg?.length) {
         const message = wrap(msg, {
           width: 30,
         });
-        if (human) {
+        clearTimeout(this.tt);
+        if (!this.chatText?.active) {
+          return;
+        }
+        this.chatText?.setFontSize(human?.antMan ? 12 : 18);
+        someoneSpeaking = Date.now();
+        const rng = alea(human?.seed + "");
+        this.chatText?.setText("");
+        const utterance = new SpeechSynthesisUtterance(message);
+        utterance.volume = game.sound.mute ? 0 : !mapJson.locked ? 0.2 : 1;
+        const voices = getVoices();
+        utterance.voice = voices[Math.floor(rng() * voices.length)];
+        console.log("VOICE", utterance.voice.name, utterance.voice.lang);
+        if (!human?.lang && human) {
+          human.lang = utterance.voice.lang;
+        }
+        human?.randomize(human.seed);
+        const preFrame = human?.faceSprites[FaceEnum.MOUTH].frame.name ?? "";
+        this.tt = setTimeout(() => {
+          this.chatText?.setText(message);
+        }, 1000);
+        utterance.addEventListener("boundary", (e) => {
           clearTimeout(this.tt);
-          if (!this.chatText?.active) {
-            return;
+          if (this.chatText?.active) {
+            this.chatText?.setText(message.slice(0, e.charIndex + e.charLength));
           }
-          this.chatText?.setFontSize(human.antMan ? 12 : 18);
-          someoneSpeaking = Date.now();
-          const rng = alea(human?.seed + "");
-          this.chatText?.setText("");
-          const utterance = new SpeechSynthesisUtterance(message);
-          utterance.volume = game.sound.mute ? 0 : !mapJson.locked ? 0.2 : 1;
-          const voices = getVoices();
-          utterance.voice = voices[Math.floor(rng() * voices.length)];
-          console.log("VOICE", utterance.voice.name, utterance.voice.lang);
-          if (!human.lang) {
-            human.lang = utterance.voice.lang;
-          }
-          human.randomize(human.seed);
-          const preFrame = human?.faceSprites[FaceEnum.MOUTH].frame.name ?? "";
-          this.tt = setTimeout(() => {
-            this.chatText?.setText(message);
-          }, 1000);
-          utterance.addEventListener("boundary", (e) => {
-            clearTimeout(this.tt);
-            if (this.chatText?.active) {
-              this.chatText?.setText(message.slice(0, e.charIndex + e.charLength));
-            }
+          if (troll) {
+            troll?.mouthSprites.forEach(sprite => sprite.setVisible(true));
+          } else {
             if (human?.faceSprites[FaceEnum.MOUTH].active) {
               human?.faceSprites[FaceEnum.MOUTH].setFrame(
                 preFrame != OPEN_MOUTH.toString()
@@ -1929,34 +2067,41 @@ export async function createHighSchoolGame(
                   : HUMAN_ANIM.FACE_MOUTH[0] + Math.floor(Math.random() * (HUMAN_ANIM.FACE_MOUTH[1] - HUMAN_ANIM.FACE_MOUTH[0])),
               );
             }
-            setTimeout(() => {
+          }
+          setTimeout(() => {
+            if (troll) {
+              troll?.mouthSprites.forEach(sprite => sprite.setVisible(false));
+            } else {
               if (human?.faceSprites[FaceEnum.MOUTH].active) {
                 human?.faceSprites[FaceEnum.MOUTH].setFrame(preFrame);
               }
-            }, 200);
-            this.tt = setTimeout(() => {
-              if (this.chatText?.active) {
-                this.chatText?.setText(message);
-              }
-            }, 2000);
-          });
-          utterance.addEventListener("end", () => {
-            this.chatText?.setText(message);
-            if (human) {
-              human.speaking = 0;
             }
-            someoneSpeaking = 0;
-            this.chatTimeout = setTimeout(() => {
-              this.chat("");
-            }, 3000);
-          });
-          speechSynthesis.speak(utterance)
+          }, 200);
+          this.tt = setTimeout(() => {
+            if (this.chatText?.active) {
+              this.chatText?.setText(message);
+            }
+          }, 2000);
+        });
+        utterance.addEventListener("end", () => {
+          this.chatText?.setText(message);
+          if (human) {
+            human.speaking = 0;
+          }
+          someoneSpeaking = 0;
+          this.chatTimeout = setTimeout(() => {
+            this.chat("");
+          }, 3000);
+        });
+        speechSynthesis.speak(utterance)
 
+        if (troll) {
+          this.chatText?.setPosition(troll.player.x, troll.player.y);
+        } else {
           this.chatText?.setPosition(human?.player.x ?? 0, human?.player.y);
-          this.chatText?.setVisible(true);
-          this.chatFollow = human?.player
         }
-
+        this.chatText?.setVisible(true);
+        this.chatFollow = troll?.player ?? human?.player
       } else {
         this.chatText?.setVisible(false);
         this.chatFollow = undefined;
@@ -2228,32 +2373,37 @@ export async function createHighSchoolGame(
     if (!bonus) {
       return;
     }
-    const t = (bonus as any).triangle = scene.add.triangle((bonus as any).indic.x, (bonus as any).indic.y + 8, 0, 0, 16, 8, 0, 16, 0xFF0000);
-    t.setInteractive({ useHandCursor: true });
-    t.on('pointerover', () => {
-      t.setFillStyle(0xFFFF00);
-    });
-    t.on('pointerout', () => {
-      t.setFillStyle(0xFF0000);
-      ui?.showPower();
-    });
-    t.on('pointerdown', () => {
-      const frame = (parseInt((bonus as any).frame.name) + 1) % BONUS_COUNT;
-      (bonus as any).setFrame(frame);
-      (bonus as any).indic.setFrame(frame);
-      ui?.showPower(POWER_DESC[parseInt(bonus.frame.name) as Bonus], bonus);
+    const t = (bonus as any).triangle = scene.add.triangle((bonus as any).indic.x, (bonus as any).indic.y, 0, 0, 12, 16, 0, 32, 0xFFaa00);
+    const t2 = (bonus as any).triangle_back = scene.add.triangle((bonus as any).indic.x, (bonus as any).indic.y, 12, 0, 0, 16, 12, 32, 0xFFaa00);
+    const tt = [t, t2];
+    tt.forEach((t, index) => {
+      t.setInteractive({ useHandCursor: true });
+      t.on('pointerover', () => {
+        t.setFillStyle(0xFFee00);
+      });
+      t.on('pointerout', () => {
+        t.setFillStyle(0xFFaa00);
+        ui?.showPower();
+      });
+      t.on('pointerdown', () => {
+        const frame = (parseInt((bonus as any).frame.name) + (index === 0 ? 1 : -1) + BONUS_COUNT) % BONUS_COUNT;
+        (bonus as any).setFrame(frame);
+        (bonus as any).indic.setFrame(frame);
+        powerUpButton?.setFrame(frame);
+        ui?.showPower(POWER_DESC[parseInt(bonus.frame.name) as Bonus], bonus);
 
-      const p = (bonus as any);
-      if (id) {
-        commit("bonus", id, p.x, p.y, p.displayWidth, p.displayHeight, parseInt(p.frame.name),
-          {
-            label: p.label,
-            lockedByLevel: p.lockedByLevel,
-            nextLevel: p.nextLevel,
-            trigger: p.trigger,
-            horizontal: p.horizontal,
-          });
-      }
+        const p = (bonus as any);
+        if (id) {
+          commit("bonus", id, p.x, p.y, p.displayWidth, p.displayHeight, parseInt(p.frame.name),
+            {
+              label: p.label,
+              lockedByLevel: p.lockedByLevel,
+              nextLevel: p.nextLevel,
+              trigger: p.trigger,
+              horizontal: p.horizontal,
+            });
+        }
+      });
     });
   }
 
@@ -2367,7 +2517,7 @@ export async function createHighSchoolGame(
     id: string | undefined,
     key: string,
     x: number, y: number,
-    frame?: number,
+    frame?: number | string,
     width?: number, height?: number,
     subject?: Phaser.GameObjects.Image,
     options: {
@@ -2384,6 +2534,9 @@ export async function createHighSchoolGame(
     }
     const platform: Phaser.Physics.Arcade.Image | undefined = platforms?.create(x, y, key, frame);
     const indic = indicators?.create(x, y, options.indicKey ?? key, frame);
+    if (indic) {
+      (indic as any).subject = subject;
+    }
     if (platform) {
       (platform as any).indic = indic;
     }
@@ -2448,7 +2601,7 @@ export async function createHighSchoolGame(
           setUiIndex(-1);
           startedMoving = false;
           rect?.destroy();
-        } else if (cursors?.shift.isDown && (!options.canCopy || options.canCopy())) {
+        } else if ((cursors?.shift.isDown || uiIndex === UIButton.Duplicate) && (!options.canCopy || options.canCopy())) {
           let id = key;
           for (let i = 1; i < 100000; i++) {
             if (!idSet.has(key + i)) {
@@ -2666,8 +2819,6 @@ export async function createHighSchoolGame(
   (window as any).humans = humans;
   // let trollo: Troll;
   const trolls: Troll[] = [];
-  let mainCamera: Phaser.Cameras.Scene2D.Camera;
-  let preTime: number = 0;
   let sky: Phaser.GameObjects.Image;
   let bonusGroup: Phaser.Physics.Arcade.Group;
   let keyGroup: Phaser.Physics.Arcade.Group;
@@ -3062,9 +3213,31 @@ export async function createHighSchoolGame(
             frames: this.anims.generateFrameNumbers('troll', { start: 0, end: 0 }),
             frameRate: 20,
           }),
+          crouch: this.anims.create({
+            key: `troll_crouch`,
+            frames: this.anims.generateFrameNumbers('troll', { frames: [38, 39] }),
+            frameRate: 10,
+          }),
+          crouch_walk: this.anims.create({
+            key: `troll_crouch_walk`,
+            frames: this.anims.generateFrameNumbers('troll', { frames: [39, 40] }),
+            frameRate: 10,
+            repeat: -1,
+          }),
+          talk_still: this.anims.create({
+            key: `troll_talk_still`,
+            frames: this.anims.generateFrameNumbers('troll', { start: 31, end: 31 }),
+            frameRate: 20,
+          }),
           walk: this.anims.create({
             key: `troll_walk`,
             frames: this.anims.generateFrameNumbers('troll', { start: 2, end: 7 }),
+            frameRate: 20,
+            repeat: -1,
+          }),
+          talk_walk: this.anims.create({
+            key: `troll_talk_walk`,
+            frames: this.anims.generateFrameNumbers('troll', { start: 32, end: 37 }),
             frameRate: 20,
             repeat: -1,
           }),
@@ -3180,7 +3353,18 @@ export async function createHighSchoolGame(
           r: Phaser.Input.Keyboard.KeyCodes.R,
           delete: Phaser.Input.Keyboard.KeyCodes.BACKSPACE,
           esc: Phaser.Input.Keyboard.KeyCodes.ESC,
+          enter: Phaser.Input.Keyboard.KeyCodes.ENTER,
         }) as Phaser.Types.Input.Keyboard.CursorKeys;
+
+        waterGroup = this.physics.add.staticGroup();
+        Object.entries(mapJson.water ?? {}).forEach(([id, params]) => {
+          const { x, y, width, height } = params;
+          const b = createPlatform(waterGroup, id, 'water', x, y, width, height);//, width ?? 64, height ?? 64);
+          if (b) {
+            (b as any).anims.play({ key: 'water', randomFrame: true });
+            (b as any).setBodySize(width, height / 3);
+          }
+        });
 
         const triggers = this.physics.add.staticGroup({
           // key: 'red',
@@ -3194,11 +3378,20 @@ export async function createHighSchoolGame(
         });
         Object.entries(mapJson.rock ?? {}).forEach(([id, params]) => {
           const { x, y, frame } = params;
-          const object = createDynamic(indicators, rocks, id, 'rock', x, y, frame);
+          const object = createDynamic(indicators, rocks, id, 'rock', x, y, frame, undefined, undefined, undefined, {
+            onCopy: (result: any, id) => {
+              result.body?.gameObject?.setPushable(false);
+              result.body?.gameObject?.setDamping(true);
+              result.body?.gameObject?.setDrag(.01);
+              result.body?.gameObject?.setCollideWorldBounds(true);
+              (result as any).indic.rock = result;
+            },
+          });
           object.body?.gameObject?.setPushable(false);
           object.body?.gameObject?.setDamping(true);
           object.body?.gameObject?.setDrag(.01);
           object.body?.gameObject?.setCollideWorldBounds(true);
+          (object as any).indic.rock = object;
         });
 
         this.physics.add.collider(rocks, keyGroup);
@@ -3290,6 +3483,7 @@ export async function createHighSchoolGame(
             bonus = createDynamic(indicators, bonusGroup, id, 'bonus', x, y, frame, BONUS_SIZE, BONUS_SIZE, undefined, {
               onDelete(bonus) {
                 (bonus as any).triangle?.destroy(true);
+                (bonus as any).triangle_back?.destroy(true);
               },
               onCopy: (result, id) => {
                 makeBonusChangeTriangle(this, result, id);
@@ -3317,7 +3511,9 @@ export async function createHighSchoolGame(
                 result?.body?.gameObject?.setDrag(.01);
                 result?.body?.gameObject?.setCollideWorldBounds(true);
                 result?.body?.gameObject?.preFX.addGlow(0xffffcc, 1);
-
+                if (result) {
+                  (result as any).indic.bonus = bonus;
+                }
               },
             });
           }
@@ -3329,6 +3525,7 @@ export async function createHighSchoolGame(
           bonus.body?.gameObject?.setDrag(.01);
           bonus.body?.gameObject?.setCollideWorldBounds(true);
           bonus.body?.gameObject?.preFX.addGlow(0xffffcc, 1);
+          bonus.indic.bonus = bonus;
 
           bonuses.push(bonus);
         });
@@ -3379,6 +3576,7 @@ export async function createHighSchoolGame(
                 b.setDrag(.01);
                 b.setCollideWorldBounds(true);
                 b.preFX?.addGlow(0xccffff, 1);
+                b.indic.key = b;
               },
             });
             if (b) {
@@ -3388,6 +3586,7 @@ export async function createHighSchoolGame(
               b.setDrag(.01);
               b.setCollideWorldBounds(true);
               b.preFX?.addGlow(0xccffff, 1);
+              b.indic.key = b;
             }
             return;
           }
@@ -3400,6 +3599,7 @@ export async function createHighSchoolGame(
               b.setDrag(.01);
               b.setCollideWorldBounds(true);
               b.preFX?.addGlow(0xccffff, 1);
+              b.indic.key = b;
             },
           });
           if (b) {
@@ -3408,6 +3608,8 @@ export async function createHighSchoolGame(
             b.setDamping(true);
             b.setDrag(.01);
             b.setCollideWorldBounds(true);
+            b.preFX?.addGlow(0xccffff, 1);
+            b.indic.key = b;
           }
         });
 
@@ -3510,15 +3712,6 @@ export async function createHighSchoolGame(
         this.physics.add.collider(bonusGroup, buttonGroup, onCollidePushButton);
 
 
-        waterGroup = this.physics.add.staticGroup();
-        Object.entries(mapJson.water ?? {}).forEach(([id, params]) => {
-          const { x, y, width, height } = params;
-          const b = createPlatform(waterGroup, id, 'water', x, y, width, height);//, width ?? 64, height ?? 64);
-          if (b) {
-            (b as any).anims.play({ key: 'water', randomFrame: true });
-            (b as any).setBodySize(width, height / 3);
-          }
-        });
         this.physics.add.overlap(waterGroup, trollGroup, (water, player) => {
           if (!gameOver) {
             setTimeout(() => {
@@ -3648,8 +3841,6 @@ export async function createHighSchoolGame(
 
         this.physics.add.collider(trollGroup, humanGroup, onTrollContactHuman);
         this.physics.add.overlap(trollGroup, humanGroup, onTrollContactHuman);
-
-        mainCamera = this.cameras.main;
       },
       update() {
         ghostPlatform?.setPosition(game.input.mousePointer?.x, game.input.mousePointer?.y);
@@ -3657,7 +3848,6 @@ export async function createHighSchoolGame(
         const now = Date.now();
         const dt = 1.5;//Math.min(3, Math.max(1, (now - preTime) / 10));
         //console.log(dt);
-        preTime = now;
 
         //        const hero = trollo;
         if (visTime && now - visTime > 500) {
@@ -3690,15 +3880,49 @@ export async function createHighSchoolGame(
           Phaser.Input.Keyboard.JustDown((cursors as any).f),
           Phaser.Input.Keyboard.JustDown((cursors as any).p),
         ];
+        const crouchKeys = [(cursors as any)?.down2.isDown, cursors?.down.isDown];
 
         if (trolls.length > 1) {
           trolls.forEach((troll, index) => {
-            troll.dx = dxKeys[index];
-            if (jumpKeys[index]) {
+            if (troll.humanBrain) {
+              troll.humanBrain.dx = dxKeys[index];
+              if (jumpKeys[index]) {
+                troll.humanBrain.tryJump(zzfx, false, -420);
+              }
+            } else {
+              troll.dx = dxKeys[index];
+              if (jumpKeys[index]) {
+                troll.tryJump(zzfx);
+              }
+              troll.crouch = crouchKeys[index];
+              if (pickingUpKeys[index]) {
+                troll.hold(bonusGroup, zzfx, ui, { isBonus: true });
+                troll.hold(keyGroup, zzfx, ui, { isKey: true });
+                troll.hold(troll.trollGroup, zzfx, ui, { isTroll: true });
+                troll.hold(humanGroup, zzfx, ui, {
+                  isHuman: true, condition(item) {
+                    return (item as any).human.frozen;
+                  },
+                });
+                ui.showCanGrab(false);
+              }
+            }
+          });
+        } else {
+          const troll = trolls[0];
+          if (troll.humanBrain) {
+            troll.humanBrain.dx = dxKeys[0] || dxKeys[1];
+            if (jumpKeys[0] || jumpKeys[1]) {
+              troll.humanBrain.tryJump(zzfx, false, -420);
+            }
+          } else {
+            troll.dx = dxKeys[0] || dxKeys[1];
+            if (jumpKeys[0] || jumpKeys[1]) {
               troll.tryJump(zzfx);
             }
-            if (pickingUpKeys[index]) {
-              troll.hold(bonusGroup, zzfx, ui, { isBonus: true });
+            troll.crouch = crouchKeys[0] || crouchKeys[1];
+            if (pickingUpKeys[0] || pickingUpKeys[1]) {
+              troll.hold(bonusGroup, zzfx, ui);
               troll.hold(keyGroup, zzfx, ui, { isKey: true });
               troll.hold(troll.trollGroup, zzfx, ui, { isTroll: true });
               troll.hold(humanGroup, zzfx, ui, {
@@ -3708,29 +3932,12 @@ export async function createHighSchoolGame(
               });
               ui.showCanGrab(false);
             }
-          });
-        } else {
-          const troll = trolls[0];
-          troll.dx = dxKeys[0] || dxKeys[1];
-          if (jumpKeys[0] || jumpKeys[1]) {
-            troll.tryJump(zzfx);
-          }
-          if (pickingUpKeys[0] || pickingUpKeys[1]) {
-            troll.hold(bonusGroup, zzfx, ui);
-            troll.hold(keyGroup, zzfx, ui, { isKey: true });
-            troll.hold(troll.trollGroup, zzfx, ui, { isTroll: true });
-            troll.hold(humanGroup, zzfx, ui, {
-              isHuman: true, condition(item) {
-                return (item as any).human.frozen;
-              },
-            });
-            ui.showCanGrab(false);
           }
         }
 
         trolls.forEach(troll => {
           if (!troll.holdingBonus) {
-            const item = troll.foreObject(bonusGroup)
+            const item = troll.humanBrain ? undefined : troll.foreObject(bonusGroup)
               ?? troll.foreObject(keyGroup)
               ?? troll.foreObject(troll.trollGroup)
               ?? troll.foreObject(humanGroup, h => (h as any).human?.frozen);
@@ -3786,7 +3993,19 @@ export async function createHighSchoolGame(
           h[Math.floor(Math.random() * h.length)]?.speakAI();
         }
         if (canEditLevel) {
-          bonuses.forEach(bonus => bonus.triangle?.setPosition(bonus.indic.x, bonus.indic.y + 15));
+          bonuses.forEach(bonus => {
+            bonus.triangle?.setPosition(bonus.indic.x + 24, bonus.indic.y);
+            bonus.triangle_back?.setPosition(bonus.indic.x - 24, bonus.indic.y);
+          });
+          if (selectedElement) {
+            const s = selectedElement as any;
+            const subject = s.subject ?? s.human?.player ?? s.troll?.player ?? s.bonus ?? s.key ?? s.rock;
+            if (subject) {
+              s.subject = subject;
+              subject.setPosition(s.x, s.y);
+              subject.setVelocity(0, 0);
+            }
+          }
         }
       },
     }, UI],
