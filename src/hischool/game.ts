@@ -708,9 +708,6 @@ export async function createHighSchoolGame(
 
     set crouch(value: boolean) {
       if (this.#crouch !== value) {
-        if (value && this.holdingBonus) {
-          return;
-        }
         if (!value) {
           const playerBounds = this.player.getBounds();
           playerBounds.y -= 16;
@@ -849,10 +846,11 @@ export async function createHighSchoolGame(
       } else if (Date.now() - this.landed < 200) {
         this.trollSprites.forEach((sprite, index) => sprite.anims.play(this.holdingBonus ? 'troll_hold_landed' : `troll_landed`, true));
       } else if (!this.dx || notMoving) {
-        if (this.#crouch && !this.holdingBonus) {
+        if (this.#crouch) {
           this.trollSprites.forEach((sprite, index) => {
-            if (sprite.anims.currentAnim?.key !== 'troll_crouch') {
-              sprite.anims.play('troll_crouch', true);
+            const animKey = this.holdingBonus ? 'troll_hold_crouch' : 'troll_crouch';
+            if (sprite.anims.currentAnim?.key !== animKey) {
+              sprite.anims.play(animKey, true);
             }
           });
         } else {
@@ -860,8 +858,8 @@ export async function createHighSchoolGame(
         }
         this.mouthSprites.forEach((sprite, index) => sprite.anims.play('troll_talk_still', true));
       } else {
-        if (this.#crouch && !this.holdingBonus) {
-          this.trollSprites.forEach((sprite, index) => sprite.anims.play('troll_crouch_walk', true));
+        if (this.#crouch) {
+          this.trollSprites.forEach((sprite, index) => sprite.anims.play(this.holdingBonus ? 'troll_hold_crouch_walk' : 'troll_crouch_walk', true));
         } else {
           this.trollSprites.forEach((sprite, index) => sprite.anims.play(this.holdingBonus ? 'troll_hold_walk' : `troll_walk`, true));
         }
@@ -871,7 +869,7 @@ export async function createHighSchoolGame(
       if (heldBonus) {
         const trollSprite = this.trollSprites[0];
         const frame = trollSprite.frame.name;
-        let holdShift = 0;
+        let holdShift = 0, holdShiftX = 0;
         switch (parseInt(frame)) {
           case 13: case 16: case 25: case 28: case 29: case 30:
             holdShift = -2 * trollSprite.scaleY;
@@ -879,8 +877,12 @@ export async function createHighSchoolGame(
           case 14: case 17: case 26:
             holdShift = -1 * trollSprite.scaleY;
             break;
+          case 41:
+            holdShift = -1 * trollSprite.scaleY;
+            holdShiftX = -1 * trollSprite.scaleX;
+            break;
         }
-        heldBonus.body?.gameObject.setPosition(this.player.x - (this.holdingTemp ? 30 : 0) * this.dx, this.player.y - ((heldBonus as any).isKey ? 20 : (heldBonus as any).human ? 40 : 40) + holdShift);
+        heldBonus.body?.gameObject.setPosition(this.player.x - (this.holdingTemp ? 30 : 0) * this.dx + holdShiftX * this.dx, this.player.y - ((heldBonus as any).isKey ? 20 : (heldBonus as any).human ? 40 : 40) + holdShift);
       }
 
       const touchingDown = this.grounded();
@@ -1536,6 +1538,7 @@ export async function createHighSchoolGame(
           this.holdingBonus.destroy(true);
         }
       }
+      this.player.setVelocityY(0);
 
       this.holdingBonus = bonus;
       (bonus as any).disableBody(true, false);
@@ -1569,7 +1572,7 @@ export async function createHighSchoolGame(
         //  flying
         this.player.body.setAllowGravity(false);
         this.flyingLevel = (this.flyingLevel ?? (this.groundY ? Math.max(this.groundY, this.player.y) : undefined) ?? this.player.y) - 50;
-        console.log(this.flyingLevel);
+        //console.log(this.flyingLevel);
         setTimeout(() => {
           this.getSurprised(0);
         }, 1000);
@@ -3055,7 +3058,7 @@ export async function createHighSchoolGame(
         doorGroup = this.physics.add.staticGroup();
         Object.entries(mapJson.door ?? {}).forEach(([id, params]) => {
           const { x, y, lockedByLevel, label, nextLevel } = params;
-          console.log(x, y, lockedByLevel, label, nextLevel);
+          //console.log(x, y, lockedByLevel, label, nextLevel);
           if (lockedByLevel && !unlockedLevel(lockedByLevel) && !canEditLevel) {
             return;
           }
@@ -3075,6 +3078,7 @@ export async function createHighSchoolGame(
                 offsetY: 1,
               },
             });
+            (d as any).labelText = labelText;
             labelText.setPosition(x - labelText.width / 2, y - labelText.height / 2 - 10);
           }
           (d as any).nextLevel = nextLevel;
@@ -3224,6 +3228,17 @@ export async function createHighSchoolGame(
             frameRate: 10,
             repeat: -1,
           }),
+          hold_crouch: this.anims.create({
+            key: `troll_hold_crouch`,
+            frames: this.anims.generateFrameNumbers('troll', { frames: [41, 41] }),
+            frameRate: 10,
+          }),
+          hold_crouch_walk: this.anims.create({
+            key: `troll_hold_crouch_walk`,
+            frames: this.anims.generateFrameNumbers('troll', { frames: [41, 42] }),
+            frameRate: 10,
+            repeat: -1,
+          }),
           talk_still: this.anims.create({
             key: `troll_talk_still`,
             frames: this.anims.generateFrameNumbers('troll', { start: 31, end: 31 }),
@@ -3356,16 +3371,6 @@ export async function createHighSchoolGame(
           enter: Phaser.Input.Keyboard.KeyCodes.ENTER,
         }) as Phaser.Types.Input.Keyboard.CursorKeys;
 
-        waterGroup = this.physics.add.staticGroup();
-        Object.entries(mapJson.water ?? {}).forEach(([id, params]) => {
-          const { x, y, width, height } = params;
-          const b = createPlatform(waterGroup, id, 'water', x, y, width, height);//, width ?? 64, height ?? 64);
-          if (b) {
-            (b as any).anims.play({ key: 'water', randomFrame: true });
-            (b as any).setBodySize(width, height / 3);
-          }
-        });
-
         const triggers = this.physics.add.staticGroup({
           // key: 'red',
           // setXY: { x: 50, y: 500 },
@@ -3393,6 +3398,22 @@ export async function createHighSchoolGame(
           object.body?.gameObject?.setCollideWorldBounds(true);
           (object as any).indic.rock = object;
         });
+
+        waterGroup = this.physics.add.staticGroup();
+        Object.entries(mapJson.water ?? {}).forEach(([id, params]) => {
+          const { x, y, width, height } = params;
+          const b = createPlatform(waterGroup, id, 'water', x, y, width, height, {
+            onCopy: (b, id) => {
+              (b as any).anims.play({ key: 'water', randomFrame: true });
+              (b as any).setBodySize(width, height / 3);
+            },
+          });
+          if (b) {
+            (b as any).anims.play({ key: 'water', randomFrame: true });
+            (b as any).setBodySize(width, height / 3);
+          }
+        });
+
 
         this.physics.add.collider(rocks, keyGroup);
         this.physics.add.collider(rocks, rocks);
@@ -3530,12 +3551,14 @@ export async function createHighSchoolGame(
           bonuses.push(bonus);
         });
 
-        this.physics.add.collider(humanGroup, bonusGroup, (human, bonus) => {
+        const powerCollision = (human: any, bonus: any) => {
           const h: Human = (human as any).human;
           if (!h.frozen && !h.acquiringPower()) {
             h.getPower(bonus as any, zzfx);
           }
-        });
+        };
+        this.physics.add.collider(humanGroup, bonusGroup, powerCollision);
+        this.physics.add.overlap(humanGroup, bonusGroup, powerCollision);
         this.physics.add.collider(bonusGroup, rocks);
 
 
@@ -3613,12 +3636,26 @@ export async function createHighSchoolGame(
           }
         });
 
+        let nextLabel = 'A';
+        const labelForTrigger: Record<string, string> = {};
+        function getLabelForTrigger(trigger?: string) {
+          if (!trigger) {
+            return undefined;
+          }
+          if (!labelForTrigger[trigger]) {
+            labelForTrigger[trigger] = nextLabel;
+            nextLabel = String.fromCharCode(nextLabel.charCodeAt(0) + 1);
+          }
+          return labelForTrigger[trigger];
+        }
+
         buttonGroup = this.physics.add.staticGroup();
         Object.entries(mapJson.button ?? {}).forEach(([id, params]) => {
-          const { x, y, width, height, trigger, label } = params;
+          const { x, y, width, height, trigger } = params;
           const b = createPlatform(buttonGroup, id, 'button', x, y, width, height);
+
+          const label = getLabelForTrigger(trigger);
           if (label) {
-            console.log("ADD LABEL TEXT");
             const labelText = ui.add.text(x, y, label, {
               fontSize: '14pt', color: '#fff',
               shadow: {
@@ -3628,6 +3665,7 @@ export async function createHighSchoolGame(
                 offsetY: 1,
               }
             });
+            (b as any).labelText = labelText;
             labelText.setPosition(x - labelText.width / 2, y + height / 2 + 2);
           }
 
@@ -3635,12 +3673,12 @@ export async function createHighSchoolGame(
             (b as any).anims.play('button_up');
             (b as any).setDisplaySize(width, height).refreshBody();
             (b as any).trigger = trigger;
-            (b as any).label = label;
           }
         });
         gateGroup = this.physics.add.staticGroup();
         Object.entries(mapJson.gate ?? {}).forEach(([id, params]) => {
-          const { x, y, width, height, label } = params;
+          const { x, y, width, height } = params;
+          const label = getLabelForTrigger(id);
           const horizontal = width > height;
           const b = createPlatform(gateGroup, id, 'gate', x, y, width, height);
           if (label) {
@@ -3653,7 +3691,8 @@ export async function createHighSchoolGame(
                 offsetY: 1,
               }
             });
-            labelText.setPosition(x - labelText.width / 2, y + height / 2 + 2);
+            (b as any).labelText = labelText;
+            labelText.setPosition(x - labelText.width / 2, y - labelText.height / 2);
           }
 
 
@@ -3661,7 +3700,6 @@ export async function createHighSchoolGame(
             (b as any).anims.play(horizontal ? 'hgate_close' : 'gate_up');
             (b as any).setDisplaySize(width, height);
             (b as any).refreshBody();
-            (b as any).label = label;
             triggerItems[id] = () => {
               if (!(b as any).opened) {
                 (b as any).opened = true;
@@ -3761,10 +3799,12 @@ export async function createHighSchoolGame(
         this.physics.add.overlap(trollGroup, doorGroup, (player, door) => {
           if ((door as any).isOpen) {
             (player as any).troll.destroy();
-            (door as any).anims.play("door_close");
             zzfx(...[1.03, , 415, .05, .3, .46, 1, 1.91, 2.7, , , , .16, , 11, .1, , .69, .24, .27]); // Powerup 271
-            ui.victory();
-            nextLevelOverride = (door as any).nextLevel;
+            if (trolls.every(troll => troll.destroyed)) {
+              ui.victory();
+              nextLevelOverride = (door as any).nextLevel;
+              (door as any).anims.play("door_close");
+            }
           }
         });
 

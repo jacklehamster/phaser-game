@@ -1,5 +1,6 @@
 {
-	"locked": false,
+	"locked": true,
+	"overlay": "assets/rock-beach.png",
 	"ground": {
 		"ground1": {
 			"x": 501,

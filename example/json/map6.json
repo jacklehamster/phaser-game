@@ -13,19 +13,17 @@
 	"gate": {
 		"gate1": {
 			"x": 374.9999649047872,
-			"y": 411,
+			"y": 413,
 			"width": 210.99998907470774,
-			"height": 22,
-			"frame": 14,
-			"label": "A"
+			"height": 28,
+			"frame": 34
 		},
 		"gate2": {
 			"x": 806.4999385681188,
 			"y": 154,
 			"width": 125.99999426269585,
 			"height": 22,
-			"frame": 21,
-			"label": "B"
+			"frame": 21
 		}
 	},
 	"button": {
@@ -35,8 +33,7 @@
 			"width": 32,
 			"height": 10,
 			"frame": 11,
-			"trigger": "gate1",
-			"label": "A"
+			"trigger": "gate1"
 		},
 		"button2": {
 			"x": 666.4999593200708,
@@ -44,22 +41,22 @@
 			"width": 32,
 			"height": 10,
 			"frame": null,
-			"trigger": "gate2",
-			"label": "B"
+			"trigger": "gate2"
 		}
 	},
 	"ground": {
-		"ground1": [
-			800,
-			568,
-			1600,
-			64
-		],
+		"ground1": {
+			"x": 122,
+			"y": 571,
+			"width": 420,
+			"height": 64,
+			"frame": null
+		},
 		"ground2": {
 			"x": 738.4999926147466,
-			"y": 410,
-			"width": 520.9999968261722,
-			"height": 26,
+			"y": 410.5,
+			"width": 520.9999968261723,
+			"height": 25,
 			"frame": null
 		},
 		"ground3": {
@@ -106,9 +103,9 @@
 		},
 		"ground9": {
 			"x": 417.5000168457022,
-			"y": 369,
+			"y": 350.5,
 			"width": 33.00000939941344,
-			"height": 60,
+			"height": 23,
 			"frame": null
 		},
 		"ground10": {
@@ -119,9 +116,9 @@
 			"frame": null
 		},
 		"ground11": {
-			"x": 513.5000125427241,
+			"x": 512.5000125427241,
 			"y": 338,
-			"width": 155.0000048217771,
+			"width": 157.0000048217771,
 			"height": 38,
 			"frame": null
 		},
@@ -138,16 +135,30 @@
 			"width": 33.00000939941344,
 			"height": 37,
 			"frame": null
+		},
+		"ground14": {
+			"x": 763,
+			"y": 571,
+			"width": 470,
+			"height": 64,
+			"frame": null
+		},
+		"ground15": {
+			"x": 275.5,
+			"y": 561.5,
+			"width": 254.99999999999997,
+			"height": 65,
+			"frame": null
+		},
+		"ground16": {
+			"x": 413.5000168457022,
+			"y": 378.5,
+			"width": 21.000009399413443,
+			"height": 43,
+			"frame": null
 		}
 	},
 	"trigger": {
-		"red1": {
-			"x": 410.9999993286133,
-			"y": 569,
-			"width": 32,
-			"height": 32,
-			"frame": null
-		},
 		"red2": {
 			"x": 700.0000061035153,
 			"y": 568,
@@ -158,10 +169,10 @@
 	},
 	"bonus": {
 		"bonus1": {
-			"x": 59.000034667966624,
-			"y": 512,
-			"width": 48,
-			"height": 48,
+			"x": 211.00003466796662,
+			"y": 472,
+			"width": 40,
+			"height": 40,
 			"frame": 5
 		},
 		"bonus2": {
@@ -197,8 +208,8 @@
 	},
 	"door": {
 		"door1": {
-			"x": 869.0000018920897,
-			"y": 505,
+			"x": 71.0000018920897,
+			"y": 507,
 			"width": 64,
 			"height": 64,
 			"frame": 4
@@ -222,11 +233,11 @@
 			"frame": null
 		},
 		"human2": {
-			"x": 346.00000787353474,
+			"x": 112.00000787353474,
 			"y": 478,
-			"width": 32,
-			"height": 32,
-			"frame": null
+			"width": 64,
+			"height": 64,
+			"frame": 54
 		},
 		"human3": {
 			"x": 70.00002471923682,
@@ -234,6 +245,15 @@
 			"width": 32,
 			"height": 32,
 			"frame": null
+		}
+	},
+	"water": {
+		"water1": {
+			"x": 467,
+			"y": 581.5,
+			"width": 136,
+			"height": 65,
+			"frame": 17
 		}
 	}
 }
