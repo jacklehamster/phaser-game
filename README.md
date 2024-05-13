@@ -165,6 +165,11 @@ The editor is limited, so some actions can only be done by modifying the JSON fi
 
 Some level configurations are also set manually in the json files: Decor overlay, if the level has pizza, gold walls, snail or cat, if it's locked (editor OFF), and what's the next level after completing it.
 
+#### Demo
+
+[Test the level editor](https://jacklehamster.github.io/phaser-game/example/?web-config=true&serverless-edit=true#map=json/map13.5.json)
+
+
 # Implementation details
 
 ## Custom NPC look

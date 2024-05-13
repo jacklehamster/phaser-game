@@ -11,8 +11,12 @@ const app = new Bao();
 app.get("/config.json", async (context: any) => {
   const configText = fs.readFileSync('config.json', 'utf-8');
   const config = JSON.parse(configText);
-  config.canEdit = true;
-  config.canCallAI = true;
+  const web = context.query.get("web-config");
+
+  if (web !== "true") {
+    config.canEdit = true;
+    config.canCallAI = true;
+  }
 
   return context.sendPrettyJson(config);
 });

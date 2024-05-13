@@ -4,6 +4,8 @@
 
 
 const debug = window.location.search.indexOf("debug") >= 0;
+const webConfig = window.location.search.indexOf("web-config") >= 0;
+const serverLessEdit = window.location.search.indexOf("serverless-edit") >= 0;
 
 import Phaser from "phaser";
 import { alea } from "seedrandom";
@@ -16,6 +18,11 @@ import { Newgrounds } from "medal-popup";
 import { unlockedLevel, unlockLevel } from "./level-storage";
 import { MapJson } from "./mapjson";
 import { prepareUrls, revoke, u } from "./prepare";
+
+
+const configJsonLink = "config.json" + (webConfig ? "?web-config=true" : "");
+console.log(configJsonLink);
+
 
 const TROLL_DISPLAY_SCALE = 1.8;
 
@@ -240,7 +247,7 @@ export async function createHighSchoolGame(
   let someoneSpeaking = 0
   location.replace("#map=" + jsonUrl);
   if (!conf) {
-    conf = await (await fetch(u("config.json", blobs))).json();
+    conf = await (await fetch(u(configJsonLink, blobs))).json();
   }
 
   let randomPower = RANDOM_POWER[Math.floor(RANDOM_POWER.length * Math.random())];
@@ -292,7 +299,7 @@ export async function createHighSchoolGame(
     'assets/sfx.png',
     'assets/mountainbg.png',
     mapJson.overlay,
-    'config.json',
+    configJsonLink,
   ], 0, undefined, blobs, true);
   if (mapJson.overlay) {
     const o = mapJson.overlay;
@@ -307,7 +314,7 @@ export async function createHighSchoolGame(
     unlockLevel(level);
   }
 
-  const canEditLevel = conf.canEdit && !(forceLock ?? mapJson.locked);
+  const canEditLevel = serverLessEdit || (conf.canEdit && !(forceLock ?? mapJson.locked));
 
   const { zzfx: zz } = require("zzfx");
   const zzfx = (...params: any[]) => {
@@ -2413,6 +2420,10 @@ export async function createHighSchoolGame(
   async function commit(type: string, id: string, x: number, y: number, width: number, height: number, frame?: number,
     extra?: any,
   ) {
+    if (serverLessEdit) {
+      console.log("no server to commit", type, id, x, y, width, height, frame, extra)
+      return;
+    }
     console.log("COMMIT", type, id, x, y, width, height, frame, extra);
     if (saveUrl) {
       await fetch(saveUrl, {

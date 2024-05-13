@@ -72,8 +72,8 @@
 			"frame": null
 		},
 		"ground11": {
-			"x": 211.5,
-			"y": 132,
+			"x": 228.5,
+			"y": 158,
 			"width": 157,
 			"height": 44,
 			"frame": null
@@ -104,6 +104,13 @@
 			"y": 292,
 			"width": 157,
 			"height": 44,
+			"frame": null
+		},
+		"ground16": {
+			"x": 220.5,
+			"y": 389,
+			"width": 129,
+			"height": 50,
 			"frame": null
 		}
 	},
@@ -178,8 +185,8 @@
 	},
 	"troll": {
 		"troll": {
-			"x": 878,
-			"y": 249,
+			"x": 170,
+			"y": 52,
 			"width": 48,
 			"height": 48,
 			"frame": 0

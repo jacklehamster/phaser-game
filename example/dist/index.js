@@ -1,6 +1,6 @@
 // /Users/vincent/phaser-game/example/node_modules/@dobuki/phaser-game/dist/index.js
-var ix = function(...C) {
-  return XN.play(...C);
+var rx = function(...C) {
+  return DN.play(...C);
 };
 var G6 = function() {
   return G6 = Object.assign ? Object.assign.bind() : function(C) {
@@ -55,31 +55,31 @@ var z$ = function(C) {
 var D7 = function(C) {
   return C && C.constructor.prototype.isIndex === true || false;
 };
-var HD = function(C) {
+var WD = function(C) {
   return typeof C === "boolean";
 };
-var WD = function(C) {
+var YD = function(C) {
   return C && C.constructor.prototype.isResultSet === true || false;
 };
 var V5 = function(C) {
   return C && C.constructor.prototype.isHelp === true || false;
 };
-var YD = function(C) {
+var UD = function(C) {
   return typeof C === "function";
 };
-var UD = function(C) {
+var GD = function(C) {
   return C instanceof Date;
 };
-var GD = function(C) {
+var LD = function(C) {
   return C instanceof RegExp;
 };
 var R7 = function(C) {
   return !!(C && typeof C === "object" && C.constructor === Object && !a6(C) && !e9(C));
 };
-var LD = function(C) {
+var XD = function(C) {
   return C === null;
 };
-var XD = function(C) {
+var DD = function(C) {
   return C === undefined;
 };
 var W9 = function(C) {
@@ -88,13 +88,13 @@ var W9 = function(C) {
 var x6 = function(C) {
   return C && C.isArrayNode === true && C.constructor.prototype.isNode === true || false;
 };
-var DD = function(C) {
+var RD = function(C) {
   return C && C.isAssignmentNode === true && C.constructor.prototype.isNode === true || false;
 };
-var RD = function(C) {
+var VD = function(C) {
   return C && C.isBlockNode === true && C.constructor.prototype.isNode === true || false;
 };
-var VD = function(C) {
+var zD = function(C) {
   return C && C.isConditionalNode === true && C.constructor.prototype.isNode === true || false;
 };
 var B8 = function(C) {
@@ -124,10 +124,10 @@ var Y6 = function(C) {
 var g6 = function(C) {
   return C && C.isParenthesisNode === true && C.constructor.prototype.isNode === true || false;
 };
-var zD = function(C) {
+var FD = function(C) {
   return C && C.isRangeNode === true && C.constructor.prototype.isNode === true || false;
 };
-var FD = function(C) {
+var PD = function(C) {
   return C && C.isRelationalNode === true && C.constructor.prototype.isNode === true || false;
 };
 var o8 = function(C) {
@@ -164,10 +164,10 @@ var H8 = function(C) {
   if (K8(C))
     return C;
   if (R7(C))
-    return GC(C, H8);
+    return XC(C, H8);
   throw new TypeError("Cannot clone: unknown type of value (value: ".concat(C, ")"));
 };
-var GC = function(C, j) {
+var XC = function(C, j) {
   var q = {};
   for (var S in C)
     if (Q8(C, S))
@@ -206,7 +206,7 @@ var S9 = function(C, j) {
   } else
     return C === j;
 };
-var PD = function(C, j, q) {
+var ID = function(C, j, q) {
   var S = true, U;
   Object.defineProperty(C, j, { get: function P() {
     if (S)
@@ -219,7 +219,7 @@ var PD = function(C, j, q) {
 var Q8 = function(C, j) {
   return C && Object.hasOwnProperty.call(C, j);
 };
-var ID = function(C, j) {
+var BD = function(C, j) {
   var q = {};
   for (var S = 0;S < j.length; S++) {
     var U = j[S], P = C[U];
@@ -247,9 +247,9 @@ var q9 = function(C, j) {
     case "fixed":
       return pZ(C, S);
     case "exponential":
-      return jD(C, S);
+      return SD(C, S);
     case "engineering":
-      return LC(C, S);
+      return DC(C, S);
     case "bin":
       return bZ(C, 2, U);
     case "oct":
@@ -257,7 +257,7 @@ var q9 = function(C, j) {
     case "hex":
       return bZ(C, 16, U);
     case "auto":
-      return XC(C, S, j).replace(/((\.\d*?)(0+))($|e)/, function() {
+      return RC(C, S, j).replace(/((\.\d*?)(0+))($|e)/, function() {
         var P = arguments[2], $ = arguments[4];
         return P !== "." ? P + $ : $;
       });
@@ -274,11 +274,11 @@ var mZ = function(C) {
       q = C.toNumber();
     else if (R7(C)) {
       if (C.precision !== undefined)
-        q = MD(C.precision, () => {
+        q = ED(C.precision, () => {
           throw new Error('Option "precision" must be a number or BigNumber');
         });
       if (C.wordSize !== undefined)
-        S = MD(C.wordSize, () => {
+        S = ED(C.wordSize, () => {
           throw new Error('Option "wordSize" must be a number or BigNumber');
         });
       if (C.notation)
@@ -302,7 +302,7 @@ var P$ = function(C) {
     $.push(0), U++;
   return { sign: q, coefficients: $, exponent: U };
 };
-var LC = function(C, j) {
+var DC = function(C, j) {
   if (isNaN(C) || !isFinite(C))
     return String(C);
   var q = P$(C), S = I5(q, j), U = S.exponent, P = S.coefficients, $ = U % 3 === 0 ? U : U < 0 ? U - 3 - U % 3 : U - U % 3;
@@ -332,7 +332,7 @@ var pZ = function(C, j) {
     U.splice(P, 0, P === 0 ? "0." : ".");
   return S.sign + U.join("");
 };
-var jD = function(C, j) {
+var SD = function(C, j) {
   if (isNaN(C) || !isFinite(C))
     return String(C);
   var q = P$(C), S = j ? I5(q, j) : q, U = S.coefficients, P = S.exponent;
@@ -341,12 +341,12 @@ var jD = function(C, j) {
   var $ = U.shift();
   return S.sign + $ + (U.length > 0 ? "." + U.join("") : "") + "e" + (P >= 0 ? "+" : "") + P;
 };
-var XC = function(C, j, q) {
+var RC = function(C, j, q) {
   if (isNaN(C) || !isFinite(C))
     return String(C);
-  var S = ED(q === null || q === undefined ? undefined : q.lowerExp, -3), U = ED(q === null || q === undefined ? undefined : q.upperExp, 5), P = P$(C), $ = j ? I5(P, j) : P;
+  var S = OD(q === null || q === undefined ? undefined : q.lowerExp, -3), U = OD(q === null || q === undefined ? undefined : q.upperExp, 5), P = P$(C), $ = j ? I5(P, j) : P;
   if ($.exponent < S || $.exponent >= U)
-    return jD(C, j);
+    return SD(C, j);
   else {
     var { coefficients: Y, exponent: X } = $;
     if (Y.length < j)
@@ -376,7 +376,7 @@ var I5 = function(C, j) {
   }
   return q;
 };
-var SD = function(C) {
+var qD = function(C) {
   return C.toExponential().replace(/e.*$/, "").replace(/^0\.?0*|\./, "").length;
 };
 var R6 = function(C, j, q) {
@@ -388,18 +388,18 @@ var R6 = function(C, j, q) {
     return false;
   if (isFinite(C) && isFinite(j)) {
     var S = Math.abs(C - j);
-    if (S <= DC)
+    if (S <= VC)
       return true;
     else
       return S <= Math.max(Math.abs(C), Math.abs(j)) * q;
   }
   return false;
 };
-var hD = function(C, j) {
+var fD = function(C, j) {
   var q = C > 0 ? true : C < 0 ? false : 1 / C === Infinity, S = j > 0 ? true : j < 0 ? false : 1 / j === Infinity;
   return q ^ S ? -C : C;
 };
-var gD = function(C, j) {
+var yD = function(C, j) {
   if (typeof j === "function")
     return j(C);
   if (!C.isFinite())
@@ -407,11 +407,11 @@ var gD = function(C, j) {
   var { notation: q, precision: S, wordSize: U } = mZ(j);
   switch (q) {
     case "fixed":
-      return VC(C, S);
+      return FC(C, S);
     case "exponential":
-      return fD(C, S);
+      return xD(C, S);
     case "engineering":
-      return RC(C, S);
+      return zC(C, S);
     case "bin":
       return dZ(C, 2, U);
     case "oct":
@@ -419,14 +419,14 @@ var gD = function(C, j) {
     case "hex":
       return dZ(C, 16, U);
     case "auto": {
-      var P = xD(j === null || j === undefined ? undefined : j.lowerExp, -3), $ = xD(j === null || j === undefined ? undefined : j.upperExp, 5);
+      var P = gD(j === null || j === undefined ? undefined : j.lowerExp, -3), $ = gD(j === null || j === undefined ? undefined : j.upperExp, 5);
       if (C.isZero())
         return "0";
       var Y, X = C.toSignificantDigits(S), K = X.e;
       if (K >= P && K < $)
         Y = X.toFixed();
       else
-        Y = fD(C, S);
+        Y = xD(C, S);
       return Y.replace(/((\.\d*?)(0+))($|e)/, function() {
         var Q = arguments[2], J = arguments[4];
         return Q !== "." ? Q + J : J;
@@ -436,7 +436,7 @@ var gD = function(C, j) {
       throw new Error('Unknown notation "' + q + '". Choose "auto", "exponential", "fixed", "bin", "oct", or "hex.');
   }
 };
-var RC = function(C, j) {
+var zC = function(C, j) {
   var q = C.e, S = q % 3 === 0 ? q : q < 0 ? q - 3 - q % 3 : q - q % 3, U = C.mul(Math.pow(10, -S)), P = U.toPrecision(j);
   if (P.indexOf("e") !== -1) {
     var $ = C.constructor;
@@ -444,21 +444,21 @@ var RC = function(C, j) {
   }
   return P + "e" + (q >= 0 ? "+" : "") + S.toString();
 };
-var fD = function(C, j) {
+var xD = function(C, j) {
   if (j !== undefined)
     return C.toExponential(j - 1);
   else
     return C.toExponential();
 };
-var VC = function(C, j) {
+var FC = function(C, j) {
   return C.toFixed(j);
 };
-var bD = function(C, j) {
+var mD = function(C, j) {
   var q = C.length - j.length, S = C.length;
   return C.substring(q, S) === j;
 };
 var G8 = function(C, j) {
-  var q = zC(C, j);
+  var q = PC(C, j);
   if (j && typeof j === "object" && "truncate" in j && q.length > j.truncate)
     return q.substring(0, j.truncate - 3) + "...";
   return q;
@@ -467,7 +467,7 @@ var s7 = function(C) {
   var j = String(C), q = "", S = 0;
   while (S < j.length) {
     var U = j.charAt(S);
-    q += U in yD ? yD[U] : U, S++;
+    q += U in bD ? bD[U] : U, S++;
   }
   return '"' + q + '"';
 };
@@ -514,7 +514,7 @@ var _Z = function(C, j) {
     if (Array.isArray(C))
       throw new D8(C.length, 0);
   } else
-    pD(C, j, 0);
+    dD(C, j, 0);
 };
 var WJ = function(C, j) {
   var q = C.isMatrix ? C._size : Y8(C), S = j._sourceSize;
@@ -567,11 +567,11 @@ var YJ = function(C, j) {
   if (j.length === 0)
     throw new D8(0, S, "!=");
   j = UJ(j, S);
-  var U = dD(j);
+  var U = uD(j);
   if (S !== U)
     throw new D8(U, S, "!=");
   try {
-    return PC(q, j);
+    return BC(q, j);
   } catch (P) {
     if (P instanceof D8)
       throw new D8(U, S, "!=");
@@ -579,7 +579,7 @@ var YJ = function(C, j) {
   }
 };
 var UJ = function(C, j) {
-  var q = dD(C), S = C.slice(), U = -1, P = C.indexOf(U), $ = C.indexOf(U, P + 1) >= 0;
+  var q = uD(C), S = C.slice(), U = -1, P = C.indexOf(U), $ = C.indexOf(U, P + 1) >= 0;
   if ($)
     throw new Error("More than one wildcard in sizes");
   var Y = P >= 0, X = j % q === 0;
@@ -598,7 +598,7 @@ var I$ = function(C, j) {
   while (q[S - 1] === 1)
     S--;
   if (S < q.length)
-    C = uD(C, S, 0), q.length = S;
+    C = _D(C, S, 0), q.length = S;
   return C;
 };
 var E5 = function(C, j, q, S) {
@@ -606,7 +606,7 @@ var E5 = function(C, j, q, S) {
   if (q)
     for (var P = 0;P < q; P++)
       C = [C], U.unshift(1);
-  C = _D(C, j, 0);
+  C = cD(C, j, 0);
   while (U.length < j)
     U.push(1);
   return C;
@@ -689,12 +689,12 @@ var lZ = function() {
     return C[0];
   if (C.length > 1)
     return C.slice(1).reduce(function(q, S) {
-      return cD(q, S, j, 0);
+      return lD(q, S, j, 0);
     }, C[0]);
   else
     throw new Error("Wrong number of arguments in function concat");
 };
-var IC = function() {
+var TC = function() {
   for (var C = arguments.length, j = new Array(C), q = 0;q < C; q++)
     j[q] = arguments[q];
   var S = j.map((Z) => Z.length), U = Math.max(...S), P = new Array(U).fill(null);
@@ -723,40 +723,40 @@ var sZ = function(C, j) {
   if (S9(q, j))
     return C;
   GJ(q, j);
-  var S = IC(q, j), U = S.length, P = [...Array(U - q.length).fill(1), ...q], $ = TC(C);
+  var S = TC(q, j), U = S.length, P = [...Array(U - q.length).fill(1), ...q], $ = EC(C);
   if (q.length < U)
     $ = YJ($, P), q = Y8($);
   for (var Y = 0;Y < U; Y++)
     if (q[Y] < S[Y])
-      $ = BC($, S[Y], Y), q = Y8($);
+      $ = MC($, S[Y], Y), q = Y8($);
   return $;
 };
-var BC = function(C, j, q) {
+var MC = function(C, j, q) {
   return lZ(...Array(j).fill(C), q);
 };
-var TC = function(C) {
+var EC = function(C) {
   return G6([], C);
 };
 var Q0 = function(C, j, q, S) {
   function U(P) {
-    var $ = ID(P, j.map(OC));
-    return MC(C, j, P), q($);
+    var $ = BD(P, j.map(AC));
+    return OC(C, j, P), q($);
   }
   if (U.isFactory = true, U.fn = C, U.dependencies = j.slice().sort(), S)
     U.meta = S;
   return U;
 };
-var MC = function(C, j, q) {
-  var S = j.filter((P) => !EC(P)).every((P) => q[P] !== undefined);
+var OC = function(C, j, q) {
+  var S = j.filter((P) => !NC(P)).every((P) => q[P] !== undefined);
   if (!S) {
     var U = j.filter((P) => q[P] === undefined);
     throw new Error("Cannot create function \"".concat(C, "\", ") + "some dependencies are missing: ".concat(U.map((P) => "\"".concat(P, "\"")).join(", "), "."));
   }
 };
-var EC = function(C) {
+var NC = function(C) {
   return C && C[0] === "?";
 };
-var OC = function(C) {
+var AC = function(C) {
   return C && C[0] === "?" ? C.slice(1) : C;
 };
 var P7 = function() {
@@ -771,7 +771,7 @@ var J7 = function(C) {
     return new M$(C);
   throw new Error("createMap can create maps from objects or Maps");
 };
-var aD = function(C) {
+var rD = function(C) {
   if (C instanceof M$)
     return C.wrappedObject;
   var j = {};
@@ -786,7 +786,7 @@ var nZ = function(C) {
     return false;
   return C instanceof Map || C instanceof M$ || typeof C.set === "function" && typeof C.get === "function" && typeof C.keys === "function" && typeof C.has === "function";
 };
-var FR = function(C) {
+var PR = function(C) {
   var j = 0, q = 1, S = Object.create(null), U = Object.create(null), P = 0, $ = function Y(X) {
     var K = U[X];
     if (!K)
@@ -820,7 +820,7 @@ var i7 = function(C) {
   var { hasher: j, limit: q } = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
   return q = q == null ? Number.POSITIVE_INFINITY : q, j = j == null ? JSON.stringify : j, function S() {
     if (typeof S.cache !== "object")
-      S.cache = { values: new Map, lru: FR(q || Number.POSITIVE_INFINITY) };
+      S.cache = { values: new Map, lru: PR(q || Number.POSITIVE_INFINITY) };
     var U = [];
     for (var P = 0;P < arguments.length; P++)
       U[P] = arguments[P];
@@ -911,7 +911,7 @@ var IK = function(C, j) {
 var BK = function(C, j) {
   return C * j;
 };
-var yj = function(C, j) {
+var mj = function(C, j) {
   return C / j;
 };
 var TK = function(C) {
@@ -921,7 +921,7 @@ var MK = function(C) {
   return C;
 };
 var N$ = function(C) {
-  return AD(C);
+  return CD(C);
 };
 var EK = function(C) {
   return C * C * C;
@@ -930,9 +930,9 @@ var OK = function(C) {
   return Math.exp(C);
 };
 var NK = function(C) {
-  return CD(C);
+  return jD(C);
 };
-var bj = function(C, j) {
+var pj = function(C, j) {
   if (!e0(C) || !e0(j))
     throw new Error("Parameters in function gcd must be integer numbers");
   var q;
@@ -950,21 +950,21 @@ var AK = function(C, j) {
     q = j, j = C % q, C = q;
   return Math.abs(S / C);
 };
-var BR = function(C, j) {
+var TR = function(C, j) {
   if (j)
     return Math.log(C) / Math.log(j);
   return Math.log(C);
 };
 var CK = function(C) {
-  return ND(C);
+  return AD(C);
 };
 var jK = function(C) {
-  return OD(C);
+  return ND(C);
 };
-var mj = function(C) {
+var dj = function(C) {
   return P5(C);
 };
-var pj = function(C, j) {
+var uj = function(C, j) {
   return j === 0 ? C : C - j * Math.floor(C / j);
 };
 var SK = function(C) {
@@ -985,7 +985,7 @@ var SK = function(C) {
 var g5 = function(C) {
   return F9(C);
 };
-var dj = function(C) {
+var _j = function(C) {
   return Math.sqrt(C);
 };
 var qK = function(C) {
@@ -1015,7 +1015,7 @@ var A$ = function(C) {
     throw new Error("Number of decimals in function round must be an integer from 0 to 15 inclusive");
   return parseFloat(pZ(C, j));
 };
-var uj = function(C) {
+var cj = function(C) {
   return Math.abs(C);
 };
 var kK = function(C, j) {
@@ -1123,16 +1123,16 @@ var VJ = function(C) {
   if (C < 0.5)
     return Math.log(Math.PI / Math.sin(Math.PI * C)) - VJ(1 - C);
   C = C - 1;
-  var j = C + lj + 0.5, q = NR[0];
-  for (var S = sj - 1;S >= 1; S--)
-    q += NR[S] / (C + S);
+  var j = C + nj + 0.5, q = AR[0];
+  for (var S = oj - 1;S >= 1; S--)
+    q += AR[S] / (C + S);
   return sK + (C + 0.5) * Math.log(j) - j + Math.log(q);
 };
-var oj = function(C) {
+var aj = function(C) {
   return Math.acos(C);
 };
 var nK = function(C) {
-  return qD(C);
+  return vD(C);
 };
 var oK = function(C) {
   return Math.atan(1 / C);
@@ -1154,25 +1154,25 @@ var eK = function(C) {
   var j = 1 / C, q = Math.sqrt(j * j - 1);
   return Math.log(q + j);
 };
-var ij = function(C) {
+var rj = function(C) {
   return Math.asin(C);
 };
 var $4 = function(C) {
-  return vD(C);
-};
-var aj = function(C) {
-  return Math.atan(C);
-};
-var rj = function(C, j) {
-  return Math.atan2(C, j);
-};
-var J4 = function(C) {
   return wD(C);
 };
 var tj = function(C) {
+  return Math.atan(C);
+};
+var ej = function(C, j) {
+  return Math.atan2(C, j);
+};
+var J4 = function(C) {
+  return kD(C);
+};
+var $S = function(C) {
   return Math.cos(C);
 };
-var ej = function(C) {
+var JS = function(C) {
   return B5(C);
 };
 var Q4 = function(C) {
@@ -1197,19 +1197,19 @@ var W4 = function(C) {
 var Y4 = function(C) {
   return 2 / (Math.exp(C) + Math.exp(-C));
 };
-var $S = function(C) {
+var QS = function(C) {
   return Math.sin(C);
 };
 var U4 = function(C) {
-  return kD(C);
-};
-var JS = function(C) {
-  return Math.tan(C);
-};
-var QS = function(C) {
-  return T5(C);
+  return hD(C);
 };
 var ZS = function(C) {
+  return Math.tan(C);
+};
+var KS = function(C) {
+  return T5(C);
+};
+var HS = function(C) {
   return e0(C);
 };
 var G4 = function(C) {
@@ -1242,7 +1242,7 @@ var N6 = function(C, j, q) {
   }
   return false;
 };
-var kR = function(C, j, q) {
+var hR = function(C, j, q) {
   return R6(C.re, j.re, q) && R6(C.im, j.im, q);
 };
 var K7 = function(C, j, q, S) {
@@ -1250,7 +1250,7 @@ var K7 = function(C, j, q, S) {
     throw new SyntaxError("Constructor must be called with the new operator");
   this.fn = C, this.count = j, this.min = q, this.max = S, this.message = "Wrong number of arguments in function " + C + " (" + j + " provided, " + q + (S !== undefined && S !== null ? "-" + S : "") + " expected)", this.stack = new Error().stack;
 };
-var DV = function(C, j) {
+var RV = function(C, j) {
   if (C.isFinite() && !C.isInteger() || j.isFinite() && !j.isInteger())
     throw new Error("Integers expected in function bitAnd");
   var q = C.constructor;
@@ -1293,7 +1293,7 @@ var S$ = function(C) {
   var S = C.plus(new j(1));
   return S.s = -S.s || null, j.config({ precision: q }), S;
 };
-var RV = function(C, j) {
+var VV = function(C, j) {
   if (C.isFinite() && !C.isInteger() || j.isFinite() && !j.isInteger())
     throw new Error("Integers expected in function bitOr");
   var q = C.constructor;
@@ -1350,7 +1350,7 @@ var UH = function(C, j, q) {
     L.s = -L.s;
   return L;
 };
-var VV = function(C, j) {
+var zV = function(C, j) {
   if (C.isFinite() && !C.isInteger() || j.isFinite() && !j.isInteger())
     throw new Error("Integers expected in function bitXor");
   var q = C.constructor;
@@ -1376,7 +1376,7 @@ var VV = function(C, j) {
     return U ^ P;
   });
 };
-var zV = function(C, j) {
+var FV = function(C, j) {
   if (C.isFinite() && !C.isInteger() || j.isFinite() && !j.isInteger())
     throw new Error("Integers expected in function leftShift");
   var q = C.constructor;
@@ -1390,7 +1390,7 @@ var zV = function(C, j) {
     return C.times(Math.pow(2, j.toNumber()) + "");
   return C.times(new q(2).pow(j));
 };
-var FV = function(C, j) {
+var PV = function(C, j) {
   if (C.isFinite() && !C.isInteger() || j.isFinite() && !j.isInteger())
     throw new Error("Integers expected in function rightArithShift");
   var q = C.constructor;
@@ -1577,7 +1577,7 @@ var e5 = function(C) {
     }
   };
 };
-var v2 = function(C) {
+var w2 = function(C) {
   var { subset: j, matrix: q } = C;
   return function S(U, P, $) {
     try {
@@ -1648,7 +1648,7 @@ var ZQ = function(C, j, q) {
   }
   return null;
 };
-var w2 = function(C) {
+var k2 = function(C) {
   var j = "OperatorNode:" + C;
   for (var q of M9)
     if (j in q)
@@ -1656,12 +1656,12 @@ var w2 = function(C) {
   return null;
 };
 var YQ = function(C) {
-  return x2.default(C, { preserveFormatting: true });
+  return g2.default(C, { preserveFormatting: true });
 };
 var UQ = function(C, j) {
   if (j = typeof j === "undefined" ? false : j, j) {
-    if (Q8(f2, C))
-      return f2[C];
+    if (Q8(x2, C))
+      return x2[C];
     return "\\mathrm{" + YQ(C) + "}";
   }
   if (Q8(v1, C))
@@ -1671,7 +1671,7 @@ var UQ = function(C, j) {
 var e7 = function(C, j) {
   return new LJ(C, new M$(j), new Set(Object.keys(j)));
 };
-var _2 = function(C, j, q, S) {
+var c2 = function(C, j, q, S) {
   var { _values: U, _index: P, _ptr: $, _size: Y, _datatype: X } = C, K = Y[0], Q = Y[1], J = S && C._values ? [] : null, Z = [], W = [], G = 0;
   for (var H = 0;H < Q; H++) {
     W[H] = G;
@@ -1697,7 +1697,7 @@ var IQ = function(C, j, q, S, U, P, $) {
   }
   return j;
 };
-var c2 = function(C, j) {
+var l2 = function(C, j) {
   if (!C)
     return null;
   var q = 0, S, U = [], P = [], $ = 0, Y = j, X = 2 * j;
@@ -1715,7 +1715,7 @@ var c2 = function(C, j) {
   }
   return U;
 };
-var l2 = function(C, j) {
+var s2 = function(C, j) {
   if (!C)
     return null;
   var { _index: q, _ptr: S, _size: U } = C, P = U[0], $ = U[1], Y = [], X = [], K = 0, Q = $, J, Z;
@@ -1736,7 +1736,7 @@ var l2 = function(C, j) {
   }
   return Y;
 };
-var s2 = function(C, j, q) {
+var n2 = function(C, j, q) {
   var { _values: S, _index: U, _ptr: P, _size: $ } = C, Y = $[1], X = 0;
   for (var K = 0;K < Y; K++) {
     var Q = P[K];
@@ -1755,7 +1755,7 @@ var s2 = function(C, j, q) {
 var h9 = function(C) {
   return -C - 2;
 };
-var o2 = function(C, j, q, S, U, P, $) {
+var i2 = function(C, j, q, S, U, P, $) {
   var Y, X, K = 0, Q;
   if (C <= j || q[S + j] <= q[U + C])
     return -1;
@@ -1781,7 +1781,7 @@ var BQ = function(C, j) {
 var i1 = function(C) {
   return C < 0 ? h9(C) : C;
 };
-var r2 = function(C, j, q, S, U) {
+var t2 = function(C, j, q, S, U) {
   var { _index: P, _ptr: $, _size: Y } = j, X = Y[1], K, Q, J, Z = 0;
   S[0] = C;
   while (Z >= 0) {
@@ -1801,12 +1801,12 @@ var r2 = function(C, j, q, S, U) {
   }
   return q;
 };
-var t2 = function(C, j, q, S, U) {
+var e2 = function(C, j, q, S, U) {
   var { _ptr: P, _size: $ } = C, Y = j._index, X = j._ptr, K = $[1], Q, J, Z, W = K;
   for (J = X[q], Z = X[q + 1], Q = J;Q < Z; Q++) {
     var G = Y[Q];
     if (!hJ(P, G))
-      W = r2(G, C, W, S, U);
+      W = t2(G, C, W, S, U);
   }
   for (Q = W;Q < K; Q++)
     BQ(P, S[Q]);
@@ -1822,7 +1822,7 @@ var r1 = function(C, j) {
       U[q] = j[q];
   return U;
 };
-var xB = function(C) {
+var gB = function(C) {
   var { addScalar: j, subtract: q, flatten: S, multiply: U, multiplyScalar: P, divideScalar: $, sqrt: Y, abs: X, bignumber: K, diag: Q, size: J, reshape: Z, inv: W, qr: G, usolve: H, usolveAll: L, equal: R, complex: V, larger: D, smaller: F, matrixFromColumns: T, dot: E } = C;
   function N(m, y, p, u) {
     var c = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : true, n = w(m, y, p, u, c);
@@ -2072,7 +2072,7 @@ var xB = function(C) {
   }
   return N;
 };
-var gB = function(C) {
+var yB = function(C) {
   var { config: j, addScalar: q, subtract: S, abs: U, atan: P, cos: $, sin: Y, multiplyScalar: X, inv: K, bignumber: Q, multiply: J, add: Z } = C;
   function W(h, x) {
     var b = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : j.epsilon, z = arguments.length > 3 ? arguments[3] : undefined, I = arguments.length > 4 ? arguments[4] : undefined;
@@ -2212,7 +2212,7 @@ var gB = function(C) {
 var W7 = function(C) {
   var j;
   function q(U) {
-    j = U === null ? If : vY.default(String(U));
+    j = U === null ? Tf : vY.default(String(U));
   }
   q(C);
   function S() {
@@ -2267,10 +2267,10 @@ var c6 = function(C) {
 var H$ = function(C) {
   if (!C?.length)
     return false;
-  return GN()[`level-${C}`];
+  return LN()[`level-${C}`];
 };
-var LN = function(C) {
-  const j = GN();
+var XN = function(C) {
+  const j = LN();
   j[`level-${C}`] = Date.now(), localStorage.setItem("troll-levels-unlocked", JSON.stringify(j));
 };
 async function uQ(C, j = 0, q, S = AL, U = false) {
@@ -2317,7 +2317,7 @@ async function uQ(C, j = 0, q, S = AL, U = false) {
           return;
         const Z = S[Q] = J;
         if (!U)
-          ox(Object.values(S).length / $);
+          ax(Object.values(S).length / $);
         return Z;
       })), X++, X % 3 === 0)
         await Promise.all(Y), await new Promise((J) => setTimeout(J, 10)), Y.length = 0;
@@ -2337,7 +2337,7 @@ var CL = function(C, j = AL) {
   if (j[C])
     URL.revokeObjectURL(j[C]), delete j[C];
 };
-async function qL(C, j, q, S, U) {
+async function vL(C, j, q, S, U) {
   _Q.forEach((G0) => clearTimeout(G0)), _Q.clear(), speechSynthesis.cancel();
   let P;
   if (!C) {
@@ -2350,10 +2350,10 @@ async function qL(C, j, q, S, U) {
   const $ = /json\/map([\d.]+).json/, [, Y] = C.match($) ?? [];
   let X = 0;
   if (location.replace("#map=" + C), !rJ)
-    rJ = await (await fetch(U6("config.json", U))).json();
+    rJ = await (await fetch(U6(qL, U))).json();
   let K = s9[Math.floor(s9.length * Math.random())];
   const Q = { [x8.JUMP]: "Super Jump: The power to jump very high, over ledges or small animals.", [x8.LEVITATE]: "Levitate: The power to levitate.", [x8.STRENGTH]: "Super Strength: The power to move heavy objects.", [x8.FREEZE]: "Freeze: The power to freeze other humans.", [x8.SHRINK]: "Ant man: The power to shrink.", [x8.RANDOM]: K, [x8.SWAP]: "Switcharoo: The power to swap position with the closest person.", [x8.EJECT_POWER]: "Eject Power: Existing power will be ejected back out into a power-up.", [x8.UPSIDE_DOWN]: "Upside down: The power to walk upside down.", [x8.GEMINI]: "Gemini: The power to duplicate the body into two.", [x8.BRAIN_SWAP]: "Brain Swap: The power to swap brain with the nearest troll.", [x8.CLIMB]: "Wall climber: The ability to climb walls with ease." }, J = await (await fetch(C)).json();
-  if (J.url = C, W$.forEach((G0) => G0(J)), W$.clear(), await uQ(["assets/troll-song.mp3", "assets/a-nice-troll.mp3", "assets/power-troll.mp3", "assets/game-over.mp3", "assets/repeat.mp3", "assets/trumpet.mp3", "assets/darkness.mp3", "assets/the-end.png", "assets/santa.png", "assets/sky.png", "assets/platform.png", "assets/trigger.png", "assets/star.png", "assets/bomb.png", "assets/bonus.png", "assets/hischooler.png", "assets/troll.png", "assets/rock.png", "assets/items.png", "assets/sfx.png", "assets/mountainbg.png", J.overlay, "config.json"], 0, undefined, U, true), J.overlay) {
+  if (J.url = C, W$.forEach((G0) => G0(J)), W$.clear(), await uQ(["assets/troll-song.mp3", "assets/a-nice-troll.mp3", "assets/power-troll.mp3", "assets/game-over.mp3", "assets/repeat.mp3", "assets/trumpet.mp3", "assets/darkness.mp3", "assets/the-end.png", "assets/santa.png", "assets/sky.png", "assets/platform.png", "assets/trigger.png", "assets/star.png", "assets/bomb.png", "assets/bonus.png", "assets/hischooler.png", "assets/troll.png", "assets/rock.png", "assets/items.png", "assets/sfx.png", "assets/mountainbg.png", J.overlay, qL], 0, undefined, U, true), J.overlay) {
     const G0 = J.overlay;
     W$.add((E0) => {
       if (E0?.overlay !== G0)
@@ -2361,8 +2361,8 @@ async function qL(C, j, q, S, U) {
     });
   }
   if (!S && J)
-    LN(Y);
-  const Z = rJ.canEdit && !(q ?? J.locked), { zzfx: W } = (RN(), lQ(DN)), G = (...G0) => {
+    XN(Y);
+  const Z = zN || rJ.canEdit && !(q ?? J.locked), { zzfx: W } = (VN(), lQ(RN)), G = (...G0) => {
     if (F0.sound.mute)
       return;
     if (!J.locked)
@@ -2838,7 +2838,7 @@ async function qL(C, j, q, S, U) {
       if (this.humanScaleX = S0() / 3 + 1, this.humanScaleY = S0() / 3 + 1, this.setScale(1, this.humanScaleX ?? 1, this.humanScaleY ?? 1), this.faceSprites[A8.HAT].frame.name != L7.toString())
         this.addHistory(n0.HAT);
       switch (jL.forEach((z0) => {
-        const u0 = ax[z0];
+        const u0 = ex[z0];
         if (u0 && this.faceSprites[z0].visible && this.faceSprites[z0].frame.name != L7.toString())
           this.addHistory(u0);
       }), this.faceSprites[A8.GLASSES].frame.name + "") {
@@ -3044,7 +3044,7 @@ async function qL(C, j, q, S, U) {
         if (this.speaking = Date.now(), A = Date.now(), this.spokenHistory = this.history.length, this.speakSeed === undefined)
           this.speakSeed = parseInt(localStorage.getItem("speakSeed") ?? "0"), localStorage.setItem("speakSeed", (this.speakSeed + 1).toString()), console.log("SPEAKSEED", this.speakSeed);
         const G0 = tJ.alea(this?.seed + ""), E0 = R(), X0 = E0[Math.floor(G0() * E0.length)];
-        T0(this.history.join("."), UN, this.speakSeed, X0.lang, true).then((N0) => {
+        T0(this.history.join("."), GN, this.speakSeed, X0.lang, true).then((N0) => {
           this.speak(N0.response);
         }), this.addHistory(n0.CHAT);
       }
@@ -3266,7 +3266,7 @@ async function qL(C, j, q, S, U) {
     chatTimeout;
     chat(G0, E0, X0) {
       if (clearTimeout(this.chatTimeout), speechSynthesis.cancel(), G0?.length) {
-        const N0 = FN.default(G0, { width: 30 });
+        const N0 = IN.default(G0, { width: 30 });
         if (clearTimeout(this.tt), !this.chatText?.active)
           return;
         this.chatText?.setFontSize(E0?.antMan ? 12 : 18), X = Date.now();
@@ -3451,7 +3451,7 @@ async function qL(C, j, q, S, U) {
       }), z0.on("pointerout", () => {
         z0.setFillStyle(16755200), v?.showPower();
       }), z0.on("pointerdown", () => {
-        const w0 = (parseInt(E0.frame.name) + (u0 === 0 ? 1 : -1) + zN) % zN;
+        const w0 = (parseInt(E0.frame.name) + (u0 === 0 ? 1 : -1) + PN) % PN;
         E0.setFrame(w0), E0.indic.setFrame(w0), x?.setFrame(w0), v?.showPower(Q[parseInt(E0.frame.name)], E0);
         const x0 = E0;
         if (X0)
@@ -3460,6 +3460,10 @@ async function qL(C, j, q, S, U) {
     });
   }
   async function B(G0, E0, X0, N0, _0, S0, z0, u0) {
+    if (zN) {
+      console.log("no server to commit", G0, E0, X0, N0, _0, S0, z0, u0);
+      return;
+    }
     if (console.log("COMMIT", G0, E0, X0, N0, _0, S0, z0, u0), j)
       await fetch(j, { method: "POST", body: JSON.stringify({ jsonUrl: C, type: G0, id: E0, deleted: u0?.deleted, item: { x: X0, y: N0, width: _0, height: S0, frame: z0, ...u0 } }) });
     else
@@ -3757,8 +3761,8 @@ async function qL(C, j, q, S, U) {
         j0.human.freeze(A0.human);
     });
     const E0 = { still: this.anims.create({ key: "troll_still", frames: this.anims.generateFrameNumbers("troll", { start: 0, end: 0 }), frameRate: 20 }), crouch: this.anims.create({ key: "troll_crouch", frames: this.anims.generateFrameNumbers("troll", { frames: [38, 39] }), frameRate: 10 }), crouch_walk: this.anims.create({ key: "troll_crouch_walk", frames: this.anims.generateFrameNumbers("troll", { frames: [39, 40] }), frameRate: 10, repeat: -1 }), hold_crouch: this.anims.create({ key: "troll_hold_crouch", frames: this.anims.generateFrameNumbers("troll", { frames: [41, 41] }), frameRate: 10 }), hold_crouch_walk: this.anims.create({ key: "troll_hold_crouch_walk", frames: this.anims.generateFrameNumbers("troll", { frames: [41, 42] }), frameRate: 10, repeat: -1 }), talk_still: this.anims.create({ key: "troll_talk_still", frames: this.anims.generateFrameNumbers("troll", { start: 31, end: 31 }), frameRate: 20 }), walk: this.anims.create({ key: "troll_walk", frames: this.anims.generateFrameNumbers("troll", { start: 2, end: 7 }), frameRate: 20, repeat: -1 }), talk_walk: this.anims.create({ key: "troll_talk_walk", frames: this.anims.generateFrameNumbers("troll", { start: 32, end: 37 }), frameRate: 20, repeat: -1 }), hold_still: this.anims.create({ key: "troll_hold_still", frames: this.anims.generateFrameNumbers("troll", { start: 12, end: 12 }), frameRate: 20, repeat: -1 }), hold_walk: this.anims.create({ key: "troll_hold_walk", frames: this.anims.generateFrameNumbers("troll", { start: 13, end: 18 }), frameRate: 20, repeat: -1 }), throw: this.anims.create({ key: "troll_throw", frames: this.anims.generateFrameNumbers("troll", { start: 8, end: 11 }), frameRate: 10, repeat: 0 }), jump: this.anims.create({ key: "troll_jump", frames: this.anims.generateFrameNumbers("troll", { start: 19, end: 23 }), frameRate: 30 }), air: this.anims.create({ key: "troll_air", frames: this.anims.generateFrameNumbers("troll", { start: 23, end: 23 }), frameRate: 30 }), land: this.anims.create({ key: "troll_land", frames: this.anims.generateFrameNumbers("troll", { start: 24, end: 24 }), frameRate: 30 }), landed: this.anims.create({ key: "troll_landed", frames: this.anims.generateFrameNumbers("troll", { frames: [22, 19, 20, 21, 21, 21, 20, 19, 0] }), frameRate: 10 }), jump_hold: this.anims.create({ key: "troll_hold_jump", frames: this.anims.generateFrameNumbers("troll", { start: 25, end: 29 }), frameRate: 30 }), air_hold: this.anims.create({ key: "troll_hold_air", frames: this.anims.generateFrameNumbers("troll", { start: 29, end: 29 }), frameRate: 30 }), land_hold: this.anims.create({ key: "troll_hold_land", frames: this.anims.generateFrameNumbers("troll", { start: 30, end: 30 }), frameRate: 30 }), landed_hold: this.anims.create({ key: "troll_hold_landed", frames: this.anims.generateFrameNumbers("troll", { frames: [28, 25, 26, 27, 27, 27, 26, 25, 12] }), frameRate: 10 }) };
-    for (let j0 in VN) {
-      const A0 = VN[j0];
+    for (let j0 in FN) {
+      const A0 = FN[j0];
       s[j0] = { walk: this.anims.create({ key: `walk_${j0}`, frames: this.anims.generateFrameNumbers("hi", { start: A0.walk[0], end: A0.walk[1] }), frameRate: 10, repeat: -1 }), still: this.anims.create({ key: `still_${j0}`, frames: this.anims.generateFrameNumbers("hi", { start: A0.still[0], end: A0.still[1] }), frameRate: 20 }), fly: this.anims.create({ key: `fly_${j0}`, frames: this.anims.generateFrameNumbers("hi", { start: A0.walk[0], end: A0.walk[1] }), frameRate: 20, repeat: -1 }) };
     }
     this.physics.add.collider(G0, B0, (j0, A0) => {
@@ -4070,7 +4074,7 @@ async function qL(C, j, q, S, U) {
     if (d0?.parentElement === document.body)
       document.body.removeChild(d0);
     _Q.add(setTimeout(() => {
-      qL(C, j, G0, false);
+      vL(C, j, G0, false);
     }, 100));
   }
   let $0 = false;
@@ -4082,7 +4086,7 @@ async function qL(C, j, q, S, U) {
     if (d0?.parentElement === document.body)
       document.body.removeChild(d0);
     _Q.add(setTimeout(() => {
-      qL(P ?? (J.theEnd ? undefined : `json/map${parseInt(Y ?? 0) + 1}.json`) ?? C, j, undefined, G0);
+      vL(P ?? (J.theEnd ? undefined : `json/map${parseInt(Y ?? 0) + 1}.json`) ?? C, j, undefined, G0);
     }, 100));
   }
   async function T0(G0, E0, X0, N0, _0) {
@@ -4106,20 +4110,20 @@ async function qL(C, j, q, S, U) {
           x0(c0), window.fetchAIResponse = () => {
           };
         };
-        const j0 = `${vL}?dictionary=${JSON.stringify(z0)}&situation=${n0.LANG}.${G0}&seed=${X0 ?? ""}${w0}&jsonp=fetchAIResponse`, A0 = document.body.appendChild(document.createElement("script"));
+        const j0 = `${wL}?dictionary=${JSON.stringify(z0)}&situation=${n0.LANG}.${G0}&seed=${X0 ?? ""}${w0}&jsonp=fetchAIResponse`, A0 = document.body.appendChild(document.createElement("script"));
         A0.src = j0;
       });
   }
   return window.fetchAI = T0, F0;
 }
-var PN = Object.create;
-var { defineProperty: r$, getPrototypeOf: IN, getOwnPropertyNames: wL, getOwnPropertyDescriptor: BN } = Object;
-var kL = Object.prototype.hasOwnProperty;
+var BN = Object.create;
+var { defineProperty: r$, getPrototypeOf: TN, getOwnPropertyNames: kL, getOwnPropertyDescriptor: MN } = Object;
+var hL = Object.prototype.hasOwnProperty;
 var C9 = (C, j, q) => {
-  q = C != null ? PN(IN(C)) : {};
+  q = C != null ? BN(TN(C)) : {};
   const S = j || !C || !C.__esModule ? r$(q, "default", { value: C, enumerable: true }) : q;
-  for (let U of wL(C))
-    if (!kL.call(S, U))
+  for (let U of kL(C))
+    if (!hL.call(S, U))
       r$(S, U, { get: () => C[U], enumerable: true });
   return S;
 };
@@ -4130,18 +4134,18 @@ var lQ = (C) => {
     return q;
   var S = r$({}, "__esModule", { value: true }), U = { enumerable: false };
   if (C && typeof C === "object" || typeof C === "function") {
-    for (let P of wL(C))
-      if (!kL.call(S, P))
-        r$(S, P, { get: () => C[P], enumerable: !(U = BN(C, P)) || U.enumerable });
+    for (let P of kL(C))
+      if (!hL.call(S, P))
+        r$(S, P, { get: () => C[P], enumerable: !(U = MN(C, P)) || U.enumerable });
   }
   return j.set(C, S), S;
 };
 var i6 = (C, j) => () => (j || C((j = { exports: {} }).exports, j), j.exports);
-var hL = (C, j) => {
+var fL = (C, j) => {
   for (var q in j)
     r$(C, q, { get: j[q], enumerable: true, configurable: true, set: (S) => j[q] = () => S });
 };
-var fL = (C, j) => () => (C && (j = C(C = 0)), j);
+var xL = (C, j) => () => (C && (j = C(C = 0)), j);
 var nQ = i6((t$, sQ) => {
   (function C(j, q) {
     if (typeof t$ === "object" && typeof sQ === "object")
@@ -43420,7 +43424,7 @@ var nQ = i6((t$, sQ) => {
     })();
   });
 });
-var gL = i6((xL, oQ) => {
+var yL = i6((gL, oQ) => {
   (function(C, j, q) {
     function S(Y) {
       var X = this, K = $();
@@ -43473,9 +43477,9 @@ var gL = i6((xL, oQ) => {
       });
     else
       this.alea = P;
-  })(xL, typeof oQ == "object" && oQ, typeof define == "function" && define);
+  })(gL, typeof oQ == "object" && oQ, typeof define == "function" && define);
 });
-var bL = i6((yL, iQ) => {
+var mL = i6((bL, iQ) => {
   (function(C, j, q) {
     function S($) {
       var Y = this, X = "";
@@ -43518,9 +43522,9 @@ var bL = i6((yL, iQ) => {
       });
     else
       this.xor128 = P;
-  })(yL, typeof iQ == "object" && iQ, typeof define == "function" && define);
+  })(bL, typeof iQ == "object" && iQ, typeof define == "function" && define);
 });
-var pL = i6((mL, aQ) => {
+var dL = i6((pL, aQ) => {
   (function(C, j, q) {
     function S($) {
       var Y = this, X = "";
@@ -43566,9 +43570,9 @@ var pL = i6((mL, aQ) => {
       });
     else
       this.xorwow = P;
-  })(mL, typeof aQ == "object" && aQ, typeof define == "function" && define);
+  })(pL, typeof aQ == "object" && aQ, typeof define == "function" && define);
 });
-var uL = i6((dL, rQ) => {
+var _L = i6((uL, rQ) => {
   (function(C, j, q) {
     function S($) {
       var Y = this;
@@ -43630,9 +43634,9 @@ var uL = i6((dL, rQ) => {
       });
     else
       this.xorshift7 = P;
-  })(dL, typeof rQ == "object" && rQ, typeof define == "function" && define);
+  })(uL, typeof rQ == "object" && rQ, typeof define == "function" && define);
 });
-var cL = i6((_L, tQ) => {
+var lL = i6((cL, tQ) => {
   (function(C, j, q) {
     function S($) {
       var Y = this;
@@ -43694,9 +43698,9 @@ var cL = i6((_L, tQ) => {
       });
     else
       this.xor4096 = P;
-  })(_L, typeof tQ == "object" && tQ, typeof define == "function" && define);
+  })(cL, typeof tQ == "object" && tQ, typeof define == "function" && define);
 });
-var sL = i6((lL, eQ) => {
+var nL = i6((sL, eQ) => {
   (function(C, j, q) {
     function S($) {
       var Y = this, X = "";
@@ -43739,10 +43743,10 @@ var sL = i6((lL, eQ) => {
       });
     else
       this.tychei = P;
-  })(lL, typeof eQ == "object" && eQ, typeof define == "function" && define);
+  })(sL, typeof eQ == "object" && eQ, typeof define == "function" && define);
 });
-var $D = {};
-hL($D, { webcrypto: () => {
+var JD = {};
+fL(JD, { webcrypto: () => {
   {
     return kZ;
   }
@@ -43772,7 +43776,7 @@ hL($D, { webcrypto: () => {
   }
 }, default: () => {
   {
-    return eX;
+    return $D;
   }
 }, DEFAULT_ENCODING: () => {
   {
@@ -43780,12 +43784,12 @@ hL($D, { webcrypto: () => {
   }
 } });
 var wZ;
-var MN;
-var Q5;
-var EN;
 var ON;
+var Q5;
 var NN;
 var AN;
+var CN;
+var jN;
 var JZ;
 var p0;
 var Z5;
@@ -43793,236 +43797,236 @@ var $5;
 var QZ;
 var b7;
 var D9;
-var CN;
-var jN;
+var SN;
+var qN;
 var p6;
 var h8;
 var L$;
 var j8;
 var m7;
-var aL;
-var K5;
-var SN;
 var rL;
-var X$;
+var K5;
+var vN;
 var tL;
+var X$;
 var eL;
 var $X;
+var JX;
 var Y$;
 var ZZ;
 var e$;
 var $Z;
 var J5;
 var KZ;
-var qN;
-var vN;
-var JX;
-var QX;
 var wN;
 var kN;
-var hN;
+var QX;
 var ZX;
-var HZ;
-var WZ;
-var D$;
+var hN;
 var fN;
 var xN;
 var KX;
+var HZ;
+var WZ;
+var D$;
 var gN;
-var HX;
 var yN;
+var HX;
+var bN;
+var WX;
+var mN;
 var YZ;
 var j6;
 var i9;
 var UZ;
 var e6;
 var H5;
-var nL;
+var oL;
 var r9;
-var WX;
+var YX;
 var p7;
 var d7;
 var u7;
-var bN;
+var pN;
 var R$;
 var GZ;
 var LZ;
-var mN;
-var XZ;
-var YX;
-var W5;
-var UX;
-var pN;
-var a9;
-var GX;
-var LX;
-var DZ;
 var dN;
-var XX;
+var XZ;
+var UX;
+var W5;
+var GX;
 var uN;
-var oL;
-var RZ;
-var DX;
+var a9;
+var LX;
+var XX;
+var DZ;
 var _N;
+var DX;
+var cN;
+var iL;
+var RZ;
+var RX;
+var lN;
 var X7;
 var QJ;
-var cN;
-var RX;
+var sN;
 var VX;
 var zX;
-var lN;
 var FX;
+var nN;
 var PX;
 var IX;
 var BX;
-var sN;
 var TX;
+var oN;
 var MX;
+var EX;
 var R9;
 var VZ;
-var EX;
-var nN;
-var oN;
+var OX;
 var iN;
 var aN;
 var rN;
-var ZJ;
 var tN;
 var eN;
+var ZJ;
 var $A;
 var JA;
 var QA;
-var OX;
-var iL;
+var ZA;
+var KA;
 var NX;
+var aL;
+var AX;
 var zZ;
 var Y5;
-var ZA;
-var AX;
-var CX;
-var U5;
-var KA;
 var HA;
-var FZ;
+var CX;
+var jX;
+var U5;
 var WA;
 var YA;
-var _7;
-var jX;
+var FZ;
 var UA;
 var GA;
-var PZ;
+var _7;
 var SX;
-var qX;
 var LA;
 var XA;
-var DA;
+var PZ;
+var qX;
 var vX;
+var DA;
 var RA;
+var VA;
 var wX;
-var V$;
+var zA;
 var kX;
+var V$;
 var hX;
+var fX;
 var U$;
 var IZ;
-var VA;
-var zA;
-var fX;
-var xX;
 var FA;
 var PA;
+var xX;
+var gX;
 var IA;
+var BA;
+var TA;
 var BZ;
 var TZ;
-var BA;
+var MA;
 var t9;
-var gX;
+var yX;
 var V9;
 var G5;
-var TA;
-var MA;
 var EA;
-var yX;
+var OA;
+var NA;
+var bX;
 var y9;
 var KJ;
-var bX;
-var OA;
 var mX;
-var NA;
-var pX;
 var AA;
+var pX;
 var CA;
+var dX;
 var jA;
 var SA;
-var MZ;
 var qA;
-var EZ;
 var vA;
+var MZ;
 var wA;
+var EZ;
 var kA;
 var hA;
 var fA;
 var xA;
 var gA;
+var yA;
+var bA;
 var OZ;
-var dX;
+var uX;
 var NZ;
 var AZ;
 var $J;
 var CZ;
 var jZ;
-var uX;
-var yA;
 var _X;
-var cX;
-var bA;
-var lX;
 var mA;
+var cX;
+var lX;
 var pA;
-var dA;
 var sX;
+var dA;
 var uA;
 var _A;
+var nX;
 var cA;
 var lA;
-var L5;
-var nX;
 var sA;
 var nA;
+var L5;
+var oX;
 var oA;
 var iA;
 var aA;
-var oX;
-var iX;
-var SZ;
-var aX;
 var rA;
 var tA;
+var iX;
+var aX;
+var SZ;
+var rX;
 var eA;
 var $C;
-var rX;
-var tX;
 var JC;
+var QC;
+var tX;
+var eX;
+var ZC;
 var G$;
 var qZ;
 var vZ;
-var QC;
+var KC;
 var JJ;
 var X5;
 var D5;
 var kZ;
-var eX;
-var JD = fL(() => {
+var $D;
+var QD = xL(() => {
   wZ = function() {
-    return QC;
-  }, MN = Object.create, Q5 = Object.defineProperty, EN = Object.getOwnPropertyDescriptor, ON = Object.getOwnPropertyNames, NN = Object.getPrototypeOf, AN = Object.prototype.hasOwnProperty, JZ = (C, j) => () => (C && (j = C(C = 0)), j), p0 = (C, j) => () => (j || C((j = { exports: {} }).exports, j), j.exports), Z5 = (C, j) => {
+    return KC;
+  }, ON = Object.create, Q5 = Object.defineProperty, NN = Object.getOwnPropertyDescriptor, AN = Object.getOwnPropertyNames, CN = Object.getPrototypeOf, jN = Object.prototype.hasOwnProperty, JZ = (C, j) => () => (C && (j = C(C = 0)), j), p0 = (C, j) => () => (j || C((j = { exports: {} }).exports, j), j.exports), Z5 = (C, j) => {
     for (var q in j)
       Q5(C, q, { get: j[q], enumerable: true });
   }, $5 = (C, j, q, S) => {
     if (j && typeof j == "object" || typeof j == "function")
-      for (let U of ON(j))
-        !AN.call(C, U) && U !== q && Q5(C, U, { get: () => j[U], enumerable: !(S = EN(j, U)) || S.enumerable });
+      for (let U of AN(j))
+        !jN.call(C, U) && U !== q && Q5(C, U, { get: () => j[U], enumerable: !(S = NN(j, U)) || S.enumerable });
     return C;
-  }, QZ = (C, j, q) => ($5(C, j, "default"), q && $5(q, j, "default")), b7 = (C, j, q) => (q = C != null ? MN(NN(C)) : {}, $5(j || !C || !C.__esModule ? Q5(q, "default", { value: C, enumerable: true }) : q, C)), D9 = (C) => $5(Q5({}, "__esModule", { value: true }), C), CN = p0((C) => {
+  }, QZ = (C, j, q) => ($5(C, j, "default"), q && $5(q, j, "default")), b7 = (C, j, q) => (q = C != null ? ON(CN(C)) : {}, $5(j || !C || !C.__esModule ? Q5(q, "default", { value: C, enumerable: true }) : q, C)), D9 = (C) => $5(Q5({}, "__esModule", { value: true }), C), SN = p0((C) => {
     C.byteLength = X, C.toByteArray = Q, C.fromByteArray = W;
     var j = [], q = [], S = typeof Uint8Array < "u" ? Uint8Array : Array, U = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
     for (P = 0, $ = U.length;P < $; ++P)
@@ -44064,7 +44068,7 @@ var JD = fL(() => {
         V.push(Z(G, F, F + D > T ? T : F + D));
       return R === 1 ? (H = G[L - 1], V.push(j[H >> 2] + j[H << 4 & 63] + "==")) : R === 2 && (H = (G[L - 2] << 8) + G[L - 1], V.push(j[H >> 10] + j[H >> 4 & 63] + j[H << 2 & 63] + "=")), V.join("");
     }
-  }), jN = p0((C) => {
+  }), qN = p0((C) => {
     C.read = function(j, q, S, U, P) {
       var $, Y, X = P * 8 - U - 1, K = (1 << X) - 1, Q = K >> 1, J = -7, Z = S ? P - 1 : 0, W = S ? -1 : 1, G = j[q + Z];
       for (Z += W, $ = G & (1 << -J) - 1, G >>= -J, J += X;J > 0; $ = $ * 256 + j[q + Z], Z += W, J -= 8)
@@ -44088,7 +44092,7 @@ var JD = fL(() => {
       j[S + G - H] |= L * 128;
     };
   }), p6 = p0((C) => {
-    var j = CN(), q = jN(), S = typeof Symbol == "function" && typeof Symbol.for == "function" ? Symbol.for("nodejs.util.inspect.custom") : null;
+    var j = SN(), q = qN(), S = typeof Symbol == "function" && typeof Symbol.for == "function" ? Symbol.for("nodejs.util.inspect.custom") : null;
     C.Buffer = Y, C.SlowBuffer = V, C.INSPECT_MAX_BYTES = 50;
     var U = 2147483647;
     C.kMaxLength = U, Y.TYPED_ARRAY_SUPPORT = P(), !Y.TYPED_ARRAY_SUPPORT && typeof console < "u" && typeof console.error == "function" && console.error("This browser lacks typed array (Uint8Array) support which is required by `buffer` v5.x. Use `buffer` v4.x if you require old browser support.");
@@ -45227,10 +45231,10 @@ Use Chrome, Firefox or Internet Explorer 11`);
       else
         throw new TypeError('The "emitter" argument must be of type EventEmitter. Received type ' + typeof E);
     }
-  }), aL = p0((C, j) => {
+  }), rL = p0((C, j) => {
     j.exports = m7().EventEmitter;
   }), K5 = p0(() => {
-  }), SN = p0((C, j) => {
+  }), vN = p0((C, j) => {
     function q(G, H) {
       var L = Object.keys(G);
       if (Object.getOwnPropertySymbols) {
@@ -45332,7 +45336,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         return J(this, S({}, L, { depth: 0, customInspect: false }));
       } }]), G;
     }();
-  }), rL = p0((C, j) => {
+  }), tL = p0((C, j) => {
     function q(X, K) {
       var Q = this, J = this._readableState && this._readableState.destroyed, Z = this._writableState && this._writableState.destroyed;
       return J || Z ? (K ? K(X) : X && (this._writableState ? this._writableState.errorEmitted || (this._writableState.errorEmitted = true, process.nextTick($, this, X)) : process.nextTick($, this, X)), this) : (this._readableState && (this._readableState.destroyed = true), this._writableState && (this._writableState.destroyed = true), this._destroy(X || null, function(W) {
@@ -45413,7 +45417,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }), U("ERR_MULTIPLE_CALLBACK", "Callback called multiple times"), U("ERR_STREAM_CANNOT_PIPE", "Cannot pipe, not readable"), U("ERR_STREAM_WRITE_AFTER_END", "write after end"), U("ERR_STREAM_NULL_VALUES", "May not write null values to stream", TypeError), U("ERR_UNKNOWN_ENCODING", function(K) {
       return "Unknown encoding: " + K;
     }, TypeError), U("ERR_STREAM_UNSHIFT_AFTER_END_EVENT", "stream.unshift() after end event"), j.exports.codes = S;
-  }), tL = p0((C, j) => {
+  }), eL = p0((C, j) => {
     var q = X$().codes.ERR_INVALID_OPT_VALUE;
     function S(P, $, Y) {
       return P.highWaterMark != null ? P.highWaterMark : $ ? P[Y] : null;
@@ -45430,7 +45434,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return P.objectMode ? 16 : 16384;
     }
     j.exports = { getHighWaterMark: U };
-  }), eL = p0((C, j) => {
+  }), $X = p0((C, j) => {
     j.exports = q;
     function q(U, P) {
       if (S("noDeprecation"))
@@ -45456,7 +45460,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var P = global.localStorage[U];
       return P == null ? false : String(P).toLowerCase() === "true";
     }
-  }), $X = p0((C, j) => {
+  }), JX = p0((C, j) => {
     j.exports = x;
     function q(s) {
       var l = this;
@@ -45466,7 +45470,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }
     var S;
     x.WritableState = w;
-    var U = { deprecate: eL() }, P = aL(), $ = p6().Buffer, Y = global.Uint8Array || function() {
+    var U = { deprecate: $X() }, P = rL(), $ = p6().Buffer, Y = global.Uint8Array || function() {
     };
     function X(s) {
       return $.from(s);
@@ -45474,7 +45478,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     function K(s) {
       return $.isBuffer(s) || s instanceof Y;
     }
-    var Q = rL(), J = tL(), Z = J.getHighWaterMark, W = X$().codes, G = W.ERR_INVALID_ARG_TYPE, H = W.ERR_METHOD_NOT_IMPLEMENTED, L = W.ERR_MULTIPLE_CALLBACK, R = W.ERR_STREAM_CANNOT_PIPE, V = W.ERR_STREAM_DESTROYED, D = W.ERR_STREAM_NULL_VALUES, F = W.ERR_STREAM_WRITE_AFTER_END, T = W.ERR_UNKNOWN_ENCODING, E = Q.errorOrDestroy;
+    var Q = tL(), J = eL(), Z = J.getHighWaterMark, W = X$().codes, G = W.ERR_INVALID_ARG_TYPE, H = W.ERR_METHOD_NOT_IMPLEMENTED, L = W.ERR_MULTIPLE_CALLBACK, R = W.ERR_STREAM_CANNOT_PIPE, V = W.ERR_STREAM_DESTROYED, D = W.ERR_STREAM_NULL_VALUES, F = W.ERR_STREAM_WRITE_AFTER_END, T = W.ERR_UNKNOWN_ENCODING, E = Q.errorOrDestroy;
     j8()(x, P);
     function N() {
     }
@@ -45655,7 +45659,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return Z;
     };
     j.exports = X;
-    var S = JX(), U = $X();
+    var S = QX(), U = JX();
     j8()(X, S);
     for (P = q(U.prototype), Y = 0;Y < P.length; Y++)
       $ = P[Y], X.prototype[$] || (X.prototype[$] = U.prototype[$]);
@@ -45892,7 +45896,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       };
     }
     j.exports = $;
-  }), qN = p0((C, j) => {
+  }), wN = p0((C, j) => {
     var q;
     function S(D, F, T) {
       return F in D ? Object.defineProperty(D, F, { value: T, enumerable: true, configurable: true, writable: true }) : D[F] = T, D;
@@ -45976,17 +45980,17 @@ Use Chrome, Firefox or Internet Explorer 11`);
       }), D.on("readable", G.bind(null, T)), T;
     };
     j.exports = V;
-  }), vN = p0((C, j) => {
+  }), kN = p0((C, j) => {
     j.exports = function() {
       throw new Error("Readable.from is not available in the browser");
     };
-  }), JX = p0((C, j) => {
+  }), QX = p0((C, j) => {
     j.exports = z;
     var q;
     z.ReadableState = b;
     var S = m7().EventEmitter, U = function(r, d) {
       return r.listeners(d).length;
-    }, P = aL(), $ = p6().Buffer, Y = global.Uint8Array || function() {
+    }, P = rL(), $ = p6().Buffer, Y = global.Uint8Array || function() {
     };
     function X(r) {
       return $.from(r);
@@ -45997,7 +46001,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     var Q = K5(), J;
     Q && Q.debuglog ? J = Q.debuglog("stream") : J = function() {
     };
-    var Z = SN(), W = rL(), G = tL(), H = G.getHighWaterMark, L = X$().codes, R = L.ERR_INVALID_ARG_TYPE, V = L.ERR_STREAM_PUSH_AFTER_EOF, D = L.ERR_METHOD_NOT_IMPLEMENTED, F = L.ERR_STREAM_UNSHIFT_AFTER_END_EVENT, T, E, N;
+    var Z = vN(), W = tL(), G = eL(), H = G.getHighWaterMark, L = X$().codes, R = L.ERR_INVALID_ARG_TYPE, V = L.ERR_STREAM_PUSH_AFTER_EOF, D = L.ERR_METHOD_NOT_IMPLEMENTED, F = L.ERR_STREAM_UNSHIFT_AFTER_END_EVENT, T, E, N;
     j8()(z, P);
     var w = W.errorOrDestroy, h = ["error", "close", "destroy", "pause", "resume"];
     function x(r, d, a) {
@@ -46249,7 +46253,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         J("wrapped _read", D0), U0 && (U0 = false, r.resume());
       }, this;
     }, typeof Symbol == "function" && (z.prototype[Symbol.asyncIterator] = function() {
-      return E === undefined && (E = qN()), E(this);
+      return E === undefined && (E = wN()), E(this);
     }), Object.defineProperty(z.prototype, "readableHighWaterMark", { enumerable: false, get: function() {
       return this._readableState.highWaterMark;
     } }), Object.defineProperty(z.prototype, "readableBuffer", { enumerable: false, get: function() {
@@ -46278,7 +46282,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       }
     }
     typeof Symbol == "function" && (z.from = function(r, d) {
-      return N === undefined && (N = vN()), N(z, r, d);
+      return N === undefined && (N = kN()), N(z, r, d);
     });
     function L0(r, d) {
       for (var a = 0, U0 = r.length;a < U0; a++)
@@ -46286,7 +46290,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
           return a;
       return -1;
     }
-  }), QX = p0((C, j) => {
+  }), ZX = p0((C, j) => {
     j.exports = K;
     var q = X$().codes, S = q.ERR_METHOD_NOT_IMPLEMENTED, U = q.ERR_MULTIPLE_CALLBACK, P = q.ERR_TRANSFORM_ALREADY_TRANSFORMING, $ = q.ERR_TRANSFORM_WITH_LENGTH_0, Y = Y$();
     j8()(K, Y);
@@ -46338,9 +46342,9 @@ Use Chrome, Firefox or Internet Explorer 11`);
         throw new P;
       return Z.push(null);
     }
-  }), wN = p0((C, j) => {
+  }), hN = p0((C, j) => {
     j.exports = S;
-    var q = QX();
+    var q = ZX();
     j8()(S, q);
     function S(U) {
       if (!(this instanceof S))
@@ -46350,7 +46354,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     S.prototype._transform = function(U, P, $) {
       $(null, U);
     };
-  }), kN = p0((C, j) => {
+  }), fN = p0((C, j) => {
     var q;
     function S(G) {
       var H = false;
@@ -46411,10 +46415,10 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return H.reduce(J);
     }
     j.exports = W;
-  }), hN = p0((C, j) => {
-    C = j.exports = JX(), C.Stream = C, C.Readable = C, C.Writable = $X(), C.Duplex = Y$(), C.Transform = QX(), C.PassThrough = wN(), C.finished = KZ(), C.pipeline = kN();
-  }), ZX = p0((C, j) => {
-    var q = h8().Buffer, S = hN().Transform, U = j8();
+  }), xN = p0((C, j) => {
+    C = j.exports = QX(), C.Stream = C, C.Readable = C, C.Writable = JX(), C.Duplex = Y$(), C.Transform = ZX(), C.PassThrough = hN(), C.finished = KZ(), C.pipeline = fN();
+  }), KX = p0((C, j) => {
+    var q = h8().Buffer, S = xN().Transform, U = j8();
     function P(Y, X) {
       if (!q.isBuffer(Y) && typeof Y != "string")
         throw new TypeError(X + " must be a string or a buffer");
@@ -46467,7 +46471,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       throw new Error("_digest is not implemented");
     }, j.exports = $;
   }), HZ = p0((C, j) => {
-    var q = j8(), S = ZX(), U = h8().Buffer, P = new Array(16);
+    var q = j8(), S = KX(), U = h8().Buffer, P = new Array(16);
     function $() {
       S.call(this, 64), this._a = 1732584193, this._b = 4023233417, this._c = 2562383102, this._d = 271733878;
     }
@@ -46498,7 +46502,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }
     j.exports = $;
   }), WZ = p0((C, j) => {
-    var q = p6().Buffer, S = j8(), U = ZX(), P = new Array(16), $ = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 7, 4, 13, 1, 10, 6, 15, 3, 12, 0, 9, 5, 2, 14, 11, 8, 3, 10, 14, 4, 9, 15, 8, 1, 2, 7, 0, 6, 13, 11, 5, 12, 1, 9, 11, 10, 0, 8, 12, 4, 13, 3, 7, 15, 14, 5, 6, 2, 4, 0, 5, 9, 7, 12, 2, 10, 14, 1, 3, 8, 11, 6, 15, 13], Y = [5, 14, 7, 0, 9, 2, 11, 4, 13, 6, 15, 8, 1, 10, 3, 12, 6, 11, 3, 7, 0, 13, 5, 10, 14, 15, 8, 12, 4, 9, 1, 2, 15, 5, 1, 3, 7, 14, 6, 9, 11, 8, 12, 2, 10, 0, 4, 13, 8, 6, 4, 1, 3, 11, 15, 0, 5, 12, 2, 13, 9, 7, 10, 14, 12, 15, 10, 4, 1, 5, 8, 7, 6, 2, 13, 14, 0, 3, 9, 11], X = [11, 14, 15, 12, 5, 8, 7, 9, 11, 13, 14, 15, 6, 7, 9, 8, 7, 6, 8, 13, 11, 9, 7, 15, 7, 12, 15, 9, 11, 7, 13, 12, 11, 13, 6, 7, 14, 9, 13, 15, 14, 8, 13, 6, 5, 12, 7, 5, 11, 12, 14, 15, 14, 15, 9, 8, 9, 14, 5, 6, 8, 6, 5, 12, 9, 15, 5, 11, 6, 8, 13, 12, 5, 12, 13, 14, 11, 8, 5, 6], K = [8, 9, 9, 11, 13, 15, 15, 5, 7, 7, 8, 11, 14, 14, 12, 6, 9, 13, 15, 7, 12, 8, 9, 11, 7, 7, 12, 7, 6, 15, 13, 11, 9, 7, 15, 11, 8, 6, 6, 14, 12, 13, 5, 14, 13, 13, 7, 5, 15, 5, 8, 11, 14, 14, 6, 14, 6, 9, 12, 9, 12, 5, 15, 8, 8, 5, 12, 9, 12, 5, 14, 6, 8, 13, 6, 5, 15, 13, 11, 11], Q = [0, 1518500249, 1859775393, 2400959708, 2840853838], J = [1352829926, 1548603684, 1836072691, 2053994217, 0];
+    var q = p6().Buffer, S = j8(), U = KX(), P = new Array(16), $ = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 7, 4, 13, 1, 10, 6, 15, 3, 12, 0, 9, 5, 2, 14, 11, 8, 3, 10, 14, 4, 9, 15, 8, 1, 2, 7, 0, 6, 13, 11, 5, 12, 1, 9, 11, 10, 0, 8, 12, 4, 13, 3, 7, 15, 14, 5, 6, 2, 4, 0, 5, 9, 7, 12, 2, 10, 14, 1, 3, 8, 11, 6, 15, 13], Y = [5, 14, 7, 0, 9, 2, 11, 4, 13, 6, 15, 8, 1, 10, 3, 12, 6, 11, 3, 7, 0, 13, 5, 10, 14, 15, 8, 12, 4, 9, 1, 2, 15, 5, 1, 3, 7, 14, 6, 9, 11, 8, 12, 2, 10, 0, 4, 13, 8, 6, 4, 1, 3, 11, 15, 0, 5, 12, 2, 13, 9, 7, 10, 14, 12, 15, 10, 4, 1, 5, 8, 7, 6, 2, 13, 14, 0, 3, 9, 11], X = [11, 14, 15, 12, 5, 8, 7, 9, 11, 13, 14, 15, 6, 7, 9, 8, 7, 6, 8, 13, 11, 9, 7, 15, 7, 12, 15, 9, 11, 7, 13, 12, 11, 13, 6, 7, 14, 9, 13, 15, 14, 8, 13, 6, 5, 12, 7, 5, 11, 12, 14, 15, 14, 15, 9, 8, 9, 14, 5, 6, 8, 6, 5, 12, 9, 15, 5, 11, 6, 8, 13, 12, 5, 12, 13, 14, 11, 8, 5, 6], K = [8, 9, 9, 11, 13, 15, 15, 5, 7, 7, 8, 11, 14, 14, 12, 6, 9, 13, 15, 7, 12, 8, 9, 11, 7, 7, 12, 7, 6, 15, 13, 11, 9, 7, 15, 11, 8, 6, 6, 14, 12, 13, 5, 14, 13, 13, 7, 5, 15, 5, 8, 11, 14, 14, 6, 14, 6, 9, 12, 9, 12, 5, 15, 8, 8, 5, 12, 9, 12, 5, 14, 6, 8, 13, 6, 5, 15, 13, 11, 11], Q = [0, 1518500249, 1859775393, 2400959708, 2840853838], J = [1352829926, 1548603684, 1836072691, 2053994217, 0];
     function Z() {
       U.call(this, 64), this._a = 1732584193, this._b = 4023233417, this._c = 2562383102, this._d = 271733878, this._e = 3285377520;
     }
@@ -46564,7 +46568,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }, S.prototype._update = function() {
       throw new Error("_update must be implemented by subclass");
     }, j.exports = S;
-  }), fN = p0((C, j) => {
+  }), gN = p0((C, j) => {
     var q = j8(), S = D$(), U = h8().Buffer, P = [1518500249, 1859775393, -1894007588, -899497514], $ = new Array(80);
     function Y() {
       this.init(), this._w = $, S.call(this, 64, 56);
@@ -46595,7 +46599,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var J = U.allocUnsafe(20);
       return J.writeInt32BE(this._a | 0, 0), J.writeInt32BE(this._b | 0, 4), J.writeInt32BE(this._c | 0, 8), J.writeInt32BE(this._d | 0, 12), J.writeInt32BE(this._e | 0, 16), J;
     }, j.exports = Y;
-  }), xN = p0((C, j) => {
+  }), yN = p0((C, j) => {
     var q = j8(), S = D$(), U = h8().Buffer, P = [1518500249, 1859775393, -1894007588, -899497514], $ = new Array(80);
     function Y() {
       this.init(), this._w = $, S.call(this, 64, 56);
@@ -46629,7 +46633,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var Z = U.allocUnsafe(20);
       return Z.writeInt32BE(this._a | 0, 0), Z.writeInt32BE(this._b | 0, 4), Z.writeInt32BE(this._c | 0, 8), Z.writeInt32BE(this._d | 0, 12), Z.writeInt32BE(this._e | 0, 16), Z;
     }, j.exports = Y;
-  }), KX = p0((C, j) => {
+  }), HX = p0((C, j) => {
     var q = j8(), S = D$(), U = h8().Buffer, P = [1116352408, 1899447441, 3049323471, 3921009573, 961987163, 1508970993, 2453635748, 2870763221, 3624381080, 310598401, 607225278, 1426881987, 1925078388, 2162078206, 2614888103, 3248222580, 3835390401, 4022224774, 264347078, 604807628, 770255983, 1249150122, 1555081692, 1996064986, 2554220882, 2821834349, 2952996808, 3210313671, 3336571891, 3584528711, 113926993, 338241895, 666307205, 773529912, 1294757372, 1396182291, 1695183700, 1986661051, 2177026350, 2456956037, 2730485921, 2820302411, 3259730800, 3345764771, 3516065817, 3600352804, 4094571909, 275423344, 430227734, 506948616, 659060556, 883997877, 958139571, 1322822218, 1537002063, 1747873779, 1955562222, 2024104815, 2227730452, 2361852424, 2428436474, 2756734187, 3204031479, 3329325298], $ = new Array(64);
     function Y() {
       this.init(), this._w = $, S.call(this, 64, 56);
@@ -46669,8 +46673,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var G = U.allocUnsafe(32);
       return G.writeInt32BE(this._a, 0), G.writeInt32BE(this._b, 4), G.writeInt32BE(this._c, 8), G.writeInt32BE(this._d, 12), G.writeInt32BE(this._e, 16), G.writeInt32BE(this._f, 20), G.writeInt32BE(this._g, 24), G.writeInt32BE(this._h, 28), G;
     }, j.exports = Y;
-  }), gN = p0((C, j) => {
-    var q = j8(), S = KX(), U = D$(), P = h8().Buffer, $ = new Array(64);
+  }), bN = p0((C, j) => {
+    var q = j8(), S = HX(), U = D$(), P = h8().Buffer, $ = new Array(64);
     function Y() {
       this.init(), this._w = $, U.call(this, 64, 56);
     }
@@ -46680,7 +46684,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var X = P.allocUnsafe(28);
       return X.writeInt32BE(this._a, 0), X.writeInt32BE(this._b, 4), X.writeInt32BE(this._c, 8), X.writeInt32BE(this._d, 12), X.writeInt32BE(this._e, 16), X.writeInt32BE(this._f, 20), X.writeInt32BE(this._g, 24), X;
     }, j.exports = Y;
-  }), HX = p0((C, j) => {
+  }), WX = p0((C, j) => {
     var q = j8(), S = D$(), U = h8().Buffer, P = [1116352408, 3609767458, 1899447441, 602891725, 3049323471, 3964484399, 3921009573, 2173295548, 961987163, 4081628472, 1508970993, 3053834265, 2453635748, 2937671579, 2870763221, 3664609560, 3624381080, 2734883394, 310598401, 1164996542, 607225278, 1323610764, 1426881987, 3590304994, 1925078388, 4068182383, 2162078206, 991336113, 2614888103, 633803317, 3248222580, 3479774868, 3835390401, 2666613458, 4022224774, 944711139, 264347078, 2341262773, 604807628, 2007800933, 770255983, 1495990901, 1249150122, 1856431235, 1555081692, 3175218132, 1996064986, 2198950837, 2554220882, 3999719339, 2821834349, 766784016, 2952996808, 2566594879, 3210313671, 3203337956, 3336571891, 1034457026, 3584528711, 2466948901, 113926993, 3758326383, 338241895, 168717936, 666307205, 1188179964, 773529912, 1546045734, 1294757372, 1522805485, 1396182291, 2643833823, 1695183700, 2343527390, 1986661051, 1014477480, 2177026350, 1206759142, 2456956037, 344077627, 2730485921, 1290863460, 2820302411, 3158454273, 3259730800, 3505952657, 3345764771, 106217008, 3516065817, 3606008344, 3600352804, 1432725776, 4094571909, 1467031594, 275423344, 851169720, 430227734, 3100823752, 506948616, 1363258195, 659060556, 3750685593, 883997877, 3785050280, 958139571, 3318307427, 1322822218, 3812723403, 1537002063, 2003034995, 1747873779, 3602036899, 1955562222, 1575990012, 2024104815, 1125592928, 2227730452, 2716904306, 2361852424, 442776044, 2428436474, 593698344, 2756734187, 3733110249, 3204031479, 2999351573, 3329325298, 3815920427, 3391569614, 3928383900, 3515267271, 566280711, 3940187606, 3454069534, 4118630271, 4000239992, 116418474, 1914138554, 174292421, 2731055270, 289380356, 3203993006, 460393269, 320620315, 685471733, 587496836, 852142971, 1086792851, 1017036298, 365543100, 1126000580, 2618297676, 1288033470, 3409855158, 1501505948, 4234509866, 1607167915, 987167468, 1816402316, 1246189591], $ = new Array(160);
     function Y() {
       this.init(), this._w = $, S.call(this, 128, 112);
@@ -46739,8 +46743,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
       }
       return V(this._ah, this._al, 0), V(this._bh, this._bl, 8), V(this._ch, this._cl, 16), V(this._dh, this._dl, 24), V(this._eh, this._el, 32), V(this._fh, this._fl, 40), V(this._gh, this._gl, 48), V(this._hh, this._hl, 56), R;
     }, j.exports = Y;
-  }), yN = p0((C, j) => {
-    var q = j8(), S = HX(), U = D$(), P = h8().Buffer, $ = new Array(160);
+  }), mN = p0((C, j) => {
+    var q = j8(), S = WX(), U = D$(), P = h8().Buffer, $ = new Array(160);
     function Y() {
       this.init(), this._w = $, U.call(this, 128, 112);
     }
@@ -46761,7 +46765,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         throw new Error(S + " is not supported (we accept pull requests)");
       return new U;
     };
-    q.sha = fN(), q.sha1 = xN(), q.sha224 = gN(), q.sha256 = KX(), q.sha384 = yN(), q.sha512 = HX();
+    q.sha = gN(), q.sha1 = yN(), q.sha224 = bN(), q.sha256 = HX(), q.sha384 = mN(), q.sha512 = WX();
   }), j6 = p0((C, j) => {
     j.exports = { ArrayIsArray(q) {
       return Array.isArray(q);
@@ -47140,7 +47144,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         throw new V(d, `('${U(a, "|")}')`, r);
     }
     j.exports = { isInt32: x, isUint32: b, parseFileMode: A, validateArray: p, validateBoolean: f, validateBuffer: c, validateEncoding: n, validateFunction: e, validateInt32: O, validateInteger: M, validateNumber: k, validateObject: y, validateOneOf: B, validatePlainFunction: Y0, validatePort: s, validateSignalName: u, validateString: g, validateUint32: v, validateUndefined: H0, validateUnion: L0, validateAbortSignal: l };
-  }), nL = p0((C, j) => {
+  }), oL = p0((C, j) => {
     var q = j.exports = {}, S, U;
     function P() {
       throw new Error("setTimeout has not been defined");
@@ -47233,9 +47237,9 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return 0;
     };
   }), r9 = {};
-  Z5(r9, { default: () => WX });
+  Z5(r9, { default: () => YX });
   p7 = JZ(() => {
-    QZ(r9, b7(nL())), WX = b7(nL());
+    QZ(r9, b7(oL())), YX = b7(oL());
   }), d7 = p0((C, j) => {
     var { Symbol: q, SymbolAsyncIterator: S, SymbolIterator: U } = j6(), P = q("kDestroyed"), $ = q("kIsErrored"), Y = q("kIsReadable"), X = q("kIsDisturbed");
     function K(M, O = false) {
@@ -47403,7 +47407,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       });
     }
     j.exports = x, j.exports.finished = b;
-  }), bN = p0((C, j) => {
+  }), pN = p0((C, j) => {
     var q = globalThis.AbortController || UZ().AbortController, { codes: { ERR_INVALID_ARG_TYPE: S, ERR_MISSING_ARGS: U, ERR_OUT_OF_RANGE: P }, AbortError: $ } = e6(), { validateAbortSignal: Y, validateInteger: X, validateObject: K } = H5(), Q = j6().Symbol("kWeak"), { finished: J } = u7(), { ArrayPrototypePush: Z, MathFloor: W, Number: G, NumberIsNaN: H, Promise: L, PromiseReject: R, PromisePrototypeThen: V, Symbol: D } = j6(), F = D("kEmpty"), T = D("kEof");
     function E(B, f) {
       if (typeof B != "function")
@@ -47740,7 +47744,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       };
       return X.aborted ? Q() : (X.addEventListener("abort", Q), U(K, () => X.removeEventListener("abort", Q))), K;
     };
-  }), mN = p0((C, j) => {
+  }), dN = p0((C, j) => {
     var { StringPrototypeSlice: q, SymbolIterator: S, TypedArrayPrototypeSet: U, Uint8Array: P } = j6(), { Buffer: $ } = p6(), { inspect: Y } = i9();
     j.exports = class {
       constructor() {
@@ -47846,7 +47850,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return $(X.objectMode);
     }
     j.exports = { getHighWaterMark: Y, getDefaultHighWaterMark: $ };
-  }), YX = p0((C, j) => {
+  }), UX = p0((C, j) => {
     var q = (p7(), D9(r9)), { PromisePrototypeThen: S, SymbolAsyncIterator: U, SymbolIterator: P } = j6(), { Buffer: $ } = p6(), { ERR_INVALID_ARG_TYPE: Y, ERR_STREAM_NULL_VALUES: X } = e6().codes;
     function K(Q, J, Z) {
       let W;
@@ -47907,7 +47911,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     j.exports = m, m.ReadableState = f;
     var { EventEmitter: G } = m7(), { Stream: H, prependListener: L } = GZ(), { Buffer: R } = p6(), { addAbortSignal: V } = LZ(), D = u7(), F = i9().debuglog("stream", (_) => {
       F = _;
-    }), T = mN(), E = R$(), { getHighWaterMark: N, getDefaultHighWaterMark: w } = XZ(), { aggregateTwoErrors: h, codes: { ERR_INVALID_ARG_TYPE: x, ERR_METHOD_NOT_IMPLEMENTED: b, ERR_OUT_OF_RANGE: z, ERR_STREAM_PUSH_AFTER_EOF: I, ERR_STREAM_UNSHIFT_AFTER_END_EVENT: A } } = e6(), { validateObject: M } = H5(), O = W("kPaused"), { StringDecoder: v } = ZZ(), g = YX();
+    }), T = dN(), E = R$(), { getHighWaterMark: N, getDefaultHighWaterMark: w } = XZ(), { aggregateTwoErrors: h, codes: { ERR_INVALID_ARG_TYPE: x, ERR_METHOD_NOT_IMPLEMENTED: b, ERR_OUT_OF_RANGE: z, ERR_STREAM_PUSH_AFTER_EOF: I, ERR_STREAM_UNSHIFT_AFTER_END_EVENT: A } } = e6(), { validateObject: M } = H5(), O = W("kPaused"), { StringDecoder: v } = ZZ(), g = UX();
     K(m.prototype, H.prototype), K(m, H);
     var k = () => {
     }, { errorOrDestroy: B } = E;
@@ -48270,7 +48274,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         E.destroyer(_, W0), O0(W0);
       } }).wrap(_);
     };
-  }), UX = p0((C, j) => {
+  }), GX = p0((C, j) => {
     var q = (p7(), D9(r9)), { ArrayPrototypeSlice: S, Error: U, FunctionPrototypeSymbolHasInstance: P, ObjectDefineProperty: $, ObjectDefineProperties: Y, ObjectSetPrototypeOf: X, StringPrototypeToLowerCase: K, Symbol: Q, SymbolHasInstance: J } = j6();
     j.exports = v, v.WritableState = M;
     var { EventEmitter: Z } = m7(), W = GZ().Stream, { Buffer: G } = p6(), H = R$(), { addAbortSignal: L } = LZ(), { getHighWaterMark: R, getDefaultHighWaterMark: V } = XZ(), { ERR_INVALID_ARG_TYPE: D, ERR_METHOD_NOT_IMPLEMENTED: F, ERR_MULTIPLE_CALLBACK: T, ERR_STREAM_CANNOT_PIPE: E, ERR_STREAM_DESTROYED: N, ERR_STREAM_ALREADY_FINISHED: w, ERR_STREAM_NULL_VALUES: h, ERR_STREAM_WRITE_AFTER_END: x, ERR_UNKNOWN_ENCODING: b } = e6().codes, { errorOrDestroy: z } = H;
@@ -48520,8 +48524,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }, v.toWeb = function(d) {
       return r().newWritableStreamFromStreamWritable(d);
     };
-  }), pN = p0((C, j) => {
-    var q = (p7(), D9(r9)), S = p6(), { isReadable: U, isWritable: P, isIterable: $, isNodeStream: Y, isReadableNodeStream: X, isWritableNodeStream: K, isDuplexNodeStream: Q } = d7(), J = u7(), { AbortError: Z, codes: { ERR_INVALID_ARG_TYPE: W, ERR_INVALID_RETURN_VALUE: G } } = e6(), { destroyer: H } = R$(), L = a9(), R = W5(), { createDeferredPromise: V } = i9(), D = YX(), F = globalThis.Blob || S.Blob, T = typeof F < "u" ? function(b) {
+  }), uN = p0((C, j) => {
+    var q = (p7(), D9(r9)), S = p6(), { isReadable: U, isWritable: P, isIterable: $, isNodeStream: Y, isReadableNodeStream: X, isWritableNodeStream: K, isDuplexNodeStream: Q } = d7(), J = u7(), { AbortError: Z, codes: { ERR_INVALID_ARG_TYPE: W, ERR_INVALID_RETURN_VALUE: G } } = e6(), { destroyer: H } = R$(), L = a9(), R = W5(), { createDeferredPromise: V } = i9(), D = UX(), F = globalThis.Blob || S.Blob, T = typeof F < "u" ? function(b) {
       return b instanceof F;
     } : function(b) {
       return false;
@@ -48654,7 +48658,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
   }), a9 = p0((C, j) => {
     var { ObjectDefineProperties: q, ObjectGetOwnPropertyDescriptor: S, ObjectKeys: U, ObjectSetPrototypeOf: P } = j6();
     j.exports = X;
-    var $ = W5(), Y = UX();
+    var $ = W5(), Y = GX();
     P(X.prototype, $.prototype), P(X, $);
     {
       let Z = U(Y.prototype);
@@ -48684,9 +48688,9 @@ Use Chrome, Firefox or Internet Explorer 11`);
     };
     var J;
     X.from = function(Z) {
-      return J || (J = pN()), J(Z, "body");
+      return J || (J = uN()), J(Z, "body");
     };
-  }), GX = p0((C, j) => {
+  }), LX = p0((C, j) => {
     var { ObjectSetPrototypeOf: q, Symbol: S } = j6();
     j.exports = X;
     var { ERR_METHOD_NOT_IMPLEMENTED: U } = e6().codes, P = a9(), { getHighWaterMark: $ } = XZ();
@@ -48727,10 +48731,10 @@ Use Chrome, Firefox or Internet Explorer 11`);
         this[Y] = null, J();
       }
     };
-  }), LX = p0((C, j) => {
+  }), XX = p0((C, j) => {
     var { ObjectSetPrototypeOf: q } = j6();
     j.exports = U;
-    var S = GX();
+    var S = LX();
     q(U.prototype, S.prototype), q(U, S);
     function U(P) {
       if (!(this instanceof U))
@@ -48842,7 +48846,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
               throw new Z("AsyncIterable", `transform[${d - 1}]`, H0);
           } else {
             var r;
-            w || (w = LX());
+            w || (w = XX());
             let R0 = new w({ objectMode: true }), V0 = (r = H0) === null || r === undefined ? undefined : r.then;
             if (typeof V0 == "function")
               l++, V0.call(H0, (q0) => {
@@ -48885,7 +48889,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       }), $(k, { readable: false, writable: true }, B);
     }
     j.exports = { pipelineImpl: O, pipeline: M };
-  }), dN = p0((C, j) => {
+  }), _N = p0((C, j) => {
     var { pipeline: q } = DZ(), S = a9(), { destroyer: U } = R$(), { isNodeStream: P, isReadable: $, isWritable: Y } = d7(), { AbortError: X, codes: { ERR_INVALID_ARG_VALUE: K, ERR_MISSING_ARGS: Q } } = e6();
     j.exports = function(...J) {
       if (J.length === 0)
@@ -48945,7 +48949,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         !N && L !== null && (N = new X), H = null, W = null, G = null, L === null ? w(N) : (L = w, U(F, N));
       }, R;
     };
-  }), XX = p0((C, j) => {
+  }), DX = p0((C, j) => {
     var { ArrayPrototypePop: q, Promise: S } = j6(), { isIterable: U, isNodeStream: P } = d7(), { pipelineImpl: $ } = DZ(), { finished: Y } = u7();
     function X(...K) {
       return new S((Q, J) => {
@@ -48960,8 +48964,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
       });
     }
     j.exports = { finished: Y, pipeline: X };
-  }), uN = p0((C, j) => {
-    var { Buffer: q } = p6(), { ObjectDefineProperty: S, ObjectKeys: U, ReflectApply: P } = j6(), { promisify: { custom: $ } } = i9(), { streamReturningOperators: Y, promiseReturningOperators: X } = bN(), { codes: { ERR_ILLEGAL_CONSTRUCTOR: K } } = e6(), Q = dN(), { pipeline: J } = DZ(), { destroyer: Z } = R$(), W = u7(), G = XX(), H = d7(), L = j.exports = GZ().Stream;
+  }), cN = p0((C, j) => {
+    var { Buffer: q } = p6(), { ObjectDefineProperty: S, ObjectKeys: U, ReflectApply: P } = j6(), { promisify: { custom: $ } } = i9(), { streamReturningOperators: Y, promiseReturningOperators: X } = pN(), { codes: { ERR_ILLEGAL_CONSTRUCTOR: K } } = e6(), Q = _N(), { pipeline: J } = DZ(), { destroyer: Z } = R$(), W = u7(), G = DX(), H = d7(), L = j.exports = GZ().Stream;
     L.isDisturbed = H.isDisturbed, L.isErrored = H.isErrored, L.isReadable = H.isReadable, L.Readable = W5();
     for (let D of U(Y)) {
       let F = function(...E) {
@@ -48985,7 +48989,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       S(F, "name", { __proto__: null, value: T.name }), S(F, "length", { __proto__: null, value: T.length }), S(L.Readable.prototype, D, { __proto__: null, value: F, enumerable: false, configurable: true, writable: true });
     }
     var R;
-    L.Writable = UX(), L.Duplex = a9(), L.Transform = GX(), L.PassThrough = LX(), L.pipeline = J;
+    L.Writable = GX(), L.Duplex = a9(), L.Transform = LX(), L.PassThrough = XX(), L.pipeline = J;
     var { addAbortSignal: V } = LZ();
     L.addAbortSignal = V, L.finished = W, L.destroy = Z, L.compose = Q, S(L, "promises", { __proto__: null, configurable: true, enumerable: true, get() {
       return G;
@@ -48998,17 +49002,17 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }, L._uint8ArrayToBuffer = function(D) {
       return q.from(D.buffer, D.byteOffset, D.byteLength);
     };
-  }), oL = p0((C, j) => {
-    var q = uN(), S = XX(), U = q.Readable.destroy;
+  }), iL = p0((C, j) => {
+    var q = cN(), S = DX(), U = q.Readable.destroy;
     j.exports = q.Readable, j.exports._uint8ArrayToBuffer = q._uint8ArrayToBuffer, j.exports._isUint8Array = q._isUint8Array, j.exports.isDisturbed = q.isDisturbed, j.exports.isErrored = q.isErrored, j.exports.isReadable = q.isReadable, j.exports.Readable = q.Readable, j.exports.Writable = q.Writable, j.exports.Duplex = q.Duplex, j.exports.Transform = q.Transform, j.exports.PassThrough = q.PassThrough, j.exports.addAbortSignal = q.addAbortSignal, j.exports.finished = q.finished, j.exports.destroy = q.destroy, j.exports.destroy = U, j.exports.pipeline = q.pipeline, j.exports.compose = q.compose, Object.defineProperty(q, "promises", { configurable: true, enumerable: true, get() {
       return S;
     } }), j.exports.Stream = q.Stream, j.exports.default = j.exports;
   }), RZ = {};
-  Z5(RZ, { default: () => DX });
-  _N = JZ(() => {
-    QZ(RZ, b7(oL())), DX = b7(oL());
+  Z5(RZ, { default: () => RX });
+  lN = JZ(() => {
+    QZ(RZ, b7(iL())), RX = b7(iL());
   }), X7 = p0((C, j) => {
-    var q = h8().Buffer, S = (_N(), D9(RZ)).Transform, U = ZZ().StringDecoder, P = j8();
+    var q = h8().Buffer, S = (lN(), D9(RZ)).Transform, U = ZZ().StringDecoder, P = j8();
     function $(Y) {
       S.call(this), this.hashMode = typeof Y == "string", this.hashMode ? this[Y] = this._finalOrDigest : this.final = this._finalOrDigest, this._final && (this.__final = this._final, this._final = null), this._decoder = null, this._encoding = null;
     }
@@ -49061,7 +49065,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }, j.exports = function(X) {
       return X = X.toLowerCase(), X === "md5" ? new S : X === "rmd160" || X === "ripemd160" ? new U : new Y(P(X));
     };
-  }), cN = p0((C, j) => {
+  }), sN = p0((C, j) => {
     var q = j8(), S = h8().Buffer, U = X7(), P = S.alloc(128), $ = 64;
     function Y(X, K) {
       U.call(this, "digest"), typeof K == "string" && (K = S.from(K)), this._alg = X, this._key = K, K.length > $ ? K = X(K) : K.length < $ && (K = S.concat([K, P], $));
@@ -49075,13 +49079,13 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var X = this._alg(S.concat(this._hash));
       return this._alg(S.concat([this._opad, X]));
     }, j.exports = Y;
-  }), RX = p0((C, j) => {
+  }), VX = p0((C, j) => {
     var q = HZ();
     j.exports = function(S) {
       return new q().update(S).digest();
     };
-  }), VX = p0((C, j) => {
-    var q = j8(), S = cN(), U = X7(), P = h8().Buffer, $ = RX(), Y = WZ(), X = YZ(), K = P.alloc(128);
+  }), zX = p0((C, j) => {
+    var q = j8(), S = sN(), U = X7(), P = h8().Buffer, $ = VX(), Y = WZ(), X = YZ(), K = P.alloc(128);
     function Q(J, Z) {
       U.call(this, "digest"), typeof Z == "string" && (Z = P.from(Z));
       var W = J === "sha512" || J === "sha384" ? 128 : 64;
@@ -49102,11 +49106,11 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }, j.exports = function(J, Z) {
       return J = J.toLowerCase(), J === "rmd160" || J === "ripemd160" ? new Q("rmd160", Z) : J === "md5" ? new S($, Z) : new Q(J, Z);
     };
-  }), zX = p0((C, j) => {
-    j.exports = { sha224WithRSAEncryption: { sign: "rsa", hash: "sha224", id: "302d300d06096086480165030402040500041c" }, "RSA-SHA224": { sign: "ecdsa/rsa", hash: "sha224", id: "302d300d06096086480165030402040500041c" }, sha256WithRSAEncryption: { sign: "rsa", hash: "sha256", id: "3031300d060960864801650304020105000420" }, "RSA-SHA256": { sign: "ecdsa/rsa", hash: "sha256", id: "3031300d060960864801650304020105000420" }, sha384WithRSAEncryption: { sign: "rsa", hash: "sha384", id: "3041300d060960864801650304020205000430" }, "RSA-SHA384": { sign: "ecdsa/rsa", hash: "sha384", id: "3041300d060960864801650304020205000430" }, sha512WithRSAEncryption: { sign: "rsa", hash: "sha512", id: "3051300d060960864801650304020305000440" }, "RSA-SHA512": { sign: "ecdsa/rsa", hash: "sha512", id: "3051300d060960864801650304020305000440" }, "RSA-SHA1": { sign: "rsa", hash: "sha1", id: "3021300906052b0e03021a05000414" }, "ecdsa-with-SHA1": { sign: "ecdsa", hash: "sha1", id: "" }, sha256: { sign: "ecdsa", hash: "sha256", id: "" }, sha224: { sign: "ecdsa", hash: "sha224", id: "" }, sha384: { sign: "ecdsa", hash: "sha384", id: "" }, sha512: { sign: "ecdsa", hash: "sha512", id: "" }, "DSA-SHA": { sign: "dsa", hash: "sha1", id: "" }, "DSA-SHA1": { sign: "dsa", hash: "sha1", id: "" }, DSA: { sign: "dsa", hash: "sha1", id: "" }, "DSA-WITH-SHA224": { sign: "dsa", hash: "sha224", id: "" }, "DSA-SHA224": { sign: "dsa", hash: "sha224", id: "" }, "DSA-WITH-SHA256": { sign: "dsa", hash: "sha256", id: "" }, "DSA-SHA256": { sign: "dsa", hash: "sha256", id: "" }, "DSA-WITH-SHA384": { sign: "dsa", hash: "sha384", id: "" }, "DSA-SHA384": { sign: "dsa", hash: "sha384", id: "" }, "DSA-WITH-SHA512": { sign: "dsa", hash: "sha512", id: "" }, "DSA-SHA512": { sign: "dsa", hash: "sha512", id: "" }, "DSA-RIPEMD160": { sign: "dsa", hash: "rmd160", id: "" }, ripemd160WithRSA: { sign: "rsa", hash: "rmd160", id: "3021300906052b2403020105000414" }, "RSA-RIPEMD160": { sign: "rsa", hash: "rmd160", id: "3021300906052b2403020105000414" }, md5WithRSAEncryption: { sign: "rsa", hash: "md5", id: "3020300c06082a864886f70d020505000410" }, "RSA-MD5": { sign: "rsa", hash: "md5", id: "3020300c06082a864886f70d020505000410" } };
-  }), lN = p0((C, j) => {
-    j.exports = zX();
   }), FX = p0((C, j) => {
+    j.exports = { sha224WithRSAEncryption: { sign: "rsa", hash: "sha224", id: "302d300d06096086480165030402040500041c" }, "RSA-SHA224": { sign: "ecdsa/rsa", hash: "sha224", id: "302d300d06096086480165030402040500041c" }, sha256WithRSAEncryption: { sign: "rsa", hash: "sha256", id: "3031300d060960864801650304020105000420" }, "RSA-SHA256": { sign: "ecdsa/rsa", hash: "sha256", id: "3031300d060960864801650304020105000420" }, sha384WithRSAEncryption: { sign: "rsa", hash: "sha384", id: "3041300d060960864801650304020205000430" }, "RSA-SHA384": { sign: "ecdsa/rsa", hash: "sha384", id: "3041300d060960864801650304020205000430" }, sha512WithRSAEncryption: { sign: "rsa", hash: "sha512", id: "3051300d060960864801650304020305000440" }, "RSA-SHA512": { sign: "ecdsa/rsa", hash: "sha512", id: "3051300d060960864801650304020305000440" }, "RSA-SHA1": { sign: "rsa", hash: "sha1", id: "3021300906052b0e03021a05000414" }, "ecdsa-with-SHA1": { sign: "ecdsa", hash: "sha1", id: "" }, sha256: { sign: "ecdsa", hash: "sha256", id: "" }, sha224: { sign: "ecdsa", hash: "sha224", id: "" }, sha384: { sign: "ecdsa", hash: "sha384", id: "" }, sha512: { sign: "ecdsa", hash: "sha512", id: "" }, "DSA-SHA": { sign: "dsa", hash: "sha1", id: "" }, "DSA-SHA1": { sign: "dsa", hash: "sha1", id: "" }, DSA: { sign: "dsa", hash: "sha1", id: "" }, "DSA-WITH-SHA224": { sign: "dsa", hash: "sha224", id: "" }, "DSA-SHA224": { sign: "dsa", hash: "sha224", id: "" }, "DSA-WITH-SHA256": { sign: "dsa", hash: "sha256", id: "" }, "DSA-SHA256": { sign: "dsa", hash: "sha256", id: "" }, "DSA-WITH-SHA384": { sign: "dsa", hash: "sha384", id: "" }, "DSA-SHA384": { sign: "dsa", hash: "sha384", id: "" }, "DSA-WITH-SHA512": { sign: "dsa", hash: "sha512", id: "" }, "DSA-SHA512": { sign: "dsa", hash: "sha512", id: "" }, "DSA-RIPEMD160": { sign: "dsa", hash: "rmd160", id: "" }, ripemd160WithRSA: { sign: "rsa", hash: "rmd160", id: "3021300906052b2403020105000414" }, "RSA-RIPEMD160": { sign: "rsa", hash: "rmd160", id: "3021300906052b2403020105000414" }, md5WithRSAEncryption: { sign: "rsa", hash: "md5", id: "3020300c06082a864886f70d020505000410" }, "RSA-MD5": { sign: "rsa", hash: "md5", id: "3020300c06082a864886f70d020505000410" } };
+  }), nN = p0((C, j) => {
+    j.exports = FX();
+  }), PX = p0((C, j) => {
     var q = Math.pow(2, 30) - 1;
     j.exports = function(S, U) {
       if (typeof S != "number")
@@ -49118,12 +49122,12 @@ Use Chrome, Firefox or Internet Explorer 11`);
       if (U < 0 || U > q || U !== U)
         throw new TypeError("Bad key length");
     };
-  }), PX = p0((C, j) => {
+  }), IX = p0((C, j) => {
     var q;
     global.process && global.process.browser ? q = "utf-8" : global.process && global.process.version ? (S = parseInt(process.version.split(".")[0].slice(1), 10), q = S >= 6 ? "utf-8" : "binary") : q = "utf-8";
     var S;
     j.exports = q;
-  }), IX = p0((C, j) => {
+  }), BX = p0((C, j) => {
     var q = h8().Buffer;
     j.exports = function(S, U, P) {
       if (q.isBuffer(S))
@@ -49134,8 +49138,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
         return q.from(S.buffer);
       throw new TypeError(P + " must be a string, a Buffer, a typed array or a DataView");
     };
-  }), BX = p0((C, j) => {
-    var q = RX(), S = WZ(), U = YZ(), P = h8().Buffer, $ = FX(), Y = PX(), X = IX(), K = P.alloc(128), Q = { md5: 16, sha1: 20, sha224: 28, sha256: 32, sha384: 48, sha512: 64, rmd160: 20, ripemd160: 20 };
+  }), TX = p0((C, j) => {
+    var q = VX(), S = WZ(), U = YZ(), P = h8().Buffer, $ = PX(), Y = IX(), X = BX(), K = P.alloc(128), Q = { md5: 16, sha1: 20, sha224: 28, sha256: 32, sha384: 48, sha512: 64, rmd160: 20, ripemd160: 20 };
     function J(G, H, L) {
       var R = Z(G), V = G === "sha512" || G === "sha384" ? 128 : 64;
       H.length > V ? H = R(H) : H.length < V && (H = P.concat([H, K], V));
@@ -49174,8 +49178,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return F;
     }
     j.exports = W;
-  }), sN = p0((C, j) => {
-    var q = h8().Buffer, S = FX(), U = PX(), P = BX(), $ = IX(), Y, X = global.crypto && global.crypto.subtle, K = { sha: "SHA-1", "sha-1": "SHA-1", sha1: "SHA-1", sha256: "SHA-256", "sha-256": "SHA-256", sha384: "SHA-384", "sha-384": "SHA-384", "sha-512": "SHA-512", sha512: "SHA-512" }, Q = [];
+  }), oN = p0((C, j) => {
+    var q = h8().Buffer, S = PX(), U = IX(), P = TX(), $ = BX(), Y, X = global.crypto && global.crypto.subtle, K = { sha: "SHA-1", "sha-1": "SHA-1", sha1: "SHA-1", sha256: "SHA-256", "sha-256": "SHA-256", sha384: "SHA-384", "sha-384": "SHA-384", "sha-512": "SHA-512", sha512: "SHA-512" }, Q = [];
     function J(L) {
       if (global.process && !global.process.browser || !X || !X.importKey || !X.deriveBits)
         return Promise.resolve(false);
@@ -49232,9 +49236,9 @@ Use Chrome, Firefox or Internet Explorer 11`);
         return N ? G(L, R, V, D, E) : P(L, R, V, D, F);
       }), T);
     };
-  }), TX = p0((C) => {
-    C.pbkdf2 = sN(), C.pbkdf2Sync = BX();
   }), MX = p0((C) => {
+    C.pbkdf2 = oN(), C.pbkdf2Sync = TX();
+  }), EX = p0((C) => {
     C.readUInt32BE = function(U, P) {
       var $ = U[0 + P] << 24 | U[1 + P] << 16 | U[2 + P] << 8 | U[3 + P];
       return $ >>> 0;
@@ -49382,8 +49386,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var U = new Array(this.blockSize);
       return this._flushBuffer(U, 0), this._unpad(U);
     };
-  }), EX = p0((C, j) => {
-    var q = R9(), S = j8(), U = MX(), P = VZ();
+  }), OX = p0((C, j) => {
+    var q = R9(), S = j8(), U = EX(), P = VZ();
     function $() {
       this.tmp = new Array(2), this.keys = null;
     }
@@ -49432,7 +49436,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       }
       U.rip(G, H, Z, W);
     };
-  }), nN = p0((C) => {
+  }), iN = p0((C) => {
     var j = R9(), q = j8(), S = {};
     function U($) {
       j.equal($.length, 8, "Invalid IV length"), this.iv = new Array(8);
@@ -49471,8 +49475,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
           Z[W] = $[Y + W];
       }
     };
-  }), oN = p0((C, j) => {
-    var q = R9(), S = j8(), U = VZ(), P = EX();
+  }), aN = p0((C, j) => {
+    var q = R9(), S = j8(), U = VZ(), P = OX();
     function $(X, K) {
       q.equal(K.length, 24, "Invalid key length");
       var Q = K.slice(0, 8), J = K.slice(8, 16), Z = K.slice(16, 24);
@@ -49489,10 +49493,10 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var Z = this._edeState;
       Z.ciphers[0]._update(X, K, Q, J), Z.ciphers[1]._update(Q, J, Q, J), Z.ciphers[2]._update(Q, J, Q, J);
     }, Y.prototype._pad = P.prototype._pad, Y.prototype._unpad = P.prototype._unpad;
-  }), iN = p0((C) => {
-    C.utils = MX(), C.Cipher = VZ(), C.DES = EX(), C.CBC = nN(), C.EDE = oN();
-  }), aN = p0((C, j) => {
-    var q = X7(), S = iN(), U = j8(), P = h8().Buffer, $ = { "des-ede3-cbc": S.CBC.instantiate(S.EDE), "des-ede3": S.EDE, "des-ede-cbc": S.CBC.instantiate(S.EDE), "des-ede": S.EDE, "des-cbc": S.CBC.instantiate(S.DES), "des-ecb": S.DES };
+  }), rN = p0((C) => {
+    C.utils = EX(), C.Cipher = VZ(), C.DES = OX(), C.CBC = iN(), C.EDE = aN();
+  }), tN = p0((C, j) => {
+    var q = X7(), S = rN(), U = j8(), P = h8().Buffer, $ = { "des-ede3-cbc": S.CBC.instantiate(S.EDE), "des-ede3": S.EDE, "des-ede-cbc": S.CBC.instantiate(S.EDE), "des-ede": S.EDE, "des-cbc": S.CBC.instantiate(S.DES), "des-ecb": S.DES };
     $.des = $["des-cbc"], $.des3 = $["des-ede3-cbc"], j.exports = Y, U(Y, q);
     function Y(X) {
       q.call(this);
@@ -49508,7 +49512,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }, Y.prototype._final = function() {
       return P.from(this._des.final());
     };
-  }), rN = p0((C) => {
+  }), eN = p0((C) => {
     C.encrypt = function(j, q) {
       return j._cipher.encryptBlock(q);
     }, C.decrypt = function(j, q) {
@@ -49520,7 +49524,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         P[$] = q[$] ^ S[$];
       return P;
     };
-  }), tN = p0((C) => {
+  }), $A = p0((C) => {
     var j = ZJ();
     C.encrypt = function(q, S) {
       var U = j(S, q._prev);
@@ -49531,7 +49535,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var P = q._cipher.decryptBlock(S);
       return j(P, U);
     };
-  }), eN = p0((C) => {
+  }), JA = p0((C) => {
     var j = h8().Buffer, q = ZJ();
     function S(U, P, $) {
       var Y = P.length, X = q(P, U._cache);
@@ -49547,7 +49551,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         }
       return Y;
     };
-  }), $A = p0((C) => {
+  }), QA = p0((C) => {
     var j = h8().Buffer;
     function q(S, U, P) {
       var $ = S._cipher.encryptBlock(S._prev), Y = $[0] ^ U;
@@ -49558,7 +49562,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         Y[X] = q(S, U[X], P);
       return Y;
     };
-  }), JA = p0((C) => {
+  }), ZA = p0((C) => {
     var j = h8().Buffer;
     function q(U, P, $) {
       for (var Y, X = -1, K = 8, Q = 0, J, Z;++X < K; )
@@ -49576,7 +49580,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         X[K] = q(U, P[K], $);
       return X;
     };
-  }), QA = p0((C) => {
+  }), KA = p0((C) => {
     var j = ZJ();
     function q(S) {
       return S._prev = S._cipher.encryptBlock(S._prev), S._prev;
@@ -49587,7 +49591,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var P = S._cache.slice(0, U.length);
       return S._cache = S._cache.slice(U.length), j(U, P);
     };
-  }), OX = p0((C, j) => {
+  }), NX = p0((C, j) => {
     function q(S) {
       for (var U = S.length, P;U--; )
         if (P = S.readUInt8(U), P === 255)
@@ -49598,8 +49602,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
         }
     }
     j.exports = q;
-  }), iL = p0((C) => {
-    var j = ZJ(), q = h8().Buffer, S = OX();
+  }), aL = p0((C) => {
+    var j = ZJ(), q = h8().Buffer, S = NX();
     function U($) {
       var Y = $._cipher.encryptBlockRaw($._prev);
       return S($._prev), Y;
@@ -49615,10 +49619,10 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var W = $._cache.slice(0, Y.length);
       return $._cache = $._cache.slice(Y.length), j(Y, W);
     };
-  }), NX = p0((C, j) => {
+  }), AX = p0((C, j) => {
     j.exports = { "aes-128-ecb": { cipher: "AES", key: 128, iv: 0, mode: "ECB", type: "block" }, "aes-192-ecb": { cipher: "AES", key: 192, iv: 0, mode: "ECB", type: "block" }, "aes-256-ecb": { cipher: "AES", key: 256, iv: 0, mode: "ECB", type: "block" }, "aes-128-cbc": { cipher: "AES", key: 128, iv: 16, mode: "CBC", type: "block" }, "aes-192-cbc": { cipher: "AES", key: 192, iv: 16, mode: "CBC", type: "block" }, "aes-256-cbc": { cipher: "AES", key: 256, iv: 16, mode: "CBC", type: "block" }, aes128: { cipher: "AES", key: 128, iv: 16, mode: "CBC", type: "block" }, aes192: { cipher: "AES", key: 192, iv: 16, mode: "CBC", type: "block" }, aes256: { cipher: "AES", key: 256, iv: 16, mode: "CBC", type: "block" }, "aes-128-cfb": { cipher: "AES", key: 128, iv: 16, mode: "CFB", type: "stream" }, "aes-192-cfb": { cipher: "AES", key: 192, iv: 16, mode: "CFB", type: "stream" }, "aes-256-cfb": { cipher: "AES", key: 256, iv: 16, mode: "CFB", type: "stream" }, "aes-128-cfb8": { cipher: "AES", key: 128, iv: 16, mode: "CFB8", type: "stream" }, "aes-192-cfb8": { cipher: "AES", key: 192, iv: 16, mode: "CFB8", type: "stream" }, "aes-256-cfb8": { cipher: "AES", key: 256, iv: 16, mode: "CFB8", type: "stream" }, "aes-128-cfb1": { cipher: "AES", key: 128, iv: 16, mode: "CFB1", type: "stream" }, "aes-192-cfb1": { cipher: "AES", key: 192, iv: 16, mode: "CFB1", type: "stream" }, "aes-256-cfb1": { cipher: "AES", key: 256, iv: 16, mode: "CFB1", type: "stream" }, "aes-128-ofb": { cipher: "AES", key: 128, iv: 16, mode: "OFB", type: "stream" }, "aes-192-ofb": { cipher: "AES", key: 192, iv: 16, mode: "OFB", type: "stream" }, "aes-256-ofb": { cipher: "AES", key: 256, iv: 16, mode: "OFB", type: "stream" }, "aes-128-ctr": { cipher: "AES", key: 128, iv: 16, mode: "CTR", type: "stream" }, "aes-192-ctr": { cipher: "AES", key: 192, iv: 16, mode: "CTR", type: "stream" }, "aes-256-ctr": { cipher: "AES", key: 256, iv: 16, mode: "CTR", type: "stream" }, "aes-128-gcm": { cipher: "AES", key: 128, iv: 12, mode: "GCM", type: "auth" }, "aes-192-gcm": { cipher: "AES", key: 192, iv: 12, mode: "GCM", type: "auth" }, "aes-256-gcm": { cipher: "AES", key: 256, iv: 12, mode: "GCM", type: "auth" } };
   }), zZ = p0((C, j) => {
-    var q = { ECB: rN(), CBC: tN(), CFB: eN(), CFB8: $A(), CFB1: JA(), OFB: QA(), CTR: iL(), GCM: iL() }, S = NX();
+    var q = { ECB: eN(), CBC: $A(), CFB: JA(), CFB8: QA(), CFB1: ZA(), OFB: KA(), CTR: aL(), GCM: aL() }, S = AX();
     for (U in S)
       S[U].module = q[S[U].mode];
     var U;
@@ -49680,7 +49684,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }, X.prototype.scrub = function() {
       U(this._keySchedule), U(this._invKeySchedule), U(this._key);
     }, j.exports.AES = X;
-  }), ZA = p0((C, j) => {
+  }), HA = p0((C, j) => {
     var q = h8().Buffer, S = q.alloc(16, 0);
     function U(Y) {
       return [Y.readUInt32BE(0), Y.readUInt32BE(4), Y.readUInt32BE(8), Y.readUInt32BE(12)];
@@ -49710,8 +49714,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }, $.prototype.final = function(Y, X) {
       return this.cache.length && this.ghash(q.concat([this.cache, S], 16)), this.ghash(P([0, Y, 0, X])), this.state;
     }, j.exports = $;
-  }), AX = p0((C, j) => {
-    var q = Y5(), S = h8().Buffer, U = X7(), P = j8(), $ = ZA(), Y = ZJ(), X = OX();
+  }), CX = p0((C, j) => {
+    var q = Y5(), S = h8().Buffer, U = X7(), P = j8(), $ = HA(), Y = ZJ(), X = NX();
     function K(Z, W) {
       var G = 0;
       Z.length !== W.length && G++;
@@ -49764,7 +49768,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         throw new Error("Attempting to set AAD in unsupported state");
       this._ghash.update(Z), this._alen += Z.length;
     }, j.exports = J;
-  }), CX = p0((C, j) => {
+  }), jX = p0((C, j) => {
     var q = Y5(), S = h8().Buffer, U = X7(), P = j8();
     function $(Y, X, K, Q) {
       U.call(this), this._cipher = new q.AES(X), this._prev = S.from(K), this._cache = S.allocUnsafe(0), this._secCache = S.allocUnsafe(0), this._decrypt = Q, this._mode = Y;
@@ -49795,8 +49799,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return Z.fill(0), { key: Q, iv: J };
     }
     j.exports = U;
-  }), KA = p0((C) => {
-    var j = zZ(), q = AX(), S = h8().Buffer, U = CX(), P = X7(), $ = Y5(), Y = U5(), X = j8();
+  }), WA = p0((C) => {
+    var j = zZ(), q = CX(), S = h8().Buffer, U = jX(), P = X7(), $ = Y5(), Y = U5(), X = j8();
     function K(G, H, L) {
       P.call(this), this._cache = new J, this._cipher = new $.AES(H), this._prev = S.from(L), this._mode = G, this._autopadding = true;
     }
@@ -49850,8 +49854,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return Z(G, R.key, R.iv);
     }
     C.createCipheriv = Z, C.createCipher = W;
-  }), HA = p0((C) => {
-    var j = AX(), q = h8().Buffer, S = zZ(), U = CX(), P = X7(), $ = Y5(), Y = U5(), X = j8();
+  }), YA = p0((C) => {
+    var j = CX(), q = h8().Buffer, S = zZ(), U = jX(), P = X7(), $ = Y5(), Y = U5(), X = j8();
     function K(G, H, L) {
       P.call(this), this._cache = new Q, this._last = undefined, this._cipher = new $.AES(H), this._prev = q.from(L), this._mode = G, this._autopadding = true;
     }
@@ -49915,15 +49919,15 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }
     C.createDecipher = W, C.createDecipheriv = Z;
   }), FZ = p0((C) => {
-    var j = KA(), q = HA(), S = NX();
+    var j = WA(), q = YA(), S = AX();
     function U() {
       return Object.keys(S);
     }
     C.createCipher = C.Cipher = j.createCipher, C.createCipheriv = C.Cipheriv = j.createCipheriv, C.createDecipher = C.Decipher = q.createDecipher, C.createDecipheriv = C.Decipheriv = q.createDecipheriv, C.listCiphers = C.getCiphers = U;
-  }), WA = p0((C) => {
+  }), UA = p0((C) => {
     C["des-ecb"] = { key: 8, iv: 0 }, C["des-cbc"] = C.des = { key: 8, iv: 8 }, C["des-ede3-cbc"] = C.des3 = { key: 24, iv: 8 }, C["des-ede3"] = { key: 24, iv: 0 }, C["des-ede-cbc"] = { key: 16, iv: 8 }, C["des-ede"] = { key: 16, iv: 0 };
-  }), YA = p0((C) => {
-    var j = aN(), q = FZ(), S = zZ(), U = WA(), P = U5();
+  }), GA = p0((C) => {
+    var j = tN(), q = FZ(), S = zZ(), U = UA(), P = U5();
     function $(J, Z) {
       J = J.toLowerCase();
       var W, G;
@@ -49967,7 +49971,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }
     C.createCipher = C.Cipher = $, C.createCipheriv = C.Cipheriv = X, C.createDecipher = C.Decipher = Y, C.createDecipheriv = C.Decipheriv = K, C.listCiphers = C.getCiphers = Q;
   }), _7 = p0(() => {
-  }), jX = p0((C, j) => {
+  }), SX = p0((C, j) => {
     (function(q, S) {
       function U(z, I) {
         if (!z)
@@ -50979,7 +50983,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         return I._forceRed(this);
       };
     })(typeof j > "u" || j, C);
-  }), UA = p0((C, j) => {
+  }), LA = p0((C, j) => {
     (function(q, S) {
       function U(z, I) {
         if (!z)
@@ -51991,7 +51995,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         return I._forceRed(this);
       };
     })(typeof j > "u" || j, C);
-  }), GA = p0(() => {
+  }), XA = p0(() => {
   }), PZ = p0((C, j) => {
     var q;
     j.exports = function(P) {
@@ -52020,7 +52024,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       });
     else
       try {
-        if (U = GA(), typeof U.randomBytes != "function")
+        if (U = XA(), typeof U.randomBytes != "function")
           throw new Error("Not supported");
         S.prototype._rand = function(P) {
           return U.randomBytes(P);
@@ -52028,8 +52032,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
       } catch {
       }
     var U;
-  }), SX = p0((C, j) => {
-    var q = UA(), S = PZ();
+  }), qX = p0((C, j) => {
+    var q = LA(), S = PZ();
     function U(P) {
       this.rand = P || new S.Rand;
     }
@@ -52088,10 +52092,10 @@ Use Chrome, Firefox or Internet Explorer 11`);
       }
       return false;
     };
-  }), qX = p0((C, j) => {
+  }), vX = p0((C, j) => {
     var q = L$();
     j.exports = E, E.simpleSieve = F, E.fermatTest = T;
-    var S = jX(), U = new S(24), P = SX(), $ = new P, Y = new S(1), X = new S(2), K = new S(5), Q = new S(16), J = new S(8), Z = new S(10), W = new S(3), G = new S(7), H = new S(11), L = new S(4), R = new S(12), V = null;
+    var S = SX(), U = new S(24), P = qX(), $ = new P, Y = new S(1), X = new S(2), K = new S(5), Q = new S(16), J = new S(8), Z = new S(10), W = new S(3), G = new S(7), H = new S(11), L = new S(4), R = new S(12), V = null;
     function D() {
       if (V !== null)
         return V;
@@ -52132,10 +52136,10 @@ Use Chrome, Firefox or Internet Explorer 11`);
           return h;
       }
     }
-  }), LA = p0((C, j) => {
+  }), DA = p0((C, j) => {
     j.exports = { modp1: { gen: "02", prime: "ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a63a3620ffffffffffffffff" }, modp2: { gen: "02", prime: "ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece65381ffffffffffffffff" }, modp5: { gen: "02", prime: "ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca237327ffffffffffffffff" }, modp14: { gen: "02", prime: "ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aacaa68ffffffffffffffff" }, modp15: { gen: "02", prime: "ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a93ad2caffffffffffffffff" }, modp16: { gen: "02", prime: "ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c934063199ffffffffffffffff" }, modp17: { gen: "02", prime: "ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c93402849236c3fab4d27c7026c1d4dcb2602646dec9751e763dba37bdf8ff9406ad9e530ee5db382f413001aeb06a53ed9027d831179727b0865a8918da3edbebcf9b14ed44ce6cbaced4bb1bdb7f1447e6cc254b332051512bd7af426fb8f401378cd2bf5983ca01c64b92ecf032ea15d1721d03f482d7ce6e74fef6d55e702f46980c82b5a84031900b1c9e59e7c97fbec7e8f323a97a7e36cc88be0f1d45b7ff585ac54bd407b22b4154aacc8f6d7ebf48e1d814cc5ed20f8037e0a79715eef29be32806a1d58bb7c5da76f550aa3d8a1fbff0eb19ccb1a313d55cda56c9ec2ef29632387fe8d76e3c0468043e8f663f4860ee12bf2d5b0b7474d6e694f91e6dcc4024ffffffffffffffff" }, modp18: { gen: "02", prime: "ffffffffffffffffc90fdaa22168c234c4c6628b80dc1cd129024e088a67cc74020bbea63b139b22514a08798e3404ddef9519b3cd3a431b302b0a6df25f14374fe1356d6d51c245e485b576625e7ec6f44c42e9a637ed6b0bff5cb6f406b7edee386bfb5a899fa5ae9f24117c4b1fe649286651ece45b3dc2007cb8a163bf0598da48361c55d39a69163fa8fd24cf5f83655d23dca3ad961c62f356208552bb9ed529077096966d670c354e4abc9804f1746c08ca18217c32905e462e36ce3be39e772c180e86039b2783a2ec07a28fb5c55df06f4c52c9de2bcbf6955817183995497cea956ae515d2261898fa051015728e5a8aaac42dad33170d04507a33a85521abdf1cba64ecfb850458dbef0a8aea71575d060c7db3970f85a6e1e4c7abf5ae8cdb0933d71e8c94e04a25619dcee3d2261ad2ee6bf12ffa06d98a0864d87602733ec86a64521f2b18177b200cbbe117577a615d6c770988c0bad946e208e24fa074e5ab3143db5bfce0fd108e4b82d120a92108011a723c12a787e6d788719a10bdba5b2699c327186af4e23c1a946834b6150bda2583e9ca2ad44ce8dbbbc2db04de8ef92e8efc141fbecaa6287c59474e6bc05d99b2964fa090c3a2233ba186515be7ed1f612970cee2d7afb81bdd762170481cd0069127d5b05aa993b4ea988d8fddc186ffb7dc90a6c08f4df435c93402849236c3fab4d27c7026c1d4dcb2602646dec9751e763dba37bdf8ff9406ad9e530ee5db382f413001aeb06a53ed9027d831179727b0865a8918da3edbebcf9b14ed44ce6cbaced4bb1bdb7f1447e6cc254b332051512bd7af426fb8f401378cd2bf5983ca01c64b92ecf032ea15d1721d03f482d7ce6e74fef6d55e702f46980c82b5a84031900b1c9e59e7c97fbec7e8f323a97a7e36cc88be0f1d45b7ff585ac54bd407b22b4154aacc8f6d7ebf48e1d814cc5ed20f8037e0a79715eef29be32806a1d58bb7c5da76f550aa3d8a1fbff0eb19ccb1a313d55cda56c9ec2ef29632387fe8d76e3c0468043e8f663f4860ee12bf2d5b0b7474d6e694f91e6dbe115974a3926f12fee5e438777cb6a932df8cd8bec4d073b931ba3bc832b68d9dd300741fa7bf8afc47ed2576f6936ba424663aab639c5ae4f5683423b4742bf1c978238f16cbe39d652de3fdb8befc848ad922222e04a4037c0713eb57a81a23f0c73473fc646cea306b4bcbc8862f8385ddfa9d4b7fa2c087e879683303ed5bdd3a062b3cf5b3a278a66d2a13f83f44f82ddf310ee074ab6a364597e899a0255dc164f31cc50846851df9ab48195ded7ea1b1d510bd7ee74d73faf36bc31ecfa268359046f4eb879f924009438b481c6cd7889a002ed5ee382bc9190da6fc026e479558e4475677e9aa9e3050e2765694dfc81f56e880b96e7160c980dd98edd3dfffffffffffffffff" } };
-  }), XA = p0((C, j) => {
-    var q = jX(), S = SX(), U = new S, P = new q(24), $ = new q(11), Y = new q(10), X = new q(3), K = new q(7), Q = qX(), J = L$();
+  }), RA = p0((C, j) => {
+    var q = SX(), S = qX(), U = new S, P = new q(24), $ = new q(11), Y = new q(10), X = new q(3), K = new q(7), Q = vX(), J = L$();
     j.exports = L;
     function Z(V, D) {
       return D = D || "utf8", Buffer.isBuffer(V) || (V = new Buffer(V, D)), this._pub = new q(V), this;
@@ -52195,8 +52199,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var F = new Buffer(V.toArray());
       return D ? F.toString(D) : F;
     }
-  }), DA = p0((C) => {
-    var j = qX(), q = LA(), S = XA();
+  }), VA = p0((C) => {
+    var j = vX(), q = DA(), S = RA();
     function U(Y) {
       var X = new Buffer(q[Y].prime, "hex"), K = new Buffer(q[Y].gen, "hex");
       return new S(X, K);
@@ -52206,9 +52210,9 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return Buffer.isBuffer(X) || P[X] === undefined ? $(Y, "binary", X, K) : (X = X || "binary", Q = Q || "binary", K = K || new Buffer([2]), Buffer.isBuffer(K) || (K = new Buffer(K, Q)), typeof Y == "number" ? new S(j(Y, K), K, true) : (Buffer.isBuffer(Y) || (Y = new Buffer(Y, X)), new S(Y, K, true)));
     }
     C.DiffieHellmanGroup = C.createDiffieHellmanGroup = C.getDiffieHellman = U, C.createDiffieHellman = C.DiffieHellman = $;
-  }), vX = p0((C, j) => {
+  }), wX = p0((C, j) => {
     j.exports = m7().EventEmitter;
-  }), RA = p0((C, j) => {
+  }), zA = p0((C, j) => {
     function q(G, H) {
       var L = Object.keys(G);
       if (Object.getOwnPropertySymbols) {
@@ -52310,7 +52314,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         return J(this, S({}, L, { depth: 0, customInspect: false }));
       } }]), G;
     }();
-  }), wX = p0((C, j) => {
+  }), kX = p0((C, j) => {
     function q(X, K) {
       var Q = this, J = this._readableState && this._readableState.destroyed, Z = this._writableState && this._writableState.destroyed;
       return J || Z ? (K ? K(X) : X && (this._writableState ? this._writableState.errorEmitted || (this._writableState.errorEmitted = true, process.nextTick($, this, X)) : process.nextTick($, this, X)), this) : (this._readableState && (this._readableState.destroyed = true), this._writableState && (this._writableState.destroyed = true), this._destroy(X || null, function(W) {
@@ -52391,7 +52395,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }), U("ERR_MULTIPLE_CALLBACK", "Callback called multiple times"), U("ERR_STREAM_CANNOT_PIPE", "Cannot pipe, not readable"), U("ERR_STREAM_WRITE_AFTER_END", "write after end"), U("ERR_STREAM_NULL_VALUES", "May not write null values to stream", TypeError), U("ERR_UNKNOWN_ENCODING", function(K) {
       return "Unknown encoding: " + K;
     }, TypeError), U("ERR_STREAM_UNSHIFT_AFTER_END_EVENT", "stream.unshift() after end event"), j.exports.codes = S;
-  }), kX = p0((C, j) => {
+  }), hX = p0((C, j) => {
     var q = V$().codes.ERR_INVALID_OPT_VALUE;
     function S(P, $, Y) {
       return P.highWaterMark != null ? P.highWaterMark : $ ? P[Y] : null;
@@ -52408,7 +52412,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return P.objectMode ? 16 : 16384;
     }
     j.exports = { getHighWaterMark: U };
-  }), hX = p0((C, j) => {
+  }), fX = p0((C, j) => {
     j.exports = x;
     function q(s) {
       var l = this;
@@ -52418,7 +52422,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }
     var S;
     x.WritableState = w;
-    var U = { deprecate: eL() }, P = vX(), $ = p6().Buffer, Y = global.Uint8Array || function() {
+    var U = { deprecate: $X() }, P = wX(), $ = p6().Buffer, Y = global.Uint8Array || function() {
     };
     function X(s) {
       return $.from(s);
@@ -52426,7 +52430,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     function K(s) {
       return $.isBuffer(s) || s instanceof Y;
     }
-    var Q = wX(), J = kX(), Z = J.getHighWaterMark, W = V$().codes, G = W.ERR_INVALID_ARG_TYPE, H = W.ERR_METHOD_NOT_IMPLEMENTED, L = W.ERR_MULTIPLE_CALLBACK, R = W.ERR_STREAM_CANNOT_PIPE, V = W.ERR_STREAM_DESTROYED, D = W.ERR_STREAM_NULL_VALUES, F = W.ERR_STREAM_WRITE_AFTER_END, T = W.ERR_UNKNOWN_ENCODING, E = Q.errorOrDestroy;
+    var Q = kX(), J = hX(), Z = J.getHighWaterMark, W = V$().codes, G = W.ERR_INVALID_ARG_TYPE, H = W.ERR_METHOD_NOT_IMPLEMENTED, L = W.ERR_MULTIPLE_CALLBACK, R = W.ERR_STREAM_CANNOT_PIPE, V = W.ERR_STREAM_DESTROYED, D = W.ERR_STREAM_NULL_VALUES, F = W.ERR_STREAM_WRITE_AFTER_END, T = W.ERR_UNKNOWN_ENCODING, E = Q.errorOrDestroy;
     j8()(x, P);
     function N() {
     }
@@ -52607,7 +52611,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return Z;
     };
     j.exports = X;
-    var S = fX(), U = hX();
+    var S = xX(), U = fX();
     j8()(X, S);
     for (P = q(U.prototype), Y = 0;Y < P.length; Y++)
       $ = P[Y], X.prototype[$] || (X.prototype[$] = U.prototype[$]);
@@ -52679,7 +52683,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       };
     }
     j.exports = $;
-  }), VA = p0((C, j) => {
+  }), FA = p0((C, j) => {
     var q;
     function S(D, F, T) {
       return F in D ? Object.defineProperty(D, F, { value: T, enumerable: true, configurable: true, writable: true }) : D[F] = T, D;
@@ -52763,17 +52767,17 @@ Use Chrome, Firefox or Internet Explorer 11`);
       }), D.on("readable", G.bind(null, T)), T;
     };
     j.exports = V;
-  }), zA = p0((C, j) => {
+  }), PA = p0((C, j) => {
     j.exports = function() {
       throw new Error("Readable.from is not available in the browser");
     };
-  }), fX = p0((C, j) => {
+  }), xX = p0((C, j) => {
     j.exports = z;
     var q;
     z.ReadableState = b;
     var S = m7().EventEmitter, U = function(r, d) {
       return r.listeners(d).length;
-    }, P = vX(), $ = p6().Buffer, Y = global.Uint8Array || function() {
+    }, P = wX(), $ = p6().Buffer, Y = global.Uint8Array || function() {
     };
     function X(r) {
       return $.from(r);
@@ -52784,7 +52788,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     var Q = K5(), J;
     Q && Q.debuglog ? J = Q.debuglog("stream") : J = function() {
     };
-    var Z = RA(), W = wX(), G = kX(), H = G.getHighWaterMark, L = V$().codes, R = L.ERR_INVALID_ARG_TYPE, V = L.ERR_STREAM_PUSH_AFTER_EOF, D = L.ERR_METHOD_NOT_IMPLEMENTED, F = L.ERR_STREAM_UNSHIFT_AFTER_END_EVENT, T, E, N;
+    var Z = zA(), W = kX(), G = hX(), H = G.getHighWaterMark, L = V$().codes, R = L.ERR_INVALID_ARG_TYPE, V = L.ERR_STREAM_PUSH_AFTER_EOF, D = L.ERR_METHOD_NOT_IMPLEMENTED, F = L.ERR_STREAM_UNSHIFT_AFTER_END_EVENT, T, E, N;
     j8()(z, P);
     var w = W.errorOrDestroy, h = ["error", "close", "destroy", "pause", "resume"];
     function x(r, d, a) {
@@ -53036,7 +53040,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         J("wrapped _read", D0), U0 && (U0 = false, r.resume());
       }, this;
     }, typeof Symbol == "function" && (z.prototype[Symbol.asyncIterator] = function() {
-      return E === undefined && (E = VA()), E(this);
+      return E === undefined && (E = FA()), E(this);
     }), Object.defineProperty(z.prototype, "readableHighWaterMark", { enumerable: false, get: function() {
       return this._readableState.highWaterMark;
     } }), Object.defineProperty(z.prototype, "readableBuffer", { enumerable: false, get: function() {
@@ -53065,7 +53069,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       }
     }
     typeof Symbol == "function" && (z.from = function(r, d) {
-      return N === undefined && (N = zA()), N(z, r, d);
+      return N === undefined && (N = PA()), N(z, r, d);
     });
     function L0(r, d) {
       for (var a = 0, U0 = r.length;a < U0; a++)
@@ -53073,7 +53077,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
           return a;
       return -1;
     }
-  }), xX = p0((C, j) => {
+  }), gX = p0((C, j) => {
     j.exports = K;
     var q = V$().codes, S = q.ERR_METHOD_NOT_IMPLEMENTED, U = q.ERR_MULTIPLE_CALLBACK, P = q.ERR_TRANSFORM_ALREADY_TRANSFORMING, $ = q.ERR_TRANSFORM_WITH_LENGTH_0, Y = U$();
     j8()(K, Y);
@@ -53125,9 +53129,9 @@ Use Chrome, Firefox or Internet Explorer 11`);
         throw new P;
       return Z.push(null);
     }
-  }), FA = p0((C, j) => {
+  }), IA = p0((C, j) => {
     j.exports = S;
-    var q = xX();
+    var q = gX();
     j8()(S, q);
     function S(U) {
       if (!(this instanceof S))
@@ -53137,7 +53141,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     S.prototype._transform = function(U, P, $) {
       $(null, U);
     };
-  }), PA = p0((C, j) => {
+  }), BA = p0((C, j) => {
     var q;
     function S(G) {
       var H = false;
@@ -53198,8 +53202,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return H.reduce(J);
     }
     j.exports = W;
-  }), IA = p0((C, j) => {
-    C = j.exports = fX(), C.Stream = C, C.Readable = C, C.Writable = hX(), C.Duplex = U$(), C.Transform = xX(), C.PassThrough = FA(), C.finished = IZ(), C.pipeline = PA();
+  }), TA = p0((C, j) => {
+    C = j.exports = xX(), C.Stream = C, C.Readable = C, C.Writable = fX(), C.Duplex = U$(), C.Transform = gX(), C.PassThrough = IA(), C.finished = IZ(), C.pipeline = BA();
   }), BZ = p0((C, j) => {
     (function(q, S) {
       function U(M, O) {
@@ -54264,7 +54268,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return V.iadd(D).imul(K.unblinder).umod(X.modulus).toArrayLike(Buffer, "be", Q);
     }
     $.getr = P, j.exports = $;
-  }), BA = p0((C, j) => {
+  }), MA = p0((C, j) => {
     j.exports = { name: "elliptic", version: "6.5.4", description: "EC cryptography", main: "lib/elliptic.js", files: ["lib"], scripts: { lint: "eslint lib test", "lint:fix": "npm run lint -- --fix", unit: "istanbul test _mocha --reporter=spec test/index.js", test: "npm run lint && npm run unit", version: "grunt dist && git add dist/" }, repository: { type: "git", url: "git@github.com:indutny/elliptic" }, keywords: ["EC", "Elliptic", "curve", "Cryptography"], author: "Fedor Indutny <fedor@indutny.com>", license: "MIT", bugs: { url: "https://github.com/indutny/elliptic/issues" }, homepage: "https://github.com/indutny/elliptic", devDependencies: { brfs: "^2.0.2", coveralls: "^3.1.0", eslint: "^7.6.0", grunt: "^1.2.1", "grunt-browserify": "^5.3.0", "grunt-cli": "^1.3.2", "grunt-contrib-connect": "^3.0.0", "grunt-contrib-copy": "^1.0.0", "grunt-contrib-uglify": "^5.0.0", "grunt-mocha-istanbul": "^5.0.2", "grunt-saucelabs": "^9.0.1", istanbul: "^0.4.5", mocha: "^8.0.1" }, dependencies: { "bn.js": "^4.11.9", brorand: "^1.1.0", "hash.js": "^1.0.0", "hmac-drbg": "^1.0.1", inherits: "^2.0.4", "minimalistic-assert": "^1.0.1", "minimalistic-crypto-utils": "^1.0.1" } };
   }), t9 = p0((C, j) => {
     (function(q, S) {
@@ -55278,7 +55282,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         return I._forceRed(this);
       };
     })(typeof j > "u" || j, C);
-  }), gX = p0((C) => {
+  }), yX = p0((C) => {
     var j = C;
     function q(P, $) {
       if (Array.isArray(P))
@@ -55316,7 +55320,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return $ === "hex" ? U(P) : P;
     };
   }), V9 = p0((C) => {
-    var j = C, q = t9(), S = R9(), U = gX();
+    var j = C, q = t9(), S = R9(), U = yX();
     j.assert = S, j.toArray = U.toArray, j.zero2 = U.zero2, j.toHex = U.toHex, j.encode = U.encode;
     function P(Q, J, Z) {
       var W = new Array(Math.max(Q.bitLength(), Z) + 1);
@@ -55495,7 +55499,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
         Q = Q.dbl();
       return Q;
     };
-  }), TA = p0((C, j) => {
+  }), EA = p0((C, j) => {
     var q = V9(), S = t9(), U = j8(), P = G5(), $ = q.assert;
     function Y(Q) {
       P.call(this, "short", Q), this.a = new S(Q.a, 16).toRed(this.red), this.b = new S(Q.b, 16).toRed(this.red), this.tinv = this.two.redInvm(), this.zeroA = this.a.fromRed().cmpn(0) === 0, this.threeA = this.a.fromRed().sub(this.p).cmpn(-3) === 0, this.endo = this._getEndomorphism(Q), this._endoWnafT1 = new Array(4), this._endoWnafT2 = new Array(4);
@@ -55791,7 +55795,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }, K.prototype.isInfinity = function() {
       return this.z.cmpn(0) === 0;
     };
-  }), MA = p0((C, j) => {
+  }), OA = p0((C, j) => {
     var q = t9(), S = j8(), U = G5(), P = V9();
     function $(X) {
       U.call(this, "mont", X), this.a = new q(X.a, 16).toRed(this.red), this.b = new q(X.b, 16).toRed(this.red), this.i4 = new q(4).toRed(this.red).redInvm(), this.two = new q(2).toRed(this.red), this.a24 = this.i4.redMul(this.a.redAdd(this.two));
@@ -55843,7 +55847,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }, Y.prototype.getX = function() {
       return this.normalize(), this.x.fromRed();
     };
-  }), EA = p0((C, j) => {
+  }), NA = p0((C, j) => {
     var q = V9(), S = t9(), U = j8(), P = G5(), $ = q.assert;
     function Y(K) {
       this.twisted = (K.a | 0) !== 1, this.mOneA = this.twisted && (K.a | 0) === -1, this.extended = this.mOneA, P.call(this, "edwards", K), this.a = new S(K.a, 16).umod(this.red.m), this.a = this.a.toRed(this.red), this.c = new S(K.c, 16).toRed(this.red), this.c2 = this.c.redSqr(), this.d = new S(K.d, 16).toRed(this.red), this.dd = this.d.redAdd(this.d), $(!this.twisted || this.c.fromRed().cmpn(1) === 0), this.oneC = (K.c | 0) === 1;
@@ -55947,9 +55951,9 @@ Use Chrome, Firefox or Internet Explorer 11`);
           return true;
       }
     }, X.prototype.toP = X.prototype.normalize, X.prototype.mixedAdd = X.prototype.add;
-  }), yX = p0((C) => {
+  }), bX = p0((C) => {
     var j = C;
-    j.base = G5(), j.short = TA(), j.mont = MA(), j.edwards = EA();
+    j.base = G5(), j.short = EA(), j.mont = OA(), j.edwards = NA();
   }), y9 = p0((C) => {
     var j = R9(), q = j8();
     C.inherits = q;
@@ -56135,7 +56139,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
           Y[X++] = 0;
       return Y;
     };
-  }), bX = p0((C) => {
+  }), mX = p0((C) => {
     var j = y9(), q = j.rotr32;
     function S(J, Z, W, G) {
       if (J === 0)
@@ -56174,8 +56178,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return q(J, 17) ^ q(J, 19) ^ J >>> 10;
     }
     C.g1_256 = Q;
-  }), OA = p0((C, j) => {
-    var q = y9(), S = KJ(), U = bX(), P = q.rotl32, $ = q.sum32, Y = q.sum32_5, X = U.ft_1, K = S.BlockHash, Q = [1518500249, 1859775393, 2400959708, 3395469782];
+  }), AA = p0((C, j) => {
+    var q = y9(), S = KJ(), U = mX(), P = q.rotl32, $ = q.sum32, Y = q.sum32_5, X = U.ft_1, K = S.BlockHash, Q = [1518500249, 1859775393, 2400959708, 3395469782];
     function J() {
       if (!(this instanceof J))
         return new J;
@@ -56195,8 +56199,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }, J.prototype._digest = function(Z) {
       return Z === "hex" ? q.toHex32(this.h, "big") : q.split32(this.h, "big");
     };
-  }), mX = p0((C, j) => {
-    var q = y9(), S = KJ(), U = bX(), P = R9(), $ = q.sum32, Y = q.sum32_4, X = q.sum32_5, K = U.ch32, Q = U.maj32, J = U.s0_256, Z = U.s1_256, W = U.g0_256, G = U.g1_256, H = S.BlockHash, L = [1116352408, 1899447441, 3049323471, 3921009573, 961987163, 1508970993, 2453635748, 2870763221, 3624381080, 310598401, 607225278, 1426881987, 1925078388, 2162078206, 2614888103, 3248222580, 3835390401, 4022224774, 264347078, 604807628, 770255983, 1249150122, 1555081692, 1996064986, 2554220882, 2821834349, 2952996808, 3210313671, 3336571891, 3584528711, 113926993, 338241895, 666307205, 773529912, 1294757372, 1396182291, 1695183700, 1986661051, 2177026350, 2456956037, 2730485921, 2820302411, 3259730800, 3345764771, 3516065817, 3600352804, 4094571909, 275423344, 430227734, 506948616, 659060556, 883997877, 958139571, 1322822218, 1537002063, 1747873779, 1955562222, 2024104815, 2227730452, 2361852424, 2428436474, 2756734187, 3204031479, 3329325298];
+  }), pX = p0((C, j) => {
+    var q = y9(), S = KJ(), U = mX(), P = R9(), $ = q.sum32, Y = q.sum32_4, X = q.sum32_5, K = U.ch32, Q = U.maj32, J = U.s0_256, Z = U.s1_256, W = U.g0_256, G = U.g1_256, H = S.BlockHash, L = [1116352408, 1899447441, 3049323471, 3921009573, 961987163, 1508970993, 2453635748, 2870763221, 3624381080, 310598401, 607225278, 1426881987, 1925078388, 2162078206, 2614888103, 3248222580, 3835390401, 4022224774, 264347078, 604807628, 770255983, 1249150122, 1555081692, 1996064986, 2554220882, 2821834349, 2952996808, 3210313671, 3336571891, 3584528711, 113926993, 338241895, 666307205, 773529912, 1294757372, 1396182291, 1695183700, 1986661051, 2177026350, 2456956037, 2730485921, 2820302411, 3259730800, 3345764771, 3516065817, 3600352804, 4094571909, 275423344, 430227734, 506948616, 659060556, 883997877, 958139571, 1322822218, 1537002063, 1747873779, 1955562222, 2024104815, 2227730452, 2361852424, 2428436474, 2756734187, 3204031479, 3329325298];
     function R() {
       if (!(this instanceof R))
         return new R;
@@ -56216,8 +56220,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }, R.prototype._digest = function(V) {
       return V === "hex" ? q.toHex32(this.h, "big") : q.split32(this.h, "big");
     };
-  }), NA = p0((C, j) => {
-    var q = y9(), S = mX();
+  }), CA = p0((C, j) => {
+    var q = y9(), S = pX();
     function U() {
       if (!(this instanceof U))
         return new U;
@@ -56226,7 +56230,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     q.inherits(U, S), j.exports = U, U.blockSize = 512, U.outSize = 224, U.hmacStrength = 192, U.padLength = 64, U.prototype._digest = function(P) {
       return P === "hex" ? q.toHex32(this.h.slice(0, 7), "big") : q.split32(this.h.slice(0, 7), "big");
     };
-  }), pX = p0((C, j) => {
+  }), dX = p0((C, j) => {
     var q = y9(), S = KJ(), U = R9(), P = q.rotr64_hi, $ = q.rotr64_lo, Y = q.shr64_hi, X = q.shr64_lo, K = q.sum64, Q = q.sum64_hi, J = q.sum64_lo, Z = q.sum64_4_hi, W = q.sum64_4_lo, G = q.sum64_5_hi, H = q.sum64_5_lo, L = S.BlockHash, R = [1116352408, 3609767458, 1899447441, 602891725, 3049323471, 3964484399, 3921009573, 2173295548, 961987163, 4081628472, 1508970993, 3053834265, 2453635748, 2937671579, 2870763221, 3664609560, 3624381080, 2734883394, 310598401, 1164996542, 607225278, 1323610764, 1426881987, 3590304994, 1925078388, 4068182383, 2162078206, 991336113, 2614888103, 633803317, 3248222580, 3479774868, 3835390401, 2666613458, 4022224774, 944711139, 264347078, 2341262773, 604807628, 2007800933, 770255983, 1495990901, 1249150122, 1856431235, 1555081692, 3175218132, 1996064986, 2198950837, 2554220882, 3999719339, 2821834349, 766784016, 2952996808, 2566594879, 3210313671, 3203337956, 3336571891, 1034457026, 3584528711, 2466948901, 113926993, 3758326383, 338241895, 168717936, 666307205, 1188179964, 773529912, 1546045734, 1294757372, 1522805485, 1396182291, 2643833823, 1695183700, 2343527390, 1986661051, 1014477480, 2177026350, 1206759142, 2456956037, 344077627, 2730485921, 1290863460, 2820302411, 3158454273, 3259730800, 3505952657, 3345764771, 106217008, 3516065817, 3606008344, 3600352804, 1432725776, 4094571909, 1467031594, 275423344, 851169720, 430227734, 3100823752, 506948616, 1363258195, 659060556, 3750685593, 883997877, 3785050280, 958139571, 3318307427, 1322822218, 3812723403, 1537002063, 2003034995, 1747873779, 3602036899, 1955562222, 1575990012, 2024104815, 1125592928, 2227730452, 2716904306, 2361852424, 442776044, 2428436474, 593698344, 2756734187, 3733110249, 3204031479, 2999351573, 3329325298, 3815920427, 3391569614, 3928383900, 3515267271, 566280711, 3940187606, 3454069534, 4118630271, 4000239992, 116418474, 1914138554, 174292421, 2731055270, 289380356, 3203993006, 460393269, 320620315, 685471733, 587496836, 852142971, 1086792851, 1017036298, 365543100, 1126000580, 2618297676, 1288033470, 3409855158, 1501505948, 4234509866, 1607167915, 987167468, 1816402316, 1246189591];
     function V() {
       if (!(this instanceof V))
@@ -56302,8 +56306,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var v = $(M, O, 19), g = $(O, M, 29), k = X(M, O, 6), B = v ^ g ^ k;
       return B < 0 && (B += 4294967296), B;
     }
-  }), AA = p0((C, j) => {
-    var q = y9(), S = pX();
+  }), jA = p0((C, j) => {
+    var q = y9(), S = dX();
     function U() {
       if (!(this instanceof U))
         return new U;
@@ -56312,9 +56316,9 @@ Use Chrome, Firefox or Internet Explorer 11`);
     q.inherits(U, S), j.exports = U, U.blockSize = 1024, U.outSize = 384, U.hmacStrength = 192, U.padLength = 128, U.prototype._digest = function(P) {
       return P === "hex" ? q.toHex32(this.h.slice(0, 12), "big") : q.split32(this.h.slice(0, 12), "big");
     };
-  }), CA = p0((C) => {
-    C.sha1 = OA(), C.sha224 = NA(), C.sha256 = mX(), C.sha384 = AA(), C.sha512 = pX();
-  }), jA = p0((C) => {
+  }), SA = p0((C) => {
+    C.sha1 = AA(), C.sha224 = CA(), C.sha256 = pX(), C.sha384 = jA(), C.sha512 = dX();
+  }), qA = p0((C) => {
     var j = y9(), q = KJ(), S = j.rotl32, U = j.sum32, P = j.sum32_3, $ = j.sum32_4, Y = q.BlockHash;
     function X() {
       if (!(this instanceof X))
@@ -56340,7 +56344,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return L <= 15 ? 1352829926 : L <= 31 ? 1548603684 : L <= 47 ? 1836072691 : L <= 63 ? 2053994217 : 0;
     }
     var Z = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 7, 4, 13, 1, 10, 6, 15, 3, 12, 0, 9, 5, 2, 14, 11, 8, 3, 10, 14, 4, 9, 15, 8, 1, 2, 7, 0, 6, 13, 11, 5, 12, 1, 9, 11, 10, 0, 8, 12, 4, 13, 3, 7, 15, 14, 5, 6, 2, 4, 0, 5, 9, 7, 12, 2, 10, 14, 1, 3, 8, 11, 6, 15, 13], W = [5, 14, 7, 0, 9, 2, 11, 4, 13, 6, 15, 8, 1, 10, 3, 12, 6, 11, 3, 7, 0, 13, 5, 10, 14, 15, 8, 12, 4, 9, 1, 2, 15, 5, 1, 3, 7, 14, 6, 9, 11, 8, 12, 2, 10, 0, 4, 13, 8, 6, 4, 1, 3, 11, 15, 0, 5, 12, 2, 13, 9, 7, 10, 14, 12, 15, 10, 4, 1, 5, 8, 7, 6, 2, 13, 14, 0, 3, 9, 11], G = [11, 14, 15, 12, 5, 8, 7, 9, 11, 13, 14, 15, 6, 7, 9, 8, 7, 6, 8, 13, 11, 9, 7, 15, 7, 12, 15, 9, 11, 7, 13, 12, 11, 13, 6, 7, 14, 9, 13, 15, 14, 8, 13, 6, 5, 12, 7, 5, 11, 12, 14, 15, 14, 15, 9, 8, 9, 14, 5, 6, 8, 6, 5, 12, 9, 15, 5, 11, 6, 8, 13, 12, 5, 12, 13, 14, 11, 8, 5, 6], H = [8, 9, 9, 11, 13, 15, 15, 5, 7, 7, 8, 11, 14, 14, 12, 6, 9, 13, 15, 7, 12, 8, 9, 11, 7, 7, 12, 7, 6, 15, 13, 11, 9, 7, 15, 11, 8, 6, 6, 14, 12, 13, 5, 14, 13, 13, 7, 5, 15, 5, 8, 11, 14, 14, 6, 14, 6, 9, 12, 9, 12, 5, 15, 8, 8, 5, 12, 9, 12, 5, 14, 6, 8, 13, 6, 5, 15, 13, 11, 11];
-  }), SA = p0((C, j) => {
+  }), vA = p0((C, j) => {
     var q = y9(), S = R9();
     function U(P, $, Y) {
       if (!(this instanceof U))
@@ -56363,11 +56367,11 @@ Use Chrome, Firefox or Internet Explorer 11`);
     };
   }), MZ = p0((C) => {
     var j = C;
-    j.utils = y9(), j.common = KJ(), j.sha = CA(), j.ripemd = jA(), j.hmac = SA(), j.sha1 = j.sha.sha1, j.sha256 = j.sha.sha256, j.sha224 = j.sha.sha224, j.sha384 = j.sha.sha384, j.sha512 = j.sha.sha512, j.ripemd160 = j.ripemd.ripemd160;
-  }), qA = p0((C, j) => {
+    j.utils = y9(), j.common = KJ(), j.sha = SA(), j.ripemd = qA(), j.hmac = vA(), j.sha1 = j.sha.sha1, j.sha256 = j.sha.sha256, j.sha224 = j.sha.sha224, j.sha384 = j.sha.sha384, j.sha512 = j.sha.sha512, j.ripemd160 = j.ripemd.ripemd160;
+  }), wA = p0((C, j) => {
     j.exports = { doubles: { step: 4, points: [["e60fce93b59e9ec53011aabc21c23e97b2a31369b87a5ae9c44ee89e2a6dec0a", "f7e3507399e595929db99f34f57937101296891e44d23f0be1f32cce69616821"], ["8282263212c609d9ea2a6e3e172de238d8c39cabd5ac1ca10646e23fd5f51508", "11f8a8098557dfe45e8256e830b60ace62d613ac2f7b17bed31b6eaff6e26caf"], ["175e159f728b865a72f99cc6c6fc846de0b93833fd2222ed73fce5b551e5b739", "d3506e0d9e3c79eba4ef97a51ff71f5eacb5955add24345c6efa6ffee9fed695"], ["363d90d447b00c9c99ceac05b6262ee053441c7e55552ffe526bad8f83ff4640", "4e273adfc732221953b445397f3363145b9a89008199ecb62003c7f3bee9de9"], ["8b4b5f165df3c2be8c6244b5b745638843e4a781a15bcd1b69f79a55dffdf80c", "4aad0a6f68d308b4b3fbd7813ab0da04f9e336546162ee56b3eff0c65fd4fd36"], ["723cbaa6e5db996d6bf771c00bd548c7b700dbffa6c0e77bcb6115925232fcda", "96e867b5595cc498a921137488824d6e2660a0653779494801dc069d9eb39f5f"], ["eebfa4d493bebf98ba5feec812c2d3b50947961237a919839a533eca0e7dd7fa", "5d9a8ca3970ef0f269ee7edaf178089d9ae4cdc3a711f712ddfd4fdae1de8999"], ["100f44da696e71672791d0a09b7bde459f1215a29b3c03bfefd7835b39a48db0", "cdd9e13192a00b772ec8f3300c090666b7ff4a18ff5195ac0fbd5cd62bc65a09"], ["e1031be262c7ed1b1dc9227a4a04c017a77f8d4464f3b3852c8acde6e534fd2d", "9d7061928940405e6bb6a4176597535af292dd419e1ced79a44f18f29456a00d"], ["feea6cae46d55b530ac2839f143bd7ec5cf8b266a41d6af52d5e688d9094696d", "e57c6b6c97dce1bab06e4e12bf3ecd5c981c8957cc41442d3155debf18090088"], ["da67a91d91049cdcb367be4be6ffca3cfeed657d808583de33fa978bc1ec6cb1", "9bacaa35481642bc41f463f7ec9780e5dec7adc508f740a17e9ea8e27a68be1d"], ["53904faa0b334cdda6e000935ef22151ec08d0f7bb11069f57545ccc1a37b7c0", "5bc087d0bc80106d88c9eccac20d3c1c13999981e14434699dcb096b022771c8"], ["8e7bcd0bd35983a7719cca7764ca906779b53a043a9b8bcaeff959f43ad86047", "10b7770b2a3da4b3940310420ca9514579e88e2e47fd68b3ea10047e8460372a"], ["385eed34c1cdff21e6d0818689b81bde71a7f4f18397e6690a841e1599c43862", "283bebc3e8ea23f56701de19e9ebf4576b304eec2086dc8cc0458fe5542e5453"], ["6f9d9b803ecf191637c73a4413dfa180fddf84a5947fbc9c606ed86c3fac3a7", "7c80c68e603059ba69b8e2a30e45c4d47ea4dd2f5c281002d86890603a842160"], ["3322d401243c4e2582a2147c104d6ecbf774d163db0f5e5313b7e0e742d0e6bd", "56e70797e9664ef5bfb019bc4ddaf9b72805f63ea2873af624f3a2e96c28b2a0"], ["85672c7d2de0b7da2bd1770d89665868741b3f9af7643397721d74d28134ab83", "7c481b9b5b43b2eb6374049bfa62c2e5e77f17fcc5298f44c8e3094f790313a6"], ["948bf809b1988a46b06c9f1919413b10f9226c60f668832ffd959af60c82a0a", "53a562856dcb6646dc6b74c5d1c3418c6d4dff08c97cd2bed4cb7f88d8c8e589"], ["6260ce7f461801c34f067ce0f02873a8f1b0e44dfc69752accecd819f38fd8e8", "bc2da82b6fa5b571a7f09049776a1ef7ecd292238051c198c1a84e95b2b4ae17"], ["e5037de0afc1d8d43d8348414bbf4103043ec8f575bfdc432953cc8d2037fa2d", "4571534baa94d3b5f9f98d09fb990bddbd5f5b03ec481f10e0e5dc841d755bda"], ["e06372b0f4a207adf5ea905e8f1771b4e7e8dbd1c6a6c5b725866a0ae4fce725", "7a908974bce18cfe12a27bb2ad5a488cd7484a7787104870b27034f94eee31dd"], ["213c7a715cd5d45358d0bbf9dc0ce02204b10bdde2a3f58540ad6908d0559754", "4b6dad0b5ae462507013ad06245ba190bb4850f5f36a7eeddff2c27534b458f2"], ["4e7c272a7af4b34e8dbb9352a5419a87e2838c70adc62cddf0cc3a3b08fbd53c", "17749c766c9d0b18e16fd09f6def681b530b9614bff7dd33e0b3941817dcaae6"], ["fea74e3dbe778b1b10f238ad61686aa5c76e3db2be43057632427e2840fb27b6", "6e0568db9b0b13297cf674deccb6af93126b596b973f7b77701d3db7f23cb96f"], ["76e64113f677cf0e10a2570d599968d31544e179b760432952c02a4417bdde39", "c90ddf8dee4e95cf577066d70681f0d35e2a33d2b56d2032b4b1752d1901ac01"], ["c738c56b03b2abe1e8281baa743f8f9a8f7cc643df26cbee3ab150242bcbb891", "893fb578951ad2537f718f2eacbfbbbb82314eef7880cfe917e735d9699a84c3"], ["d895626548b65b81e264c7637c972877d1d72e5f3a925014372e9f6588f6c14b", "febfaa38f2bc7eae728ec60818c340eb03428d632bb067e179363ed75d7d991f"], ["b8da94032a957518eb0f6433571e8761ceffc73693e84edd49150a564f676e03", "2804dfa44805a1e4d7c99cc9762808b092cc584d95ff3b511488e4e74efdf6e7"], ["e80fea14441fb33a7d8adab9475d7fab2019effb5156a792f1a11778e3c0df5d", "eed1de7f638e00771e89768ca3ca94472d155e80af322ea9fcb4291b6ac9ec78"], ["a301697bdfcd704313ba48e51d567543f2a182031efd6915ddc07bbcc4e16070", "7370f91cfb67e4f5081809fa25d40f9b1735dbf7c0a11a130c0d1a041e177ea1"], ["90ad85b389d6b936463f9d0512678de208cc330b11307fffab7ac63e3fb04ed4", "e507a3620a38261affdcbd9427222b839aefabe1582894d991d4d48cb6ef150"], ["8f68b9d2f63b5f339239c1ad981f162ee88c5678723ea3351b7b444c9ec4c0da", "662a9f2dba063986de1d90c2b6be215dbbea2cfe95510bfdf23cbf79501fff82"], ["e4f3fb0176af85d65ff99ff9198c36091f48e86503681e3e6686fd5053231e11", "1e63633ad0ef4f1c1661a6d0ea02b7286cc7e74ec951d1c9822c38576feb73bc"], ["8c00fa9b18ebf331eb961537a45a4266c7034f2f0d4e1d0716fb6eae20eae29e", "efa47267fea521a1a9dc343a3736c974c2fadafa81e36c54e7d2a4c66702414b"], ["e7a26ce69dd4829f3e10cec0a9e98ed3143d084f308b92c0997fddfc60cb3e41", "2a758e300fa7984b471b006a1aafbb18d0a6b2c0420e83e20e8a9421cf2cfd51"], ["b6459e0ee3662ec8d23540c223bcbdc571cbcb967d79424f3cf29eb3de6b80ef", "67c876d06f3e06de1dadf16e5661db3c4b3ae6d48e35b2ff30bf0b61a71ba45"], ["d68a80c8280bb840793234aa118f06231d6f1fc67e73c5a5deda0f5b496943e8", "db8ba9fff4b586d00c4b1f9177b0e28b5b0e7b8f7845295a294c84266b133120"], ["324aed7df65c804252dc0270907a30b09612aeb973449cea4095980fc28d3d5d", "648a365774b61f2ff130c0c35aec1f4f19213b0c7e332843967224af96ab7c84"], ["4df9c14919cde61f6d51dfdbe5fee5dceec4143ba8d1ca888e8bd373fd054c96", "35ec51092d8728050974c23a1d85d4b5d506cdc288490192ebac06cad10d5d"], ["9c3919a84a474870faed8a9c1cc66021523489054d7f0308cbfc99c8ac1f98cd", "ddb84f0f4a4ddd57584f044bf260e641905326f76c64c8e6be7e5e03d4fc599d"], ["6057170b1dd12fdf8de05f281d8e06bb91e1493a8b91d4cc5a21382120a959e5", "9a1af0b26a6a4807add9a2daf71df262465152bc3ee24c65e899be932385a2a8"], ["a576df8e23a08411421439a4518da31880cef0fba7d4df12b1a6973eecb94266", "40a6bf20e76640b2c92b97afe58cd82c432e10a7f514d9f3ee8be11ae1b28ec8"], ["7778a78c28dec3e30a05fe9629de8c38bb30d1f5cf9a3a208f763889be58ad71", "34626d9ab5a5b22ff7098e12f2ff580087b38411ff24ac563b513fc1fd9f43ac"], ["928955ee637a84463729fd30e7afd2ed5f96274e5ad7e5cb09eda9c06d903ac", "c25621003d3f42a827b78a13093a95eeac3d26efa8a8d83fc5180e935bcd091f"], ["85d0fef3ec6db109399064f3a0e3b2855645b4a907ad354527aae75163d82751", "1f03648413a38c0be29d496e582cf5663e8751e96877331582c237a24eb1f962"], ["ff2b0dce97eece97c1c9b6041798b85dfdfb6d8882da20308f5404824526087e", "493d13fef524ba188af4c4dc54d07936c7b7ed6fb90e2ceb2c951e01f0c29907"], ["827fbbe4b1e880ea9ed2b2e6301b212b57f1ee148cd6dd28780e5e2cf856e241", "c60f9c923c727b0b71bef2c67d1d12687ff7a63186903166d605b68baec293ec"], ["eaa649f21f51bdbae7be4ae34ce6e5217a58fdce7f47f9aa7f3b58fa2120e2b3", "be3279ed5bbbb03ac69a80f89879aa5a01a6b965f13f7e59d47a5305ba5ad93d"], ["e4a42d43c5cf169d9391df6decf42ee541b6d8f0c9a137401e23632dda34d24f", "4d9f92e716d1c73526fc99ccfb8ad34ce886eedfa8d8e4f13a7f7131deba9414"], ["1ec80fef360cbdd954160fadab352b6b92b53576a88fea4947173b9d4300bf19", "aeefe93756b5340d2f3a4958a7abbf5e0146e77f6295a07b671cdc1cc107cefd"], ["146a778c04670c2f91b00af4680dfa8bce3490717d58ba889ddb5928366642be", "b318e0ec3354028add669827f9d4b2870aaa971d2f7e5ed1d0b297483d83efd0"], ["fa50c0f61d22e5f07e3acebb1aa07b128d0012209a28b9776d76a8793180eef9", "6b84c6922397eba9b72cd2872281a68a5e683293a57a213b38cd8d7d3f4f2811"], ["da1d61d0ca721a11b1a5bf6b7d88e8421a288ab5d5bba5220e53d32b5f067ec2", "8157f55a7c99306c79c0766161c91e2966a73899d279b48a655fba0f1ad836f1"], ["a8e282ff0c9706907215ff98e8fd416615311de0446f1e062a73b0610d064e13", "7f97355b8db81c09abfb7f3c5b2515888b679a3e50dd6bd6cef7c73111f4cc0c"], ["174a53b9c9a285872d39e56e6913cab15d59b1fa512508c022f382de8319497c", "ccc9dc37abfc9c1657b4155f2c47f9e6646b3a1d8cb9854383da13ac079afa73"], ["959396981943785c3d3e57edf5018cdbe039e730e4918b3d884fdff09475b7ba", "2e7e552888c331dd8ba0386a4b9cd6849c653f64c8709385e9b8abf87524f2fd"], ["d2a63a50ae401e56d645a1153b109a8fcca0a43d561fba2dbb51340c9d82b151", "e82d86fb6443fcb7565aee58b2948220a70f750af484ca52d4142174dcf89405"], ["64587e2335471eb890ee7896d7cfdc866bacbdbd3839317b3436f9b45617e073", "d99fcdd5bf6902e2ae96dd6447c299a185b90a39133aeab358299e5e9faf6589"], ["8481bde0e4e4d885b3a546d3e549de042f0aa6cea250e7fd358d6c86dd45e458", "38ee7b8cba5404dd84a25bf39cecb2ca900a79c42b262e556d64b1b59779057e"], ["13464a57a78102aa62b6979ae817f4637ffcfed3c4b1ce30bcd6303f6caf666b", "69be159004614580ef7e433453ccb0ca48f300a81d0942e13f495a907f6ecc27"], ["bc4a9df5b713fe2e9aef430bcc1dc97a0cd9ccede2f28588cada3a0d2d83f366", "d3a81ca6e785c06383937adf4b798caa6e8a9fbfa547b16d758d666581f33c1"], ["8c28a97bf8298bc0d23d8c749452a32e694b65e30a9472a3954ab30fe5324caa", "40a30463a3305193378fedf31f7cc0eb7ae784f0451cb9459e71dc73cbef9482"], ["8ea9666139527a8c1dd94ce4f071fd23c8b350c5a4bb33748c4ba111faccae0", "620efabbc8ee2782e24e7c0cfb95c5d735b783be9cf0f8e955af34a30e62b945"], ["dd3625faef5ba06074669716bbd3788d89bdde815959968092f76cc4eb9a9787", "7a188fa3520e30d461da2501045731ca941461982883395937f68d00c644a573"], ["f710d79d9eb962297e4f6232b40e8f7feb2bc63814614d692c12de752408221e", "ea98e67232d3b3295d3b535532115ccac8612c721851617526ae47a9c77bfc82"]] }, naf: { wnd: 7, points: [["f9308a019258c31049344f85f89d5229b531c845836f99b08601f113bce036f9", "388f7b0f632de8140fe337e62a37f3566500a99934c2231b6cb9fd7584b8e672"], ["2f8bde4d1a07209355b4a7250a5c5128e88b84bddc619ab7cba8d569b240efe4", "d8ac222636e5e3d6d4dba9dda6c9c426f788271bab0d6840dca87d3aa6ac62d6"], ["5cbdf0646e5db4eaa398f365f2ea7a0e3d419b7e0330e39ce92bddedcac4f9bc", "6aebca40ba255960a3178d6d861a54dba813d0b813fde7b5a5082628087264da"], ["acd484e2f0c7f65309ad178a9f559abde09796974c57e714c35f110dfc27ccbe", "cc338921b0a7d9fd64380971763b61e9add888a4375f8e0f05cc262ac64f9c37"], ["774ae7f858a9411e5ef4246b70c65aac5649980be5c17891bbec17895da008cb", "d984a032eb6b5e190243dd56d7b7b365372db1e2dff9d6a8301d74c9c953c61b"], ["f28773c2d975288bc7d1d205c3748651b075fbc6610e58cddeeddf8f19405aa8", "ab0902e8d880a89758212eb65cdaf473a1a06da521fa91f29b5cb52db03ed81"], ["d7924d4f7d43ea965a465ae3095ff41131e5946f3c85f79e44adbcf8e27e080e", "581e2872a86c72a683842ec228cc6defea40af2bd896d3a5c504dc9ff6a26b58"], ["defdea4cdb677750a420fee807eacf21eb9898ae79b9768766e4faa04a2d4a34", "4211ab0694635168e997b0ead2a93daeced1f4a04a95c0f6cfb199f69e56eb77"], ["2b4ea0a797a443d293ef5cff444f4979f06acfebd7e86d277475656138385b6c", "85e89bc037945d93b343083b5a1c86131a01f60c50269763b570c854e5c09b7a"], ["352bbf4a4cdd12564f93fa332ce333301d9ad40271f8107181340aef25be59d5", "321eb4075348f534d59c18259dda3e1f4a1b3b2e71b1039c67bd3d8bcf81998c"], ["2fa2104d6b38d11b0230010559879124e42ab8dfeff5ff29dc9cdadd4ecacc3f", "2de1068295dd865b64569335bd5dd80181d70ecfc882648423ba76b532b7d67"], ["9248279b09b4d68dab21a9b066edda83263c3d84e09572e269ca0cd7f5453714", "73016f7bf234aade5d1aa71bdea2b1ff3fc0de2a887912ffe54a32ce97cb3402"], ["daed4f2be3a8bf278e70132fb0beb7522f570e144bf615c07e996d443dee8729", "a69dce4a7d6c98e8d4a1aca87ef8d7003f83c230f3afa726ab40e52290be1c55"], ["c44d12c7065d812e8acf28d7cbb19f9011ecd9e9fdf281b0e6a3b5e87d22e7db", "2119a460ce326cdc76c45926c982fdac0e106e861edf61c5a039063f0e0e6482"], ["6a245bf6dc698504c89a20cfded60853152b695336c28063b61c65cbd269e6b4", "e022cf42c2bd4a708b3f5126f16a24ad8b33ba48d0423b6efd5e6348100d8a82"], ["1697ffa6fd9de627c077e3d2fe541084ce13300b0bec1146f95ae57f0d0bd6a5", "b9c398f186806f5d27561506e4557433a2cf15009e498ae7adee9d63d01b2396"], ["605bdb019981718b986d0f07e834cb0d9deb8360ffb7f61df982345ef27a7479", "2972d2de4f8d20681a78d93ec96fe23c26bfae84fb14db43b01e1e9056b8c49"], ["62d14dab4150bf497402fdc45a215e10dcb01c354959b10cfe31c7e9d87ff33d", "80fc06bd8cc5b01098088a1950eed0db01aa132967ab472235f5642483b25eaf"], ["80c60ad0040f27dade5b4b06c408e56b2c50e9f56b9b8b425e555c2f86308b6f", "1c38303f1cc5c30f26e66bad7fe72f70a65eed4cbe7024eb1aa01f56430bd57a"], ["7a9375ad6167ad54aa74c6348cc54d344cc5dc9487d847049d5eabb0fa03c8fb", "d0e3fa9eca8726909559e0d79269046bdc59ea10c70ce2b02d499ec224dc7f7"], ["d528ecd9b696b54c907a9ed045447a79bb408ec39b68df504bb51f459bc3ffc9", "eecf41253136e5f99966f21881fd656ebc4345405c520dbc063465b521409933"], ["49370a4b5f43412ea25f514e8ecdad05266115e4a7ecb1387231808f8b45963", "758f3f41afd6ed428b3081b0512fd62a54c3f3afbb5b6764b653052a12949c9a"], ["77f230936ee88cbbd73df930d64702ef881d811e0e1498e2f1c13eb1fc345d74", "958ef42a7886b6400a08266e9ba1b37896c95330d97077cbbe8eb3c7671c60d6"], ["f2dac991cc4ce4b9ea44887e5c7c0bce58c80074ab9d4dbaeb28531b7739f530", "e0dedc9b3b2f8dad4da1f32dec2531df9eb5fbeb0598e4fd1a117dba703a3c37"], ["463b3d9f662621fb1b4be8fbbe2520125a216cdfc9dae3debcba4850c690d45b", "5ed430d78c296c3543114306dd8622d7c622e27c970a1de31cb377b01af7307e"], ["f16f804244e46e2a09232d4aff3b59976b98fac14328a2d1a32496b49998f247", "cedabd9b82203f7e13d206fcdf4e33d92a6c53c26e5cce26d6579962c4e31df6"], ["caf754272dc84563b0352b7a14311af55d245315ace27c65369e15f7151d41d1", "cb474660ef35f5f2a41b643fa5e460575f4fa9b7962232a5c32f908318a04476"], ["2600ca4b282cb986f85d0f1709979d8b44a09c07cb86d7c124497bc86f082120", "4119b88753c15bd6a693b03fcddbb45d5ac6be74ab5f0ef44b0be9475a7e4b40"], ["7635ca72d7e8432c338ec53cd12220bc01c48685e24f7dc8c602a7746998e435", "91b649609489d613d1d5e590f78e6d74ecfc061d57048bad9e76f302c5b9c61"], ["754e3239f325570cdbbf4a87deee8a66b7f2b33479d468fbc1a50743bf56cc18", "673fb86e5bda30fb3cd0ed304ea49a023ee33d0197a695d0c5d98093c536683"], ["e3e6bd1071a1e96aff57859c82d570f0330800661d1c952f9fe2694691d9b9e8", "59c9e0bba394e76f40c0aa58379a3cb6a5a2283993e90c4167002af4920e37f5"], ["186b483d056a033826ae73d88f732985c4ccb1f32ba35f4b4cc47fdcf04aa6eb", "3b952d32c67cf77e2e17446e204180ab21fb8090895138b4a4a797f86e80888b"], ["df9d70a6b9876ce544c98561f4be4f725442e6d2b737d9c91a8321724ce0963f", "55eb2dafd84d6ccd5f862b785dc39d4ab157222720ef9da217b8c45cf2ba2417"], ["5edd5cc23c51e87a497ca815d5dce0f8ab52554f849ed8995de64c5f34ce7143", "efae9c8dbc14130661e8cec030c89ad0c13c66c0d17a2905cdc706ab7399a868"], ["290798c2b6476830da12fe02287e9e777aa3fba1c355b17a722d362f84614fba", "e38da76dcd440621988d00bcf79af25d5b29c094db2a23146d003afd41943e7a"], ["af3c423a95d9f5b3054754efa150ac39cd29552fe360257362dfdecef4053b45", "f98a3fd831eb2b749a93b0e6f35cfb40c8cd5aa667a15581bc2feded498fd9c6"], ["766dbb24d134e745cccaa28c99bf274906bb66b26dcf98df8d2fed50d884249a", "744b1152eacbe5e38dcc887980da38b897584a65fa06cedd2c924f97cbac5996"], ["59dbf46f8c94759ba21277c33784f41645f7b44f6c596a58ce92e666191abe3e", "c534ad44175fbc300f4ea6ce648309a042ce739a7919798cd85e216c4a307f6e"], ["f13ada95103c4537305e691e74e9a4a8dd647e711a95e73cb62dc6018cfd87b8", "e13817b44ee14de663bf4bc808341f326949e21a6a75c2570778419bdaf5733d"], ["7754b4fa0e8aced06d4167a2c59cca4cda1869c06ebadfb6488550015a88522c", "30e93e864e669d82224b967c3020b8fa8d1e4e350b6cbcc537a48b57841163a2"], ["948dcadf5990e048aa3874d46abef9d701858f95de8041d2a6828c99e2262519", "e491a42537f6e597d5d28a3224b1bc25df9154efbd2ef1d2cbba2cae5347d57e"], ["7962414450c76c1689c7b48f8202ec37fb224cf5ac0bfa1570328a8a3d7c77ab", "100b610ec4ffb4760d5c1fc133ef6f6b12507a051f04ac5760afa5b29db83437"], ["3514087834964b54b15b160644d915485a16977225b8847bb0dd085137ec47ca", "ef0afbb2056205448e1652c48e8127fc6039e77c15c2378b7e7d15a0de293311"], ["d3cc30ad6b483e4bc79ce2c9dd8bc54993e947eb8df787b442943d3f7b527eaf", "8b378a22d827278d89c5e9be8f9508ae3c2ad46290358630afb34db04eede0a4"], ["1624d84780732860ce1c78fcbfefe08b2b29823db913f6493975ba0ff4847610", "68651cf9b6da903e0914448c6cd9d4ca896878f5282be4c8cc06e2a404078575"], ["733ce80da955a8a26902c95633e62a985192474b5af207da6df7b4fd5fc61cd4", "f5435a2bd2badf7d485a4d8b8db9fcce3e1ef8e0201e4578c54673bc1dc5ea1d"], ["15d9441254945064cf1a1c33bbd3b49f8966c5092171e699ef258dfab81c045c", "d56eb30b69463e7234f5137b73b84177434800bacebfc685fc37bbe9efe4070d"], ["a1d0fcf2ec9de675b612136e5ce70d271c21417c9d2b8aaaac138599d0717940", "edd77f50bcb5a3cab2e90737309667f2641462a54070f3d519212d39c197a629"], ["e22fbe15c0af8ccc5780c0735f84dbe9a790badee8245c06c7ca37331cb36980", "a855babad5cd60c88b430a69f53a1a7a38289154964799be43d06d77d31da06"], ["311091dd9860e8e20ee13473c1155f5f69635e394704eaa74009452246cfa9b3", "66db656f87d1f04fffd1f04788c06830871ec5a64feee685bd80f0b1286d8374"], ["34c1fd04d301be89b31c0442d3e6ac24883928b45a9340781867d4232ec2dbdf", "9414685e97b1b5954bd46f730174136d57f1ceeb487443dc5321857ba73abee"], ["f219ea5d6b54701c1c14de5b557eb42a8d13f3abbcd08affcc2a5e6b049b8d63", "4cb95957e83d40b0f73af4544cccf6b1f4b08d3c07b27fb8d8c2962a400766d1"], ["d7b8740f74a8fbaab1f683db8f45de26543a5490bca627087236912469a0b448", "fa77968128d9c92ee1010f337ad4717eff15db5ed3c049b3411e0315eaa4593b"], ["32d31c222f8f6f0ef86f7c98d3a3335ead5bcd32abdd94289fe4d3091aa824bf", "5f3032f5892156e39ccd3d7915b9e1da2e6dac9e6f26e961118d14b8462e1661"], ["7461f371914ab32671045a155d9831ea8793d77cd59592c4340f86cbc18347b5", "8ec0ba238b96bec0cbdddcae0aa442542eee1ff50c986ea6b39847b3cc092ff6"], ["ee079adb1df1860074356a25aa38206a6d716b2c3e67453d287698bad7b2b2d6", "8dc2412aafe3be5c4c5f37e0ecc5f9f6a446989af04c4e25ebaac479ec1c8c1e"], ["16ec93e447ec83f0467b18302ee620f7e65de331874c9dc72bfd8616ba9da6b5", "5e4631150e62fb40d0e8c2a7ca5804a39d58186a50e497139626778e25b0674d"], ["eaa5f980c245f6f038978290afa70b6bd8855897f98b6aa485b96065d537bd99", "f65f5d3e292c2e0819a528391c994624d784869d7e6ea67fb18041024edc07dc"], ["78c9407544ac132692ee1910a02439958ae04877151342ea96c4b6b35a49f51", "f3e0319169eb9b85d5404795539a5e68fa1fbd583c064d2462b675f194a3ddb4"], ["494f4be219a1a77016dcd838431aea0001cdc8ae7a6fc688726578d9702857a5", "42242a969283a5f339ba7f075e36ba2af925ce30d767ed6e55f4b031880d562c"], ["a598a8030da6d86c6bc7f2f5144ea549d28211ea58faa70ebf4c1e665c1fe9b5", "204b5d6f84822c307e4b4a7140737aec23fc63b65b35f86a10026dbd2d864e6b"], ["c41916365abb2b5d09192f5f2dbeafec208f020f12570a184dbadc3e58595997", "4f14351d0087efa49d245b328984989d5caf9450f34bfc0ed16e96b58fa9913"], ["841d6063a586fa475a724604da03bc5b92a2e0d2e0a36acfe4c73a5514742881", "73867f59c0659e81904f9a1c7543698e62562d6744c169ce7a36de01a8d6154"], ["5e95bb399a6971d376026947f89bde2f282b33810928be4ded112ac4d70e20d5", "39f23f366809085beebfc71181313775a99c9aed7d8ba38b161384c746012865"], ["36e4641a53948fd476c39f8a99fd974e5ec07564b5315d8bf99471bca0ef2f66", "d2424b1b1abe4eb8164227b085c9aa9456ea13493fd563e06fd51cf5694c78fc"], ["336581ea7bfbbb290c191a2f507a41cf5643842170e914faeab27c2c579f726", "ead12168595fe1be99252129b6e56b3391f7ab1410cd1e0ef3dcdcabd2fda224"], ["8ab89816dadfd6b6a1f2634fcf00ec8403781025ed6890c4849742706bd43ede", "6fdcef09f2f6d0a044e654aef624136f503d459c3e89845858a47a9129cdd24e"], ["1e33f1a746c9c5778133344d9299fcaa20b0938e8acff2544bb40284b8c5fb94", "60660257dd11b3aa9c8ed618d24edff2306d320f1d03010e33a7d2057f3b3b6"], ["85b7c1dcb3cec1b7ee7f30ded79dd20a0ed1f4cc18cbcfcfa410361fd8f08f31", "3d98a9cdd026dd43f39048f25a8847f4fcafad1895d7a633c6fed3c35e999511"], ["29df9fbd8d9e46509275f4b125d6d45d7fbe9a3b878a7af872a2800661ac5f51", "b4c4fe99c775a606e2d8862179139ffda61dc861c019e55cd2876eb2a27d84b"], ["a0b1cae06b0a847a3fea6e671aaf8adfdfe58ca2f768105c8082b2e449fce252", "ae434102edde0958ec4b19d917a6a28e6b72da1834aff0e650f049503a296cf2"], ["4e8ceafb9b3e9a136dc7ff67e840295b499dfb3b2133e4ba113f2e4c0e121e5", "cf2174118c8b6d7a4b48f6d534ce5c79422c086a63460502b827ce62a326683c"], ["d24a44e047e19b6f5afb81c7ca2f69080a5076689a010919f42725c2b789a33b", "6fb8d5591b466f8fc63db50f1c0f1c69013f996887b8244d2cdec417afea8fa3"], ["ea01606a7a6c9cdd249fdfcfacb99584001edd28abbab77b5104e98e8e3b35d4", "322af4908c7312b0cfbfe369f7a7b3cdb7d4494bc2823700cfd652188a3ea98d"], ["af8addbf2b661c8a6c6328655eb96651252007d8c5ea31be4ad196de8ce2131f", "6749e67c029b85f52a034eafd096836b2520818680e26ac8f3dfbcdb71749700"], ["e3ae1974566ca06cc516d47e0fb165a674a3dabcfca15e722f0e3450f45889", "2aeabe7e4531510116217f07bf4d07300de97e4874f81f533420a72eeb0bd6a4"], ["591ee355313d99721cf6993ffed1e3e301993ff3ed258802075ea8ced397e246", "b0ea558a113c30bea60fc4775460c7901ff0b053d25ca2bdeee98f1a4be5d196"], ["11396d55fda54c49f19aa97318d8da61fa8584e47b084945077cf03255b52984", "998c74a8cd45ac01289d5833a7beb4744ff536b01b257be4c5767bea93ea57a4"], ["3c5d2a1ba39c5a1790000738c9e0c40b8dcdfd5468754b6405540157e017aa7a", "b2284279995a34e2f9d4de7396fc18b80f9b8b9fdd270f6661f79ca4c81bd257"], ["cc8704b8a60a0defa3a99a7299f2e9c3fbc395afb04ac078425ef8a1793cc030", "bdd46039feed17881d1e0862db347f8cf395b74fc4bcdc4e940b74e3ac1f1b13"], ["c533e4f7ea8555aacd9777ac5cad29b97dd4defccc53ee7ea204119b2889b197", "6f0a256bc5efdf429a2fb6242f1a43a2d9b925bb4a4b3a26bb8e0f45eb596096"], ["c14f8f2ccb27d6f109f6d08d03cc96a69ba8c34eec07bbcf566d48e33da6593", "c359d6923bb398f7fd4473e16fe1c28475b740dd098075e6c0e8649113dc3a38"], ["a6cbc3046bc6a450bac24789fa17115a4c9739ed75f8f21ce441f72e0b90e6ef", "21ae7f4680e889bb130619e2c0f95a360ceb573c70603139862afd617fa9b9f"], ["347d6d9a02c48927ebfb86c1359b1caf130a3c0267d11ce6344b39f99d43cc38", "60ea7f61a353524d1c987f6ecec92f086d565ab687870cb12689ff1e31c74448"], ["da6545d2181db8d983f7dcb375ef5866d47c67b1bf31c8cf855ef7437b72656a", "49b96715ab6878a79e78f07ce5680c5d6673051b4935bd897fea824b77dc208a"], ["c40747cc9d012cb1a13b8148309c6de7ec25d6945d657146b9d5994b8feb1111", "5ca560753be2a12fc6de6caf2cb489565db936156b9514e1bb5e83037e0fa2d4"], ["4e42c8ec82c99798ccf3a610be870e78338c7f713348bd34c8203ef4037f3502", "7571d74ee5e0fb92a7a8b33a07783341a5492144cc54bcc40a94473693606437"], ["3775ab7089bc6af823aba2e1af70b236d251cadb0c86743287522a1b3b0dedea", "be52d107bcfa09d8bcb9736a828cfa7fac8db17bf7a76a2c42ad961409018cf7"], ["cee31cbf7e34ec379d94fb814d3d775ad954595d1314ba8846959e3e82f74e26", "8fd64a14c06b589c26b947ae2bcf6bfa0149ef0be14ed4d80f448a01c43b1c6d"], ["b4f9eaea09b6917619f6ea6a4eb5464efddb58fd45b1ebefcdc1a01d08b47986", "39e5c9925b5a54b07433a4f18c61726f8bb131c012ca542eb24a8ac07200682a"], ["d4263dfc3d2df923a0179a48966d30ce84e2515afc3dccc1b77907792ebcc60e", "62dfaf07a0f78feb30e30d6295853ce189e127760ad6cf7fae164e122a208d54"], ["48457524820fa65a4f8d35eb6930857c0032acc0a4a2de422233eeda897612c4", "25a748ab367979d98733c38a1fa1c2e7dc6cc07db2d60a9ae7a76aaa49bd0f77"], ["dfeeef1881101f2cb11644f3a2afdfc2045e19919152923f367a1767c11cceda", "ecfb7056cf1de042f9420bab396793c0c390bde74b4bbdff16a83ae09a9a7517"], ["6d7ef6b17543f8373c573f44e1f389835d89bcbc6062ced36c82df83b8fae859", "cd450ec335438986dfefa10c57fea9bcc521a0959b2d80bbf74b190dca712d10"], ["e75605d59102a5a2684500d3b991f2e3f3c88b93225547035af25af66e04541f", "f5c54754a8f71ee540b9b48728473e314f729ac5308b06938360990e2bfad125"], ["eb98660f4c4dfaa06a2be453d5020bc99a0c2e60abe388457dd43fefb1ed620c", "6cb9a8876d9cb8520609af3add26cd20a0a7cd8a9411131ce85f44100099223e"], ["13e87b027d8514d35939f2e6892b19922154596941888336dc3563e3b8dba942", "fef5a3c68059a6dec5d624114bf1e91aac2b9da568d6abeb2570d55646b8adf1"], ["ee163026e9fd6fe017c38f06a5be6fc125424b371ce2708e7bf4491691e5764a", "1acb250f255dd61c43d94ccc670d0f58f49ae3fa15b96623e5430da0ad6c62b2"], ["b268f5ef9ad51e4d78de3a750c2dc89b1e626d43505867999932e5db33af3d80", "5f310d4b3c99b9ebb19f77d41c1dee018cf0d34fd4191614003e945a1216e423"], ["ff07f3118a9df035e9fad85eb6c7bfe42b02f01ca99ceea3bf7ffdba93c4750d", "438136d603e858a3a5c440c38eccbaddc1d2942114e2eddd4740d098ced1f0d8"], ["8d8b9855c7c052a34146fd20ffb658bea4b9f69e0d825ebec16e8c3ce2b526a1", "cdb559eedc2d79f926baf44fb84ea4d44bcf50fee51d7ceb30e2e7f463036758"], ["52db0b5384dfbf05bfa9d472d7ae26dfe4b851ceca91b1eba54263180da32b63", "c3b997d050ee5d423ebaf66a6db9f57b3180c902875679de924b69d84a7b375"], ["e62f9490d3d51da6395efd24e80919cc7d0f29c3f3fa48c6fff543becbd43352", "6d89ad7ba4876b0b22c2ca280c682862f342c8591f1daf5170e07bfd9ccafa7d"], ["7f30ea2476b399b4957509c88f77d0191afa2ff5cb7b14fd6d8e7d65aaab1193", "ca5ef7d4b231c94c3b15389a5f6311e9daff7bb67b103e9880ef4bff637acaec"], ["5098ff1e1d9f14fb46a210fada6c903fef0fb7b4a1dd1d9ac60a0361800b7a00", "9731141d81fc8f8084d37c6e7542006b3ee1b40d60dfe5362a5b132fd17ddc0"], ["32b78c7de9ee512a72895be6b9cbefa6e2f3c4ccce445c96b9f2c81e2778ad58", "ee1849f513df71e32efc3896ee28260c73bb80547ae2275ba497237794c8753c"], ["e2cb74fddc8e9fbcd076eef2a7c72b0ce37d50f08269dfc074b581550547a4f7", "d3aa2ed71c9dd2247a62df062736eb0baddea9e36122d2be8641abcb005cc4a4"], ["8438447566d4d7bedadc299496ab357426009a35f235cb141be0d99cd10ae3a8", "c4e1020916980a4da5d01ac5e6ad330734ef0d7906631c4f2390426b2edd791f"], ["4162d488b89402039b584c6fc6c308870587d9c46f660b878ab65c82c711d67e", "67163e903236289f776f22c25fb8a3afc1732f2b84b4e95dbda47ae5a0852649"], ["3fad3fa84caf0f34f0f89bfd2dcf54fc175d767aec3e50684f3ba4a4bf5f683d", "cd1bc7cb6cc407bb2f0ca647c718a730cf71872e7d0d2a53fa20efcdfe61826"], ["674f2600a3007a00568c1a7ce05d0816c1fb84bf1370798f1c69532faeb1a86b", "299d21f9413f33b3edf43b257004580b70db57da0b182259e09eecc69e0d38a5"], ["d32f4da54ade74abb81b815ad1fb3b263d82d6c692714bcff87d29bd5ee9f08f", "f9429e738b8e53b968e99016c059707782e14f4535359d582fc416910b3eea87"], ["30e4e670435385556e593657135845d36fbb6931f72b08cb1ed954f1e3ce3ff6", "462f9bce619898638499350113bbc9b10a878d35da70740dc695a559eb88db7b"], ["be2062003c51cc3004682904330e4dee7f3dcd10b01e580bf1971b04d4cad297", "62188bc49d61e5428573d48a74e1c655b1c61090905682a0d5558ed72dccb9bc"], ["93144423ace3451ed29e0fb9ac2af211cb6e84a601df5993c419859fff5df04a", "7c10dfb164c3425f5c71a3f9d7992038f1065224f72bb9d1d902a6d13037b47c"], ["b015f8044f5fcbdcf21ca26d6c34fb8197829205c7b7d2a7cb66418c157b112c", "ab8c1e086d04e813744a655b2df8d5f83b3cdc6faa3088c1d3aea1454e3a1d5f"], ["d5e9e1da649d97d89e4868117a465a3a4f8a18de57a140d36b3f2af341a21b52", "4cb04437f391ed73111a13cc1d4dd0db1693465c2240480d8955e8592f27447a"], ["d3ae41047dd7ca065dbf8ed77b992439983005cd72e16d6f996a5316d36966bb", "bd1aeb21ad22ebb22a10f0303417c6d964f8cdd7df0aca614b10dc14d125ac46"], ["463e2763d885f958fc66cdd22800f0a487197d0a82e377b49f80af87c897b065", "bfefacdb0e5d0fd7df3a311a94de062b26b80c61fbc97508b79992671ef7ca7f"], ["7985fdfd127c0567c6f53ec1bb63ec3158e597c40bfe747c83cddfc910641917", "603c12daf3d9862ef2b25fe1de289aed24ed291e0ec6708703a5bd567f32ed03"], ["74a1ad6b5f76e39db2dd249410eac7f99e74c59cb83d2d0ed5ff1543da7703e9", "cc6157ef18c9c63cd6193d83631bbea0093e0968942e8c33d5737fd790e0db08"], ["30682a50703375f602d416664ba19b7fc9bab42c72747463a71d0896b22f6da3", "553e04f6b018b4fa6c8f39e7f311d3176290d0e0f19ca73f17714d9977a22ff8"], ["9e2158f0d7c0d5f26c3791efefa79597654e7a2b2464f52b1ee6c1347769ef57", "712fcdd1b9053f09003a3481fa7762e9ffd7c8ef35a38509e2fbf2629008373"], ["176e26989a43c9cfeba4029c202538c28172e566e3c4fce7322857f3be327d66", "ed8cc9d04b29eb877d270b4878dc43c19aefd31f4eee09ee7b47834c1fa4b1c3"], ["75d46efea3771e6e68abb89a13ad747ecf1892393dfc4f1b7004788c50374da8", "9852390a99507679fd0b86fd2b39a868d7efc22151346e1a3ca4726586a6bed8"], ["809a20c67d64900ffb698c4c825f6d5f2310fb0451c869345b7319f645605721", "9e994980d9917e22b76b061927fa04143d096ccc54963e6a5ebfa5f3f8e286c1"], ["1b38903a43f7f114ed4500b4eac7083fdefece1cf29c63528d563446f972c180", "4036edc931a60ae889353f77fd53de4a2708b26b6f5da72ad3394119daf408f9"]] } };
   }), EZ = p0((C) => {
-    var j = C, q = MZ(), S = yX(), U = V9(), P = U.assert;
+    var j = C, q = MZ(), S = bX(), U = V9(), P = U.assert;
     function $(K) {
       K.type === "short" ? this.curve = new S.short(K) : K.type === "edwards" ? this.curve = new S.edwards(K) : this.curve = new S.mont(K), this.g = this.curve.g, this.n = this.curve.n, this.hash = K.hash, P(this.g.validate(), "Invalid curve"), P(this.g.mul(this.n).isInfinity(), "Invalid curve, G*N != O");
     }
@@ -56381,13 +56385,13 @@ Use Chrome, Firefox or Internet Explorer 11`);
     Y("p192", { type: "short", prime: "p192", p: "ffffffff ffffffff ffffffff fffffffe ffffffff ffffffff", a: "ffffffff ffffffff ffffffff fffffffe ffffffff fffffffc", b: "64210519 e59c80e7 0fa7e9ab 72243049 feb8deec c146b9b1", n: "ffffffff ffffffff ffffffff 99def836 146bc9b1 b4d22831", hash: q.sha256, gRed: false, g: ["188da80e b03090f6 7cbf20eb 43a18800 f4ff0afd 82ff1012", "07192b95 ffc8da78 631011ed 6b24cdd5 73f977a1 1e794811"] }), Y("p224", { type: "short", prime: "p224", p: "ffffffff ffffffff ffffffff ffffffff 00000000 00000000 00000001", a: "ffffffff ffffffff ffffffff fffffffe ffffffff ffffffff fffffffe", b: "b4050a85 0c04b3ab f5413256 5044b0b7 d7bfd8ba 270b3943 2355ffb4", n: "ffffffff ffffffff ffffffff ffff16a2 e0b8f03e 13dd2945 5c5c2a3d", hash: q.sha256, gRed: false, g: ["b70e0cbd 6bb4bf7f 321390b9 4a03c1d3 56c21122 343280d6 115c1d21", "bd376388 b5f723fb 4c22dfe6 cd4375a0 5a074764 44d58199 85007e34"] }), Y("p256", { type: "short", prime: null, p: "ffffffff 00000001 00000000 00000000 00000000 ffffffff ffffffff ffffffff", a: "ffffffff 00000001 00000000 00000000 00000000 ffffffff ffffffff fffffffc", b: "5ac635d8 aa3a93e7 b3ebbd55 769886bc 651d06b0 cc53b0f6 3bce3c3e 27d2604b", n: "ffffffff 00000000 ffffffff ffffffff bce6faad a7179e84 f3b9cac2 fc632551", hash: q.sha256, gRed: false, g: ["6b17d1f2 e12c4247 f8bce6e5 63a440f2 77037d81 2deb33a0 f4a13945 d898c296", "4fe342e2 fe1a7f9b 8ee7eb4a 7c0f9e16 2bce3357 6b315ece cbb64068 37bf51f5"] }), Y("p384", { type: "short", prime: null, p: "ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff fffffffe ffffffff 00000000 00000000 ffffffff", a: "ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff fffffffe ffffffff 00000000 00000000 fffffffc", b: "b3312fa7 e23ee7e4 988e056b e3f82d19 181d9c6e fe814112 0314088f 5013875a c656398d 8a2ed19d 2a85c8ed d3ec2aef", n: "ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff c7634d81 f4372ddf 581a0db2 48b0a77a ecec196a ccc52973", hash: q.sha384, gRed: false, g: ["aa87ca22 be8b0537 8eb1c71e f320ad74 6e1d3b62 8ba79b98 59f741e0 82542a38 5502f25d bf55296c 3a545e38 72760ab7", "3617de4a 96262c6f 5d9e98bf 9292dc29 f8f41dbd 289a147c e9da3113 b5f0b8c0 0a60b1ce 1d7e819d 7a431d7c 90ea0e5f"] }), Y("p521", { type: "short", prime: null, p: "000001ff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff", a: "000001ff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff fffffffc", b: "00000051 953eb961 8e1c9a1f 929a21a0 b68540ee a2da725b 99b315f3 b8b48991 8ef109e1 56193951 ec7e937b 1652c0bd 3bb1bf07 3573df88 3d2c34f1 ef451fd4 6b503f00", n: "000001ff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff fffffffa 51868783 bf2f966b 7fcc0148 f709a5d0 3bb5c9b8 899c47ae bb6fb71e 91386409", hash: q.sha512, gRed: false, g: ["000000c6 858e06b7 0404e9cd 9e3ecb66 2395b442 9c648139 053fb521 f828af60 6b4d3dba a14b5e77 efe75928 fe1dc127 a2ffa8de 3348b3c1 856a429b f97e7e31 c2e5bd66", "00000118 39296a78 9a3bc004 5c8a5fb4 2c7d1bd9 98f54449 579b4468 17afbd17 273e662c 97ee7299 5ef42640 c550b901 3fad0761 353c7086 a272c240 88be9476 9fd16650"] }), Y("curve25519", { type: "mont", prime: "p25519", p: "7fffffffffffffff ffffffffffffffff ffffffffffffffff ffffffffffffffed", a: "76d06", b: "1", n: "1000000000000000 0000000000000000 14def9dea2f79cd6 5812631a5cf5d3ed", hash: q.sha256, gRed: false, g: ["9"] }), Y("ed25519", { type: "edwards", prime: "p25519", p: "7fffffffffffffff ffffffffffffffff ffffffffffffffff ffffffffffffffed", a: "-1", c: "1", d: "52036cee2b6ffe73 8cc740797779e898 00700a4d4141d8ab 75eb4dca135978a3", n: "1000000000000000 0000000000000000 14def9dea2f79cd6 5812631a5cf5d3ed", hash: q.sha256, gRed: false, g: ["216936d3cd6e53fec0a4e231fdd6dc5c692cc7609525a7b2c9562d608f25d51a", "6666666666666666666666666666666666666666666666666666666666666658"] });
     var X;
     try {
-      X = qA();
+      X = wA();
     } catch {
       X = undefined;
     }
     Y("secp256k1", { type: "short", prime: "k256", p: "ffffffff ffffffff ffffffff ffffffff ffffffff ffffffff fffffffe fffffc2f", a: "0", b: "7", n: "ffffffff ffffffff ffffffff fffffffe baaedce6 af48a03b bfd25e8c d0364141", h: "1", hash: q.sha256, beta: "7ae96a2b657c07106e64479eac3434e99cf0497512f58995c1396c28719501ee", lambda: "5363ad4cc05c30e0a5261c028812645a122e22ea20816678df02967c1b23bd72", basis: [{ a: "3086d221a7d46bcde86c90e49284eb15", b: "-e4437ed6010e88286f547fa90abfe4c3" }, { a: "114ca50f7a8e2f3f657c1108d9d44cfd8", b: "3086d221a7d46bcde86c90e49284eb15" }], gRed: false, g: ["79be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798", "483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8", X] });
-  }), vA = p0((C, j) => {
-    var q = MZ(), S = gX(), U = R9();
+  }), kA = p0((C, j) => {
+    var q = MZ(), S = yX(), U = R9();
     function P($) {
       if (!(this instanceof P))
         return new P($);
@@ -56417,7 +56421,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var J = Q.slice(0, $);
       return this._update(X), this._reseed++, S.encode(J, Y);
     };
-  }), wA = p0((C, j) => {
+  }), hA = p0((C, j) => {
     var q = t9(), S = V9(), U = S.assert;
     function P($, Y) {
       this.ec = $, this.priv = null, this.pub = null, Y.priv && this._importPrivate(Y.priv, Y.privEnc), Y.pub && this._importPublic(Y.pub, Y.pubEnc);
@@ -56450,7 +56454,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }, P.prototype.inspect = function() {
       return "<Key priv: " + (this.priv && this.priv.toString(16, 2)) + " pub: " + (this.pub && this.pub.inspect()) + " >";
     };
-  }), kA = p0((C, j) => {
+  }), fA = p0((C, j) => {
     var q = t9(), S = V9(), U = S.assert;
     function P(Q, J) {
       if (Q instanceof P)
@@ -56526,8 +56530,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var G = W.concat(Z), H = [48];
       return K(H, G.length), H = H.concat(G), S.encode(H, Q);
     };
-  }), hA = p0((C, j) => {
-    var q = t9(), S = vA(), U = V9(), P = EZ(), $ = PZ(), Y = U.assert, X = wA(), K = kA();
+  }), xA = p0((C, j) => {
+    var q = t9(), S = kA(), U = V9(), P = EZ(), $ = PZ(), Y = U.assert, X = hA(), K = fA();
     function Q(J) {
       if (!(this instanceof Q))
         return new Q(J);
@@ -56597,7 +56601,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       }
       throw new Error("Unable to find valid recovery factor");
     };
-  }), fA = p0((C, j) => {
+  }), gA = p0((C, j) => {
     var q = V9(), S = q.assert, U = q.parseBytes, P = q.cachedProperty;
     function $(Y, X) {
       this.eddsa = Y, this._secret = U(X.secret), Y.isPoint(X.pub) ? this._pub = X.pub : this._pubBytes = U(X.pub);
@@ -56630,7 +56634,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }, $.prototype.getPublic = function(Y) {
       return q.encode(this.pubBytes(), Y);
     }, j.exports = $;
-  }), xA = p0((C, j) => {
+  }), yA = p0((C, j) => {
     var q = t9(), S = V9(), U = S.assert, P = S.cachedProperty, $ = S.parseBytes;
     function Y(X, K) {
       this.eddsa = X, typeof K != "object" && (K = $(K)), Array.isArray(K) && (K = { R: K.slice(0, X.encodingLength), S: K.slice(X.encodingLength) }), U(K.R && K.S, "Signature without R or S"), X.isPoint(K.R) && (this._R = K.R), K.S instanceof q && (this._S = K.S), this._Rencoded = Array.isArray(K.R) ? K.R : K.Rencoded, this._Sencoded = Array.isArray(K.S) ? K.S : K.Sencoded;
@@ -56648,8 +56652,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }, Y.prototype.toHex = function() {
       return S.encode(this.toBytes(), "hex").toUpperCase();
     }, j.exports = Y;
-  }), gA = p0((C, j) => {
-    var q = MZ(), S = EZ(), U = V9(), P = U.assert, $ = U.parseBytes, Y = fA(), X = xA();
+  }), bA = p0((C, j) => {
+    var q = MZ(), S = EZ(), U = V9(), P = U.assert, $ = U.parseBytes, Y = gA(), X = yA();
     function K(Q) {
       if (P(Q === "ed25519", "only tested with ed25519 so far"), !(this instanceof K))
         return new K(Q);
@@ -56689,8 +56693,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
     };
   }), OZ = p0((C) => {
     var j = C;
-    j.version = BA().version, j.utils = V9(), j.rand = PZ(), j.curve = yX(), j.curves = EZ(), j.ec = hA(), j.eddsa = gA();
-  }), dX = p0((C, j) => {
+    j.version = MA().version, j.utils = V9(), j.rand = PZ(), j.curve = bX(), j.curves = EZ(), j.ec = xA(), j.eddsa = bA();
+  }), uX = p0((C, j) => {
     (function(q, S) {
       function U(z, I) {
         if (!z)
@@ -58079,7 +58083,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       }), S;
     }
     C.tagClass = { 0: "universal", 1: "application", 2: "context", 3: "private" }, C.tagClassByName = j(C.tagClass), C.tag = { 0: "end", 1: "bool", 2: "int", 3: "bitstr", 4: "octstr", 5: "null_", 6: "objid", 7: "objDesc", 8: "external", 9: "real", 10: "enum", 11: "embed", 12: "utf8str", 13: "relativeOid", 16: "seq", 17: "set", 18: "numstr", 19: "printstr", 20: "t61str", 21: "videostr", 22: "ia5str", 23: "utctime", 24: "gentime", 25: "graphstr", 26: "iso646str", 27: "genstr", 28: "unistr", 29: "charstr", 30: "bmpstr" }, C.tagByName = j(C.tag);
-  }), uX = p0((C, j) => {
+  }), _X = p0((C, j) => {
     var q = j8(), S = NZ().Buffer, U = CZ(), P = jZ();
     function $(Q) {
       this.enc = "der", this.name = Q.name, this.entity = Q, this.tree = new Y, this.tree._init(Q.body);
@@ -58212,8 +58216,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
         return W.error("Unknown tag: " + Q);
       return G >= 31 ? W.error("Multi-octet tag encoding unsupported") : (J || (G |= 32), G |= P.tagClassByName[Z || "universal"] << 6, G);
     }
-  }), yA = p0((C, j) => {
-    var q = j8(), S = uX();
+  }), mA = p0((C, j) => {
+    var q = j8(), S = _X();
     function U(P) {
       S.call(this, P), this.enc = "pem";
     }
@@ -58224,11 +58228,11 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return X.push("-----END " + $.label + "-----"), X.join(`
 `);
     };
-  }), _X = p0((C) => {
+  }), cX = p0((C) => {
     var j = C;
-    j.der = uX(), j.pem = yA();
-  }), cX = p0((C, j) => {
-    var q = j8(), S = dX(), U = $J().DecoderBuffer, P = CZ(), $ = jZ();
+    j.der = _X(), j.pem = mA();
+  }), lX = p0((C, j) => {
+    var q = j8(), S = uX(), U = $J().DecoderBuffer, P = CZ(), $ = jZ();
     function Y(J) {
       this.enc = "der", this.name = J.name, this.entity = J, this.tree = new X, this.tree._init(J.body);
     }
@@ -58377,8 +58381,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
       }
       return G;
     }
-  }), bA = p0((C, j) => {
-    var q = j8(), S = NZ().Buffer, U = cX();
+  }), pA = p0((C, j) => {
+    var q = j8(), S = NZ().Buffer, U = lX();
     function P($) {
       U.call(this, $), this.enc = "pem";
     }
@@ -58405,11 +58409,11 @@ Use Chrome, Firefox or Internet Explorer 11`);
       let G = S.from(W, "base64");
       return U.prototype.decode.call(this, G, Y);
     };
-  }), lX = p0((C) => {
+  }), sX = p0((C) => {
     var j = C;
-    j.der = cX(), j.pem = bA();
-  }), mA = p0((C) => {
-    var j = _X(), q = lX(), S = j8(), U = C;
+    j.der = lX(), j.pem = pA();
+  }), dA = p0((C) => {
+    var j = cX(), q = sX(), S = j8(), U = C;
     U.define = function($, Y) {
       return new P($, Y);
     };
@@ -58433,10 +58437,10 @@ Use Chrome, Firefox or Internet Explorer 11`);
     }, P.prototype.encode = function($, Y, X) {
       return this._getEncoder(Y).encode($, X);
     };
-  }), pA = p0((C) => {
+  }), uA = p0((C) => {
     var j = C;
     j.Reporter = AZ().Reporter, j.DecoderBuffer = $J().DecoderBuffer, j.EncoderBuffer = $J().EncoderBuffer, j.Node = CZ();
-  }), dA = p0((C) => {
+  }), _A = p0((C) => {
     var j = C;
     j._reverse = function(q) {
       let S = {};
@@ -58446,11 +58450,11 @@ Use Chrome, Firefox or Internet Explorer 11`);
         S[P] = U;
       }), S;
     }, j.der = jZ();
-  }), sX = p0((C) => {
+  }), nX = p0((C) => {
     var j = C;
-    j.bignum = dX(), j.define = mA().define, j.base = pA(), j.constants = dA(), j.decoders = lX(), j.encoders = _X();
-  }), uA = p0((C, j) => {
-    var q = sX(), S = q.define("Time", function() {
+    j.bignum = uX(), j.define = dA().define, j.base = uA(), j.constants = _A(), j.decoders = sX(), j.encoders = cX();
+  }), cA = p0((C, j) => {
+    var q = nX(), S = q.define("Time", function() {
       this.choice({ utcTime: this.utctime(), generalTime: this.gentime() });
     }), U = q.define("AttributeTypeValue", function() {
       this.seq().obj(this.key("type").objid(), this.key("value").any());
@@ -58474,9 +58478,9 @@ Use Chrome, Firefox or Internet Explorer 11`);
       this.seq().obj(this.key("tbsCertificate").use(Z), this.key("signatureAlgorithm").use(P), this.key("signatureValue").bitstr());
     });
     j.exports = W;
-  }), _A = p0((C) => {
-    var j = sX();
-    C.certificate = uA();
+  }), lA = p0((C) => {
+    var j = nX();
+    C.certificate = cA();
     var q = j.define("RSAPrivateKey", function() {
       this.seq().obj(this.key("version").int(), this.key("modulus").int(), this.key("publicExponent").int(), this.key("privateExponent").int(), this.key("prime1").int(), this.key("prime2").int(), this.key("exponent1").int(), this.key("exponent2").int(), this.key("coefficient").int());
     });
@@ -58515,9 +58519,9 @@ Use Chrome, Firefox or Internet Explorer 11`);
     C.signature = j.define("signature", function() {
       this.seq().obj(this.key("r").int(), this.key("s").int());
     });
-  }), cA = p0((C, j) => {
+  }), sA = p0((C, j) => {
     j.exports = { "2.16.840.1.101.3.4.1.1": "aes-128-ecb", "2.16.840.1.101.3.4.1.2": "aes-128-cbc", "2.16.840.1.101.3.4.1.3": "aes-128-ofb", "2.16.840.1.101.3.4.1.4": "aes-128-cfb", "2.16.840.1.101.3.4.1.21": "aes-192-ecb", "2.16.840.1.101.3.4.1.22": "aes-192-cbc", "2.16.840.1.101.3.4.1.23": "aes-192-ofb", "2.16.840.1.101.3.4.1.24": "aes-192-cfb", "2.16.840.1.101.3.4.1.41": "aes-256-ecb", "2.16.840.1.101.3.4.1.42": "aes-256-cbc", "2.16.840.1.101.3.4.1.43": "aes-256-ofb", "2.16.840.1.101.3.4.1.44": "aes-256-cfb" };
-  }), lA = p0((C, j) => {
+  }), nA = p0((C, j) => {
     var q = /Proc-Type: 4,ENCRYPTED[\n\r]+DEK-Info: AES-((?:128)|(?:192)|(?:256))-CBC,([0-9A-H]+)[\n\r]+([0-9A-z\n\r+/=]+)[\n\r]+/m, S = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----/m, U = /^-----BEGIN ((?:.*? KEY)|CERTIFICATE)-----([0-9A-z\n\r+/=]+)-----END \1-----$/m, P = U5(), $ = FZ(), Y = h8().Buffer;
     j.exports = function(X, K) {
       var Q = X.toString(), J = Q.match(q), Z;
@@ -58532,7 +58536,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return { tag: F, data: Z };
     };
   }), L5 = p0((C, j) => {
-    var q = _A(), S = cA(), U = lA(), P = FZ(), $ = TX(), Y = h8().Buffer;
+    var q = lA(), S = sA(), U = nA(), P = FZ(), $ = MX(), Y = h8().Buffer;
     j.exports = X;
     function X(Q) {
       var J;
@@ -58582,10 +58586,10 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var Z = Q.algorithm.decrypt.kde.kdeparams.salt, W = parseInt(Q.algorithm.decrypt.kde.kdeparams.iters.toString(), 10), G = S[Q.algorithm.decrypt.cipher.algo.join(".")], H = Q.algorithm.decrypt.cipher.iv, L = Q.subjectPrivateKey, R = parseInt(G.split("-")[1], 10) / 8, V = $.pbkdf2Sync(J, Z, W, R, "sha1"), D = P.createDecipheriv(G, V, H), F = [];
       return F.push(D.update(L)), F.push(D.final()), Y.concat(F);
     }
-  }), nX = p0((C, j) => {
+  }), oX = p0((C, j) => {
     j.exports = { "1.3.132.0.10": "secp256k1", "1.3.132.0.33": "p224", "1.2.840.10045.3.1.1": "p192", "1.2.840.10045.3.1.7": "p256", "1.3.132.0.34": "p384", "1.3.132.0.35": "p521" };
-  }), sA = p0((C, j) => {
-    var q = h8().Buffer, S = VX(), U = TZ(), P = OZ().ec, $ = BZ(), Y = L5(), X = nX();
+  }), oA = p0((C, j) => {
+    var q = h8().Buffer, S = zX(), U = TZ(), P = OZ().ec, $ = BZ(), Y = L5(), X = oX();
     function K(V, D, F, T, E) {
       var N = Y(D);
       if (N.curve) {
@@ -58660,8 +58664,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return V.toRed($.mont(F)).redPow(D).fromRed().mod(T);
     }
     j.exports = K, j.exports.getKey = W, j.exports.makeKey = L;
-  }), nA = p0((C, j) => {
-    var q = h8().Buffer, S = BZ(), U = OZ().ec, P = L5(), $ = nX();
+  }), iA = p0((C, j) => {
+    var q = h8().Buffer, S = BZ(), U = OZ().ec, P = L5(), $ = oX();
     function Y(J, Z, W, G, H) {
       var L = P(W);
       if (L.type === "ec") {
@@ -58708,8 +58712,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
         throw new Error("invalid sig");
     }
     j.exports = Y;
-  }), oA = p0((C, j) => {
-    var q = h8().Buffer, S = QJ(), U = IA(), P = j8(), $ = sA(), Y = nA(), X = zX();
+  }), aA = p0((C, j) => {
+    var q = h8().Buffer, S = QJ(), U = TA(), P = j8(), $ = oA(), Y = iA(), X = FX();
     Object.keys(X).forEach(function(W) {
       X[W].id = q.from(X[W].id, "hex"), X[W.toLowerCase()] = X[W];
     });
@@ -58752,7 +58756,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       return new Q(W);
     }
     j.exports = { Sign: J, Verify: Z, createSign: J, createVerify: Z };
-  }), iA = p0((C, j) => {
+  }), rA = p0((C, j) => {
     (function(q, S) {
       function U(z, I) {
         if (!z)
@@ -59764,8 +59768,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
         return I._forceRed(this);
       };
     })(typeof j > "u" || j, C);
-  }), aA = p0((C, j) => {
-    var q = OZ(), S = iA();
+  }), tA = p0((C, j) => {
+    var q = OZ(), S = rA();
     j.exports = function(Y) {
       return new P(Y);
     };
@@ -59801,7 +59805,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       }
       return X ? Q.toString(X) : Q;
     }
-  }), oX = p0((C, j) => {
+  }), iX = p0((C, j) => {
     var q = QJ(), S = h8().Buffer;
     j.exports = function(P, $) {
       for (var Y = S.alloc(0), X = 0, K;Y.length < $; )
@@ -59812,7 +59816,7 @@ Use Chrome, Firefox or Internet Explorer 11`);
       var $ = S.allocUnsafe(4);
       return $.writeUInt32BE(P, 0), $;
     }
-  }), iX = p0((C, j) => {
+  }), aX = p0((C, j) => {
     j.exports = function(q, S) {
       for (var U = q.length, P = -1;++P < U; )
         q[P] ^= S[P];
@@ -60830,14 +60834,14 @@ Use Chrome, Firefox or Internet Explorer 11`);
         return I._forceRed(this);
       };
     })(typeof j > "u" || j, C);
-  }), aX = p0((C, j) => {
+  }), rX = p0((C, j) => {
     var q = SZ(), S = h8().Buffer;
     function U(P, $) {
       return S.from(P.toRed(q.mont($.modulus)).redPow(new q($.publicExponent)).fromRed().toArray());
     }
     j.exports = U;
-  }), rA = p0((C, j) => {
-    var q = L5(), S = L$(), U = QJ(), P = oX(), $ = iX(), Y = SZ(), X = aX(), K = TZ(), Q = h8().Buffer;
+  }), eA = p0((C, j) => {
+    var q = L5(), S = L$(), U = QJ(), P = iX(), $ = aX(), Y = SZ(), X = rX(), K = TZ(), Q = h8().Buffer;
     j.exports = function(G, H, L) {
       var R;
       G.padding ? R = G.padding : L ? R = 1 : R = 4;
@@ -60872,8 +60876,8 @@ Use Chrome, Firefox or Internet Explorer 11`);
         V === R.length && (R = S(G * 2), V = 0), D = R[V++], D && (H[L++] = D);
       return H;
     }
-  }), tA = p0((C, j) => {
-    var q = L5(), S = oX(), U = iX(), P = SZ(), $ = TZ(), Y = QJ(), X = aX(), K = h8().Buffer;
+  }), $C = p0((C, j) => {
+    var q = L5(), S = iX(), U = aX(), P = SZ(), $ = TZ(), Y = QJ(), X = rX(), K = h8().Buffer;
     j.exports = function(W, G, H) {
       var L;
       W.padding ? L = W.padding : H ? L = 1 : L = 4;
@@ -60923,13 +60927,13 @@ Use Chrome, Firefox or Internet Explorer 11`);
         H += W[R] ^ G[R];
       return H;
     }
-  }), eA = p0((C) => {
-    C.publicEncrypt = rA(), C.privateDecrypt = tA(), C.privateEncrypt = function(j, q) {
+  }), JC = p0((C) => {
+    C.publicEncrypt = eA(), C.privateDecrypt = $C(), C.privateEncrypt = function(j, q) {
       return C.publicEncrypt(j, q, true);
     }, C.publicDecrypt = function(j, q) {
       return C.privateDecrypt(j, q, true);
     };
-  }), $C = p0((C) => {
+  }), QC = p0((C) => {
     function j() {
       throw new Error(`secure random number generation not supported by this browser
 use chrome, FireFox or Internet Explorer 11`);
@@ -60979,31 +60983,31 @@ use chrome, FireFox or Internet Explorer 11`);
         throw new TypeError('"buf" argument must be a Buffer or Uint8Array');
       return X(G, W.length), H === undefined && (H = W.length - G), K(H, G, W.length), J(W, G, H);
     }
-  }), rX = p0((C) => {
-    C.randomBytes = C.rng = C.pseudoRandomBytes = C.prng = L$(), C.createHash = C.Hash = QJ(), C.createHmac = C.Hmac = VX();
-    var j = lN(), q = Object.keys(j), S = ["sha1", "sha224", "sha256", "sha384", "sha512", "md5", "rmd160"].concat(q);
+  }), tX = p0((C) => {
+    C.randomBytes = C.rng = C.pseudoRandomBytes = C.prng = L$(), C.createHash = C.Hash = QJ(), C.createHmac = C.Hmac = zX();
+    var j = nN(), q = Object.keys(j), S = ["sha1", "sha224", "sha256", "sha384", "sha512", "md5", "rmd160"].concat(q);
     C.getHashes = function() {
       return S;
     };
-    var U = TX();
+    var U = MX();
     C.pbkdf2 = U.pbkdf2, C.pbkdf2Sync = U.pbkdf2Sync;
-    var P = YA();
+    var P = GA();
     C.Cipher = P.Cipher, C.createCipher = P.createCipher, C.Cipheriv = P.Cipheriv, C.createCipheriv = P.createCipheriv, C.Decipher = P.Decipher, C.createDecipher = P.createDecipher, C.Decipheriv = P.Decipheriv, C.createDecipheriv = P.createDecipheriv, C.getCiphers = P.getCiphers, C.listCiphers = P.listCiphers;
-    var $ = DA();
+    var $ = VA();
     C.DiffieHellmanGroup = $.DiffieHellmanGroup, C.createDiffieHellmanGroup = $.createDiffieHellmanGroup, C.getDiffieHellman = $.getDiffieHellman, C.createDiffieHellman = $.createDiffieHellman, C.DiffieHellman = $.DiffieHellman;
-    var Y = oA();
-    C.createSign = Y.createSign, C.Sign = Y.Sign, C.createVerify = Y.createVerify, C.Verify = Y.Verify, C.createECDH = aA();
-    var X = eA();
+    var Y = aA();
+    C.createSign = Y.createSign, C.Sign = Y.Sign, C.createVerify = Y.createVerify, C.Verify = Y.Verify, C.createECDH = tA();
+    var X = JC();
     C.publicEncrypt = X.publicEncrypt, C.privateEncrypt = X.privateEncrypt, C.publicDecrypt = X.publicDecrypt, C.privateDecrypt = X.privateDecrypt;
-    var K = $C();
+    var K = QC();
     C.randomFill = K.randomFill, C.randomFillSync = K.randomFillSync, C.createCredentials = function() {
       throw new Error(["sorry, createCredentials is not implemented yet", "we accept pull requests", "https://github.com/crypto-browserify/crypto-browserify"].join(`
 `));
     }, C.constants = { DH_CHECK_P_NOT_SAFE_PRIME: 2, DH_CHECK_P_NOT_PRIME: 1, DH_UNABLE_TO_CHECK_GENERATOR: 4, DH_NOT_SUITABLE_GENERATOR: 8, NPN_ENABLED: 1, ALPN_ENABLED: 1, RSA_PKCS1_PADDING: 1, RSA_SSLV23_PADDING: 2, RSA_NO_PADDING: 3, RSA_PKCS1_OAEP_PADDING: 4, RSA_X931_PADDING: 5, RSA_PKCS1_PSS_PADDING: 6, POINT_CONVERSION_COMPRESSED: 2, POINT_CONVERSION_UNCOMPRESSED: 4, POINT_CONVERSION_HYBRID: 6 };
-  }), tX = {};
-  Z5(tX, { DEFAULT_ENCODING: () => G$, default: () => eX, getCurves: () => wZ, getRandomValues: () => qZ, randomUUID: () => vZ, scrypt: () => D5, scryptSync: () => X5, timingSafeEqual: () => JJ, webcrypto: () => kZ });
-  QZ(tX, b7(rX()));
-  JC = b7(rX()), G$ = "buffer", qZ = (C) => crypto.getRandomValues(C), vZ = () => crypto.randomUUID(), QC = ["p192", "p224", "p256", "p384", "p521", "curve25519", "ed25519", "secp256k1", "secp224r1", "prime256v1", "prime192v1", "ed25519", "secp384r1", "secp521r1"], JJ = "timingSafeEqual" in crypto ? (C, j) => {
+  }), eX = {};
+  Z5(eX, { DEFAULT_ENCODING: () => G$, default: () => $D, getCurves: () => wZ, getRandomValues: () => qZ, randomUUID: () => vZ, scrypt: () => D5, scryptSync: () => X5, timingSafeEqual: () => JJ, webcrypto: () => kZ });
+  QZ(eX, b7(tX()));
+  ZC = b7(tX()), G$ = "buffer", qZ = (C) => crypto.getRandomValues(C), vZ = () => crypto.randomUUID(), KC = ["p192", "p224", "p256", "p384", "p521", "curve25519", "ed25519", "secp256k1", "secp224r1", "prime256v1", "prime192v1", "ed25519", "secp384r1", "secp521r1"], JJ = "timingSafeEqual" in crypto ? (C, j) => {
     let { byteLength: q } = C, { byteLength: S } = j;
     if (typeof q != "number" || typeof S != "number")
       throw new TypeError("Input must be an array buffer view");
@@ -61026,7 +61030,7 @@ use chrome, FireFox or Internet Explorer 11`);
     }
   } : undefined;
   JJ && (Object.defineProperty(JJ, "name", { value: "::bunternal::" }), Object.defineProperty(D5, "name", { value: "::bunternal::" }), Object.defineProperty(X5, "name", { value: "::bunternal::" }));
-  kZ = crypto, eX = { ...JC, getRandomValues: qZ, randomUUID: vZ, timingSafeEqual: JJ, scryptSync: X5, scrypt: D5, webcrypto: kZ, getCurves: wZ };
+  kZ = crypto, $D = { ...ZC, getRandomValues: qZ, randomUUID: vZ, timingSafeEqual: JJ, scryptSync: X5, scrypt: D5, webcrypto: kZ, getCurves: wZ };
   /*!
    * The buffer module from node.js, for the browser.
    *
@@ -61036,7 +61040,7 @@ use chrome, FireFox or Internet Explorer 11`);
   /*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */
   /*! safe-buffer. MIT License. Feross Aboukhadijeh <https://feross.org/opensource> */
 });
-var ZD = i6((QD, R5) => {
+var KD = i6((ZD, R5) => {
   (function(C, j, q) {
     var S = 256, U = 6, P = 52, $ = "random", Y = q.pow(S, U), X = q.pow(2, P), K = X * 2, Q = S - 1, J;
     function Z(D, F, T) {
@@ -61118,10 +61122,10 @@ var ZD = i6((QD, R5) => {
     function V(D) {
       return String.fromCharCode.apply(0, D);
     }
-    if (L(q.random(), j), typeof R5 == "object" && QD) {
+    if (L(q.random(), j), typeof R5 == "object" && ZD) {
       R5.exports = Z;
       try {
-        J = (JD(), lQ($D));
+        J = (QD(), lQ(JD));
       } catch (D) {
       }
     } else if (typeof define == "function" && define.amd)
@@ -61130,17 +61134,17 @@ var ZD = i6((QD, R5) => {
       });
     else
       q["seed" + $] = Z;
-  })(typeof self !== "undefined" ? self : QD, [], Math);
+  })(typeof self !== "undefined" ? self : ZD, [], Math);
 });
-var hZ = i6((Hg, KD) => {
-  var ZC = gL(), KC = bL(), HC = pL(), WC = uL(), YC = cL(), UC = sL(), c7 = ZD();
-  c7.alea = ZC;
-  c7.xor128 = KC;
-  c7.xorwow = HC;
-  c7.xorshift7 = WC;
-  c7.xor4096 = YC;
-  c7.tychei = UC;
-  KD.exports = c7;
+var hZ = i6((Ug, HD) => {
+  var HC = yL(), WC = mL(), YC = dL(), UC = _L(), GC = lL(), LC = nL(), c7 = KD();
+  c7.alea = HC;
+  c7.xor128 = WC;
+  c7.xorwow = YC;
+  c7.xorshift7 = UC;
+  c7.xor4096 = GC;
+  c7.tychei = LC;
+  HD.exports = c7;
 });
 var yZ = i6((xZ, gZ) => {
   (function(C, j) {
@@ -61917,7 +61921,7 @@ var yZ = i6((xZ, gZ) => {
     return P;
   });
 });
-var RR = i6((WK, DR) => {
+var VR = i6((WK, RR) => {
   (function(C) {
     var j = Math.cosh || function(K) {
       return Math.abs(K) < 0.000000001 ? 1 - K : (Math.exp(K) + Math.exp(-K)) * 0.5;
@@ -62292,12 +62296,12 @@ var RR = i6((WK, DR) => {
         return X;
       });
     else if (typeof WK === "object")
-      Object.defineProperty(X, "__esModule", { value: true }), X.default = X, X.Complex = X, DR.exports = X;
+      Object.defineProperty(X, "__esModule", { value: true }), X.default = X, X.Complex = X, RR.exports = X;
     else
       C.Complex = X;
   })(WK);
 });
-var zR = i6((UK, VR) => {
+var FR = i6((UK, zR) => {
   (function(C) {
     var j = 2000, q = { s: 1, n: 0, d: 1 };
     function S(H, L) {
@@ -62617,13 +62621,13 @@ var zR = i6((UK, VR) => {
           F += L / R | 0, L %= R, L *= 10;
       return F;
     } }, typeof UK === "object")
-      Object.defineProperty(J, "__esModule", { value: true }), J.default = J, J.Fraction = J, VR.exports = J;
+      Object.defineProperty(J, "__esModule", { value: true }), J.default = J, J.Fraction = J, zR.exports = J;
     else
       C.Fraction = J;
   })(UK);
 });
-var vz = i6((Gi, qz) => {
-  qz.exports = function C(j, q) {
+var wz = i6((Di, vz) => {
+  vz.exports = function C(j, q) {
     var S = /(^([+\-]?(?:0|[1-9]\d*)(?:\.\d*)?(?:[eE][+\-]?\d+)?)?$|^0x[0-9a-f]+$|\d+)/gi, U = /(^[ ]*|[ ]*$)/g, P = /(^([\w ]+,?[\w ]+)?[\w ]+,?[\w ]+\d+:\d+(:\d+)?[\w ]?|^\d{1,4}[\/\-]\d{1,4}[\/\-]\d{1,4}|^\w+, \w+ \d+, \d{4})/, $ = /^0x[0-9a-f]+$/i, Y = /^0/, X = function(D) {
       return C.insensitive && ("" + D).toLowerCase() || "" + D;
     }, K = X(j).replace(U, "") || "", Q = X(q).replace(U, "") || "", J = K.replace(S, "\0$1\0").replace(/\0$/, "").replace(/^\0/, "").split("\0"), Z = Q.replace(S, "\0$1\0").replace(/\0$/, "").replace(/^\0/, "").split("\0"), W = parseInt(K.match($), 16) || J.length !== 1 && K.match(P) && Date.parse(K), G = parseInt(Q.match($), 16) || W && Q.match(P) && Date.parse(Q) || null, H, L;
@@ -62646,7 +62650,7 @@ var vz = i6((Gi, qz) => {
     return 0;
   };
 });
-var h2 = i6((C00, k2) => {
+var f2 = i6((q00, h2) => {
   var q1 = Object.assign || function(C) {
     for (var j = 1;j < arguments.length; j++) {
       var q = arguments[j];
@@ -62655,11 +62659,11 @@ var h2 = i6((C00, k2) => {
           C[S] = q[S];
     }
     return C;
-  }, ek = { "{": "\\{", "}": "\\}", "\\": "\\textbackslash{}", "#": "\\#", $: "\\$", "%": "\\%", "&": "\\&", "^": "\\textasciicircum{}", _: "\\_", "~": "\\textasciitilde{}" }, $h = { "\u2013": "\\--", "\u2014": "\\---", " ": "~", "\t": "\\qquad{}", "\r\n": "\\newline{}", "\n": "\\newline{}" }, Jh = function C(j, q) {
+  }, Jh = { "{": "\\{", "}": "\\}", "\\": "\\textbackslash{}", "#": "\\#", $: "\\$", "%": "\\%", "&": "\\&", "^": "\\textasciicircum{}", _: "\\_", "~": "\\textasciitilde{}" }, Qh = { "\u2013": "\\--", "\u2014": "\\---", " ": "~", "\t": "\\qquad{}", "\r\n": "\\newline{}", "\n": "\\newline{}" }, Zh = function C(j, q) {
     return q1({}, j, q);
   };
-  k2.exports = function(C) {
-    var j = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {}, q = j.preserveFormatting, S = q === undefined ? false : q, U = j.escapeMapFn, P = U === undefined ? Jh : U, $ = String(C), Y = "", X = P(q1({}, ek), S ? q1({}, $h) : {}), K = Object.keys(X), Q = function J() {
+  h2.exports = function(C) {
+    var j = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {}, q = j.preserveFormatting, S = q === undefined ? false : q, U = j.escapeMapFn, P = U === undefined ? Zh : U, $ = String(C), Y = "", X = P(q1({}, Jh), S ? q1({}, Qh) : {}), K = Object.keys(X), Q = function J() {
       var Z = false;
       if (K.forEach(function(W, G) {
         if (Z)
@@ -62674,15 +62678,15 @@ var h2 = i6((C00, k2) => {
     return Y;
   };
 });
-var YN = i6((G20, WN) => {
-  var cx = function(C) {
+var UN = i6((D20, YN) => {
+  var sx = function(C) {
     let j = C.length - 1, q = C[j];
     while (q === " " || q === "\t")
       q = C[--j];
     return C.substring(0, j + 1);
-  }, lx = function(C) {
-    return C.split("\n").map((S) => cx(S)).join("\n");
-  }, sx = function(C) {
+  }, nx = function(C) {
+    return C.split("\n").map((S) => sx(S)).join("\n");
+  }, ox = function(C) {
     return C;
   };
   /*!
@@ -62691,10 +62695,10 @@ var YN = i6((G20, WN) => {
    * Copyright (c) 2014-2023, Jon Schlinkert.
    * Released under the MIT License.
    */
-  WN.exports = function(C, j) {
+  YN.exports = function(C, j) {
     if (j = j || {}, C == null)
       return C;
-    var q = j.width || 50, S = typeof j.indent === "string" ? j.indent : "  ", U = j.newline || "\n" + S, P = typeof j.escape === "function" ? j.escape : sx, $ = ".{1," + q + "}";
+    var q = j.width || 50, S = typeof j.indent === "string" ? j.indent : "  ", U = j.newline || "\n" + S, P = typeof j.escape === "function" ? j.escape : ox, $ = ".{1," + q + "}";
     if (j.cut !== true)
       $ += "([\\s\u200B]+|$)|[^\\s\u200B]+?([\\s\u200B]+|$)";
     var Y = new RegExp($, "g"), X = C.match(Y) || [], K = S + X.map(function(Q) {
@@ -62703,23 +62707,23 @@ var YN = i6((G20, WN) => {
       return P(Q);
     }).join(U);
     if (j.trim === true)
-      K = lx(K);
+      K = nx(K);
     return K;
   };
 });
-var DN = {};
-hL(DN, { zzfx: () => {
+var RN = {};
+fL(RN, { zzfx: () => {
   {
-    return ix;
+    return rx;
   }
 }, ZZFX: () => {
   {
-    return XN;
+    return DN;
   }
 } });
-var XN;
-var RN = fL(() => {
-  XN = { volume: 0.3, sampleRate: 44100, x: new AudioContext, play: function(...C) {
+var DN;
+var VN = xL(() => {
+  DN = { volume: 0.3, sampleRate: 44100, x: new AudioContext, play: function(...C) {
     return this.playSamples(this.buildSamples(...C));
   }, playSamples: function(...C) {
     const j = this.x.createBuffer(C.length, C[0].length, this.sampleRate), q = this.x.createBufferSource();
@@ -62745,14 +62749,14 @@ var D6 = C9(nQ(), 1);
 var tJ = C9(hZ(), 1);
 var fZ = { epsilon: 0.000000000001, matrix: "Matrix", number: "number", precision: 64, predictable: false, randomSeed: null };
 var C8 = Array.isArray;
-var BD = ["Matrix", "Array"];
-var TD = ["number", "BigNumber", "Fraction"];
+var TD = ["Matrix", "Array"];
+var MD = ["number", "BigNumber", "Fraction"];
 var l0 = function C(j) {
   if (j)
     throw new Error("The global config is readonly. \nPlease create a mathjs instance if you want to change the default configuration. \nExample:\n\n  import { create, all } from \'mathjs\';\n  const mathjs = create(all);\n  mathjs.config({ number: \'BigNumber\' });\n");
   return Object.freeze(fZ);
 };
-G6(l0, fZ, { MATRIX_OPTIONS: BD, NUMBER_OPTIONS: TD });
+G6(l0, fZ, { MATRIX_OPTIONS: TD, NUMBER_OPTIONS: MD });
 var aZ = C9(yZ(), 1);
 var bZ = function(C2, j, q) {
   var S = { 2: "0b", 8: "0o", 16: "0x" }, U = S[j], P = "";
@@ -62780,7 +62784,7 @@ var F$ = function(C2) {
     j.push(0);
   return j;
 };
-var MD = function(C2, j) {
+var ED = function(C2, j) {
   if (U8(C2))
     return C2;
   else if (K8(C2))
@@ -62788,7 +62792,7 @@ var MD = function(C2, j) {
   else
     j();
 };
-var ED = function(C2, j) {
+var OD = function(C2, j) {
   if (U8(C2))
     return C2;
   else if (K8(C2))
@@ -62804,16 +62808,16 @@ var F9 = Math.sign || function(C2) {
   else
     return 0;
 };
-var OD = Math.log2 || function C2(j) {
+var ND = Math.log2 || function C2(j) {
   return Math.log(j) / Math.LN2;
 };
-var ND = Math.log10 || function C3(j) {
+var AD = Math.log10 || function C3(j) {
   return Math.log(j) / Math.LN10;
 };
 var P5 = Math.log1p || function(C4) {
   return Math.log(C4 + 1);
 };
-var AD = Math.cbrt || function C4(j) {
+var CD = Math.cbrt || function C4(j) {
   if (j === 0)
     return j;
   var q = j < 0, S;
@@ -62825,23 +62829,23 @@ var AD = Math.cbrt || function C4(j) {
     S = j;
   return q ? -S : S;
 };
-var CD = Math.expm1 || function C5(j) {
+var jD = Math.expm1 || function C5(j) {
   return j >= 0.0002 || j <= -0.0002 ? Math.exp(j) - 1 : j + j * j / 2 + j * j * j / 6;
 };
-var DC = Number.EPSILON || 0.0000000000000002220446049250313;
-var qD = Math.acosh || function(C6) {
+var VC = Number.EPSILON || 0.0000000000000002220446049250313;
+var vD = Math.acosh || function(C6) {
   return Math.log(Math.sqrt(C6 * C6 - 1) + C6);
 };
-var vD = Math.asinh || function(C6) {
+var wD = Math.asinh || function(C6) {
   return Math.log(Math.sqrt(C6 * C6 + 1) + C6);
 };
-var wD = Math.atanh || function(C6) {
+var kD = Math.atanh || function(C6) {
   return Math.log((1 + C6) / (1 - C6)) / 2;
 };
 var B5 = Math.cosh || function(C6) {
   return (Math.exp(C6) + Math.exp(-C6)) / 2;
 };
-var kD = Math.sinh || function(C6) {
+var hD = Math.sinh || function(C6) {
   return (Math.exp(C6) - Math.exp(-C6)) / 2;
 };
 var T5 = Math.tanh || function(C6) {
@@ -62874,7 +62878,7 @@ var dZ = function(C6, j, q) {
       throw new Error("Base ".concat(j, " not supported "));
   }
 };
-var xD = function(C6, j) {
+var gD = function(C6, j) {
   if (U8(C6))
     return C6;
   else if (K8(C6))
@@ -62882,18 +62886,18 @@ var xD = function(C6, j) {
   else
     return j;
 };
-var zC = function(C6, j) {
+var PC = function(C6, j) {
   if (typeof C6 === "number")
     return q9(C6, j);
   if (K8(C6))
-    return gD(C6, j);
-  if (FC(C6))
+    return yD(C6, j);
+  if (IC(C6))
     if (!j || j.fraction !== "decimal")
       return C6.s * C6.n + "/" + C6.d;
     else
       return C6.toString();
   if (Array.isArray(C6))
-    return mD(C6, j);
+    return pD(C6, j);
   if (z6(C6))
     return s7(C6);
   if (typeof C6 === "function")
@@ -62911,22 +62915,22 @@ var zC = function(C6, j) {
     }
   return String(C6);
 };
-var mD = function(C6, j) {
+var pD = function(C6, j) {
   if (Array.isArray(C6)) {
     var q = "[", S = C6.length;
     for (var U = 0;U < S; U++) {
       if (U !== 0)
         q += ", ";
-      q += mD(C6[U], j);
+      q += pD(C6[U], j);
     }
     return q += "]", q;
   } else
     return G8(C6, j);
 };
-var FC = function(C6) {
+var IC = function(C6) {
   return C6 && typeof C6 === "object" && typeof C6.s === "number" && typeof C6.n === "number" && typeof C6.d === "number" || false;
 };
-var yD = { '"': '\\"', "\\": "\\\\", "\b": "\\b", "\f": "\\f", "\n": "\\n", "\r": "\\r", "\t": "\\t" };
+var bD = { '"': '\\"', "\\": "\\\\", "\b": "\\b", "\f": "\\f", "\n": "\\n", "\r": "\\r", "\t": "\\t" };
 D8.prototype = new RangeError;
 D8.prototype.constructor = RangeError;
 D8.prototype.name = "DimensionError";
@@ -62935,7 +62939,7 @@ y6.prototype = new RangeError;
 y6.prototype.constructor = RangeError;
 y6.prototype.name = "IndexError";
 y6.prototype.isIndexError = true;
-var pD = function(C6, j, q) {
+var dD = function(C6, j, q) {
   var S, U = C6.length;
   if (U !== j[q])
     throw new D8(U, j[q]);
@@ -62945,7 +62949,7 @@ var pD = function(C6, j, q) {
       var $ = C6[S];
       if (!Array.isArray($))
         throw new D8(j.length - 1, j.length, "<");
-      pD(C6[S], j, P);
+      dD(C6[S], j, P);
     }
   } else
     for (S = 0;S < U; S++)
@@ -62971,10 +62975,10 @@ var uZ = function(C6, j, q, S) {
       C6[U] = S;
   }
 };
-var dD = function(C6) {
+var uD = function(C6) {
   return C6.reduce((j, q) => j * q, 1);
 };
-var PC = function(C6, j) {
+var BC = function(C6, j) {
   var q = C6, S;
   for (var U = j.length - 1;U > 0; U--) {
     var P = j[U];
@@ -62986,58 +62990,58 @@ var PC = function(C6, j) {
   }
   return q;
 };
-var uD = function(C6, j, q) {
+var _D = function(C6, j, q) {
   var S, U;
   if (q < j) {
     var P = q + 1;
     for (S = 0, U = C6.length;S < U; S++)
-      C6[S] = uD(C6[S], j, P);
+      C6[S] = _D(C6[S], j, P);
   } else
     while (Array.isArray(C6))
       C6 = C6[0];
   return C6;
 };
-var _D = function(C6, j, q) {
+var cD = function(C6, j, q) {
   var S, U;
   if (Array.isArray(C6)) {
     var P = q + 1;
     for (S = 0, U = C6.length;S < U; S++)
-      C6[S] = _D(C6[S], j, P);
+      C6[S] = cD(C6[S], j, P);
   } else
     for (var $ = q;$ < j; $++)
       C6 = [C6];
   return C6;
 };
-var cD = function(C6, j, q, S) {
+var lD = function(C6, j, q, S) {
   if (S < q) {
     if (C6.length !== j.length)
       throw new D8(C6.length, j.length);
     var U = [];
     for (var P = 0;P < C6.length; P++)
-      U[P] = cD(C6[P], j[P], q, S + 1);
+      U[P] = lD(C6[P], j[P], q, S + 1);
     return U;
   } else
     return C6.concat(j);
 };
 var L6 = function(C6, j) {
-  if (oD(C6) && sD(C6, j))
+  if (iD(C6) && nD(C6, j))
     return C6[j];
   if (typeof C6[j] === "function" && N5(C6, j))
     throw new Error('Cannot access method "' + j + '" as a property');
   throw new Error('No access to property "' + j + '"');
 };
 var m9 = function(C6, j, q) {
-  if (oD(C6) && sD(C6, j))
+  if (iD(C6) && nD(C6, j))
     return C6[j] = q, q;
   throw new Error('No access to property "' + j + '"');
 };
-var lD = function(C6, j) {
+var sD = function(C6, j) {
   return j in C6;
 };
-var sD = function(C6, j) {
+var nD = function(C6, j) {
   if (!C6 || typeof C6 !== "object")
     return false;
-  if (Q8(NC, j))
+  if (Q8(CC, j))
     return true;
   if (j in Object.prototype)
     return false;
@@ -63045,7 +63049,7 @@ var sD = function(C6, j) {
     return false;
   return true;
 };
-var nD = function(C6, j) {
+var oD = function(C6, j) {
   if (!N5(C6, j))
     throw new Error('No access to method "' + j + '"');
   return C6[j];
@@ -63055,7 +63059,7 @@ var N5 = function(C6, j) {
     return false;
   if (Q8(C6, j) && Object.getPrototypeOf && j in Object.getPrototypeOf(C6))
     return false;
-  if (Q8(AC, j))
+  if (Q8(jC, j))
     return true;
   if (j in Object.prototype)
     return false;
@@ -63063,12 +63067,12 @@ var N5 = function(C6, j) {
     return false;
   return true;
 };
-var oD = function(C6) {
+var iD = function(C6) {
   return typeof C6 === "object" && C6 && C6.constructor === Object;
 };
-var NC = { length: true, name: true };
-var AC = { toString: true, valueOf: true, toLocaleString: true };
-var iD = function(C6, j) {
+var CC = { length: true, name: true };
+var jC = { toString: true, valueOf: true, toLocaleString: true };
+var aD = function(C6, j) {
   return { next: () => {
     var q = C6.next();
     return q.done ? q : { value: j(q.value), done: false };
@@ -63089,10 +63093,10 @@ class M$ {
     return m9(this.wrappedObject, C6, j), this;
   }
   has(C6) {
-    return lD(this.wrappedObject, C6);
+    return sD(this.wrappedObject, C6);
   }
   entries() {
-    return iD(this.keys(), (C6) => [C6, this.get(C6)]);
+    return aD(this.keys(), (C6) => [C6, this.get(C6)]);
   }
   forEach(C6) {
     for (var j of this.keys())
@@ -63131,7 +63135,7 @@ class LJ {
     return new Set([...this.a.keys(), ...this.b.keys()])[Symbol.iterator]();
   }
   entries() {
-    return iD(this.keys(), (C6) => [C6, this.get(C6)]);
+    return aD(this.keys(), (C6) => [C6, this.get(C6)]);
   }
   forEach(C6) {
     for (var j of this.keys())
@@ -63153,22 +63157,22 @@ var oZ = function(C6) {
 var A5 = function(C6) {
   throw new Error("Cannot convert value ".concat(C6, " into a Complex number: no class 'Complex' provided"));
 };
-var jC = function() {
+var qC = function() {
   throw new Error("Cannot convert array into a Matrix: no class \'DenseMatrix\' provided");
 };
 var iZ = function(C6) {
   throw new Error("Cannot convert value ".concat(C6, " into a Fraction, no class 'Fraction' provided."));
 };
-var rD = function C6() {
-  return rD = aZ.default.create, aZ.default;
+var tD = function C6() {
+  return tD = aZ.default.create, aZ.default;
 };
-var CC = ["?BigNumber", "?Complex", "?DenseMatrix", "?Fraction"];
-var rZ = Q0("typed", CC, function C7(j) {
-  var { BigNumber: q, Complex: S, DenseMatrix: U, Fraction: P } = j, $ = rD();
-  return $.clear(), $.addTypes([{ name: "number", test: U8 }, { name: "Complex", test: a6 }, { name: "BigNumber", test: K8 }, { name: "Fraction", test: e9 }, { name: "Unit", test: f6 }, { name: "identifier", test: (Y) => z6 && /^(?:[A-Za-z\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0560-\u0588\u05D0-\u05EA\u05EF-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u0860-\u086A\u0870-\u0887\u0889-\u088E\u08A0-\u08C9\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u09FC\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0AF9\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58-\u0C5A\u0C5D\u0C60\u0C61\u0C80\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D04-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D54-\u0D56\u0D5F-\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E86-\u0E8A\u0E8C-\u0EA3\u0EA5\u0EA7-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16F1-\u16F8\u1700-\u1711\u171F-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1878\u1880-\u1884\u1887-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4C\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1C80-\u1C88\u1C90-\u1CBA\u1CBD-\u1CBF\u1CE9-\u1CEC\u1CEE-\u1CF3\u1CF5\u1CF6\u1CFA\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312F\u3131-\u318E\u31A0-\u31BF\u31F0-\u31FF\u3400-\u4DBF\u4E00-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA7CA\uA7D0\uA7D1\uA7D3\uA7D5-\uA7D9\uA7F2-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA8FD\uA8FE\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uA9E0-\uA9E4\uA9E6-\uA9EF\uA9FA-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB69\uAB70-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]|\uD800[\uDC00-\uDC0B\uDC0D-\uDC26\uDC28-\uDC3A\uDC3C\uDC3D\uDC3F-\uDC4D\uDC50-\uDC5D\uDC80-\uDCFA\uDE80-\uDE9C\uDEA0-\uDED0\uDF00-\uDF1F\uDF2D-\uDF40\uDF42-\uDF49\uDF50-\uDF75\uDF80-\uDF9D\uDFA0-\uDFC3\uDFC8-\uDFCF]|\uD801[\uDC00-\uDC9D\uDCB0-\uDCD3\uDCD8-\uDCFB\uDD00-\uDD27\uDD30-\uDD63\uDD70-\uDD7A\uDD7C-\uDD8A\uDD8C-\uDD92\uDD94\uDD95\uDD97-\uDDA1\uDDA3-\uDDB1\uDDB3-\uDDB9\uDDBB\uDDBC\uDE00-\uDF36\uDF40-\uDF55\uDF60-\uDF67\uDF80-\uDF85\uDF87-\uDFB0\uDFB2-\uDFBA]|\uD802[\uDC00-\uDC05\uDC08\uDC0A-\uDC35\uDC37\uDC38\uDC3C\uDC3F-\uDC55\uDC60-\uDC76\uDC80-\uDC9E\uDCE0-\uDCF2\uDCF4\uDCF5\uDD00-\uDD15\uDD20-\uDD39\uDD80-\uDDB7\uDDBE\uDDBF\uDE00\uDE10-\uDE13\uDE15-\uDE17\uDE19-\uDE35\uDE60-\uDE7C\uDE80-\uDE9C\uDEC0-\uDEC7\uDEC9-\uDEE4\uDF00-\uDF35\uDF40-\uDF55\uDF60-\uDF72\uDF80-\uDF91]|\uD803[\uDC00-\uDC48\uDC80-\uDCB2\uDCC0-\uDCF2\uDD00-\uDD23\uDE80-\uDEA9\uDEB0\uDEB1\uDF00-\uDF1C\uDF27\uDF30-\uDF45\uDF70-\uDF81\uDFB0-\uDFC4\uDFE0-\uDFF6]|\uD804[\uDC03-\uDC37\uDC71\uDC72\uDC75\uDC83-\uDCAF\uDCD0-\uDCE8\uDD03-\uDD26\uDD44\uDD47\uDD50-\uDD72\uDD76\uDD83-\uDDB2\uDDC1-\uDDC4\uDDDA\uDDDC\uDE00-\uDE11\uDE13-\uDE2B\uDE3F\uDE40\uDE80-\uDE86\uDE88\uDE8A-\uDE8D\uDE8F-\uDE9D\uDE9F-\uDEA8\uDEB0-\uDEDE\uDF05-\uDF0C\uDF0F\uDF10\uDF13-\uDF28\uDF2A-\uDF30\uDF32\uDF33\uDF35-\uDF39\uDF3D\uDF50\uDF5D-\uDF61]|\uD805[\uDC00-\uDC34\uDC47-\uDC4A\uDC5F-\uDC61\uDC80-\uDCAF\uDCC4\uDCC5\uDCC7\uDD80-\uDDAE\uDDD8-\uDDDB\uDE00-\uDE2F\uDE44\uDE80-\uDEAA\uDEB8\uDF00-\uDF1A\uDF40-\uDF46]|\uD806[\uDC00-\uDC2B\uDCA0-\uDCDF\uDCFF-\uDD06\uDD09\uDD0C-\uDD13\uDD15\uDD16\uDD18-\uDD2F\uDD3F\uDD41\uDDA0-\uDDA7\uDDAA-\uDDD0\uDDE1\uDDE3\uDE00\uDE0B-\uDE32\uDE3A\uDE50\uDE5C-\uDE89\uDE9D\uDEB0-\uDEF8]|\uD807[\uDC00-\uDC08\uDC0A-\uDC2E\uDC40\uDC72-\uDC8F\uDD00-\uDD06\uDD08\uDD09\uDD0B-\uDD30\uDD46\uDD60-\uDD65\uDD67\uDD68\uDD6A-\uDD89\uDD98\uDEE0-\uDEF2\uDF02\uDF04-\uDF10\uDF12-\uDF33\uDFB0]|\uD808[\uDC00-\uDF99]|\uD809[\uDC80-\uDD43]|\uD80B[\uDF90-\uDFF0]|[\uD80C\uD81C-\uD820\uD822\uD840-\uD868\uD86A-\uD86C\uD86F-\uD872\uD874-\uD879\uD880-\uD883\uD885-\uD887][\uDC00-\uDFFF]|\uD80D[\uDC00-\uDC2F\uDC41-\uDC46]|\uD811[\uDC00-\uDE46]|\uD81A[\uDC00-\uDE38\uDE40-\uDE5E\uDE70-\uDEBE\uDED0-\uDEED\uDF00-\uDF2F\uDF40-\uDF43\uDF63-\uDF77\uDF7D-\uDF8F]|\uD81B[\uDE40-\uDE7F\uDF00-\uDF4A\uDF50\uDF93-\uDF9F\uDFE0\uDFE1\uDFE3]|\uD821[\uDC00-\uDFF7]|\uD823[\uDC00-\uDCD5\uDD00-\uDD08]|\uD82B[\uDFF0-\uDFF3\uDFF5-\uDFFB\uDFFD\uDFFE]|\uD82C[\uDC00-\uDD22\uDD32\uDD50-\uDD52\uDD55\uDD64-\uDD67\uDD70-\uDEFB]|\uD82F[\uDC00-\uDC6A\uDC70-\uDC7C\uDC80-\uDC88\uDC90-\uDC99]|\uD835[\uDC00-\uDC54\uDC56-\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD1E-\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD52-\uDEA5\uDEA8-\uDEC0\uDEC2-\uDEDA\uDEDC-\uDEFA\uDEFC-\uDF14\uDF16-\uDF34\uDF36-\uDF4E\uDF50-\uDF6E\uDF70-\uDF88\uDF8A-\uDFA8\uDFAA-\uDFC2\uDFC4-\uDFCB]|\uD837[\uDF00-\uDF1E\uDF25-\uDF2A]|\uD838[\uDC30-\uDC6D\uDD00-\uDD2C\uDD37-\uDD3D\uDD4E\uDE90-\uDEAD\uDEC0-\uDEEB]|\uD839[\uDCD0-\uDCEB\uDFE0-\uDFE6\uDFE8-\uDFEB\uDFED\uDFEE\uDFF0-\uDFFE]|\uD83A[\uDC00-\uDCC4\uDD00-\uDD43\uDD4B]|\uD83B[\uDE00-\uDE03\uDE05-\uDE1F\uDE21\uDE22\uDE24\uDE27\uDE29-\uDE32\uDE34-\uDE37\uDE39\uDE3B\uDE42\uDE47\uDE49\uDE4B\uDE4D-\uDE4F\uDE51\uDE52\uDE54\uDE57\uDE59\uDE5B\uDE5D\uDE5F\uDE61\uDE62\uDE64\uDE67-\uDE6A\uDE6C-\uDE72\uDE74-\uDE77\uDE79-\uDE7C\uDE7E\uDE80-\uDE89\uDE8B-\uDE9B\uDEA1-\uDEA3\uDEA5-\uDEA9\uDEAB-\uDEBB]|\uD869[\uDC00-\uDEDF\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF39\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D\uDC20-\uDFFF]|\uD873[\uDC00-\uDEA1\uDEB0-\uDFFF]|\uD87A[\uDC00-\uDFE0]|\uD87E[\uDC00-\uDE1D]|\uD884[\uDC00-\uDF4A\uDF50-\uDFFF]|\uD888[\uDC00-\uDFAF])(?:[0-9A-Za-z\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0560-\u0588\u05D0-\u05EA\u05EF-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u0860-\u086A\u0870-\u0887\u0889-\u088E\u08A0-\u08C9\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u09FC\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0AF9\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58-\u0C5A\u0C5D\u0C60\u0C61\u0C80\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D04-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D54-\u0D56\u0D5F-\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E86-\u0E8A\u0E8C-\u0EA3\u0EA5\u0EA7-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16F1-\u16F8\u1700-\u1711\u171F-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1878\u1880-\u1884\u1887-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4C\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1C80-\u1C88\u1C90-\u1CBA\u1CBD-\u1CBF\u1CE9-\u1CEC\u1CEE-\u1CF3\u1CF5\u1CF6\u1CFA\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312F\u3131-\u318E\u31A0-\u31BF\u31F0-\u31FF\u3400-\u4DBF\u4E00-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA7CA\uA7D0\uA7D1\uA7D3\uA7D5-\uA7D9\uA7F2-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA8FD\uA8FE\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uA9E0-\uA9E4\uA9E6-\uA9EF\uA9FA-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB69\uAB70-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]|\uD800[\uDC00-\uDC0B\uDC0D-\uDC26\uDC28-\uDC3A\uDC3C\uDC3D\uDC3F-\uDC4D\uDC50-\uDC5D\uDC80-\uDCFA\uDE80-\uDE9C\uDEA0-\uDED0\uDF00-\uDF1F\uDF2D-\uDF40\uDF42-\uDF49\uDF50-\uDF75\uDF80-\uDF9D\uDFA0-\uDFC3\uDFC8-\uDFCF]|\uD801[\uDC00-\uDC9D\uDCB0-\uDCD3\uDCD8-\uDCFB\uDD00-\uDD27\uDD30-\uDD63\uDD70-\uDD7A\uDD7C-\uDD8A\uDD8C-\uDD92\uDD94\uDD95\uDD97-\uDDA1\uDDA3-\uDDB1\uDDB3-\uDDB9\uDDBB\uDDBC\uDE00-\uDF36\uDF40-\uDF55\uDF60-\uDF67\uDF80-\uDF85\uDF87-\uDFB0\uDFB2-\uDFBA]|\uD802[\uDC00-\uDC05\uDC08\uDC0A-\uDC35\uDC37\uDC38\uDC3C\uDC3F-\uDC55\uDC60-\uDC76\uDC80-\uDC9E\uDCE0-\uDCF2\uDCF4\uDCF5\uDD00-\uDD15\uDD20-\uDD39\uDD80-\uDDB7\uDDBE\uDDBF\uDE00\uDE10-\uDE13\uDE15-\uDE17\uDE19-\uDE35\uDE60-\uDE7C\uDE80-\uDE9C\uDEC0-\uDEC7\uDEC9-\uDEE4\uDF00-\uDF35\uDF40-\uDF55\uDF60-\uDF72\uDF80-\uDF91]|\uD803[\uDC00-\uDC48\uDC80-\uDCB2\uDCC0-\uDCF2\uDD00-\uDD23\uDE80-\uDEA9\uDEB0\uDEB1\uDF00-\uDF1C\uDF27\uDF30-\uDF45\uDF70-\uDF81\uDFB0-\uDFC4\uDFE0-\uDFF6]|\uD804[\uDC03-\uDC37\uDC71\uDC72\uDC75\uDC83-\uDCAF\uDCD0-\uDCE8\uDD03-\uDD26\uDD44\uDD47\uDD50-\uDD72\uDD76\uDD83-\uDDB2\uDDC1-\uDDC4\uDDDA\uDDDC\uDE00-\uDE11\uDE13-\uDE2B\uDE3F\uDE40\uDE80-\uDE86\uDE88\uDE8A-\uDE8D\uDE8F-\uDE9D\uDE9F-\uDEA8\uDEB0-\uDEDE\uDF05-\uDF0C\uDF0F\uDF10\uDF13-\uDF28\uDF2A-\uDF30\uDF32\uDF33\uDF35-\uDF39\uDF3D\uDF50\uDF5D-\uDF61]|\uD805[\uDC00-\uDC34\uDC47-\uDC4A\uDC5F-\uDC61\uDC80-\uDCAF\uDCC4\uDCC5\uDCC7\uDD80-\uDDAE\uDDD8-\uDDDB\uDE00-\uDE2F\uDE44\uDE80-\uDEAA\uDEB8\uDF00-\uDF1A\uDF40-\uDF46]|\uD806[\uDC00-\uDC2B\uDCA0-\uDCDF\uDCFF-\uDD06\uDD09\uDD0C-\uDD13\uDD15\uDD16\uDD18-\uDD2F\uDD3F\uDD41\uDDA0-\uDDA7\uDDAA-\uDDD0\uDDE1\uDDE3\uDE00\uDE0B-\uDE32\uDE3A\uDE50\uDE5C-\uDE89\uDE9D\uDEB0-\uDEF8]|\uD807[\uDC00-\uDC08\uDC0A-\uDC2E\uDC40\uDC72-\uDC8F\uDD00-\uDD06\uDD08\uDD09\uDD0B-\uDD30\uDD46\uDD60-\uDD65\uDD67\uDD68\uDD6A-\uDD89\uDD98\uDEE0-\uDEF2\uDF02\uDF04-\uDF10\uDF12-\uDF33\uDFB0]|\uD808[\uDC00-\uDF99]|\uD809[\uDC80-\uDD43]|\uD80B[\uDF90-\uDFF0]|[\uD80C\uD81C-\uD820\uD822\uD840-\uD868\uD86A-\uD86C\uD86F-\uD872\uD874-\uD879\uD880-\uD883\uD885-\uD887][\uDC00-\uDFFF]|\uD80D[\uDC00-\uDC2F\uDC41-\uDC46]|\uD811[\uDC00-\uDE46]|\uD81A[\uDC00-\uDE38\uDE40-\uDE5E\uDE70-\uDEBE\uDED0-\uDEED\uDF00-\uDF2F\uDF40-\uDF43\uDF63-\uDF77\uDF7D-\uDF8F]|\uD81B[\uDE40-\uDE7F\uDF00-\uDF4A\uDF50\uDF93-\uDF9F\uDFE0\uDFE1\uDFE3]|\uD821[\uDC00-\uDFF7]|\uD823[\uDC00-\uDCD5\uDD00-\uDD08]|\uD82B[\uDFF0-\uDFF3\uDFF5-\uDFFB\uDFFD\uDFFE]|\uD82C[\uDC00-\uDD22\uDD32\uDD50-\uDD52\uDD55\uDD64-\uDD67\uDD70-\uDEFB]|\uD82F[\uDC00-\uDC6A\uDC70-\uDC7C\uDC80-\uDC88\uDC90-\uDC99]|\uD835[\uDC00-\uDC54\uDC56-\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD1E-\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD52-\uDEA5\uDEA8-\uDEC0\uDEC2-\uDEDA\uDEDC-\uDEFA\uDEFC-\uDF14\uDF16-\uDF34\uDF36-\uDF4E\uDF50-\uDF6E\uDF70-\uDF88\uDF8A-\uDFA8\uDFAA-\uDFC2\uDFC4-\uDFCB]|\uD837[\uDF00-\uDF1E\uDF25-\uDF2A]|\uD838[\uDC30-\uDC6D\uDD00-\uDD2C\uDD37-\uDD3D\uDD4E\uDE90-\uDEAD\uDEC0-\uDEEB]|\uD839[\uDCD0-\uDCEB\uDFE0-\uDFE6\uDFE8-\uDFEB\uDFED\uDFEE\uDFF0-\uDFFE]|\uD83A[\uDC00-\uDCC4\uDD00-\uDD43\uDD4B]|\uD83B[\uDE00-\uDE03\uDE05-\uDE1F\uDE21\uDE22\uDE24\uDE27\uDE29-\uDE32\uDE34-\uDE37\uDE39\uDE3B\uDE42\uDE47\uDE49\uDE4B\uDE4D-\uDE4F\uDE51\uDE52\uDE54\uDE57\uDE59\uDE5B\uDE5D\uDE5F\uDE61\uDE62\uDE64\uDE67-\uDE6A\uDE6C-\uDE72\uDE74-\uDE77\uDE79-\uDE7C\uDE7E\uDE80-\uDE89\uDE8B-\uDE9B\uDEA1-\uDEA3\uDEA5-\uDEA9\uDEAB-\uDEBB]|\uD869[\uDC00-\uDEDF\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF39\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D\uDC20-\uDFFF]|\uD873[\uDC00-\uDEA1\uDEB0-\uDFFF]|\uD87A[\uDC00-\uDFE0]|\uD87E[\uDC00-\uDE1D]|\uD884[\uDC00-\uDF4A\uDF50-\uDFFF]|\uD888[\uDC00-\uDFAF])*$/.test(Y) }, { name: "string", test: z6 }, { name: "Chain", test: z5 }, { name: "Array", test: C8 }, { name: "Matrix", test: $8 }, { name: "DenseMatrix", test: l7 }, { name: "SparseMatrix", test: j9 }, { name: "Range", test: z$ }, { name: "Index", test: D7 }, { name: "boolean", test: HD }, { name: "ResultSet", test: WD }, { name: "Help", test: V5 }, { name: "function", test: YD }, { name: "Date", test: UD }, { name: "RegExp", test: GD }, { name: "null", test: LD }, { name: "undefined", test: XD }, { name: "AccessorNode", test: W9 }, { name: "ArrayNode", test: x6 }, { name: "AssignmentNode", test: DD }, { name: "BlockNode", test: RD }, { name: "ConditionalNode", test: VD }, { name: "ConstantNode", test: B8 }, { name: "FunctionNode", test: r6 }, { name: "FunctionAssignmentNode", test: b9 }, { name: "IndexNode", test: z9 }, { name: "Node", test: T8 }, { name: "ObjectNode", test: V7 }, { name: "OperatorNode", test: Y6 }, { name: "ParenthesisNode", test: g6 }, { name: "RangeNode", test: zD }, { name: "RelationalNode", test: FD }, { name: "SymbolNode", test: o8 }, { name: "Map", test: nZ }, { name: "Object", test: R7 }]), $.addConversions([{ from: "number", to: "BigNumber", convert: function Y(X) {
+var SC = ["?BigNumber", "?Complex", "?DenseMatrix", "?Fraction"];
+var rZ = Q0("typed", SC, function C7(j) {
+  var { BigNumber: q, Complex: S, DenseMatrix: U, Fraction: P } = j, $ = tD();
+  return $.clear(), $.addTypes([{ name: "number", test: U8 }, { name: "Complex", test: a6 }, { name: "BigNumber", test: K8 }, { name: "Fraction", test: e9 }, { name: "Unit", test: f6 }, { name: "identifier", test: (Y) => z6 && /^(?:[A-Za-z\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0560-\u0588\u05D0-\u05EA\u05EF-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u0860-\u086A\u0870-\u0887\u0889-\u088E\u08A0-\u08C9\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u09FC\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0AF9\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58-\u0C5A\u0C5D\u0C60\u0C61\u0C80\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D04-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D54-\u0D56\u0D5F-\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E86-\u0E8A\u0E8C-\u0EA3\u0EA5\u0EA7-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16F1-\u16F8\u1700-\u1711\u171F-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1878\u1880-\u1884\u1887-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4C\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1C80-\u1C88\u1C90-\u1CBA\u1CBD-\u1CBF\u1CE9-\u1CEC\u1CEE-\u1CF3\u1CF5\u1CF6\u1CFA\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312F\u3131-\u318E\u31A0-\u31BF\u31F0-\u31FF\u3400-\u4DBF\u4E00-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA7CA\uA7D0\uA7D1\uA7D3\uA7D5-\uA7D9\uA7F2-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA8FD\uA8FE\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uA9E0-\uA9E4\uA9E6-\uA9EF\uA9FA-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB69\uAB70-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]|\uD800[\uDC00-\uDC0B\uDC0D-\uDC26\uDC28-\uDC3A\uDC3C\uDC3D\uDC3F-\uDC4D\uDC50-\uDC5D\uDC80-\uDCFA\uDE80-\uDE9C\uDEA0-\uDED0\uDF00-\uDF1F\uDF2D-\uDF40\uDF42-\uDF49\uDF50-\uDF75\uDF80-\uDF9D\uDFA0-\uDFC3\uDFC8-\uDFCF]|\uD801[\uDC00-\uDC9D\uDCB0-\uDCD3\uDCD8-\uDCFB\uDD00-\uDD27\uDD30-\uDD63\uDD70-\uDD7A\uDD7C-\uDD8A\uDD8C-\uDD92\uDD94\uDD95\uDD97-\uDDA1\uDDA3-\uDDB1\uDDB3-\uDDB9\uDDBB\uDDBC\uDE00-\uDF36\uDF40-\uDF55\uDF60-\uDF67\uDF80-\uDF85\uDF87-\uDFB0\uDFB2-\uDFBA]|\uD802[\uDC00-\uDC05\uDC08\uDC0A-\uDC35\uDC37\uDC38\uDC3C\uDC3F-\uDC55\uDC60-\uDC76\uDC80-\uDC9E\uDCE0-\uDCF2\uDCF4\uDCF5\uDD00-\uDD15\uDD20-\uDD39\uDD80-\uDDB7\uDDBE\uDDBF\uDE00\uDE10-\uDE13\uDE15-\uDE17\uDE19-\uDE35\uDE60-\uDE7C\uDE80-\uDE9C\uDEC0-\uDEC7\uDEC9-\uDEE4\uDF00-\uDF35\uDF40-\uDF55\uDF60-\uDF72\uDF80-\uDF91]|\uD803[\uDC00-\uDC48\uDC80-\uDCB2\uDCC0-\uDCF2\uDD00-\uDD23\uDE80-\uDEA9\uDEB0\uDEB1\uDF00-\uDF1C\uDF27\uDF30-\uDF45\uDF70-\uDF81\uDFB0-\uDFC4\uDFE0-\uDFF6]|\uD804[\uDC03-\uDC37\uDC71\uDC72\uDC75\uDC83-\uDCAF\uDCD0-\uDCE8\uDD03-\uDD26\uDD44\uDD47\uDD50-\uDD72\uDD76\uDD83-\uDDB2\uDDC1-\uDDC4\uDDDA\uDDDC\uDE00-\uDE11\uDE13-\uDE2B\uDE3F\uDE40\uDE80-\uDE86\uDE88\uDE8A-\uDE8D\uDE8F-\uDE9D\uDE9F-\uDEA8\uDEB0-\uDEDE\uDF05-\uDF0C\uDF0F\uDF10\uDF13-\uDF28\uDF2A-\uDF30\uDF32\uDF33\uDF35-\uDF39\uDF3D\uDF50\uDF5D-\uDF61]|\uD805[\uDC00-\uDC34\uDC47-\uDC4A\uDC5F-\uDC61\uDC80-\uDCAF\uDCC4\uDCC5\uDCC7\uDD80-\uDDAE\uDDD8-\uDDDB\uDE00-\uDE2F\uDE44\uDE80-\uDEAA\uDEB8\uDF00-\uDF1A\uDF40-\uDF46]|\uD806[\uDC00-\uDC2B\uDCA0-\uDCDF\uDCFF-\uDD06\uDD09\uDD0C-\uDD13\uDD15\uDD16\uDD18-\uDD2F\uDD3F\uDD41\uDDA0-\uDDA7\uDDAA-\uDDD0\uDDE1\uDDE3\uDE00\uDE0B-\uDE32\uDE3A\uDE50\uDE5C-\uDE89\uDE9D\uDEB0-\uDEF8]|\uD807[\uDC00-\uDC08\uDC0A-\uDC2E\uDC40\uDC72-\uDC8F\uDD00-\uDD06\uDD08\uDD09\uDD0B-\uDD30\uDD46\uDD60-\uDD65\uDD67\uDD68\uDD6A-\uDD89\uDD98\uDEE0-\uDEF2\uDF02\uDF04-\uDF10\uDF12-\uDF33\uDFB0]|\uD808[\uDC00-\uDF99]|\uD809[\uDC80-\uDD43]|\uD80B[\uDF90-\uDFF0]|[\uD80C\uD81C-\uD820\uD822\uD840-\uD868\uD86A-\uD86C\uD86F-\uD872\uD874-\uD879\uD880-\uD883\uD885-\uD887][\uDC00-\uDFFF]|\uD80D[\uDC00-\uDC2F\uDC41-\uDC46]|\uD811[\uDC00-\uDE46]|\uD81A[\uDC00-\uDE38\uDE40-\uDE5E\uDE70-\uDEBE\uDED0-\uDEED\uDF00-\uDF2F\uDF40-\uDF43\uDF63-\uDF77\uDF7D-\uDF8F]|\uD81B[\uDE40-\uDE7F\uDF00-\uDF4A\uDF50\uDF93-\uDF9F\uDFE0\uDFE1\uDFE3]|\uD821[\uDC00-\uDFF7]|\uD823[\uDC00-\uDCD5\uDD00-\uDD08]|\uD82B[\uDFF0-\uDFF3\uDFF5-\uDFFB\uDFFD\uDFFE]|\uD82C[\uDC00-\uDD22\uDD32\uDD50-\uDD52\uDD55\uDD64-\uDD67\uDD70-\uDEFB]|\uD82F[\uDC00-\uDC6A\uDC70-\uDC7C\uDC80-\uDC88\uDC90-\uDC99]|\uD835[\uDC00-\uDC54\uDC56-\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD1E-\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD52-\uDEA5\uDEA8-\uDEC0\uDEC2-\uDEDA\uDEDC-\uDEFA\uDEFC-\uDF14\uDF16-\uDF34\uDF36-\uDF4E\uDF50-\uDF6E\uDF70-\uDF88\uDF8A-\uDFA8\uDFAA-\uDFC2\uDFC4-\uDFCB]|\uD837[\uDF00-\uDF1E\uDF25-\uDF2A]|\uD838[\uDC30-\uDC6D\uDD00-\uDD2C\uDD37-\uDD3D\uDD4E\uDE90-\uDEAD\uDEC0-\uDEEB]|\uD839[\uDCD0-\uDCEB\uDFE0-\uDFE6\uDFE8-\uDFEB\uDFED\uDFEE\uDFF0-\uDFFE]|\uD83A[\uDC00-\uDCC4\uDD00-\uDD43\uDD4B]|\uD83B[\uDE00-\uDE03\uDE05-\uDE1F\uDE21\uDE22\uDE24\uDE27\uDE29-\uDE32\uDE34-\uDE37\uDE39\uDE3B\uDE42\uDE47\uDE49\uDE4B\uDE4D-\uDE4F\uDE51\uDE52\uDE54\uDE57\uDE59\uDE5B\uDE5D\uDE5F\uDE61\uDE62\uDE64\uDE67-\uDE6A\uDE6C-\uDE72\uDE74-\uDE77\uDE79-\uDE7C\uDE7E\uDE80-\uDE89\uDE8B-\uDE9B\uDEA1-\uDEA3\uDEA5-\uDEA9\uDEAB-\uDEBB]|\uD869[\uDC00-\uDEDF\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF39\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D\uDC20-\uDFFF]|\uD873[\uDC00-\uDEA1\uDEB0-\uDFFF]|\uD87A[\uDC00-\uDFE0]|\uD87E[\uDC00-\uDE1D]|\uD884[\uDC00-\uDF4A\uDF50-\uDFFF]|\uD888[\uDC00-\uDFAF])(?:[0-9A-Za-z\xAA\xB5\xBA\xC0-\xD6\xD8-\xF6\xF8-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0370-\u0374\u0376\u0377\u037A-\u037D\u037F\u0386\u0388-\u038A\u038C\u038E-\u03A1\u03A3-\u03F5\u03F7-\u0481\u048A-\u052F\u0531-\u0556\u0559\u0560-\u0588\u05D0-\u05EA\u05EF-\u05F2\u0620-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06E5\u06E6\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u07F4\u07F5\u07FA\u0800-\u0815\u081A\u0824\u0828\u0840-\u0858\u0860-\u086A\u0870-\u0887\u0889-\u088E\u08A0-\u08C9\u0904-\u0939\u093D\u0950\u0958-\u0961\u0971-\u0980\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u09FC\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0AF9\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C39\u0C3D\u0C58-\u0C5A\u0C5D\u0C60\u0C61\u0C80\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D04-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D54-\u0D56\u0D5F-\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E46\u0E81\u0E82\u0E84\u0E86-\u0E8A\u0E8C-\u0EA3\u0EA5\u0EA7-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EC6\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10A0-\u10C5\u10C7\u10CD\u10D0-\u10FA\u10FC-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F5\u13F8-\u13FD\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u16F1-\u16F8\u1700-\u1711\u171F-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17D7\u17DC\u1820-\u1878\u1880-\u1884\u1887-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191E\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19B0-\u19C9\u1A00-\u1A16\u1A20-\u1A54\u1AA7\u1B05-\u1B33\u1B45-\u1B4C\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C7D\u1C80-\u1C88\u1C90-\u1CBA\u1CBD-\u1CBF\u1CE9-\u1CEC\u1CEE-\u1CF3\u1CF5\u1CF6\u1CFA\u1D00-\u1DBF\u1E00-\u1F15\u1F18-\u1F1D\u1F20-\u1F45\u1F48-\u1F4D\u1F50-\u1F57\u1F59\u1F5B\u1F5D\u1F5F-\u1F7D\u1F80-\u1FB4\u1FB6-\u1FBC\u1FBE\u1FC2-\u1FC4\u1FC6-\u1FCC\u1FD0-\u1FD3\u1FD6-\u1FDB\u1FE0-\u1FEC\u1FF2-\u1FF4\u1FF6-\u1FFC\u2071\u207F\u2090-\u209C\u2102\u2107\u210A-\u2113\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u212F-\u2139\u213C-\u213F\u2145-\u2149\u214E\u2183\u2184\u2C00-\u2CE4\u2CEB-\u2CEE\u2CF2\u2CF3\u2D00-\u2D25\u2D27\u2D2D\u2D30-\u2D67\u2D6F\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u2E2F\u3005\u3006\u3031-\u3035\u303B\u303C\u3041-\u3096\u309D-\u309F\u30A1-\u30FA\u30FC-\u30FF\u3105-\u312F\u3131-\u318E\u31A0-\u31BF\u31F0-\u31FF\u3400-\u4DBF\u4E00-\uA48C\uA4D0-\uA4FD\uA500-\uA60C\uA610-\uA61F\uA62A\uA62B\uA640-\uA66E\uA67F-\uA69D\uA6A0-\uA6E5\uA717-\uA71F\uA722-\uA788\uA78B-\uA7CA\uA7D0\uA7D1\uA7D3\uA7D5-\uA7D9\uA7F2-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA8FD\uA8FE\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uA9CF\uA9E0-\uA9E4\uA9E6-\uA9EF\uA9FA-\uA9FE\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA76\uAA7A\uAA7E-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB-\uAADD\uAAE0-\uAAEA\uAAF2-\uAAF4\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uAB30-\uAB5A\uAB5C-\uAB69\uAB70-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB00-\uFB06\uFB13-\uFB17\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF21-\uFF3A\uFF41-\uFF5A\uFF66-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]|\uD800[\uDC00-\uDC0B\uDC0D-\uDC26\uDC28-\uDC3A\uDC3C\uDC3D\uDC3F-\uDC4D\uDC50-\uDC5D\uDC80-\uDCFA\uDE80-\uDE9C\uDEA0-\uDED0\uDF00-\uDF1F\uDF2D-\uDF40\uDF42-\uDF49\uDF50-\uDF75\uDF80-\uDF9D\uDFA0-\uDFC3\uDFC8-\uDFCF]|\uD801[\uDC00-\uDC9D\uDCB0-\uDCD3\uDCD8-\uDCFB\uDD00-\uDD27\uDD30-\uDD63\uDD70-\uDD7A\uDD7C-\uDD8A\uDD8C-\uDD92\uDD94\uDD95\uDD97-\uDDA1\uDDA3-\uDDB1\uDDB3-\uDDB9\uDDBB\uDDBC\uDE00-\uDF36\uDF40-\uDF55\uDF60-\uDF67\uDF80-\uDF85\uDF87-\uDFB0\uDFB2-\uDFBA]|\uD802[\uDC00-\uDC05\uDC08\uDC0A-\uDC35\uDC37\uDC38\uDC3C\uDC3F-\uDC55\uDC60-\uDC76\uDC80-\uDC9E\uDCE0-\uDCF2\uDCF4\uDCF5\uDD00-\uDD15\uDD20-\uDD39\uDD80-\uDDB7\uDDBE\uDDBF\uDE00\uDE10-\uDE13\uDE15-\uDE17\uDE19-\uDE35\uDE60-\uDE7C\uDE80-\uDE9C\uDEC0-\uDEC7\uDEC9-\uDEE4\uDF00-\uDF35\uDF40-\uDF55\uDF60-\uDF72\uDF80-\uDF91]|\uD803[\uDC00-\uDC48\uDC80-\uDCB2\uDCC0-\uDCF2\uDD00-\uDD23\uDE80-\uDEA9\uDEB0\uDEB1\uDF00-\uDF1C\uDF27\uDF30-\uDF45\uDF70-\uDF81\uDFB0-\uDFC4\uDFE0-\uDFF6]|\uD804[\uDC03-\uDC37\uDC71\uDC72\uDC75\uDC83-\uDCAF\uDCD0-\uDCE8\uDD03-\uDD26\uDD44\uDD47\uDD50-\uDD72\uDD76\uDD83-\uDDB2\uDDC1-\uDDC4\uDDDA\uDDDC\uDE00-\uDE11\uDE13-\uDE2B\uDE3F\uDE40\uDE80-\uDE86\uDE88\uDE8A-\uDE8D\uDE8F-\uDE9D\uDE9F-\uDEA8\uDEB0-\uDEDE\uDF05-\uDF0C\uDF0F\uDF10\uDF13-\uDF28\uDF2A-\uDF30\uDF32\uDF33\uDF35-\uDF39\uDF3D\uDF50\uDF5D-\uDF61]|\uD805[\uDC00-\uDC34\uDC47-\uDC4A\uDC5F-\uDC61\uDC80-\uDCAF\uDCC4\uDCC5\uDCC7\uDD80-\uDDAE\uDDD8-\uDDDB\uDE00-\uDE2F\uDE44\uDE80-\uDEAA\uDEB8\uDF00-\uDF1A\uDF40-\uDF46]|\uD806[\uDC00-\uDC2B\uDCA0-\uDCDF\uDCFF-\uDD06\uDD09\uDD0C-\uDD13\uDD15\uDD16\uDD18-\uDD2F\uDD3F\uDD41\uDDA0-\uDDA7\uDDAA-\uDDD0\uDDE1\uDDE3\uDE00\uDE0B-\uDE32\uDE3A\uDE50\uDE5C-\uDE89\uDE9D\uDEB0-\uDEF8]|\uD807[\uDC00-\uDC08\uDC0A-\uDC2E\uDC40\uDC72-\uDC8F\uDD00-\uDD06\uDD08\uDD09\uDD0B-\uDD30\uDD46\uDD60-\uDD65\uDD67\uDD68\uDD6A-\uDD89\uDD98\uDEE0-\uDEF2\uDF02\uDF04-\uDF10\uDF12-\uDF33\uDFB0]|\uD808[\uDC00-\uDF99]|\uD809[\uDC80-\uDD43]|\uD80B[\uDF90-\uDFF0]|[\uD80C\uD81C-\uD820\uD822\uD840-\uD868\uD86A-\uD86C\uD86F-\uD872\uD874-\uD879\uD880-\uD883\uD885-\uD887][\uDC00-\uDFFF]|\uD80D[\uDC00-\uDC2F\uDC41-\uDC46]|\uD811[\uDC00-\uDE46]|\uD81A[\uDC00-\uDE38\uDE40-\uDE5E\uDE70-\uDEBE\uDED0-\uDEED\uDF00-\uDF2F\uDF40-\uDF43\uDF63-\uDF77\uDF7D-\uDF8F]|\uD81B[\uDE40-\uDE7F\uDF00-\uDF4A\uDF50\uDF93-\uDF9F\uDFE0\uDFE1\uDFE3]|\uD821[\uDC00-\uDFF7]|\uD823[\uDC00-\uDCD5\uDD00-\uDD08]|\uD82B[\uDFF0-\uDFF3\uDFF5-\uDFFB\uDFFD\uDFFE]|\uD82C[\uDC00-\uDD22\uDD32\uDD50-\uDD52\uDD55\uDD64-\uDD67\uDD70-\uDEFB]|\uD82F[\uDC00-\uDC6A\uDC70-\uDC7C\uDC80-\uDC88\uDC90-\uDC99]|\uD835[\uDC00-\uDC54\uDC56-\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD1E-\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD52-\uDEA5\uDEA8-\uDEC0\uDEC2-\uDEDA\uDEDC-\uDEFA\uDEFC-\uDF14\uDF16-\uDF34\uDF36-\uDF4E\uDF50-\uDF6E\uDF70-\uDF88\uDF8A-\uDFA8\uDFAA-\uDFC2\uDFC4-\uDFCB]|\uD837[\uDF00-\uDF1E\uDF25-\uDF2A]|\uD838[\uDC30-\uDC6D\uDD00-\uDD2C\uDD37-\uDD3D\uDD4E\uDE90-\uDEAD\uDEC0-\uDEEB]|\uD839[\uDCD0-\uDCEB\uDFE0-\uDFE6\uDFE8-\uDFEB\uDFED\uDFEE\uDFF0-\uDFFE]|\uD83A[\uDC00-\uDCC4\uDD00-\uDD43\uDD4B]|\uD83B[\uDE00-\uDE03\uDE05-\uDE1F\uDE21\uDE22\uDE24\uDE27\uDE29-\uDE32\uDE34-\uDE37\uDE39\uDE3B\uDE42\uDE47\uDE49\uDE4B\uDE4D-\uDE4F\uDE51\uDE52\uDE54\uDE57\uDE59\uDE5B\uDE5D\uDE5F\uDE61\uDE62\uDE64\uDE67-\uDE6A\uDE6C-\uDE72\uDE74-\uDE77\uDE79-\uDE7C\uDE7E\uDE80-\uDE89\uDE8B-\uDE9B\uDEA1-\uDEA3\uDEA5-\uDEA9\uDEAB-\uDEBB]|\uD869[\uDC00-\uDEDF\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF39\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D\uDC20-\uDFFF]|\uD873[\uDC00-\uDEA1\uDEB0-\uDFFF]|\uD87A[\uDC00-\uDFE0]|\uD87E[\uDC00-\uDE1D]|\uD884[\uDC00-\uDF4A\uDF50-\uDFFF]|\uD888[\uDC00-\uDFAF])*$/.test(Y) }, { name: "string", test: z6 }, { name: "Chain", test: z5 }, { name: "Array", test: C8 }, { name: "Matrix", test: $8 }, { name: "DenseMatrix", test: l7 }, { name: "SparseMatrix", test: j9 }, { name: "Range", test: z$ }, { name: "Index", test: D7 }, { name: "boolean", test: WD }, { name: "ResultSet", test: YD }, { name: "Help", test: V5 }, { name: "function", test: UD }, { name: "Date", test: GD }, { name: "RegExp", test: LD }, { name: "null", test: XD }, { name: "undefined", test: DD }, { name: "AccessorNode", test: W9 }, { name: "ArrayNode", test: x6 }, { name: "AssignmentNode", test: RD }, { name: "BlockNode", test: VD }, { name: "ConditionalNode", test: zD }, { name: "ConstantNode", test: B8 }, { name: "FunctionNode", test: r6 }, { name: "FunctionAssignmentNode", test: b9 }, { name: "IndexNode", test: z9 }, { name: "Node", test: T8 }, { name: "ObjectNode", test: V7 }, { name: "OperatorNode", test: Y6 }, { name: "ParenthesisNode", test: g6 }, { name: "RangeNode", test: FD }, { name: "RelationalNode", test: PD }, { name: "SymbolNode", test: o8 }, { name: "Map", test: nZ }, { name: "Object", test: R7 }]), $.addConversions([{ from: "number", to: "BigNumber", convert: function Y(X) {
     if (!q)
       oZ(X);
-    if (SD(X) > 15)
+    if (qD(X) > 15)
       throw new TypeError("Cannot implicitly convert a number with >15 significant digits to BigNumber (value: " + X + "). Use function bignumber(x) to convert to BigNumber.");
     return new q(X);
   } }, { from: "number", to: "Complex", convert: function Y(X) {
@@ -63235,7 +63239,7 @@ var rZ = Q0("typed", CC, function C7(j) {
     return String(X);
   } }, { from: "Array", to: "Matrix", convert: function Y(X) {
     if (!U)
-      jC();
+      qC();
     return new U(X);
   } }, { from: "Matrix", to: "Array", convert: function Y(X) {
     return X.valueOf();
@@ -63255,9 +63259,9 @@ var rZ = Q0("typed", CC, function C7(j) {
     throw Q;
   }, $;
 });
-var SC = "ResultSet";
-var qC = [];
-var tZ = Q0(SC, qC, () => {
+var vC = "ResultSet";
+var wC = [];
+var tZ = Q0(vC, wC, () => {
   function C10(j) {
     if (!(this instanceof C10))
       throw new SyntaxError("Constructor must be called with the new operator");
@@ -63338,7 +63342,7 @@ var C52 = function(C10, j, q) {
   }
   return U.reverse();
 };
-var xC = function(C10, j) {
+var yC = function(C10, j) {
   var q, S, U;
   if (j.isZero())
     return j;
@@ -63418,7 +63422,7 @@ var V8 = function(C10, j, q, S) {
 };
 var p9 = function(C10, j, q) {
   if (!C10.isFinite())
-    return GR(C10);
+    return LR(C10);
   var S, U = C10.e, P = b6(C10.d), $ = P.length;
   if (j) {
     if (q && (S = q - $) > 0)
@@ -63450,19 +63454,19 @@ var w5 = function(C10, j) {
   return j;
 };
 var q5 = function(C10, j, q) {
-  if (j > fC) {
+  if (j > gC) {
     if (M8 = true, q)
       C10.precision = q;
-    throw Error(QR);
+    throw Error(ZR);
   }
   return V8(new C10(j5), j, 1, true);
 };
 var w9 = function(C10, j, q) {
   if (j > JK)
-    throw Error(QR);
+    throw Error(ZR);
   return V8(new C10(S5), j, q, true);
 };
-var WR = function(C10) {
+var YR = function(C10) {
   var j = C10.length - 1, q = j * P8 + 1;
   if (j = C10[j], j) {
     for (;j % 10 == 0; j /= 10)
@@ -63478,12 +63482,12 @@ var I7 = function(C10) {
     j += "0";
   return j;
 };
-var YR = function(C10, j, q, S) {
+var UR = function(C10, j, q, S) {
   var U, P = new C10(1), $ = Math.ceil(S / P8 + 4);
   M8 = false;
   for (;; ) {
     if (q % 2) {
-      if (P = P.times(j), eD(P.d, $))
+      if (P = P.times(j), $R(P.d, $))
         U = true;
     }
     if (q = d6(q / 2), q === 0) {
@@ -63491,14 +63495,14 @@ var YR = function(C10, j, q, S) {
         ++P.d[q];
       break;
     }
-    j = j.times(j), eD(j.d, $);
+    j = j.times(j), $R(j.d, $);
   }
   return M8 = true, P;
 };
-var tD = function(C10) {
+var eD = function(C10) {
   return C10.d[C10.d.length - 1] & 1;
 };
-var UR = function(C10, j, q) {
+var GR = function(C10, j, q) {
   var S, U = new C10(j[0]), P = 0;
   for (;++P < j.length; )
     if (S = new C10(j[P]), !S.s) {
@@ -63569,7 +63573,7 @@ var B7 = function(C10, j) {
     X = K, U += 2;
   }
 };
-var GR = function(C10) {
+var LR = function(C10) {
   return String(C10.s * C10.s / 0);
 };
 var ZK = function(C10, j) {
@@ -63609,21 +63613,21 @@ var ZK = function(C10, j) {
     C10.e = 0, C10.d = [0];
   return C10;
 };
-var gC = function(C10, j) {
+var bC = function(C10, j) {
   var q, S, U, P, $, Y, X, K, Q;
   if (j.indexOf("_") > -1) {
-    if (j = j.replace(/(\d)_(?=\d)/g, "$1"), HR.test(j))
+    if (j = j.replace(/(\d)_(?=\d)/g, "$1"), WR.test(j))
       return ZK(C10, j);
   } else if (j === "Infinity" || j === "NaN") {
     if (!+j)
       C10.s = NaN;
     return C10.e = NaN, C10.d = null, C10;
   }
-  if (wC.test(j))
+  if (hC.test(j))
     q = 16, j = j.toLowerCase();
-  else if (vC.test(j))
-    q = 2;
   else if (kC.test(j))
+    q = 2;
+  else if (fC.test(j))
     q = 8;
   else
     throw Error(T7 + j);
@@ -63632,7 +63636,7 @@ var gC = function(C10, j) {
   else
     j = j.slice(2);
   if (P = j.indexOf("."), $ = P >= 0, S = C10.constructor, $)
-    j = j.replace(".", ""), Y = j.length, P = Y - P, U = YR(S, new S(q), P, P * 2);
+    j = j.replace(".", ""), Y = j.length, P = Y - P, U = UR(S, new S(q), P, P * 2);
   K = C52(j, q, k9), Q = K.length - 1;
   for (P = Q;K[P] === 0; --P)
     K.pop();
@@ -63644,7 +63648,7 @@ var gC = function(C10, j) {
     C10 = C10.times(Math.abs(X) < 54 ? q6(2, X) : DJ.pow(2, X));
   return M8 = true, C10;
 };
-var yC = function(C10, j) {
+var mC = function(C10, j) {
   var q, S = j.d.length;
   if (S < 3)
     return j.isZero() ? j : O$(C10, 2, j, j);
@@ -63674,7 +63678,7 @@ var k5 = function(C10, j) {
     q *= C10;
   return q;
 };
-var LR = function(C10, j) {
+var XR = function(C10, j) {
   var q, S = j.s < 0, U = w9(C10, C10.precision, 1), P = U.times(0.5);
   if (j = j.abs(), j.lte(P))
     return Q7 = S ? 4 : 1, j;
@@ -63682,8 +63686,8 @@ var LR = function(C10, j) {
     Q7 = S ? 3 : 2;
   else {
     if (j = j.minus(q.times(U)), j.lte(P))
-      return Q7 = tD(q) ? S ? 2 : 3 : S ? 4 : 1, j;
-    Q7 = tD(q) ? S ? 1 : 4 : S ? 3 : 2;
+      return Q7 = eD(q) ? S ? 2 : 3 : S ? 4 : 1, j;
+    Q7 = eD(q) ? S ? 1 : 4 : S ? 3 : 2;
   }
   return j.minus(U).abs();
 };
@@ -63697,7 +63701,7 @@ var KK = function(C10, j, q, S) {
   else
     q = W.precision, S = W.rounding;
   if (!C10.isFinite())
-    Q = GR(C10);
+    Q = LR(C10);
   else {
     if (Q = p9(C10), $ = Q.indexOf("."), G) {
       if (U = 2, j == 16)
@@ -63717,7 +63721,7 @@ var KK = function(C10, j, q, S) {
       if ($ < 0)
         P--;
       else
-        C10 = new W(C10), C10.d = J, C10.e = P, C10 = X6(C10, Z, q, S, 0, U), J = C10.d, P = C10.e, K = JR;
+        C10 = new W(C10), C10.d = J, C10.e = P, C10 = X6(C10, Z, q, S, 0, U), J = C10.d, P = C10.e, K = QR;
       if ($ = J[q], Y = U / 2, K = K || J[q + 1] !== undefined, K = S < 4 ? ($ !== undefined || K) && (S === 0 || S === (C10.s < 0 ? 3 : 2)) : $ > Y || $ === Y && (S === 4 || K || S === 6 && J[q - 1] & 1 || S === (C10.s < 0 ? 8 : 7)), J.length = q, K) {
         for (;++J[--q] > U - 1; )
           if (J[q] = 0, !q)
@@ -63755,35 +63759,35 @@ var KK = function(C10, j, q, S) {
   }
   return C10.s < 0 ? "-" + Q : Q;
 };
-var eD = function(C10, j) {
+var $R = function(C10, j) {
   if (C10.length > j)
     return C10.length = j, true;
 };
-var bC = function(C10) {
+var pC = function(C10) {
   return new this(C10).abs();
 };
-var mC = function(C10) {
+var dC = function(C10) {
   return new this(C10).acos();
 };
-var pC = function(C10) {
+var uC = function(C10) {
   return new this(C10).acosh();
 };
-var dC = function(C10, j) {
+var _C = function(C10, j) {
   return new this(C10).plus(j);
 };
-var uC = function(C10) {
+var cC = function(C10) {
   return new this(C10).asin();
 };
-var _C = function(C10) {
+var lC = function(C10) {
   return new this(C10).asinh();
 };
-var cC = function(C10) {
+var sC = function(C10) {
   return new this(C10).atan();
 };
-var lC = function(C10) {
+var nC = function(C10) {
   return new this(C10).atanh();
 };
-var sC = function(C10, j) {
+var oC = function(C10, j) {
   C10 = new this(C10), j = new this(j);
   var q, S = this.precision, U = this.rounding, P = S + 4;
   if (!C10.s || !j.s)
@@ -63800,16 +63804,16 @@ var sC = function(C10, j) {
     q = this.atan(X6(C10, j, P, 1));
   return q;
 };
-var nC = function(C10) {
+var iC = function(C10) {
   return new this(C10).cbrt();
 };
-var oC = function(C10) {
+var aC = function(C10) {
   return V8(C10 = new this(C10), C10.e + 1, 2);
 };
-var iC = function(C10, j, q) {
+var rC = function(C10, j, q) {
   return new this(C10).clamp(j, q);
 };
-var aC = function(C10) {
+var tC = function(C10) {
   if (!C10 || typeof C10 !== "object")
     throw Error(v5 + "Object expected");
   var j, q, S, U = C10.defaults === true, P = ["precision", 1, M7, "rounding", 0, 8, "toExpNeg", -E$, 0, "toExpPos", 0, E$, "maxE", 0, E$, "minE", -E$, 0, "modulo", 0, 9];
@@ -63830,26 +63834,26 @@ var aC = function(C10) {
         if (typeof crypto != "undefined" && crypto && (crypto.getRandomValues || crypto.randomBytes))
           this[q] = true;
         else
-          throw Error(ZR);
+          throw Error(KR);
       else
         this[q] = false;
     else
       throw Error(T7 + q + ": " + S);
   return this;
 };
-var rC = function(C10) {
+var eC = function(C10) {
   return new this(C10).cos();
 };
-var tC = function(C10) {
+var $j = function(C10) {
   return new this(C10).cosh();
 };
-var XR = function(C10) {
+var DR = function(C10) {
   var j, q, S;
   function U(P) {
     var $, Y, X, K = this;
     if (!(K instanceof U))
       return new U(P);
-    if (K.constructor = U, $R(P)) {
+    if (K.constructor = U, JR(P)) {
       if (K.s = P.s, M8)
         if (!P.d || P.e > U.maxE)
           K.e = NaN, K.d = null;
@@ -63899,9 +63903,9 @@ var XR = function(C10) {
         P = P.slice(1);
       K.s = 1;
     }
-    return HR.test(P) ? ZK(K, P) : gC(K, P);
+    return WR.test(P) ? ZK(K, P) : bC(K, P);
   }
-  if (U.prototype = o0, U.ROUND_UP = 0, U.ROUND_DOWN = 1, U.ROUND_CEIL = 2, U.ROUND_FLOOR = 3, U.ROUND_HALF_UP = 4, U.ROUND_HALF_DOWN = 5, U.ROUND_HALF_EVEN = 6, U.ROUND_HALF_CEIL = 7, U.ROUND_HALF_FLOOR = 8, U.EUCLID = 9, U.config = U.set = aC, U.clone = XR, U.isDecimal = $R, U.abs = bC, U.acos = mC, U.acosh = pC, U.add = dC, U.asin = uC, U.asinh = _C, U.atan = cC, U.atanh = lC, U.atan2 = sC, U.cbrt = nC, U.ceil = oC, U.clamp = iC, U.cos = rC, U.cosh = tC, U.div = eC, U.exp = $j, U.floor = Jj, U.hypot = Qj, U.ln = Zj, U.log = Kj, U.log10 = Wj, U.log2 = Hj, U.max = Yj, U.min = Uj, U.mod = Gj, U.mul = Lj, U.pow = Xj, U.random = Dj, U.round = Rj, U.sign = Vj, U.sin = zj, U.sinh = Fj, U.sqrt = Pj, U.sub = Ij, U.sum = Bj, U.tan = Tj, U.tanh = Mj, U.trunc = Ej, C10 === undefined)
+  if (U.prototype = o0, U.ROUND_UP = 0, U.ROUND_DOWN = 1, U.ROUND_CEIL = 2, U.ROUND_FLOOR = 3, U.ROUND_HALF_UP = 4, U.ROUND_HALF_DOWN = 5, U.ROUND_HALF_EVEN = 6, U.ROUND_HALF_CEIL = 7, U.ROUND_HALF_FLOOR = 8, U.EUCLID = 9, U.config = U.set = tC, U.clone = DR, U.isDecimal = JR, U.abs = pC, U.acos = dC, U.acosh = uC, U.add = _C, U.asin = cC, U.asinh = lC, U.atan = sC, U.atanh = nC, U.atan2 = oC, U.cbrt = iC, U.ceil = aC, U.clamp = rC, U.cos = eC, U.cosh = $j, U.div = Jj, U.exp = Qj, U.floor = Zj, U.hypot = Kj, U.ln = Hj, U.log = Wj, U.log10 = Uj, U.log2 = Yj, U.max = Gj, U.min = Lj, U.mod = Xj, U.mul = Dj, U.pow = Rj, U.random = Vj, U.round = zj, U.sign = Fj, U.sin = Pj, U.sinh = Ij, U.sqrt = Bj, U.sub = Tj, U.sum = Mj, U.tan = Ej, U.tanh = Oj, U.trunc = Nj, C10 === undefined)
     C10 = {};
   if (C10) {
     if (C10.defaults !== true) {
@@ -63913,16 +63917,16 @@ var XR = function(C10) {
   }
   return U.config(C10), U;
 };
-var eC = function(C10, j) {
+var Jj = function(C10, j) {
   return new this(C10).div(j);
 };
-var $j = function(C10) {
+var Qj = function(C10) {
   return new this(C10).exp();
 };
-var Jj = function(C10) {
+var Zj = function(C10) {
   return V8(C10 = new this(C10), C10.e + 1, 3);
 };
-var Qj = function() {
+var Kj = function() {
   var C10, j, q = new this(0);
   M8 = false;
   for (C10 = 0;C10 < arguments.length; )
@@ -63934,37 +63938,37 @@ var Qj = function() {
       q = q.plus(j.times(j));
   return M8 = true, q.sqrt();
 };
-var $R = function(C10) {
-  return C10 instanceof DJ || C10 && C10.toStringTag === KR || false;
-};
-var Zj = function(C10) {
-  return new this(C10).ln();
-};
-var Kj = function(C10, j) {
-  return new this(C10).log(j);
+var JR = function(C10) {
+  return C10 instanceof DJ || C10 && C10.toStringTag === HR || false;
 };
 var Hj = function(C10) {
+  return new this(C10).ln();
+};
+var Wj = function(C10, j) {
+  return new this(C10).log(j);
+};
+var Yj = function(C10) {
   return new this(C10).log(2);
 };
-var Wj = function(C10) {
+var Uj = function(C10) {
   return new this(C10).log(10);
 };
-var Yj = function() {
-  return UR(this, arguments, "lt");
+var Gj = function() {
+  return GR(this, arguments, "lt");
 };
-var Uj = function() {
-  return UR(this, arguments, "gt");
-};
-var Gj = function(C10, j) {
-  return new this(C10).mod(j);
-};
-var Lj = function(C10, j) {
-  return new this(C10).mul(j);
+var Lj = function() {
+  return GR(this, arguments, "gt");
 };
 var Xj = function(C10, j) {
+  return new this(C10).mod(j);
+};
+var Dj = function(C10, j) {
+  return new this(C10).mul(j);
+};
+var Rj = function(C10, j) {
   return new this(C10).pow(j);
 };
-var Dj = function(C10) {
+var Vj = function(C10) {
   var j, q, S, U, P = 0, $ = new this(1), Y = [];
   if (C10 === undefined)
     C10 = this.precision;
@@ -63989,7 +63993,7 @@ var Dj = function(C10) {
         Y.push(U % 1e7), P += 4;
     P = S / 4;
   } else
-    throw Error(ZR);
+    throw Error(KR);
   if (S = Y[--P], C10 %= P8, S && C10)
     U = q6(10, P8 - C10), Y[P] = (S / U | 0) * U;
   for (;Y[P] === 0; P--)
@@ -64007,38 +64011,38 @@ var Dj = function(C10) {
   }
   return $.e = q, $.d = Y, $;
 };
-var Rj = function(C10) {
+var zj = function(C10) {
   return V8(C10 = new this(C10), C10.e + 1, this.rounding);
 };
-var Vj = function(C10) {
+var Fj = function(C10) {
   return C10 = new this(C10), C10.d ? C10.d[0] ? C10.s : 0 * C10.s : C10.s || NaN;
 };
-var zj = function(C10) {
+var Pj = function(C10) {
   return new this(C10).sin();
 };
-var Fj = function(C10) {
+var Ij = function(C10) {
   return new this(C10).sinh();
 };
-var Pj = function(C10) {
+var Bj = function(C10) {
   return new this(C10).sqrt();
 };
-var Ij = function(C10, j) {
+var Tj = function(C10, j) {
   return new this(C10).sub(j);
 };
-var Bj = function() {
+var Mj = function() {
   var C10 = 0, j = arguments, q = new this(j[C10]);
   M8 = false;
   for (;q.s && ++C10 < j.length; )
     q = q.plus(j[C10]);
   return M8 = true, V8(q, this.precision, this.rounding);
 };
-var Tj = function(C10) {
+var Ej = function(C10) {
   return new this(C10).tan();
 };
-var Mj = function(C10) {
+var Oj = function(C10) {
   return new this(C10).tanh();
 };
-var Ej = function(C10) {
+var Nj = function(C10) {
   return V8(C10 = new this(C10), C10.e + 1, 1);
 };
 /*!
@@ -64054,26 +64058,26 @@ var eZ = "0123456789abcdef";
 var j5 = "2.3025850929940456840179914546843642076011014886287729760333279009675726096773524802359972050895982983419677840422862486334095254650828067566662873690987816894829072083255546808437998948262331985283935053089653777326288461633662222876982198867465436674744042432743651550489343149393914796194044002221051017141748003688084012647080685567743216228355220114804663715659121373450747856947683463616792101806445070648000277502684916746550586856935673420670581136429224554405758925724208241314695689016758940256776311356919292033376587141660230105703089634572075440370847469940168269282808481184289314848524948644871927809676271275775397027668605952496716674183485704422507197965004714951050492214776567636938662976979522110718264549734772662425709429322582798502585509785265383207606726317164309505995087807523710333101197857547331541421808427543863591778117054309827482385045648019095610299291824318237525357709750539565187697510374970888692180205189339507238539205144634197265287286965110862571492198849978748873771345686209167058";
 var S5 = "3.1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679821480865132823066470938446095505822317253594081284811174502841027019385211055596446229489549303819644288109756659334461284756482337867831652712019091456485669234603486104543266482133936072602491412737245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094330572703657595919530921861173819326117931051185480744623799627495673518857527248912279381830119491298336733624406566430860213949463952247371907021798609437027705392171762931767523846748184676694051320005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235420199561121290219608640344181598136297747713099605187072113499999983729780499510597317328160963185950244594553469083026425223082533446850352619311881710100031378387528865875332083814206171776691473035982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989380952572010654858632789";
 var $K = { precision: 20, rounding: 4, modulo: 1, toExpNeg: -7, toExpPos: 21, minE: -E$, maxE: E$, crypto: false };
-var JR;
+var QR;
 var Q7;
 var M8 = true;
 var v5 = "[DecimalError] ";
 var T7 = v5 + "Invalid argument: ";
-var QR = v5 + "Precision limit exceeded";
-var ZR = v5 + "crypto unavailable";
-var KR = "[object Decimal]";
+var ZR = v5 + "Precision limit exceeded";
+var KR = v5 + "crypto unavailable";
+var HR = "[object Decimal]";
 var d6 = Math.floor;
 var q6 = Math.pow;
-var vC = /^0b([01]+(\.[01]*)?|\.[01]+)(p[+-]?\d+)?$/i;
-var wC = /^0x([0-9a-f]+(\.[0-9a-f]*)?|\.[0-9a-f]+)(p[+-]?\d+)?$/i;
-var kC = /^0o([0-7]+(\.[0-7]*)?|\.[0-7]+)(p[+-]?\d+)?$/i;
-var HR = /^(\d+(\.\d*)?|\.\d+)(e[+-]?\d+)?$/i;
+var kC = /^0b([01]+(\.[01]*)?|\.[01]+)(p[+-]?\d+)?$/i;
+var hC = /^0x([0-9a-f]+(\.[0-9a-f]*)?|\.[0-9a-f]+)(p[+-]?\d+)?$/i;
+var fC = /^0o([0-7]+(\.[0-7]*)?|\.[0-7]+)(p[+-]?\d+)?$/i;
+var WR = /^(\d+(\.\d*)?|\.\d+)(e[+-]?\d+)?$/i;
 var k9 = 1e7;
 var P8 = 7;
-var hC = 9007199254740991;
-var fC = j5.length - 1;
+var xC = 9007199254740991;
+var gC = j5.length - 1;
 var JK = S5.length - 1;
-var o0 = { toStringTag: KR };
+var o0 = { toStringTag: HR };
 o0.absoluteValue = o0.abs = function() {
   var C10 = new this.constructor(this);
   if (C10.s < 0)
@@ -64113,7 +64117,7 @@ o0.cosine = o0.cos = function() {
     return new S(NaN);
   if (!q.d[0])
     return new S(1);
-  return C10 = S.precision, j = S.rounding, S.precision = C10 + Math.max(q.e, q.sd()) + P8, S.rounding = 1, q = xC(S, LR(S, q)), S.precision = C10, S.rounding = j, V8(Q7 == 2 || Q7 == 3 ? q.neg() : q, C10, j, true);
+  return C10 = S.precision, j = S.rounding, S.precision = C10 + Math.max(q.e, q.sd()) + P8, S.rounding = 1, q = yC(S, XR(S, q)), S.precision = C10, S.rounding = j, V8(Q7 == 2 || Q7 == 3 ? q.neg() : q, C10, j, true);
 };
 o0.cubeRoot = o0.cbrt = function() {
   var C10, j, q, S, U, P, $, Y, X, K, Q = this, J = Q.constructor;
@@ -64464,7 +64468,7 @@ o0.precision = o0.sd = function(C10) {
   if (C10 !== undefined && C10 !== !!C10 && C10 !== 1 && C10 !== 0)
     throw Error(T7 + C10);
   if (q.d) {
-    if (j = WR(q.d), C10 && q.e + 1 > j)
+    if (j = YR(q.d), C10 && q.e + 1 > j)
       j = q.e + 1;
   } else
     j = NaN;
@@ -64480,7 +64484,7 @@ o0.sine = o0.sin = function() {
     return new S(NaN);
   if (q.isZero())
     return new S(q);
-  return C10 = S.precision, j = S.rounding, S.precision = C10 + Math.max(q.e, q.sd()) + P8, S.rounding = 1, q = yC(S, LR(S, q)), S.precision = C10, S.rounding = j, V8(Q7 > 2 ? q.neg() : q, C10, j, true);
+  return C10 = S.precision, j = S.rounding, S.precision = C10 + Math.max(q.e, q.sd()) + P8, S.rounding = 1, q = mC(S, XR(S, q)), S.precision = C10, S.rounding = j, V8(Q7 > 2 ? q.neg() : q, C10, j, true);
 };
 o0.squareRoot = o0.sqrt = function() {
   var C10, j, q, S, U, P, $ = this, Y = $.d, X = $.e, K = $.s, Q = $.constructor;
@@ -64588,7 +64592,7 @@ o0.toFraction = function(C10) {
   var j, q, S, U, P, $, Y, X, K, Q, J, Z, W = this, G = W.d, H = W.constructor;
   if (!G)
     return new H(W);
-  if (K = q = new H(1), S = X = new H(0), j = new H(S), P = j.e = WR(G) - W.e - 1, $ = P % P8, j.d[0] = q6(10, $ < 0 ? P8 + $ : $), C10 == null)
+  if (K = q = new H(1), S = X = new H(0), j = new H(S), P = j.e = YR(G) - W.e - 1, $ = P % P8, j.d[0] = q6(10, $ < 0 ? P8 + $ : $), C10 == null)
     C10 = P > 0 ? j : K;
   else {
     if (Y = new H(C10), !Y.isInt() || Y.lt(K))
@@ -64645,8 +64649,8 @@ o0.toPower = o0.pow = function(C10) {
     return Y;
   if (S = X.precision, P = X.rounding, C10.eq(1))
     return V8(Y, S, P);
-  if (j = d6(C10.e / P8), j >= C10.d.length - 1 && (q = K < 0 ? -K : K) <= hC)
-    return U = YR(X, Y, q, S), C10.s < 0 ? new X(1).div(U) : V8(U, S, P);
+  if (j = d6(C10.e / P8), j >= C10.d.length - 1 && (q = K < 0 ? -K : K) <= xC)
+    return U = UR(X, Y, q, S), C10.s < 0 ? new X(1).div(U) : V8(U, S, P);
   if ($ = Y.s, $ < 0) {
     if (j < C10.d.length - 1)
       return new X(NaN);
@@ -64796,7 +64800,7 @@ var X6 = function() {
         V.shift();
     }
     if (W == 1)
-      R.e = Q, JR = G;
+      R.e = Q, QR = G;
     else {
       for (J = 1, Z = V[0];Z >= 10; Z /= 10)
         J++;
@@ -64807,13 +64811,13 @@ var X6 = function() {
 }();
 o0[Symbol.for("nodejs.util.inspect.custom")] = o0.toString;
 o0[Symbol.toStringTag] = "Decimal";
-var DJ = o0.constructor = XR($K);
+var DJ = o0.constructor = DR($K);
 j5 = new DJ(j5);
 S5 = new DJ(S5);
 var o7 = DJ;
-var Oj = "BigNumber";
-var Nj = ["?on", "config"];
-var HK = Q0(Oj, Nj, (C10) => {
+var Aj = "BigNumber";
+var Cj = ["?on", "config"];
+var HK = Q0(Aj, Cj, (C10) => {
   var { on: j, config: q } = C10, S = o7.clone({ precision: q.precision, modulo: o7.EUCLID });
   if (S.prototype = Object.create(S.prototype), S.prototype.type = "BigNumber", S.prototype.isBigNumber = true, S.prototype.toJSON = function() {
     return { mathjs: "BigNumber", value: this.toString() };
@@ -64826,10 +64830,10 @@ var HK = Q0(Oj, Nj, (C10) => {
     });
   return S;
 }, { isClass: true });
-var w6 = C9(RR(), 1);
-var Aj = "Complex";
-var Cj = [];
-var YK = Q0(Aj, Cj, () => {
+var w6 = C9(VR(), 1);
+var jj = "Complex";
+var Sj = [];
+var YK = Q0(jj, Sj, () => {
   return Object.defineProperty(w6.default, "name", { value: "Complex" }), w6.default.prototype.constructor = w6.default, w6.default.prototype.type = "Complex", w6.default.prototype.isComplex = true, w6.default.prototype.toJSON = function() {
     return { mathjs: "Complex", re: this.re, im: this.im };
   }, w6.default.prototype.toPolar = function() {
@@ -64899,19 +64903,19 @@ var YK = Q0(Aj, Cj, () => {
     return 0;
   }, w6.default;
 }, { isClass: true });
-var d9 = C9(zR(), 1);
-var jj = "Fraction";
-var Sj = [];
-var GK = Q0(jj, Sj, () => {
+var d9 = C9(FR(), 1);
+var qj = "Fraction";
+var vj = [];
+var GK = Q0(qj, vj, () => {
   return Object.defineProperty(d9.default, "name", { value: "Fraction" }), d9.default.prototype.constructor = d9.default, d9.default.prototype.type = "Fraction", d9.default.prototype.isFraction = true, d9.default.prototype.toJSON = function() {
     return { mathjs: "Fraction", n: this.s * this.n, d: this.d };
   }, d9.default.fromJSON = function(C10) {
     return new d9.default(C10);
   }, d9.default;
 }, { isClass: true });
-var qj = "Range";
-var vj = [];
-var LK = Q0(qj, vj, () => {
+var wj = "Range";
+var kj = [];
+var LK = Q0(wj, kj, () => {
   function C10(j, q, S) {
     if (!(this instanceof C10))
       throw new SyntaxError("Constructor must be called with the new operator");
@@ -65016,9 +65020,9 @@ var LK = Q0(qj, vj, () => {
     return new C10(j.start, j.end, j.step);
   }, C10;
 }, { isClass: true });
-var wj = "Matrix";
-var kj = [];
-var XK = Q0(wj, kj, () => {
+var hj = "Matrix";
+var fj = [];
+var XK = Q0(hj, fj, () => {
   function C10() {
     if (!(this instanceof C10))
       throw new SyntaxError("Constructor must be called with the new operator");
@@ -65059,9 +65063,9 @@ var XK = Q0(wj, kj, () => {
     throw new Error("Cannot invoke toString on a Matrix interface");
   }, C10;
 }, { isClass: true });
-var hj = "DenseMatrix";
-var fj = ["Matrix"];
-var DK = Q0(hj, fj, (C10) => {
+var xj = "DenseMatrix";
+var gj = ["Matrix"];
+var DK = Q0(xj, gj, (C10) => {
   var { Matrix: j } = C10;
   function q(Q, J) {
     if (!(this instanceof q))
@@ -65390,11 +65394,11 @@ var DK = Q0(hj, fj, (C10) => {
   }
   return q;
 }, { isClass: true });
-var PR = "clone";
-var xj = ["typed"];
-var RK = Q0(PR, xj, (C10) => {
+var IR = "clone";
+var yj = ["typed"];
+var RK = Q0(IR, yj, (C10) => {
   var { typed: j } = C10;
-  return j(PR, { any: H8 });
+  return j(IR, { any: H8 });
 });
 var x5 = function(C10, j, q) {
   var S, U, P, $;
@@ -65417,11 +65421,11 @@ var x5 = function(C10, j, q) {
     return U;
   }
 };
-var IR = "isInteger";
-var gj = ["typed"];
-var zK = Q0(IR, gj, (C10) => {
+var BR = "isInteger";
+var bj = ["typed"];
+var zK = Q0(BR, bj, (C10) => {
   var { typed: j } = C10;
-  return j(IR, { number: e0, BigNumber: function q(S) {
+  return j(BR, { number: e0, BigNumber: function q(S) {
     return S.isInt();
   }, Fraction: function q(S) {
     return S.d === 1 && isFinite(S.n);
@@ -65433,42 +65437,42 @@ FK.signature = Q9;
 PK.signature = Z7;
 IK.signature = Z7;
 BK.signature = Z7;
-yj.signature = Z7;
+mj.signature = Z7;
 TK.signature = Q9;
 MK.signature = Q9;
 N$.signature = Q9;
 EK.signature = Q9;
 OK.signature = Q9;
 NK.signature = Q9;
-bj.signature = Z7;
+pj.signature = Z7;
 AK.signature = Z7;
 CK.signature = Q9;
 jK.signature = Q9;
-mj.signature = Q9;
-pj.signature = Z7;
-g5.signature = Q9;
 dj.signature = Q9;
+uj.signature = Z7;
+g5.signature = Q9;
+_j.signature = Q9;
 qK.signature = Q9;
 vK.signature = Z7;
 wK.signature = Z7;
-uj.signature = Q9;
-var _j = "number";
+cj.signature = Q9;
+var lj = "number";
 var C$ = "number, number";
 kK.signature = C$;
-hK.signature = _j;
+hK.signature = lj;
 fK.signature = C$;
 xK.signature = C$;
 gK.signature = C$;
 yK.signature = C$;
 bK.signature = C$;
 mK.signature = "number, number";
-var TR = Math.PI;
-var MR = 2 * Math.PI;
-var ER = Math.E;
-var OR = 1.618033988749895;
-var cj = "number";
+var MR = Math.PI;
+var ER = 2 * Math.PI;
+var OR = Math.E;
+var NR = 1.618033988749895;
+var sj = "number";
 var pK = "number, number";
-dK.signature = cj;
+dK.signature = sj;
 uK.signature = pK;
 _K.signature = pK;
 cK.signature = pK;
@@ -65476,13 +65480,13 @@ RJ.signature = "number";
 var lK = 4.7421875;
 var a7 = [0.9999999999999971, 57.15623566586292, -59.59796035547549, 14.136097974741746, -0.4919138160976202, 0.00003399464998481189, 0.00004652362892704858, -0.00009837447530487956, 0.0001580887032249125, -0.00021026444172410488, 0.00021743961811521265, -0.0001643181065367639, 0.00008441822398385275, -0.000026190838401581408, 0.0000036899182659531625];
 var sK = 0.9189385332046728;
-var lj = 5;
-var sj = 7;
-var NR = [1.000000000190015, 76.18009172947146, -86.50532032941678, 24.01409824083091, -1.231739572450155, 0.001208650973866179, -0.000005395239384953];
+var nj = 5;
+var oj = 7;
+var AR = [1.000000000190015, 76.18009172947146, -86.50532032941678, 24.01409824083091, -1.231739572450155, 0.001208650973866179, -0.000005395239384953];
 VJ.signature = "number";
 var F6 = "number";
-var nj = "number, number";
-oj.signature = F6;
+var ij = "number, number";
+aj.signature = F6;
 nK.signature = F6;
 oK.signature = F6;
 iK.signature = F6;
@@ -65490,70 +65494,70 @@ aK.signature = F6;
 rK.signature = F6;
 tK.signature = F6;
 eK.signature = F6;
-ij.signature = F6;
+rj.signature = F6;
 $4.signature = F6;
-aj.signature = F6;
-rj.signature = nj;
-J4.signature = F6;
 tj.signature = F6;
-ej.signature = F6;
+ej.signature = ij;
+J4.signature = F6;
+$S.signature = F6;
+JS.signature = F6;
 Q4.signature = F6;
 Z4.signature = F6;
 K4.signature = F6;
 H4.signature = F6;
 W4.signature = F6;
 Y4.signature = F6;
-$S.signature = F6;
-U4.signature = F6;
-JS.signature = F6;
 QS.signature = F6;
+U4.signature = F6;
+ZS.signature = F6;
+KS.signature = F6;
 var zJ = "number";
-ZS.signature = zJ;
+HS.signature = zJ;
 G4.signature = zJ;
 L4.signature = zJ;
 X4.signature = zJ;
 D4.signature = zJ;
-var AR = "isNegative";
-var KS = ["typed"];
-var R4 = Q0(AR, KS, (C10) => {
+var CR = "isNegative";
+var WS = ["typed"];
+var R4 = Q0(CR, WS, (C10) => {
   var { typed: j } = C10;
-  return j(AR, { number: G4, BigNumber: function q(S) {
+  return j(CR, { number: G4, BigNumber: function q(S) {
     return S.isNeg() && !S.isZero() && !S.isNaN();
   }, Fraction: function q(S) {
     return S.s < 0;
   }, Unit: j.referToSelf((q) => (S) => j.find(q, S.valueType())(S.value)), "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
 });
-var CR = "isNumeric";
-var HS = ["typed"];
-var V4 = Q0(CR, HS, (C10) => {
+var jR = "isNumeric";
+var YS = ["typed"];
+var V4 = Q0(jR, YS, (C10) => {
   var { typed: j } = C10;
-  return j(CR, { "number | BigNumber | Fraction | boolean": () => true, "Complex | Unit | string | null | undefined | Node": () => false, "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
+  return j(jR, { "number | BigNumber | Fraction | boolean": () => true, "Complex | Unit | string | null | undefined | Node": () => false, "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
 });
-var jR = "hasNumericValue";
-var WS = ["typed", "isNumeric"];
-var z4 = Q0(jR, WS, (C10) => {
+var SR = "hasNumericValue";
+var US = ["typed", "isNumeric"];
+var z4 = Q0(SR, US, (C10) => {
   var { typed: j, isNumeric: q } = C10;
-  return j(jR, { boolean: () => true, string: function S(U) {
+  return j(SR, { boolean: () => true, string: function S(U) {
     return U.trim().length > 0 && !isNaN(Number(U));
   }, any: function S(U) {
     return q(U);
   } });
 });
-var SR = "isPositive";
-var YS = ["typed"];
-var F4 = Q0(SR, YS, (C10) => {
+var qR = "isPositive";
+var GS = ["typed"];
+var F4 = Q0(qR, GS, (C10) => {
   var { typed: j } = C10;
-  return j(SR, { number: L4, BigNumber: function q(S) {
+  return j(qR, { number: L4, BigNumber: function q(S) {
     return !S.isNeg() && !S.isZero() && !S.isNaN();
   }, Fraction: function q(S) {
     return S.s > 0 && S.n > 0;
   }, Unit: j.referToSelf((q) => (S) => j.find(q, S.valueType())(S.value)), "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
 });
-var qR = "isZero";
-var US = ["typed"];
-var P4 = Q0(qR, US, (C10) => {
+var vR = "isZero";
+var LS = ["typed"];
+var P4 = Q0(vR, LS, (C10) => {
   var { typed: j } = C10;
-  return j(qR, { number: X4, BigNumber: function q(S) {
+  return j(vR, { number: X4, BigNumber: function q(S) {
     return S.isZero();
   }, Complex: function q(S) {
     return S.re === 0 && S.im === 0;
@@ -65561,11 +65565,11 @@ var P4 = Q0(qR, US, (C10) => {
     return S.d === 1 && S.n === 0;
   }, Unit: j.referToSelf((q) => (S) => j.find(q, S.valueType())(S.value)), "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
 });
-var vR = "isNaN";
-var GS = ["typed"];
-var I4 = Q0(vR, GS, (C10) => {
+var wR = "isNaN";
+var XS = ["typed"];
+var I4 = Q0(wR, XS, (C10) => {
   var { typed: j } = C10;
-  return j(vR, { number: D4, BigNumber: function q(S) {
+  return j(wR, { number: D4, BigNumber: function q(S) {
     return S.isNaN();
   }, Fraction: function q(S) {
     return false;
@@ -65575,11 +65579,11 @@ var I4 = Q0(vR, GS, (C10) => {
     return Number.isNaN(S.value);
   }, "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
 });
-var wR = "typeOf";
-var LS = ["typed"];
-var B4 = Q0(wR, LS, (C10) => {
+var kR = "typeOf";
+var DS = ["typed"];
+var B4 = Q0(kR, DS, (C10) => {
   var { typed: j } = C10;
-  return j(wR, { any: O8 });
+  return j(kR, { any: O8 });
 });
 var I9 = Q0("compareUnits", ["typed"], (C10) => {
   var { typed: j } = C10;
@@ -65590,8 +65594,8 @@ var I9 = Q0("compareUnits", ["typed"], (C10) => {
   }) };
 });
 var y5 = "equalScalar";
-var XS = ["typed", "config"];
-var T4 = Q0(y5, XS, (C10) => {
+var RS = ["typed", "config"];
+var T4 = Q0(y5, RS, (C10) => {
   var { typed: j, config: q } = C10, S = I9({ typed: j });
   return j(y5, { "boolean, boolean": function U(P, $) {
     return P === $;
@@ -65602,18 +65606,18 @@ var T4 = Q0(y5, XS, (C10) => {
   }, "Fraction, Fraction": function U(P, $) {
     return P.equals($);
   }, "Complex, Complex": function U(P, $) {
-    return kR(P, $, q.epsilon);
+    return hR(P, $, q.epsilon);
   } }, S);
 });
-var hb = Q0(y5, ["typed", "config"], (C10) => {
+var gb = Q0(y5, ["typed", "config"], (C10) => {
   var { typed: j, config: q } = C10;
   return j(y5, { "number, number": function S(U, P) {
     return R6(U, P, q.epsilon);
   } });
 });
-var DS = "SparseMatrix";
-var RS = ["typed", "equalScalar", "Matrix"];
-var M4 = Q0(DS, RS, (C10) => {
+var VS = "SparseMatrix";
+var zS = ["typed", "equalScalar", "Matrix"];
+var M4 = Q0(VS, zS, (C10) => {
   var { typed: j, equalScalar: q, Matrix: S } = C10;
   function U(H, L) {
     if (!(this instanceof U))
@@ -66127,7 +66131,7 @@ var M4 = Q0(DS, RS, (C10) => {
     }
   }, U;
 }, { isClass: true });
-var FS = function(C10) {
+var IS = function(C10) {
   var j = C10.match(/(0[box])([0-9a-fA-F]*)\.([0-9a-fA-F]*)/);
   if (j) {
     var q = { "0b": 2, "0o": 8, "0x": 16 }[j[1]], S = j[2], U = j[3];
@@ -66135,7 +66139,7 @@ var FS = function(C10) {
   } else
     return null;
 };
-var PS = function(C10) {
+var BS = function(C10) {
   var j = parseInt(C10.integerPart, C10.radix), q = 0;
   for (var S = 0;S < C10.fractionalPart.length; S++) {
     var U = parseInt(C10.fractionalPart[S], C10.radix);
@@ -66146,9 +66150,9 @@ var PS = function(C10) {
     throw new SyntaxError('String "' + C10.input + '" is not a valid number');
   return P;
 };
-var VS = "number";
-var zS = ["typed"];
-var E4 = Q0(VS, zS, (C10) => {
+var FS = "number";
+var PS = ["typed"];
+var E4 = Q0(FS, PS, (C10) => {
   var { typed: j } = C10, q = j("number", { "": function S() {
     return 0;
   }, number: function S(U) {
@@ -66156,9 +66160,9 @@ var E4 = Q0(VS, zS, (C10) => {
   }, string: function S(U) {
     if (U === "NaN")
       return NaN;
-    var P = FS(U);
+    var P = IS(U);
     if (P)
-      return PS(P);
+      return BS(P);
     var $ = 0, Y = U.match(/(0[box][0-9a-fA-F]*)i([0-9]*)/);
     if (Y)
       $ = Number(Y[2]), U = Y[1];
@@ -66188,11 +66192,11 @@ var E4 = Q0(VS, zS, (C10) => {
     return parseFloat(S.value);
   }, q;
 });
-var hR = "string";
-var IS = ["typed"];
-var O4 = Q0(hR, IS, (C10) => {
+var fR = "string";
+var TS = ["typed"];
+var O4 = Q0(fR, TS, (C10) => {
   var { typed: j } = C10;
-  return j(hR, { "": function q() {
+  return j(fR, { "": function q() {
     return "";
   }, number: q9, null: function q(S) {
     return "null";
@@ -66204,11 +66208,11 @@ var O4 = Q0(hR, IS, (C10) => {
     return String(S);
   } });
 });
-var fR = "boolean";
-var BS = ["typed"];
-var N4 = Q0(fR, BS, (C10) => {
+var xR = "boolean";
+var MS = ["typed"];
+var N4 = Q0(xR, MS, (C10) => {
   var { typed: j } = C10;
-  return j(fR, { "": function q() {
+  return j(xR, { "": function q() {
     return false;
   }, boolean: function q(S) {
     return S;
@@ -66230,9 +66234,9 @@ var N4 = Q0(fR, BS, (C10) => {
     throw new Error('Cannot convert "' + S + '" to a boolean');
   }, "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
 });
-var TS = "bignumber";
-var MS = ["typed", "BigNumber"];
-var A4 = Q0(TS, MS, (C10) => {
+var ES = "bignumber";
+var OS = ["typed", "BigNumber"];
+var A4 = Q0(ES, OS, (C10) => {
   var { typed: j, BigNumber: q } = C10;
   return j("bignumber", { "": function S() {
     return new q(0);
@@ -66262,9 +66266,9 @@ var A4 = Q0(TS, MS, (C10) => {
     return new q(0);
   }, "Array | Matrix": j.referToSelf((S) => (U) => Z8(U, S)) });
 });
-var ES = "complex";
-var OS = ["typed", "Complex"];
-var C42 = Q0(ES, OS, (C10) => {
+var NS = "complex";
+var AS = ["typed", "Complex"];
+var C42 = Q0(NS, AS, (C10) => {
   var { typed: j, Complex: q } = C10;
   return j("complex", { "": function S() {
     return q.ZERO;
@@ -66290,9 +66294,9 @@ var C42 = Q0(ES, OS, (C10) => {
     throw new Error("Expected object with properties (re and im) or (r and phi) or (abs and arg)");
   }, "Array | Matrix": j.referToSelf((S) => (U) => Z8(U, S)) });
 });
-var NS = "fraction";
-var AS = ["typed", "Fraction"];
-var j4 = Q0(NS, AS, (C10) => {
+var CS = "fraction";
+var jS = ["typed", "Fraction"];
+var j4 = Q0(CS, jS, (C10) => {
   var { typed: j, Fraction: q } = C10;
   return j("fraction", { number: function S(U) {
     if (!isFinite(U) || isNaN(U))
@@ -66315,11 +66319,11 @@ var j4 = Q0(NS, AS, (C10) => {
     return new q(U);
   }, "Array | Matrix": j.referToSelf((S) => (U) => Z8(U, S)) });
 });
-var xR = "matrix";
-var CS = ["typed", "Matrix", "DenseMatrix", "SparseMatrix"];
-var S4 = Q0(xR, CS, (C10) => {
+var gR = "matrix";
+var SS = ["typed", "Matrix", "DenseMatrix", "SparseMatrix"];
+var S4 = Q0(gR, SS, (C10) => {
   var { typed: j, Matrix: q, DenseMatrix: S, SparseMatrix: U } = C10;
-  return j(xR, { "": function $() {
+  return j(gR, { "": function $() {
     return P([]);
   }, string: function $(Y) {
     return P([], Y);
@@ -66338,11 +66342,11 @@ var S4 = Q0(xR, CS, (C10) => {
     throw new TypeError("Unknown matrix type " + JSON.stringify(Y) + ".");
   }
 });
-var gR = "matrixFromFunction";
-var jS = ["typed", "matrix", "isZero"];
-var q4 = Q0(gR, jS, (C10) => {
+var yR = "matrixFromFunction";
+var qS = ["typed", "matrix", "isZero"];
+var q4 = Q0(yR, qS, (C10) => {
   var { typed: j, matrix: q, isZero: S } = C10;
-  return j(gR, { "Array | Matrix, function, string, string": function P($, Y, X, K) {
+  return j(yR, { "Array | Matrix, function, string, string": function P($, Y, X, K) {
     return U($, Y, X, K);
   }, "Array | Matrix, function, string": function P($, Y, X) {
     return U($, Y, X);
@@ -66369,11 +66373,11 @@ var q4 = Q0(gR, jS, (C10) => {
     }), K;
   }
 });
-var yR = "matrixFromRows";
-var SS = ["typed", "matrix", "flatten", "size"];
-var v4 = Q0(yR, SS, (C10) => {
+var bR = "matrixFromRows";
+var vS = ["typed", "matrix", "flatten", "size"];
+var v4 = Q0(bR, vS, (C10) => {
   var { typed: j, matrix: q, flatten: S, size: U } = C10;
-  return j(yR, { "...Array": function Y(X) {
+  return j(bR, { "...Array": function Y(X) {
     return P(X);
   }, "...Matrix": function Y(X) {
     return q(P(X.map((K) => K.toArray())));
@@ -66405,11 +66409,11 @@ var v4 = Q0(yR, SS, (C10) => {
       throw new TypeError("Only one- or two-dimensional vectors are supported.");
   }
 });
-var bR = "matrixFromColumns";
-var qS = ["typed", "matrix", "flatten", "size"];
-var w4 = Q0(bR, qS, (C10) => {
+var mR = "matrixFromColumns";
+var wS = ["typed", "matrix", "flatten", "size"];
+var w4 = Q0(mR, wS, (C10) => {
   var { typed: j, matrix: q, flatten: S, size: U } = C10;
-  return j(bR, { "...Array": function Y(X) {
+  return j(mR, { "...Array": function Y(X) {
     return P(X);
   }, "...Matrix": function Y(X) {
     return q(P(X.map((K) => K.toArray())));
@@ -66445,28 +66449,28 @@ var w4 = Q0(bR, qS, (C10) => {
       throw new TypeError("Only one- or two-dimensional vectors are supported.");
   }
 });
-var mR = "splitUnit";
-var vS = ["typed"];
-var k4 = Q0(mR, vS, (C10) => {
+var pR = "splitUnit";
+var kS = ["typed"];
+var k4 = Q0(pR, kS, (C10) => {
   var { typed: j } = C10;
-  return j(mR, { "Unit, Array": function q(S, U) {
+  return j(pR, { "Unit, Array": function q(S, U) {
     return S.splitUnit(U);
   } });
 });
-var pR = "unaryMinus";
-var wS = ["typed"];
-var h4 = Q0(pR, wS, (C10) => {
+var dR = "unaryMinus";
+var hS = ["typed"];
+var h4 = Q0(dR, hS, (C10) => {
   var { typed: j } = C10;
-  return j(pR, { number: TK, "Complex | BigNumber | Fraction": (q) => q.neg(), Unit: j.referToSelf((q) => (S) => {
+  return j(dR, { number: TK, "Complex | BigNumber | Fraction": (q) => q.neg(), Unit: j.referToSelf((q) => (S) => {
     var U = S.clone();
     return U.value = j.find(q, U.valueType())(S.value), U;
   }), "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q, true)) });
 });
-var dR = "unaryPlus";
-var kS = ["typed", "config", "BigNumber"];
-var f4 = Q0(dR, kS, (C10) => {
+var uR = "unaryPlus";
+var fS = ["typed", "config", "BigNumber"];
+var f4 = Q0(uR, fS, (C10) => {
   var { typed: j, config: q, BigNumber: S } = C10;
-  return j(dR, { number: MK, Complex: function U(P) {
+  return j(uR, { number: MK, Complex: function U(P) {
     return P;
   }, BigNumber: function U(P) {
     return P;
@@ -66478,11 +66482,11 @@ var f4 = Q0(dR, kS, (C10) => {
     return q.number === "BigNumber" ? new S(+P) : +P;
   } });
 });
-var uR = "abs";
-var hS = ["typed"];
-var x4 = Q0(uR, hS, (C10) => {
+var _R = "abs";
+var xS = ["typed"];
+var x4 = Q0(_R, xS, (C10) => {
   var { typed: j } = C10;
-  return j(uR, { number: FK, "Complex | BigNumber | Fraction | Unit": (q) => q.abs(), "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q, true)) });
+  return j(_R, { number: FK, "Complex | BigNumber | Fraction | Unit": (q) => q.abs(), "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q, true)) });
 });
 var b5 = function(C10, j, q) {
   var S, U, P;
@@ -66490,7 +66494,7 @@ var b5 = function(C10, j, q) {
     if (!Array.isArray(C10[0]))
       return q(C10);
     else {
-      P = xS(C10), U = [];
+      P = yS(C10), U = [];
       for (S = 0;S < P.length; S++)
         U[S] = b5(P[S], j - 1, q);
       return U;
@@ -66502,7 +66506,7 @@ var b5 = function(C10, j, q) {
     return U;
   }
 };
-var xS = function(C10) {
+var yS = function(C10) {
   var j = C10.length, q = C10[0].length, S, U, P = [];
   for (U = 0;U < q; U++) {
     var $ = [];
@@ -66512,11 +66516,11 @@ var xS = function(C10) {
   }
   return P;
 };
-var _R = "apply";
-var fS = ["typed", "isInteger"];
-var r7 = Q0(_R, fS, (C10) => {
+var cR = "apply";
+var gS = ["typed", "isInteger"];
+var r7 = Q0(cR, gS, (C10) => {
   var { typed: j, isInteger: q } = C10;
-  return j(_R, { "Array | Matrix, number | BigNumber, function": function S(U, P, $) {
+  return j(cR, { "Array | Matrix, number | BigNumber, function": function S(U, P, $) {
     if (!q(P))
       throw new TypeError("Integer number expected for dimension");
     var Y = Array.isArray(U) ? Y8(U) : U.size();
@@ -66528,11 +66532,11 @@ var r7 = Q0(_R, fS, (C10) => {
       return b5(U, P, $);
   } });
 });
-var cR = "addScalar";
-var gS = ["typed"];
-var g4 = Q0(cR, gS, (C10) => {
+var lR = "addScalar";
+var bS = ["typed"];
+var g4 = Q0(lR, bS, (C10) => {
   var { typed: j } = C10;
-  return j(cR, { "number, number": PK, "Complex, Complex": function q(S, U) {
+  return j(lR, { "number, number": PK, "Complex, Complex": function q(S, U) {
     return S.add(U);
   }, "BigNumber, BigNumber": function q(S, U) {
     return S.plus(U);
@@ -66549,11 +66553,11 @@ var g4 = Q0(cR, gS, (C10) => {
     return P.value = j.find(q, [P.valueType(), U.valueType()])(P.value, U.value), P.fixPrefix = false, P;
   }) });
 });
-var lR = "subtractScalar";
-var yS = ["typed"];
-var y4 = Q0(lR, yS, (C10) => {
+var sR = "subtractScalar";
+var mS = ["typed"];
+var y4 = Q0(sR, mS, (C10) => {
   var { typed: j } = C10;
-  return j(lR, { "number, number": IK, "Complex, Complex": function q(S, U) {
+  return j(sR, { "number, number": IK, "Complex, Complex": function q(S, U) {
     return S.sub(U);
   }, "BigNumber, BigNumber": function q(S, U) {
     return S.minus(U);
@@ -66570,11 +66574,11 @@ var y4 = Q0(lR, yS, (C10) => {
     return P.value = j.find(q, [P.valueType(), U.valueType()])(P.value, U.value), P.fixPrefix = false, P;
   }) });
 });
-var sR = "cbrt";
-var bS = ["config", "typed", "isNegative", "unaryMinus", "matrix", "Complex", "BigNumber", "Fraction"];
-var b4 = Q0(sR, bS, (C10) => {
+var nR = "cbrt";
+var pS = ["config", "typed", "isNegative", "unaryMinus", "matrix", "Complex", "BigNumber", "Fraction"];
+var b4 = Q0(nR, pS, (C10) => {
   var { config: j, typed: q, isNegative: S, unaryMinus: U, matrix: P, Complex: $, BigNumber: Y, Fraction: X } = C10;
-  return q(sR, { number: N$, Complex: K, "Complex, boolean": K, BigNumber: function J(Z) {
+  return q(nR, { number: N$, Complex: K, "Complex, boolean": K, BigNumber: function J(Z) {
     return Z.cbrt();
   }, Unit: Q });
   function K(J, Z) {
@@ -66607,9 +66611,9 @@ var b4 = Q0(sR, bS, (C10) => {
     }
   }
 });
-var mS = "matAlgo11xS0s";
-var pS = ["typed", "equalScalar"];
-var u8 = Q0(mS, pS, (C10) => {
+var dS = "matAlgo11xS0s";
+var uS = ["typed", "equalScalar"];
+var u8 = Q0(dS, uS, (C10) => {
   var { typed: j, equalScalar: q } = C10;
   return function S(U, P, $, Y) {
     var { _values: X, _index: K, _ptr: Q, _size: J, _datatype: Z } = U;
@@ -66630,9 +66634,9 @@ var u8 = Q0(mS, pS, (C10) => {
     return T[G] = F.length, U.createSparseMatrix({ values: D, index: F, ptr: T, size: [W, G], datatype: H });
   };
 });
-var dS = "matAlgo12xSfs";
-var uS = ["typed", "DenseMatrix"];
-var f8 = Q0(dS, uS, (C10) => {
+var _S = "matAlgo12xSfs";
+var cS = ["typed", "DenseMatrix"];
+var f8 = Q0(_S, cS, (C10) => {
   var { typed: j, DenseMatrix: q } = C10;
   return function S(U, P, $, Y) {
     var { _values: X, _index: K, _ptr: Q, _size: J, _datatype: Z } = U;
@@ -66660,9 +66664,9 @@ var f8 = Q0(dS, uS, (C10) => {
     return new q({ data: R, size: [W, G], datatype: H });
   };
 });
-var _S = "matAlgo14xDs";
-var cS = ["typed"];
-var M6 = Q0(_S, cS, (C10) => {
+var lS = "matAlgo14xDs";
+var sS = ["typed"];
+var M6 = Q0(lS, sS, (C10) => {
   var { typed: j } = C10;
   return function S(U, P, $, Y) {
     var { _data: X, _size: K, _datatype: Q } = U, J, Z = $;
@@ -66683,8 +66687,8 @@ var M6 = Q0(_S, cS, (C10) => {
   }
 });
 var m4 = "ceil";
-var lS = ["typed", "config", "round", "matrix", "equalScalar", "zeros", "DenseMatrix"];
-var sS = Q0(m4, ["typed", "config", "round"], (C10) => {
+var nS = ["typed", "config", "round", "matrix", "equalScalar", "zeros", "DenseMatrix"];
+var oS = Q0(m4, ["typed", "config", "round"], (C10) => {
   var { typed: j, config: q, round: S } = C10;
   return j(m4, { number: function U(P) {
     if (R6(P, S(P), q.epsilon))
@@ -66700,8 +66704,8 @@ var sS = Q0(m4, ["typed", "config", "round"], (C10) => {
     }
   } });
 });
-var p4 = Q0(m4, lS, (C10) => {
-  var { typed: j, config: q, round: S, matrix: U, equalScalar: P, zeros: $, DenseMatrix: Y } = C10, X = u8({ typed: j, equalScalar: P }), K = f8({ typed: j, DenseMatrix: Y }), Q = M6({ typed: j }), J = sS({ typed: j, config: q, round: S });
+var p4 = Q0(m4, nS, (C10) => {
+  var { typed: j, config: q, round: S, matrix: U, equalScalar: P, zeros: $, DenseMatrix: Y } = C10, X = u8({ typed: j, equalScalar: P }), K = f8({ typed: j, DenseMatrix: Y }), Q = M6({ typed: j }), J = oS({ typed: j, config: q, round: S });
   return j("ceil", { number: J.signatures.number, "number,number": J.signatures["number,number"], Complex: function Z(W) {
     return W.ceil();
   }, "Complex, number": function Z(W, G) {
@@ -66742,11 +66746,11 @@ var p4 = Q0(m4, lS, (C10) => {
     return K(G, W, Z, true);
   }) });
 });
-var nR = "cube";
-var nS = ["typed"];
-var d4 = Q0(nR, nS, (C10) => {
+var oR = "cube";
+var iS = ["typed"];
+var d4 = Q0(oR, iS, (C10) => {
   var { typed: j } = C10;
-  return j(nR, { number: EK, Complex: function q(S) {
+  return j(oR, { number: EK, Complex: function q(S) {
     return S.mul(S).mul(S);
   }, BigNumber: function q(S) {
     return S.times(S).times(S);
@@ -66756,21 +66760,21 @@ var d4 = Q0(nR, nS, (C10) => {
     return S.pow(3);
   } });
 });
-var oR = "exp";
-var oS = ["typed"];
-var u4 = Q0(oR, oS, (C10) => {
+var iR = "exp";
+var aS = ["typed"];
+var u4 = Q0(iR, aS, (C10) => {
   var { typed: j } = C10;
-  return j(oR, { number: OK, Complex: function q(S) {
+  return j(iR, { number: OK, Complex: function q(S) {
     return S.exp();
   }, BigNumber: function q(S) {
     return S.exp();
   } });
 });
-var iR = "expm1";
-var iS = ["typed", "Complex"];
-var _4 = Q0(iR, iS, (C10) => {
+var aR = "expm1";
+var rS = ["typed", "Complex"];
+var _4 = Q0(aR, rS, (C10) => {
   var { typed: j, Complex: q } = C10;
-  return j(iR, { number: NK, Complex: function S(U) {
+  return j(aR, { number: NK, Complex: function S(U) {
     var P = Math.exp(U.re);
     return new q(P * Math.cos(U.im) - 1, P * Math.sin(U.im));
   }, BigNumber: function S(U) {
@@ -66778,8 +66782,8 @@ var _4 = Q0(iR, iS, (C10) => {
   } });
 });
 var c4 = "fix";
-var aS = ["typed", "Complex", "matrix", "ceil", "floor", "equalScalar", "zeros", "DenseMatrix"];
-var rS = Q0(c4, ["typed", "ceil", "floor"], (C10) => {
+var tS = ["typed", "Complex", "matrix", "ceil", "floor", "equalScalar", "zeros", "DenseMatrix"];
+var eS = Q0(c4, ["typed", "ceil", "floor"], (C10) => {
   var { typed: j, ceil: q, floor: S } = C10;
   return j(c4, { number: function U(P) {
     return P > 0 ? S(P) : q(P);
@@ -66787,8 +66791,8 @@ var rS = Q0(c4, ["typed", "ceil", "floor"], (C10) => {
     return P > 0 ? S(P, $) : q(P, $);
   } });
 });
-var l4 = Q0(c4, aS, (C10) => {
-  var { typed: j, Complex: q, matrix: S, ceil: U, floor: P, equalScalar: $, zeros: Y, DenseMatrix: X } = C10, K = f8({ typed: j, DenseMatrix: X }), Q = M6({ typed: j }), J = rS({ typed: j, ceil: U, floor: P });
+var l4 = Q0(c4, tS, (C10) => {
+  var { typed: j, Complex: q, matrix: S, ceil: U, floor: P, equalScalar: $, zeros: Y, DenseMatrix: X } = C10, K = f8({ typed: j, DenseMatrix: X }), Q = M6({ typed: j }), J = eS({ typed: j, ceil: U, floor: P });
   return j("fix", { number: J.signatures.number, "number, number | BigNumber": J.signatures["number,number"], Complex: function Z(W) {
     return new q(W.re > 0 ? Math.floor(W.re) : Math.ceil(W.re), W.im > 0 ? Math.floor(W.im) : Math.ceil(W.im));
   }, "Complex, number": function Z(W, G) {
@@ -66819,8 +66823,8 @@ var l4 = Q0(c4, aS, (C10) => {
   }) });
 });
 var s4 = "floor";
-var tS = ["typed", "config", "round", "matrix", "equalScalar", "zeros", "DenseMatrix"];
-var eS = Q0(s4, ["typed", "config", "round"], (C10) => {
+var $q = ["typed", "config", "round", "matrix", "equalScalar", "zeros", "DenseMatrix"];
+var Jq = Q0(s4, ["typed", "config", "round"], (C10) => {
   var { typed: j, config: q, round: S } = C10;
   return j(s4, { number: function U(P) {
     if (R6(P, S(P), q.epsilon))
@@ -66836,8 +66840,8 @@ var eS = Q0(s4, ["typed", "config", "round"], (C10) => {
     }
   } });
 });
-var FJ = Q0(s4, tS, (C10) => {
-  var { typed: j, config: q, round: S, matrix: U, equalScalar: P, zeros: $, DenseMatrix: Y } = C10, X = u8({ typed: j, equalScalar: P }), K = f8({ typed: j, DenseMatrix: Y }), Q = M6({ typed: j }), J = eS({ typed: j, config: q, round: S });
+var FJ = Q0(s4, $q, (C10) => {
+  var { typed: j, config: q, round: S, matrix: U, equalScalar: P, zeros: $, DenseMatrix: Y } = C10, X = u8({ typed: j, equalScalar: P }), K = f8({ typed: j, DenseMatrix: Y }), Q = M6({ typed: j }), J = Jq({ typed: j, config: q, round: S });
   return j("floor", { number: J.signatures.number, "number,number": J.signatures["number,number"], Complex: function Z(W) {
     return W.floor();
   }, "Complex, number": function Z(W, G) {
@@ -66878,9 +66882,9 @@ var FJ = Q0(s4, tS, (C10) => {
     return K(G, W, Z, true);
   }) });
 });
-var $q = "matAlgo02xDS0";
-var Jq = ["typed", "equalScalar"];
-var E6 = Q0($q, Jq, (C10) => {
+var Qq = "matAlgo02xDS0";
+var Zq = ["typed", "equalScalar"];
+var E6 = Q0(Qq, Zq, (C10) => {
   var { typed: j, equalScalar: q } = C10;
   return function S(U, P, $, Y) {
     var { _data: X, _size: K } = U, Q = U._datatype || U.getDataType(), J = P._values, Z = P._index, W = P._ptr, G = P._size, H = P._datatype || P._data === undefined ? P._datatype : P.getDataType();
@@ -66905,9 +66909,9 @@ var E6 = Q0($q, Jq, (C10) => {
     return w[R] = N.length, P.createSparseMatrix({ values: E, index: N, ptr: w, size: [L, R], datatype: Q === U._datatype && H === P._datatype ? V : undefined });
   };
 });
-var Qq = "matAlgo03xDSf";
-var Zq = ["typed"];
-var i8 = Q0(Qq, Zq, (C10) => {
+var Kq = "matAlgo03xDSf";
+var Hq = ["typed"];
+var i8 = Q0(Kq, Hq, (C10) => {
   var { typed: j } = C10;
   return function q(S, U, P, $) {
     var { _data: Y, _size: X } = S, K = S._datatype || S.getDataType(), Q = U._values, J = U._index, Z = U._ptr, W = U._size, G = U._datatype || U._data === undefined ? U._datatype : U.getDataType();
@@ -66939,9 +66943,9 @@ var i8 = Q0(Qq, Zq, (C10) => {
     return S.createDenseMatrix({ data: F, size: [H, L], datatype: K === S._datatype && G === U._datatype ? R : undefined });
   };
 });
-var Kq = "matAlgo05xSfSf";
-var Hq = ["typed", "equalScalar"];
-var O7 = Q0(Kq, Hq, (C10) => {
+var Wq = "matAlgo05xSfSf";
+var Yq = ["typed", "equalScalar"];
+var O7 = Q0(Wq, Yq, (C10) => {
   var { typed: j, equalScalar: q } = C10;
   return function S(U, P, $) {
     var { _values: Y, _index: X, _ptr: K, _size: Q } = U, J = U._datatype || U._data === undefined ? U._datatype : U.getDataType(), Z = P._values, W = P._index, G = P._ptr, H = P._size, L = P._datatype || P._data === undefined ? P._datatype : P.getDataType();
@@ -66983,9 +66987,9 @@ var O7 = Q0(Kq, Hq, (C10) => {
     return h[V] = w.length, U.createSparseMatrix({ values: N, index: w, ptr: h, size: [R, V], datatype: J === U._datatype && L === P._datatype ? D : undefined });
   };
 });
-var Wq = "matAlgo13xDD";
-var Yq = ["typed"];
-var aR = Q0(Wq, Yq, (C10) => {
+var Uq = "matAlgo13xDD";
+var Gq = ["typed"];
+var rR = Q0(Uq, Gq, (C10) => {
   var { typed: j } = C10;
   return function S(U, P, $) {
     var { _data: Y, _size: X, _datatype: K } = U, Q = P._data, J = P._size, Z = P._datatype, W = [];
@@ -67013,9 +67017,9 @@ var aR = Q0(Wq, Yq, (C10) => {
     return K;
   }
 });
-var Uq = "broadcast";
-var Gq = ["concat"];
-var rR = Q0(Uq, Gq, (C10) => {
+var Lq = "broadcast";
+var Xq = ["concat"];
+var tR = Q0(Lq, Xq, (C10) => {
   var { concat: j } = C10;
   return function(U, P) {
     var $ = Math.max(U._size.length, P._size.length);
@@ -67047,10 +67051,10 @@ var rR = Q0(Uq, Gq, (C10) => {
     return j(...Array(P).fill(U), $);
   }
 });
-var Lq = "matrixAlgorithmSuite";
-var Xq = ["typed", "matrix", "concat"];
-var z8 = Q0(Lq, Xq, (C10) => {
-  var { typed: j, matrix: q, concat: S } = C10, U = aR({ typed: j }), P = M6({ typed: j }), $ = rR({ concat: S });
+var Dq = "matrixAlgorithmSuite";
+var Rq = ["typed", "matrix", "concat"];
+var z8 = Q0(Dq, Rq, (C10) => {
+  var { typed: j, matrix: q, concat: S } = C10, U = rR({ typed: j }), P = M6({ typed: j }), $ = tR({ concat: S });
   return function Y(X) {
     var K = X.elop, Q = X.SD || X.DS, J;
     if (K) {
@@ -67121,11 +67125,11 @@ var z8 = Q0(Lq, Xq, (C10) => {
     return J;
   };
 });
-var tR = "mod";
-var Dq = ["typed", "config", "round", "matrix", "equalScalar", "zeros", "DenseMatrix", "concat"];
-var PJ = Q0(tR, Dq, (C10) => {
+var eR = "mod";
+var Vq = ["typed", "config", "round", "matrix", "equalScalar", "zeros", "DenseMatrix", "concat"];
+var PJ = Q0(eR, Vq, (C10) => {
   var { typed: j, config: q, round: S, matrix: U, equalScalar: P, zeros: $, DenseMatrix: Y, concat: X } = C10, K = FJ({ typed: j, config: q, round: S, matrix: U, equalScalar: P, zeros: $, DenseMatrix: Y }), Q = E6({ typed: j, equalScalar: P }), J = i8({ typed: j }), Z = O7({ typed: j, equalScalar: P }), W = u8({ typed: j, equalScalar: P }), G = f8({ typed: j, DenseMatrix: Y }), H = z8({ typed: j, matrix: U, concat: X });
-  return j(tR, { "number, number": L, "BigNumber, BigNumber": function R(V, D) {
+  return j(eR, { "number, number": L, "BigNumber, BigNumber": function R(V, D) {
     return D.isZero() ? V : V.sub(D.mul(K(V.div(D))));
   }, "Fraction, Fraction": function R(V, D) {
     return D.equals(0) ? V : V.sub(D.mul(K(V.div(D))));
@@ -67134,9 +67138,9 @@ var PJ = Q0(tR, Dq, (C10) => {
     return V === 0 ? R : R - V * K(R / V);
   }
 });
-var Rq = "matAlgo01xDSid";
-var Vq = ["typed"];
-var _6 = Q0(Rq, Vq, (C10) => {
+var zq = "matAlgo01xDSid";
+var Fq = ["typed"];
+var _6 = Q0(zq, Fq, (C10) => {
   var { typed: j } = C10;
   return function q(S, U, P, $) {
     var { _data: Y, _size: X } = S, K = S._datatype || S.getDataType(), Q = U._values, J = U._index, Z = U._ptr, W = U._size, G = U._datatype || U._data === undefined ? U._datatype : U.getDataType();
@@ -67163,9 +67167,9 @@ var _6 = Q0(Rq, Vq, (C10) => {
     return S.createDenseMatrix({ data: T, size: [H, L], datatype: K === S._datatype && G === U._datatype ? R : undefined });
   };
 });
-var zq = "matAlgo04xSidSid";
-var Fq = ["typed", "equalScalar"];
-var j$ = Q0(zq, Fq, (C10) => {
+var Pq = "matAlgo04xSidSid";
+var Iq = ["typed", "equalScalar"];
+var j$ = Q0(Pq, Iq, (C10) => {
   var { typed: j, equalScalar: q } = C10;
   return function S(U, P, $) {
     var { _values: Y, _index: X, _ptr: K, _size: Q } = U, J = U._datatype || U._data === undefined ? U._datatype : U.getDataType(), Z = P._values, W = P._index, G = P._ptr, H = P._size, L = P._datatype || P._data === undefined ? P._datatype : P.getDataType();
@@ -67208,9 +67212,9 @@ var j$ = Q0(zq, Fq, (C10) => {
     return h[V] = w.length, U.createSparseMatrix({ values: N, index: w, ptr: h, size: [R, V], datatype: J === U._datatype && L === P._datatype ? D : undefined });
   };
 });
-var Pq = "matAlgo10xSids";
-var Iq = ["typed", "DenseMatrix"];
-var Z9 = Q0(Pq, Iq, (C10) => {
+var Bq = "matAlgo10xSids";
+var Tq = ["typed", "DenseMatrix"];
+var Z9 = Q0(Bq, Tq, (C10) => {
   var { typed: j, DenseMatrix: q } = C10;
   return function S(U, P, $, Y) {
     var { _values: X, _index: K, _ptr: Q, _size: J, _datatype: Z } = U;
@@ -67242,24 +67246,24 @@ K7.prototype = new Error;
 K7.prototype.constructor = Error;
 K7.prototype.name = "ArgumentsError";
 K7.prototype.isArgumentsError = true;
-var $V = function(C10) {
+var JV = function(C10) {
   return !C10.some((j) => Array.isArray(j));
 };
-var eR = "gcd";
-var Bq = ["typed", "config", "round", "matrix", "equalScalar", "zeros", "BigNumber", "DenseMatrix", "concat"];
+var $V = "gcd";
+var Mq = ["typed", "config", "round", "matrix", "equalScalar", "zeros", "BigNumber", "DenseMatrix", "concat"];
 var n4 = "number | BigNumber | Fraction | Matrix | Array";
-var Tq = "".concat(n4, ", ").concat(n4, ", ...").concat(n4);
-var o4 = Q0(eR, Bq, (C10) => {
+var Eq = "".concat(n4, ", ").concat(n4, ", ...").concat(n4);
+var o4 = Q0($V, Mq, (C10) => {
   var { typed: j, matrix: q, config: S, round: U, equalScalar: P, zeros: $, BigNumber: Y, DenseMatrix: X, concat: K } = C10, Q = PJ({ typed: j, config: S, round: U, matrix: q, equalScalar: P, zeros: $, DenseMatrix: X, concat: K }), J = _6({ typed: j }), Z = j$({ typed: j, equalScalar: P }), W = Z9({ typed: j, DenseMatrix: X }), G = z8({ typed: j, matrix: q, concat: K });
-  return j(eR, { "number, number": H, "BigNumber, BigNumber": L, "Fraction, Fraction": (R, V) => R.gcd(V) }, G({ SS: Z, DS: J, Ss: W }), { [Tq]: j.referToSelf((R) => (V, D, F) => {
+  return j($V, { "number, number": H, "BigNumber, BigNumber": L, "Fraction, Fraction": (R, V) => R.gcd(V) }, G({ SS: Z, DS: J, Ss: W }), { [Eq]: j.referToSelf((R) => (V, D, F) => {
     var T = R(V, D);
     for (var E = 0;E < F.length; E++)
       T = R(T, F[E]);
     return T;
   }), Array: j.referToSelf((R) => (V) => {
-    if (V.length === 1 && Array.isArray(V[0]) && $V(V[0]))
+    if (V.length === 1 && Array.isArray(V[0]) && JV(V[0]))
       return R(...V[0]);
-    if ($V(V))
+    if (JV(V))
       return R(...V);
     throw new K7("gcd() supports only 1d matrices!");
   }), Matrix: j.referToSelf((R) => (V) => {
@@ -67284,9 +67288,9 @@ var o4 = Q0(eR, Bq, (C10) => {
     return R.lt(D) ? R.neg() : R;
   }
 });
-var Mq = "matAlgo06xS0S0";
-var Eq = ["typed", "equalScalar"];
-var N7 = Q0(Mq, Eq, (C10) => {
+var Oq = "matAlgo06xS0S0";
+var Nq = ["typed", "equalScalar"];
+var N7 = Q0(Oq, Nq, (C10) => {
   var { typed: j, equalScalar: q } = C10;
   return function S(U, P, $) {
     var { _values: Y, _size: X } = U, K = U._datatype || U._data === undefined ? U._datatype : U.getDataType(), Q = P._values, J = P._size, Z = P._datatype || P._data === undefined ? P._datatype : P.getDataType();
@@ -67328,16 +67332,16 @@ var N7 = Q0(Mq, Eq, (C10) => {
     return T[G] = F.length, U.createSparseMatrix({ values: D, index: F, ptr: T, size: [W, G], datatype: K === U._datatype && Z === P._datatype ? H : undefined });
   };
 });
-var JV = "lcm";
-var Oq = ["typed", "matrix", "equalScalar", "concat"];
-var i4 = Q0(JV, Oq, (C10) => {
+var QV = "lcm";
+var Aq = ["typed", "matrix", "equalScalar", "concat"];
+var i4 = Q0(QV, Aq, (C10) => {
   var { typed: j, matrix: q, equalScalar: S, concat: U } = C10, P = E6({ typed: j, equalScalar: S }), $ = N7({ typed: j, equalScalar: S }), Y = u8({ typed: j, equalScalar: S }), X = z8({ typed: j, matrix: q, concat: U }), K = "number | BigNumber | Fraction | Matrix | Array", Q = {};
   return Q["".concat(K, ", ").concat(K, ", ...").concat(K)] = j.referToSelf((Z) => (W, G, H) => {
     var L = Z(W, G);
     for (var R = 0;R < H.length; R++)
       L = Z(L, H[R]);
     return L;
-  }), j(JV, { "number, number": AK, "BigNumber, BigNumber": J, "Fraction, Fraction": (Z, W) => Z.lcm(W) }, X({ SS: $, DS: P, Ss: Y }), Q);
+  }), j(QV, { "number, number": AK, "BigNumber, BigNumber": J, "Fraction, Fraction": (Z, W) => Z.lcm(W) }, X({ SS: $, DS: P, Ss: Y }), Q);
   function J(Z, W) {
     if (!Z.isInt() || !W.isInt())
       throw new Error("Parameters in function lcm must be integer numbers");
@@ -67353,11 +67357,11 @@ var i4 = Q0(JV, Oq, (C10) => {
     return G.div(Z).abs();
   }
 });
-var QV = "log10";
-var Nq = ["typed", "config", "Complex"];
-var a4 = Q0(QV, Nq, (C10) => {
+var ZV = "log10";
+var Cq = ["typed", "config", "Complex"];
+var a4 = Q0(ZV, Cq, (C10) => {
   var { typed: j, config: q, Complex: S } = C10;
-  return j(QV, { number: function U(P) {
+  return j(ZV, { number: function U(P) {
     if (P >= 0 || q.predictable)
       return CK(P);
     else
@@ -67371,11 +67375,11 @@ var a4 = Q0(QV, Nq, (C10) => {
       return new S(P.toNumber(), 0).log().div(Math.LN10);
   }, "Array | Matrix": j.referToSelf((U) => (P) => Z8(P, U)) });
 });
-var ZV = "log2";
-var Aq = ["typed", "config", "Complex"];
-var r4 = Q0(ZV, Aq, (C10) => {
+var KV = "log2";
+var jq = ["typed", "config", "Complex"];
+var r4 = Q0(KV, jq, (C10) => {
   var { typed: j, config: q, Complex: S } = C10;
-  return j(ZV, { number: function P($) {
+  return j(KV, { number: function P($) {
     if ($ >= 0 || q.predictable)
       return jK($);
     else
@@ -67391,9 +67395,9 @@ var r4 = Q0(ZV, Aq, (C10) => {
     return new S(Math.log2 ? Math.log2($) : Math.log($) / Math.LN2, Math.atan2(P.im, P.re) / Math.LN2);
   }
 });
-var Cq = "multiplyScalar";
-var jq = ["typed"];
-var t4 = Q0(Cq, jq, (C10) => {
+var Sq = "multiplyScalar";
+var qq = ["typed"];
+var t4 = Q0(Sq, qq, (C10) => {
   var { typed: j } = C10;
   return j("multiplyScalar", { "number, number": BK, "Complex, Complex": function q(S, U) {
     return S.mul(U);
@@ -67403,9 +67407,9 @@ var t4 = Q0(Cq, jq, (C10) => {
     return S.mul(U);
   }, "number | Fraction | BigNumber | Complex, Unit": (q, S) => S.multiply(q), "Unit, number | Fraction | BigNumber | Complex | Unit": (q, S) => q.multiply(S) });
 });
-var KV = "multiply";
-var Sq = ["typed", "matrix", "addScalar", "multiplyScalar", "equalScalar", "dot"];
-var e4 = Q0(KV, Sq, (C10) => {
+var HV = "multiply";
+var vq = ["typed", "matrix", "addScalar", "multiplyScalar", "equalScalar", "dot"];
+var e4 = Q0(HV, vq, (C10) => {
   var { typed: j, matrix: q, addScalar: S, multiplyScalar: U, equalScalar: P, dot: $ } = C10, Y = u8({ typed: j, equalScalar: P }), X = M6({ typed: j });
   function K(T, E) {
     switch (T.length) {
@@ -67606,7 +67610,7 @@ var e4 = Q0(KV, Sq, (C10) => {
     }
     return y[O] = m.length, p;
   }
-  return j(KV, U, { "Array, Array": j.referTo("Matrix, Matrix", (T) => (E, N) => {
+  return j(HV, U, { "Array, Array": j.referTo("Matrix, Matrix", (T) => (E, N) => {
     K(Y8(E), Y8(N));
     var w = T(q(E), q(N));
     return $8(w) ? w.valueOf() : w;
@@ -67641,14 +67645,14 @@ var e4 = Q0(KV, Sq, (C10) => {
     return h;
   }) });
 });
-var HV = "nthRoot";
-var qq = ["typed", "matrix", "equalScalar", "BigNumber", "concat"];
-var $H = Q0(HV, qq, (C10) => {
+var WV = "nthRoot";
+var wq = ["typed", "matrix", "equalScalar", "BigNumber", "concat"];
+var $H = Q0(WV, wq, (C10) => {
   var { typed: j, matrix: q, equalScalar: S, BigNumber: U, concat: P } = C10, $ = _6({ typed: j }), Y = E6({ typed: j, equalScalar: S }), X = N7({ typed: j, equalScalar: S }), K = u8({ typed: j, equalScalar: S }), Q = z8({ typed: j, matrix: q, concat: P });
   function J() {
     throw new Error("Complex number not supported in function nthRoot. Use nthRoots instead.");
   }
-  return j(HV, { number: SK, "number, number": SK, BigNumber: (W) => Z(W, new U(2)), "BigNumber, BigNumber": Z, Complex: J, "Complex, number": J, Array: j.referTo("DenseMatrix,number", (W) => (G) => W(q(G), 2).valueOf()), DenseMatrix: j.referTo("DenseMatrix,number", (W) => (G) => W(G, 2)), SparseMatrix: j.referTo("SparseMatrix,number", (W) => (G) => W(G, 2)), "SparseMatrix, SparseMatrix": j.referToSelf((W) => (G, H) => {
+  return j(WV, { number: SK, "number, number": SK, BigNumber: (W) => Z(W, new U(2)), "BigNumber, BigNumber": Z, Complex: J, "Complex, number": J, Array: j.referTo("DenseMatrix,number", (W) => (G) => W(q(G), 2).valueOf()), DenseMatrix: j.referTo("DenseMatrix,number", (W) => (G) => W(G, 2)), SparseMatrix: j.referTo("SparseMatrix,number", (W) => (G) => W(G, 2)), "SparseMatrix, SparseMatrix": j.referToSelf((W) => (G, H) => {
     if (H.density() === 1)
       return X(G, H, W);
     else
@@ -67680,11 +67684,11 @@ var $H = Q0(HV, qq, (C10) => {
     return F = W.isNeg() ? F.neg() : F, new U((D ? V.div(F) : F).toPrecision(H));
   }
 });
-var WV = "sign";
-var vq = ["typed", "BigNumber", "Fraction", "complex"];
-var JH = Q0(WV, vq, (C10) => {
+var YV = "sign";
+var kq = ["typed", "BigNumber", "Fraction", "complex"];
+var JH = Q0(YV, kq, (C10) => {
   var { typed: j, BigNumber: q, complex: S, Fraction: U } = C10;
-  return j(WV, { number: g5, Complex: function P($) {
+  return j(YV, { number: g5, Complex: function P($) {
     return $.im === 0 ? S(g5($.re)) : $.sign();
   }, BigNumber: function P($) {
     return new q($.cmp(0));
@@ -67696,9 +67700,9 @@ var JH = Q0(WV, vq, (C10) => {
     return j.find(P, $.valueType())($.value);
   }) });
 });
-var wq = "sqrt";
-var kq = ["config", "typed", "Complex"];
-var QH = Q0(wq, kq, (C10) => {
+var hq = "sqrt";
+var fq = ["config", "typed", "Complex"];
+var QH = Q0(hq, fq, (C10) => {
   var { config: j, typed: q, Complex: S } = C10;
   return q("sqrt", { number: U, Complex: function P($) {
     return $.sqrt();
@@ -67719,11 +67723,11 @@ var QH = Q0(wq, kq, (C10) => {
       return new S(P, 0).sqrt();
   }
 });
-var YV = "square";
-var hq = ["typed"];
-var ZH = Q0(YV, hq, (C10) => {
+var UV = "square";
+var xq = ["typed"];
+var ZH = Q0(UV, xq, (C10) => {
   var { typed: j } = C10;
-  return j(YV, { number: qK, Complex: function q(S) {
+  return j(UV, { number: qK, Complex: function q(S) {
     return S.mul(S);
   }, BigNumber: function q(S) {
     return S.times(S);
@@ -67733,17 +67737,17 @@ var ZH = Q0(YV, hq, (C10) => {
     return S.pow(2);
   } });
 });
-var UV = "subtract";
-var fq = ["typed", "matrix", "equalScalar", "subtractScalar", "unaryMinus", "DenseMatrix", "concat"];
-var KH = Q0(UV, fq, (C10) => {
+var GV = "subtract";
+var gq = ["typed", "matrix", "equalScalar", "subtractScalar", "unaryMinus", "DenseMatrix", "concat"];
+var KH = Q0(GV, gq, (C10) => {
   var { typed: j, matrix: q, equalScalar: S, subtractScalar: U, unaryMinus: P, DenseMatrix: $, concat: Y } = C10, X = _6({ typed: j }), K = i8({ typed: j }), Q = O7({ typed: j, equalScalar: S }), J = Z9({ typed: j, DenseMatrix: $ }), Z = f8({ typed: j, DenseMatrix: $ }), W = z8({ typed: j, matrix: q, concat: Y });
-  return j(UV, { "any, any": U }, W({ elop: U, SS: Q, DS: X, SD: K, Ss: Z, sS: J }));
+  return j(GV, { "any, any": U }, W({ elop: U, SS: Q, DS: X, SD: K, Ss: Z, sS: J }));
 });
-var GV = "xgcd";
-var xq = ["typed", "config", "matrix", "BigNumber"];
-var HH = Q0(GV, xq, (C10) => {
+var LV = "xgcd";
+var yq = ["typed", "config", "matrix", "BigNumber"];
+var HH = Q0(LV, yq, (C10) => {
   var { typed: j, config: q, matrix: S, BigNumber: U } = C10;
-  return j(GV, { "number, number": function $(Y, X) {
+  return j(LV, { "number, number": function $(Y, X) {
     var K = vK(Y, X);
     return q.matrix === "Array" ? K : S(K);
   }, "BigNumber, BigNumber": P });
@@ -67761,11 +67765,11 @@ var HH = Q0(GV, xq, (C10) => {
     return q.matrix === "Array" ? R : S(R);
   }
 });
-var LV = "invmod";
-var gq = ["typed", "config", "BigNumber", "xgcd", "equal", "smaller", "mod", "add", "isInteger"];
-var WH = Q0(LV, gq, (C10) => {
+var XV = "invmod";
+var bq = ["typed", "config", "BigNumber", "xgcd", "equal", "smaller", "mod", "add", "isInteger"];
+var WH = Q0(XV, bq, (C10) => {
   var { typed: j, config: q, BigNumber: S, xgcd: U, equal: P, smaller: $, mod: Y, add: X, isInteger: K } = C10;
-  return j(LV, { "number, number": Q, "BigNumber, BigNumber": Q });
+  return j(XV, { "number, number": Q, "BigNumber, BigNumber": Q });
   function Q(J, Z) {
     if (!K(J) || !K(Z))
       throw new Error("Parameters in function invmod must be integer numbers");
@@ -67781,9 +67785,9 @@ var WH = Q0(LV, gq, (C10) => {
     return H;
   }
 });
-var yq = "matAlgo09xS0Sf";
-var bq = ["typed", "equalScalar"];
-var m5 = Q0(yq, bq, (C10) => {
+var mq = "matAlgo09xS0Sf";
+var pq = ["typed", "equalScalar"];
+var m5 = Q0(mq, pq, (C10) => {
   var { typed: j, equalScalar: q } = C10;
   return function S(U, P, $) {
     var { _values: Y, _index: X, _ptr: K, _size: Q } = U, J = U._datatype || U._data === undefined ? U._datatype : U.getDataType(), Z = P._values, W = P._index, G = P._ptr, H = P._size, L = P._datatype || P._data === undefined ? P._datatype : P.getDataType();
@@ -67812,11 +67816,11 @@ var m5 = Q0(yq, bq, (C10) => {
     return h[V] = w.length, U.createSparseMatrix({ values: N, index: w, ptr: h, size: [R, V], datatype: J === U._datatype && L === P._datatype ? D : undefined });
   };
 });
-var XV = "dotMultiply";
-var mq = ["typed", "matrix", "equalScalar", "multiplyScalar", "concat"];
-var YH = Q0(XV, mq, (C10) => {
+var DV = "dotMultiply";
+var dq = ["typed", "matrix", "equalScalar", "multiplyScalar", "concat"];
+var YH = Q0(DV, dq, (C10) => {
   var { typed: j, matrix: q, equalScalar: S, multiplyScalar: U, concat: P } = C10, $ = E6({ typed: j, equalScalar: S }), Y = m5({ typed: j, equalScalar: S }), X = u8({ typed: j, equalScalar: S }), K = z8({ typed: j, matrix: q, concat: P });
-  return j(XV, K({ elop: U, SS: Y, DS: $, Ss: X }));
+  return j(DV, K({ elop: U, SS: Y, DS: $, Ss: X }));
 });
 var p5 = function(C10) {
   var j = C10.d, q = j[0] + "";
@@ -67853,27 +67857,27 @@ var p5 = function(C10) {
   }
   return Q.reverse();
 };
-var PV = "bitAnd";
-var pq = ["typed", "matrix", "equalScalar", "concat"];
-var IJ = Q0(PV, pq, (C10) => {
+var IV = "bitAnd";
+var uq = ["typed", "matrix", "equalScalar", "concat"];
+var IJ = Q0(IV, uq, (C10) => {
   var { typed: j, matrix: q, equalScalar: S, concat: U } = C10, P = E6({ typed: j, equalScalar: S }), $ = N7({ typed: j, equalScalar: S }), Y = u8({ typed: j, equalScalar: S }), X = z8({ typed: j, matrix: q, concat: U });
-  return j(PV, { "number, number": kK, "BigNumber, BigNumber": DV }, X({ SS: $, DS: P, Ss: Y }));
+  return j(IV, { "number, number": kK, "BigNumber, BigNumber": RV }, X({ SS: $, DS: P, Ss: Y }));
 });
-var IV = "bitNot";
-var dq = ["typed"];
-var GH = Q0(IV, dq, (C10) => {
+var BV = "bitNot";
+var _q = ["typed"];
+var GH = Q0(BV, _q, (C10) => {
   var { typed: j } = C10;
-  return j(IV, { number: hK, BigNumber: S$, "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
+  return j(BV, { number: hK, BigNumber: S$, "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
 });
-var BV = "bitOr";
-var uq = ["typed", "matrix", "equalScalar", "DenseMatrix", "concat"];
-var BJ = Q0(BV, uq, (C10) => {
+var TV = "bitOr";
+var cq = ["typed", "matrix", "equalScalar", "DenseMatrix", "concat"];
+var BJ = Q0(TV, cq, (C10) => {
   var { typed: j, matrix: q, equalScalar: S, DenseMatrix: U, concat: P } = C10, $ = _6({ typed: j }), Y = j$({ typed: j, equalScalar: S }), X = Z9({ typed: j, DenseMatrix: U }), K = z8({ typed: j, matrix: q, concat: P });
-  return j(BV, { "number, number": fK, "BigNumber, BigNumber": RV }, K({ SS: Y, DS: $, Ss: X }));
+  return j(TV, { "number, number": fK, "BigNumber, BigNumber": VV }, K({ SS: Y, DS: $, Ss: X }));
 });
-var _q = "matAlgo07xSSf";
-var cq = ["typed", "DenseMatrix"];
-var A6 = Q0(_q, cq, (C10) => {
+var lq = "matAlgo07xSSf";
+var sq = ["typed", "DenseMatrix"];
+var A6 = Q0(lq, sq, (C10) => {
   var { typed: j, DenseMatrix: q } = C10;
   return function U(P, $, Y) {
     var X = P._size, K = P._datatype || P._data === undefined ? P._datatype : P.getDataType(), Q = $._size, J = $._datatype || $._data === undefined ? $._datatype : $.getDataType();
@@ -67906,17 +67910,17 @@ var A6 = Q0(_q, cq, (C10) => {
     }
   }
 });
-var TV = "bitXor";
-var lq = ["typed", "matrix", "DenseMatrix", "concat"];
-var LH = Q0(TV, lq, (C10) => {
+var MV = "bitXor";
+var nq = ["typed", "matrix", "DenseMatrix", "concat"];
+var LH = Q0(MV, nq, (C10) => {
   var { typed: j, matrix: q, DenseMatrix: S, concat: U } = C10, P = i8({ typed: j }), $ = A6({ typed: j, DenseMatrix: S }), Y = f8({ typed: j, DenseMatrix: S }), X = z8({ typed: j, matrix: q, concat: U });
-  return j(TV, { "number, number": xK, "BigNumber, BigNumber": VV }, X({ SS: $, DS: P, Ss: Y }));
+  return j(MV, { "number, number": xK, "BigNumber, BigNumber": zV }, X({ SS: $, DS: P, Ss: Y }));
 });
-var MV = "arg";
-var sq = ["typed"];
-var XH = Q0(MV, sq, (C10) => {
+var EV = "arg";
+var oq = ["typed"];
+var XH = Q0(EV, oq, (C10) => {
   var { typed: j } = C10;
-  return j(MV, { number: function q(S) {
+  return j(EV, { number: function q(S) {
     return Math.atan2(0, S);
   }, BigNumber: function q(S) {
     return S.constructor.atan2(0, S);
@@ -67924,59 +67928,59 @@ var XH = Q0(MV, sq, (C10) => {
     return S.arg();
   }, "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
 });
-var EV = "conj";
-var nq = ["typed"];
-var DH = Q0(EV, nq, (C10) => {
-  var { typed: j } = C10;
-  return j(EV, { "number | BigNumber | Fraction": (q) => q, Complex: (q) => q.conjugate(), "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
-});
-var OV = "im";
-var oq = ["typed"];
-var RH = Q0(OV, oq, (C10) => {
-  var { typed: j } = C10;
-  return j(OV, { number: () => 0, "BigNumber | Fraction": (q) => q.mul(0), Complex: (q) => q.im, "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
-});
-var NV = "re";
+var OV = "conj";
 var iq = ["typed"];
-var VH = Q0(NV, iq, (C10) => {
+var DH = Q0(OV, iq, (C10) => {
   var { typed: j } = C10;
-  return j(NV, { "number | BigNumber | Fraction": (q) => q, Complex: (q) => q.re, "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
+  return j(OV, { "number | BigNumber | Fraction": (q) => q, Complex: (q) => q.conjugate(), "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
 });
-var AV = "not";
+var NV = "im";
 var aq = ["typed"];
-var zH = Q0(AV, aq, (C10) => {
+var RH = Q0(NV, aq, (C10) => {
   var { typed: j } = C10;
-  return j(AV, { "null | undefined": () => true, number: dK, Complex: function q(S) {
+  return j(NV, { number: () => 0, "BigNumber | Fraction": (q) => q.mul(0), Complex: (q) => q.im, "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
+});
+var AV = "re";
+var rq = ["typed"];
+var VH = Q0(AV, rq, (C10) => {
+  var { typed: j } = C10;
+  return j(AV, { "number | BigNumber | Fraction": (q) => q, Complex: (q) => q.re, "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
+});
+var CV = "not";
+var tq = ["typed"];
+var zH = Q0(CV, tq, (C10) => {
+  var { typed: j } = C10;
+  return j(CV, { "null | undefined": () => true, number: dK, Complex: function q(S) {
     return S.re === 0 && S.im === 0;
   }, BigNumber: function q(S) {
     return S.isZero() || S.isNaN();
   }, Unit: j.referToSelf((q) => (S) => j.find(q, S.valueType())(S.value)), "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
 });
-var CV = "or";
-var rq = ["typed", "matrix", "equalScalar", "DenseMatrix", "concat"];
-var TJ = Q0(CV, rq, (C10) => {
+var jV = "or";
+var eq = ["typed", "matrix", "equalScalar", "DenseMatrix", "concat"];
+var TJ = Q0(jV, eq, (C10) => {
   var { typed: j, matrix: q, equalScalar: S, DenseMatrix: U, concat: P } = C10, $ = i8({ typed: j }), Y = O7({ typed: j, equalScalar: S }), X = f8({ typed: j, DenseMatrix: U }), K = z8({ typed: j, matrix: q, concat: P });
-  return j(CV, { "number, number": uK, "Complex, Complex": function Q(J, Z) {
+  return j(jV, { "number, number": uK, "Complex, Complex": function Q(J, Z) {
     return J.re !== 0 || J.im !== 0 || Z.re !== 0 || Z.im !== 0;
   }, "BigNumber, BigNumber": function Q(J, Z) {
     return !J.isZero() && !J.isNaN() || !Z.isZero() && !Z.isNaN();
   }, "Unit, Unit": j.referToSelf((Q) => (J, Z) => Q(J.value || 0, Z.value || 0)) }, K({ SS: Y, DS: $, Ss: X }));
 });
-var jV = "xor";
-var tq = ["typed", "matrix", "DenseMatrix", "concat"];
-var FH = Q0(jV, tq, (C10) => {
+var SV = "xor";
+var $v = ["typed", "matrix", "DenseMatrix", "concat"];
+var FH = Q0(SV, $v, (C10) => {
   var { typed: j, matrix: q, DenseMatrix: S, concat: U } = C10, P = i8({ typed: j }), $ = A6({ typed: j, DenseMatrix: S }), Y = f8({ typed: j, DenseMatrix: S }), X = z8({ typed: j, matrix: q, concat: U });
-  return j(jV, { "number, number": _K, "Complex, Complex": function K(Q, J) {
+  return j(SV, { "number, number": _K, "Complex, Complex": function K(Q, J) {
     return (Q.re !== 0 || Q.im !== 0) !== (J.re !== 0 || J.im !== 0);
   }, "BigNumber, BigNumber": function K(Q, J) {
     return (!Q.isZero() && !Q.isNaN()) !== (!J.isZero() && !J.isNaN());
   }, "Unit, Unit": j.referToSelf((K) => (Q, J) => K(Q.value || 0, J.value || 0)) }, X({ SS: $, DS: P, Ss: Y }));
 });
-var SV = "concat";
-var eq = ["typed", "matrix", "isInteger"];
-var MJ = Q0(SV, eq, (C10) => {
+var qV = "concat";
+var Jv = ["typed", "matrix", "isInteger"];
+var MJ = Q0(qV, Jv, (C10) => {
   var { typed: j, matrix: q, isInteger: S } = C10;
-  return j(SV, { "...Array | Matrix | number | BigNumber": function U(P) {
+  return j(qV, { "...Array | Matrix | number | BigNumber": function U(P) {
     var $, Y = P.length, X = -1, K, Q = false, J = [];
     for ($ = 0;$ < Y; $++) {
       var Z = P[$];
@@ -68005,11 +68009,11 @@ var MJ = Q0(SV, eq, (C10) => {
     return P.join("");
   } });
 });
-var qV = "column";
-var $v = ["typed", "Index", "matrix", "range"];
-var EJ = Q0(qV, $v, (C10) => {
+var vV = "column";
+var Qv = ["typed", "Index", "matrix", "range"];
+var EJ = Q0(vV, Qv, (C10) => {
   var { typed: j, Index: q, matrix: S, range: U } = C10;
-  return j(qV, { "Matrix, number": P, "Array, number": function $(Y, X) {
+  return j(vV, { "Matrix, number": P, "Array, number": function $(Y, X) {
     return P(S(H8(Y)), X).valueOf();
   } });
   function P($, Y) {
@@ -68020,21 +68024,21 @@ var EJ = Q0(qV, $v, (C10) => {
     return $8(Q) ? Q : S([[Q]]);
   }
 });
-var vV = "count";
-var Jv = ["typed", "size", "prod"];
-var PH = Q0(vV, Jv, (C10) => {
+var wV = "count";
+var Zv = ["typed", "size", "prod"];
+var PH = Q0(wV, Zv, (C10) => {
   var { typed: j, size: q, prod: S } = C10;
-  return j(vV, { string: function U(P) {
+  return j(wV, { string: function U(P) {
     return P.length;
   }, "Matrix | Array": function U(P) {
     return S(q(P));
   } });
 });
-var wV = "cross";
-var Qv = ["typed", "matrix", "subtract", "multiply"];
-var IH = Q0(wV, Qv, (C10) => {
+var kV = "cross";
+var Kv = ["typed", "matrix", "subtract", "multiply"];
+var IH = Q0(kV, Kv, (C10) => {
   var { typed: j, matrix: q, subtract: S, multiply: U } = C10;
-  return j(wV, { "Matrix, Matrix": function $(Y, X) {
+  return j(kV, { "Matrix, Matrix": function $(Y, X) {
     return q(P(Y.toArray(), X.toArray()));
   }, "Matrix, Array": function $(Y, X) {
     return q(P(Y.toArray(), X));
@@ -68054,11 +68058,11 @@ var IH = Q0(wV, Qv, (C10) => {
       return J;
   }
 });
-var kV = "diag";
-var Zv = ["typed", "matrix", "DenseMatrix", "SparseMatrix"];
-var BH = Q0(kV, Zv, (C10) => {
+var hV = "diag";
+var Hv = ["typed", "matrix", "DenseMatrix", "SparseMatrix"];
+var BH = Q0(hV, Hv, (C10) => {
   var { typed: j, matrix: q, DenseMatrix: S, SparseMatrix: U } = C10;
-  return j(kV, { Array: function X(K) {
+  return j(hV, { Array: function X(K) {
     return P(K, 0, Y8(K), null);
   }, "Array, number": function X(K, Q) {
     return P(K, Q, Y8(K), null);
@@ -68119,33 +68123,33 @@ var BH = Q0(kV, Zv, (C10) => {
   }
 });
 var OJ = C9(yZ(), 1);
-var hV = function(C10, j) {
+var fV = function(C10, j) {
   return O5(C10, function(q, S, U) {
     return B9(j, q, [S], U, "filter");
   });
 };
-var Kv = "filter";
-var Hv = ["typed"];
-var TH = Q0(Kv, Hv, (C10) => {
+var Wv = "filter";
+var Yv = ["typed"];
+var TH = Q0(Wv, Yv, (C10) => {
   var { typed: j } = C10;
-  return j("filter", { "Array, function": hV, "Matrix, function": function q(S, U) {
-    return S.create(hV(S.toArray(), U));
+  return j("filter", { "Array, function": fV, "Matrix, function": function q(S, U) {
+    return S.create(fV(S.toArray(), U));
   }, "Array, RegExp": B$, "Matrix, RegExp": function q(S, U) {
     return S.create(B$(S.toArray(), U));
   } });
 });
-var fV = "flatten";
-var Wv = ["typed", "matrix"];
-var MH = Q0(fV, Wv, (C10) => {
+var xV = "flatten";
+var Uv = ["typed", "matrix"];
+var MH = Q0(xV, Uv, (C10) => {
   var { typed: j, matrix: q } = C10;
-  return j(fV, { Array: function S(U) {
+  return j(xV, { Array: function S(U) {
     return F8(U);
   }, Matrix: function S(U) {
     var P = F8(U.toArray());
     return q(P);
   } });
 });
-var Uv = function(C10, j) {
+var Lv = function(C10, j) {
   var q = function S(U, P) {
     if (Array.isArray(U))
       z7(U, function($, Y) {
@@ -68156,29 +68160,29 @@ var Uv = function(C10, j) {
   };
   q(C10, []);
 };
-var xV = "forEach";
-var Yv = ["typed"];
-var EH = Q0(xV, Yv, (C10) => {
+var gV = "forEach";
+var Gv = ["typed"];
+var EH = Q0(gV, Gv, (C10) => {
   var { typed: j } = C10;
-  return j(xV, { "Array, function": Uv, "Matrix, function": function q(S, U) {
+  return j(gV, { "Array, function": Lv, "Matrix, function": function q(S, U) {
     S.forEach(U);
   } });
 });
-var gV = "getMatrixDataType";
-var Gv = ["typed"];
-var OH = Q0(gV, Gv, (C10) => {
+var yV = "getMatrixDataType";
+var Xv = ["typed"];
+var OH = Q0(yV, Xv, (C10) => {
   var { typed: j } = C10;
-  return j(gV, { Array: function q(S) {
+  return j(yV, { Array: function q(S) {
     return F7(S, O8);
   }, Matrix: function q(S) {
     return S.getDataType();
   } });
 });
-var yV = "identity";
-var Lv = ["typed", "config", "matrix", "BigNumber", "DenseMatrix", "SparseMatrix"];
-var NH = Q0(yV, Lv, (C10) => {
+var bV = "identity";
+var Dv = ["typed", "config", "matrix", "BigNumber", "DenseMatrix", "SparseMatrix"];
+var NH = Q0(bV, Dv, (C10) => {
   var { typed: j, config: q, matrix: S, BigNumber: U, DenseMatrix: P, SparseMatrix: $ } = C10;
-  return j(yV, { "": function K() {
+  return j(bV, { "": function K() {
     return q.matrix === "Matrix" ? S([]) : [];
   }, string: function K(Q) {
     return S(Q);
@@ -68235,11 +68239,11 @@ var NH = Q0(yV, Lv, (C10) => {
     return L;
   }
 });
-var bV = "kron";
-var Xv = ["typed", "matrix", "multiplyScalar"];
-var AH = Q0(bV, Xv, (C10) => {
+var mV = "kron";
+var Rv = ["typed", "matrix", "multiplyScalar"];
+var AH = Q0(mV, Rv, (C10) => {
   var { typed: j, matrix: q, multiplyScalar: S } = C10;
-  return j(bV, { "Matrix, Matrix": function P($, Y) {
+  return j(mV, { "Matrix, Matrix": function P($, Y) {
     return q(U($.toArray(), Y.toArray()));
   }, "Matrix, Array": function P($, Y) {
     return q(U($.toArray(), Y));
@@ -68265,7 +68269,7 @@ var AH = Q0(bV, Xv, (C10) => {
     }) && Y;
   }
 });
-var Rv = function(C10, j) {
+var zv = function(C10, j) {
   var q = function S(U, P) {
     if (Array.isArray(U))
       return U.map(function($, Y) {
@@ -68276,19 +68280,19 @@ var Rv = function(C10, j) {
   };
   return q(C10, []);
 };
-var mV = "map";
-var Dv = ["typed"];
-var CH = Q0(mV, Dv, (C10) => {
+var pV = "map";
+var Vv = ["typed"];
+var CH = Q0(pV, Vv, (C10) => {
   var { typed: j } = C10;
-  return j(mV, { "Array, function": Rv, "Matrix, function": function q(S, U) {
+  return j(pV, { "Array, function": zv, "Matrix, function": function q(S, U) {
     return S.map(U);
   } });
 });
-var pV = "diff";
-var Vv = ["typed", "matrix", "subtract", "number"];
-var NJ = Q0(pV, Vv, (C10) => {
+var dV = "diff";
+var Fv = ["typed", "matrix", "subtract", "number"];
+var NJ = Q0(dV, Fv, (C10) => {
   var { typed: j, matrix: q, subtract: S, number: U } = C10;
-  return j(pV, { "Array | Matrix": function K(Q) {
+  return j(dV, { "Array | Matrix": function K(Q) {
     if ($8(Q))
       return q($(Q.toArray()));
     else
@@ -68343,9 +68347,9 @@ var NJ = Q0(pV, Vv, (C10) => {
     return J;
   }
 });
-var zv = "ones";
-var Fv = ["typed", "config", "matrix", "BigNumber"];
-var jH = Q0(zv, Fv, (C10) => {
+var Pv = "ones";
+var Iv = ["typed", "config", "matrix", "BigNumber"];
+var jH = Q0(Pv, Iv, (C10) => {
   var { typed: j, config: q, matrix: S, BigNumber: U } = C10;
   return j("ones", { "": function X() {
     return q.matrix === "Array" ? P([]) : P([], "default");
@@ -68392,11 +68396,11 @@ var jH = Q0(zv, Fv, (C10) => {
     });
   }
 });
-var dV = "range";
-var Pv = ["typed", "config", "?matrix", "?bignumber", "smaller", "smallerEq", "larger", "largerEq", "add", "isPositive"];
-var AJ = Q0(dV, Pv, (C10) => {
+var uV = "range";
+var Bv = ["typed", "config", "?matrix", "?bignumber", "smaller", "smallerEq", "larger", "largerEq", "add", "isPositive"];
+var AJ = Q0(uV, Bv, (C10) => {
   var { typed: j, config: q, matrix: S, bignumber: U, smaller: P, smallerEq: $, larger: Y, largerEq: X, add: K, isPositive: Q } = C10;
-  return j(dV, { string: Z, "string, boolean": Z, "number, number": function H(L, R) {
+  return j(uV, { string: Z, "string, boolean": Z, "number, number": function H(L, R) {
     return J(W(L, R, 1, false));
   }, "number, number, number": function H(L, R, V) {
     return J(W(L, R, V, false));
@@ -68459,11 +68463,11 @@ var AJ = Q0(dV, Pv, (C10) => {
     }
   }
 });
-var uV = "reshape";
-var Iv = ["typed", "isInteger", "matrix"];
-var SH = Q0(uV, Iv, (C10) => {
+var _V = "reshape";
+var Tv = ["typed", "isInteger", "matrix"];
+var SH = Q0(_V, Tv, (C10) => {
   var { typed: j, isInteger: q } = C10;
-  return j(uV, { "Matrix, Array": function S(U, P) {
+  return j(_V, { "Matrix, Array": function S(U, P) {
     return U.reshape(P, true);
   }, "Array, Array": function S(U, P) {
     return P.forEach(function($) {
@@ -68472,9 +68476,9 @@ var SH = Q0(uV, Iv, (C10) => {
     }), YJ(U, P);
   } });
 });
-var Bv = "resize";
-var Tv = ["config", "matrix"];
-var qH = Q0(Bv, Tv, (C10) => {
+var Mv = "resize";
+var Ev = ["config", "matrix"];
+var qH = Q0(Mv, Ev, (C10) => {
   var { config: j, matrix: q } = C10;
   return function U(P, $, Y) {
     if (arguments.length !== 2 && arguments.length !== 3)
@@ -68524,11 +68528,11 @@ var qH = Q0(Bv, Tv, (C10) => {
       return U;
   }
 });
-var _V = "rotate";
-var Mv = ["typed", "multiply", "rotationMatrix"];
-var vH = Q0(_V, Mv, (C10) => {
+var cV = "rotate";
+var Ov = ["typed", "multiply", "rotationMatrix"];
+var vH = Q0(cV, Ov, (C10) => {
   var { typed: j, multiply: q, rotationMatrix: S } = C10;
-  return j(_V, { "Array , number | BigNumber | Complex | Unit": function P($, Y) {
+  return j(cV, { "Array , number | BigNumber | Complex | Unit": function P($, Y) {
     U($, 2);
     var X = q(S(Y), $);
     return X.toArray();
@@ -68551,11 +68555,11 @@ var vH = Q0(_V, Mv, (C10) => {
       throw new RangeError("Vector must be of dimensions 1x".concat($));
   }
 });
-var cV = "rotationMatrix";
-var Ev = ["typed", "config", "multiplyScalar", "addScalar", "unaryMinus", "norm", "matrix", "BigNumber", "DenseMatrix", "SparseMatrix", "cos", "sin"];
-var wH = Q0(cV, Ev, (C10) => {
+var lV = "rotationMatrix";
+var Nv = ["typed", "config", "multiplyScalar", "addScalar", "unaryMinus", "norm", "matrix", "BigNumber", "DenseMatrix", "SparseMatrix", "cos", "sin"];
+var wH = Q0(lV, Nv, (C10) => {
   var { typed: j, config: q, multiplyScalar: S, addScalar: U, unaryMinus: P, norm: $, BigNumber: Y, matrix: X, DenseMatrix: K, SparseMatrix: Q, cos: J, sin: Z } = C10;
-  return j(cV, { "": function V() {
+  return j(lV, { "": function V() {
     return q.matrix === "Matrix" ? X([]) : [];
   }, string: function V(D) {
     return X(D);
@@ -68606,11 +68610,11 @@ var wH = Q0(cV, Ev, (C10) => {
     return L(p, F);
   }
 });
-var lV = "row";
-var Ov = ["typed", "Index", "matrix", "range"];
-var CJ = Q0(lV, Ov, (C10) => {
+var sV = "row";
+var Av = ["typed", "Index", "matrix", "range"];
+var CJ = Q0(sV, Av, (C10) => {
   var { typed: j, Index: q, matrix: S, range: U } = C10;
-  return j(lV, { "Matrix, number": P, "Array, number": function $(Y, X) {
+  return j(sV, { "Matrix, number": P, "Array, number": function $(Y, X) {
     return P(S(H8(Y)), X).valueOf();
   } });
   function P($, Y) {
@@ -68621,11 +68625,11 @@ var CJ = Q0(lV, Ov, (C10) => {
     return $8(Q) ? Q : S([[Q]]);
   }
 });
-var sV = "size";
-var Nv = ["typed", "config", "?matrix"];
-var kH = Q0(sV, Nv, (C10) => {
+var nV = "size";
+var Cv = ["typed", "config", "?matrix"];
+var kH = Q0(nV, Cv, (C10) => {
   var { typed: j, config: q, matrix: S } = C10;
-  return j(sV, { Matrix: function U(P) {
+  return j(nV, { Matrix: function U(P) {
     return P.create(P.size());
   }, Array: Y8, string: function U(P) {
     return q.matrix === "Array" ? [P.length] : S([P.length]);
@@ -68633,11 +68637,11 @@ var kH = Q0(sV, Nv, (C10) => {
     return q.matrix === "Array" ? [] : S ? S([]) : u5();
   } });
 });
-var nV = "squeeze";
-var Av = ["typed", "matrix"];
-var hH = Q0(nV, Av, (C10) => {
+var oV = "squeeze";
+var jv = ["typed", "matrix"];
+var hH = Q0(oV, jv, (C10) => {
   var { typed: j, matrix: q } = C10;
-  return j(nV, { Array: function S(U) {
+  return j(oV, { Array: function S(U) {
     return I$(H8(U));
   }, Matrix: function S(U) {
     var P = I$(U.toArray());
@@ -68646,7 +68650,7 @@ var hH = Q0(nV, Av, (C10) => {
     return H8(U);
   } });
 });
-var jv = function(C10, j) {
+var qv = function(C10, j) {
   if (!D7(j))
     throw new TypeError("Index expected");
   if (n7(j))
@@ -68660,7 +68664,7 @@ var jv = function(C10, j) {
     U += C10.charAt(P);
   }), U;
 };
-var iV = function(C10, j, q, S) {
+var aV = function(C10, j, q, S) {
   if (!j || j.isIndex !== true)
     throw new TypeError("Index expected");
   if (n7(j))
@@ -68689,7 +68693,7 @@ var iV = function(C10, j, q, S) {
   }
   return Y.join("");
 };
-var Sv = function(C10, j) {
+var vv = function(C10, j) {
   if (n7(j))
     return;
   if (j.size().length !== 1)
@@ -68699,7 +68703,7 @@ var Sv = function(C10, j) {
     throw new TypeError("String expected as index to retrieve an object property");
   return L6(C10, q);
 };
-var qv = function(C10, j, q) {
+var wv = function(C10, j, q) {
   if (n7(j))
     return C10;
   if (j.size().length !== 1)
@@ -68710,11 +68714,11 @@ var qv = function(C10, j, q) {
   var U = H8(C10);
   return m9(U, S, q), U;
 };
-var oV = "subset";
-var Cv = ["typed", "matrix", "zeros", "add"];
-var jJ = Q0(oV, Cv, (C10) => {
+var iV = "subset";
+var Sv = ["typed", "matrix", "zeros", "add"];
+var jJ = Q0(iV, Sv, (C10) => {
   var { typed: j, matrix: q, zeros: S, add: U } = C10;
-  return j(oV, { "Matrix, Index": function $(Y, X) {
+  return j(iV, { "Matrix, Index": function $(Y, X) {
     if (n7(X))
       return q();
     return WJ(Y, X), Y.subset(X);
@@ -68723,7 +68727,7 @@ var jJ = Q0(oV, Cv, (C10) => {
       var K = $(q(Y), X);
       return X.isScalar() ? K : K.valueOf();
     };
-  }), "Object, Index": Sv, "string, Index": jv, "Matrix, Index, any, any": function $(Y, X, K, Q) {
+  }), "Object, Index": vv, "string, Index": qv, "Matrix, Index, any, any": function $(Y, X, K, Q) {
     if (n7(X))
       return Y;
     return WJ(Y, X), Y.clone().subset(X, P(K, X), Q);
@@ -68740,7 +68744,7 @@ var jJ = Q0(oV, Cv, (C10) => {
     return function(Y, X, K) {
       return $(Y, X, K, undefined);
     };
-  }), "string, Index, string": iV, "string, Index, string, string": iV, "Object, Index, any": qv });
+  }), "string, Index, string": aV, "string, Index, string, string": aV, "Object, Index, any": wv });
   function P($, Y) {
     if (typeof $ === "string")
       throw new Error("can\'t boradcast a string");
@@ -68757,11 +68761,11 @@ var jJ = Q0(oV, Cv, (C10) => {
       return $;
   }
 });
-var aV = "transpose";
-var vv = ["typed", "matrix"];
-var fH = Q0(aV, vv, (C10) => {
+var rV = "transpose";
+var kv = ["typed", "matrix"];
+var fH = Q0(rV, kv, (C10) => {
   var { typed: j, matrix: q } = C10;
-  return j(aV, { Array: ($) => S(q($)).valueOf(), Matrix: S, any: H8 });
+  return j(rV, { Array: ($) => S(q($)).valueOf(), Matrix: S, any: H8 });
   function S($) {
     var Y = $.size(), X;
     switch (Y.length) {
@@ -68817,19 +68821,19 @@ var fH = Q0(aV, vv, (C10) => {
     return $.createSparseMatrix({ values: Z, index: W, ptr: G, size: [X, Y], datatype: $._datatype });
   }
 });
-var rV = "ctranspose";
-var wv = ["typed", "transpose", "conj"];
-var xH = Q0(rV, wv, (C10) => {
+var tV = "ctranspose";
+var hv = ["typed", "transpose", "conj"];
+var xH = Q0(tV, hv, (C10) => {
   var { typed: j, transpose: q, conj: S } = C10;
-  return j(rV, { any: function U(P) {
+  return j(tV, { any: function U(P) {
     return S(q(P));
   } });
 });
-var tV = "zeros";
-var kv = ["typed", "config", "matrix", "BigNumber"];
-var gH = Q0(tV, kv, (C10) => {
+var eV = "zeros";
+var fv = ["typed", "config", "matrix", "BigNumber"];
+var gH = Q0(eV, fv, (C10) => {
   var { typed: j, config: q, matrix: S, BigNumber: U } = C10;
-  return j(tV, { "": function X() {
+  return j(eV, { "": function X() {
     return q.matrix === "Array" ? P([]) : P([], "default");
   }, "...number | BigNumber | string": function X(K) {
     var Q = K[K.length - 1];
@@ -68874,11 +68878,11 @@ var gH = Q0(tV, kv, (C10) => {
     });
   }
 });
-var eV = "fft";
-var hv = ["typed", "matrix", "addScalar", "multiplyScalar", "divideScalar", "exp", "tau", "i", "dotDivide", "conj", "pow", "ceil", "log2"];
-var yH = Q0(eV, hv, (C10) => {
+var $z = "fft";
+var xv = ["typed", "matrix", "addScalar", "multiplyScalar", "divideScalar", "exp", "tau", "i", "dotDivide", "conj", "pow", "ceil", "log2"];
+var yH = Q0($z, xv, (C10) => {
   var { typed: j, matrix: q, addScalar: S, multiplyScalar: U, divideScalar: P, exp: $, tau: Y, i: X, dotDivide: K, conj: Q, pow: J, ceil: Z, log2: W } = C10;
-  return j(eV, { Array: G, Matrix: function V(D) {
+  return j($z, { Array: G, Matrix: function V(D) {
     return D.create(G(D.toArray()));
   } });
   function G(V) {
@@ -68923,16 +68927,16 @@ var yH = Q0(eV, hv, (C10) => {
       return L(V);
   }
 });
-var $z = "ifft";
-var fv = ["typed", "fft", "dotDivide", "conj"];
-var bH = Q0($z, fv, (C10) => {
+var Jz = "ifft";
+var gv = ["typed", "fft", "dotDivide", "conj"];
+var bH = Q0(Jz, gv, (C10) => {
   var { typed: j, fft: q, dotDivide: S, conj: U } = C10;
-  return j($z, { "Array | Matrix": function P($) {
+  return j(Jz, { "Array | Matrix": function P($) {
     var Y = $8($) ? $.size() : Y8($);
     return S(U(q(U($))), Y.reduce((X, K) => X * K, 1));
   } });
 });
-var Jz = function(C10, j) {
+var Qz = function(C10, j) {
   var q = Object.keys(C10);
   if (Object.getOwnPropertySymbols) {
     var S = Object.getOwnPropertySymbols(C10);
@@ -68942,20 +68946,20 @@ var Jz = function(C10, j) {
   }
   return q;
 };
-var xv = function(C10) {
+var yv = function(C10) {
   for (var j = 1;j < arguments.length; j++) {
     var q = arguments[j] != null ? arguments[j] : {};
-    j % 2 ? Jz(Object(q), true).forEach(function(S) {
+    j % 2 ? Qz(Object(q), true).forEach(function(S) {
       y8(C10, S, q[S]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(C10, Object.getOwnPropertyDescriptors(q)) : Jz(Object(q)).forEach(function(S) {
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(C10, Object.getOwnPropertyDescriptors(q)) : Qz(Object(q)).forEach(function(S) {
       Object.defineProperty(C10, S, Object.getOwnPropertyDescriptor(q, S));
     });
   }
   return C10;
 };
-var gv = "solveODE";
-var yv = ["typed", "add", "subtract", "multiply", "divide", "max", "map", "abs", "isPositive", "isNegative", "larger", "smaller", "matrix", "bignumber", "unaryMinus"];
-var dH = Q0(gv, yv, (C10) => {
+var bv = "solveODE";
+var mv = ["typed", "add", "subtract", "multiply", "divide", "max", "map", "abs", "isPositive", "isNegative", "larger", "smaller", "matrix", "bignumber", "unaryMinus"];
+var dH = Q0(bv, mv, (C10) => {
   var { typed: j, add: q, subtract: S, multiply: U, divide: P, max: $, map: Y, abs: X, isPositive: K, isNegative: Q, larger: J, smaller: Z, matrix: W, bignumber: G, unaryMinus: H } = C10;
   function L(w) {
     return function(h, x, b, z) {
@@ -69009,7 +69013,7 @@ var dH = Q0(gv, yv, (C10) => {
   function D(w, h, x, b) {
     var z = b.method ? b.method : "RK45", I = { RK23: R, RK45: V };
     if (z.toUpperCase() in I) {
-      var A = xv({}, b);
+      var A = yv({}, b);
       return delete A.method, I[z.toUpperCase()](w, h, x, A);
     } else {
       var M = Object.keys(I).map((v) => "\"".concat(v, "\"")), O = "".concat(M.slice(0, -1).join(", "), " and ").concat(M.slice(-1));
@@ -69047,15 +69051,15 @@ var dH = Q0(gv, yv, (C10) => {
     return { t: W(z.t), y: W(z.y.map((I) => I[0])) };
   } });
 });
-var bv = "erf";
-var mv = ["typed"];
-var uH = Q0(bv, mv, (C10) => {
+var pv = "erf";
+var dv = ["typed"];
+var uH = Q0(pv, dv, (C10) => {
   var { typed: j } = C10;
   return j("name", { number: function P($) {
     var Y = Math.abs($);
-    if (Y >= uv)
+    if (Y >= cv)
       return F9($);
-    if (Y <= pv)
+    if (Y <= uv)
       return F9($) * q(Y);
     if (Y <= 4)
       return F9($) * (1 - S(Y));
@@ -69079,21 +69083,21 @@ var uH = Q0(bv, mv, (C10) => {
     for (K = 0;K < 4; K += 1)
       Y = (Y + H7[2][K]) * $, X = (X + v$[2][K]) * $;
     var Q = $ * (Y + H7[2][4]) / (X + v$[2][4]);
-    Q = (dv - Q) / P, $ = parseInt(P * 16) / 16;
+    Q = (_v - Q) / P, $ = parseInt(P * 16) / 16;
     var J = (P - $) * (P + $);
     return Math.exp(-$ * $) * Math.exp(-J) * Q;
   }
 });
-var pv = 0.46875;
-var dv = 0.5641895835477563;
+var uv = 0.46875;
+var _v = 0.5641895835477563;
 var H7 = [[3.1611237438705655, 113.86415415105016, 377.485237685302, 3209.3775891384694, 0.18577770618460315], [0.5641884969886701, 8.883149794388377, 66.11919063714163, 298.6351381974001, 881.952221241769, 1712.0476126340707, 2051.0783778260716, 1230.3393547979972, 0.000000021531153547440383], [0.30532663496123236, 0.36034489994980445, 0.12578172611122926, 0.016083785148742275, 0.0006587491615298378, 0.016315387137302097]];
 var v$ = [[23.601290952344122, 244.02463793444417, 1282.6165260773723, 2844.236833439171], [15.744926110709835, 117.6939508913125, 537.1811018620099, 1621.3895745666903, 3290.7992357334597, 4362.619090143247, 3439.3676741437216, 1230.3393548037495], [2.568520192289822, 1.8729528499234604, 0.5279051029514285, 0.06051834131244132, 0.0023352049762686918]];
-var uv = Math.pow(2, 53);
-var Qz = "zeta";
-var _v = ["typed", "config", "multiply", "pow", "divide", "factorial", "equal", "smallerEq", "isNegative", "gamma", "sin", "subtract", "add", "?Complex", "?BigNumber", "pi"];
-var _H = Q0(Qz, _v, (C10) => {
+var cv = Math.pow(2, 53);
+var Zz = "zeta";
+var lv = ["typed", "config", "multiply", "pow", "divide", "factorial", "equal", "smallerEq", "isNegative", "gamma", "sin", "subtract", "add", "?Complex", "?BigNumber", "pi"];
+var _H = Q0(Zz, lv, (C10) => {
   var { typed: j, config: q, multiply: S, pow: U, divide: P, factorial: $, equal: Y, smallerEq: X, isNegative: K, gamma: Q, sin: J, subtract: Z, add: W, Complex: G, BigNumber: H, pi: L } = C10;
-  return j(Qz, { number: (E) => R(E, (N) => N, () => 20), BigNumber: (E) => R(E, (N) => new H(N), () => {
+  return j(Zz, { number: (E) => R(E, (N) => N, () => 20), BigNumber: (E) => R(E, (N) => new H(N), () => {
     return Math.abs(Math.log10(q.epsilon));
   }), Complex: V });
   function R(E, N, w) {
@@ -69140,11 +69144,11 @@ var _H = Q0(Qz, _v, (C10) => {
     return S(h, x);
   }
 });
-var Zz = "mode";
-var cv = ["typed", "isNaN", "isNumeric"];
-var cH = Q0(Zz, cv, (C10) => {
+var Kz = "mode";
+var sv = ["typed", "isNaN", "isNumeric"];
+var cH = Q0(Kz, sv, (C10) => {
   var { typed: j, isNaN: q, isNumeric: S } = C10;
-  return j(Zz, { "Array | Matrix": U, "...": function P($) {
+  return j(Kz, { "Array | Matrix": U, "...": function P($) {
     return U($);
   } });
   function U(P) {
@@ -69167,11 +69171,11 @@ var cH = Q0(Zz, cv, (C10) => {
     return X;
   }
 });
-var Kz = "prod";
-var lv = ["typed", "config", "multiplyScalar", "numeric"];
-var lH = Q0(Kz, lv, (C10) => {
+var Hz = "prod";
+var nv = ["typed", "config", "multiplyScalar", "numeric"];
+var lH = Q0(Hz, nv, (C10) => {
   var { typed: j, config: q, multiplyScalar: S, numeric: U } = C10;
-  return j(Kz, { "Array | Matrix": P, "Array | Matrix, number | BigNumber": function $(Y, X) {
+  return j(Hz, { "Array | Matrix": P, "Array | Matrix, number | BigNumber": function $(Y, X) {
     throw new Error("prod(A, dim) is not yet supported");
   }, "...": function $(Y) {
     return P(Y);
@@ -69191,44 +69195,44 @@ var lH = Q0(Kz, lv, (C10) => {
     return Y;
   }
 });
-var Hz = "format";
-var sv = ["typed"];
-var sH = Q0(Hz, sv, (C10) => {
+var Wz = "format";
+var ov = ["typed"];
+var sH = Q0(Wz, ov, (C10) => {
   var { typed: j } = C10;
-  return j(Hz, { any: G8, "any, Object | function | number | BigNumber": G8 });
+  return j(Wz, { any: G8, "any, Object | function | number | BigNumber": G8 });
 });
-var Wz = "bin";
-var nv = ["typed", "format"];
-var nH = Q0(Wz, nv, (C10) => {
+var Yz = "bin";
+var iv = ["typed", "format"];
+var nH = Q0(Yz, iv, (C10) => {
   var { typed: j, format: q } = C10;
-  return j(Wz, { "number | BigNumber": function S(U) {
+  return j(Yz, { "number | BigNumber": function S(U) {
     return q(U, { notation: "bin" });
   }, "number | BigNumber, number | BigNumber": function S(U, P) {
     return q(U, { notation: "bin", wordSize: P });
   } });
 });
-var Yz = "oct";
-var ov = ["typed", "format"];
-var oH = Q0(Yz, ov, (C10) => {
+var Uz = "oct";
+var av = ["typed", "format"];
+var oH = Q0(Uz, av, (C10) => {
   var { typed: j, format: q } = C10;
-  return j(Yz, { "number | BigNumber": function S(U) {
+  return j(Uz, { "number | BigNumber": function S(U) {
     return q(U, { notation: "oct" });
   }, "number | BigNumber, number | BigNumber": function S(U, P) {
     return q(U, { notation: "oct", wordSize: P });
   } });
 });
-var Uz = "hex";
-var iv = ["typed", "format"];
-var iH = Q0(Uz, iv, (C10) => {
+var Gz = "hex";
+var rv = ["typed", "format"];
+var iH = Q0(Gz, rv, (C10) => {
   var { typed: j, format: q } = C10;
-  return j(Uz, { "number | BigNumber": function S(U) {
+  return j(Gz, { "number | BigNumber": function S(U) {
     return q(U, { notation: "hex" });
   }, "number | BigNumber, number | BigNumber": function S(U, P) {
     return q(U, { notation: "hex", wordSize: P });
   } });
 });
 var _5 = /\$([\w.]+)/g;
-var Lz = function(C10, j, q) {
+var Xz = function(C10, j, q) {
   return C10.replace(_5, function(S, U) {
     var P = U.split("."), $ = j[P.shift()];
     if ($ !== undefined && $.isMatrix)
@@ -69245,23 +69249,23 @@ var Lz = function(C10, j, q) {
     return S;
   });
 };
-var Gz = "print";
-var av = ["typed"];
-var SJ = Q0(Gz, av, (C10) => {
-  var { typed: j } = C10;
-  return j(Gz, { "string, Object | Array": Lz, "string, Object | Array, number | Object": Lz });
-});
-var Xz = "to";
-var rv = ["typed", "matrix", "concat"];
-var aH = Q0(Xz, rv, (C10) => {
-  var { typed: j, matrix: q, concat: S } = C10, U = z8({ typed: j, matrix: q, concat: S });
-  return j(Xz, { "Unit, Unit | string": (P, $) => P.to($) }, U({ Ds: true }));
-});
-var Dz = "isPrime";
+var Lz = "print";
 var tv = ["typed"];
-var rH = Q0(Dz, tv, (C10) => {
+var SJ = Q0(Lz, tv, (C10) => {
   var { typed: j } = C10;
-  return j(Dz, { number: function q(S) {
+  return j(Lz, { "string, Object | Array": Xz, "string, Object | Array, number | Object": Xz });
+});
+var Dz = "to";
+var ev = ["typed", "matrix", "concat"];
+var aH = Q0(Dz, ev, (C10) => {
+  var { typed: j, matrix: q, concat: S } = C10, U = z8({ typed: j, matrix: q, concat: S });
+  return j(Dz, { "Unit, Unit | string": (P, $) => P.to($) }, U({ Ds: true }));
+});
+var Rz = "isPrime";
+var $w = ["typed"];
+var rH = Q0(Rz, $w, (C10) => {
+  var { typed: j } = C10;
+  return j(Rz, { number: function q(S) {
     if (S * 0 !== 0)
       return false;
     if (S <= 3)
@@ -69320,9 +69324,9 @@ var rH = Q0(Dz, tv, (C10) => {
     return true;
   }, "Array | Matrix": j.referToSelf((q) => (S) => Z8(S, q)) });
 });
-var ev = "numeric";
-var $w = ["number", "?bignumber", "?fraction"];
-var tH = Q0(ev, $w, (C10) => {
+var Jw = "numeric";
+var Qw = ["number", "?bignumber", "?fraction"];
+var tH = Q0(Jw, Qw, (C10) => {
   var { number: j, bignumber: q, fraction: S } = C10, U = { string: true, number: true, BigNumber: true, Fraction: true }, P = { number: ($) => j($), BigNumber: q ? ($) => q($) : q$, Fraction: S ? ($) => S($) : d5 };
   return function $(Y) {
     var X = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "number", K = arguments.length > 2 ? arguments[2] : undefined;
@@ -69339,11 +69343,11 @@ var tH = Q0(ev, $w, (C10) => {
       return P[X](Y);
   };
 });
-var Rz = "divideScalar";
-var Jw = ["typed", "numeric"];
-var eH = Q0(Rz, Jw, (C10) => {
+var Vz = "divideScalar";
+var Zw = ["typed", "numeric"];
+var eH = Q0(Vz, Zw, (C10) => {
   var { typed: j, numeric: q } = C10;
-  return j(Rz, { "number, number": function S(U, P) {
+  return j(Vz, { "number, number": function S(U, P) {
     return U / P;
   }, "Complex, Complex": function S(U, P) {
     return U.div(P);
@@ -69353,11 +69357,11 @@ var eH = Q0(Rz, Jw, (C10) => {
     return U.div(P);
   }, "Unit, number | Complex | Fraction | BigNumber | Unit": (S, U) => S.divide(U), "number | Fraction | Complex | BigNumber, Unit": (S, U) => U.divideInto(S) });
 });
-var Vz = "pow";
-var Qw = ["typed", "config", "identity", "multiply", "matrix", "inv", "fraction", "number", "Complex"];
-var $W = Q0(Vz, Qw, (C10) => {
+var zz = "pow";
+var Kw = ["typed", "config", "identity", "multiply", "matrix", "inv", "fraction", "number", "Complex"];
+var $W = Q0(zz, Kw, (C10) => {
   var { typed: j, config: q, identity: S, multiply: U, matrix: P, inv: $, number: Y, fraction: X, Complex: K } = C10;
-  return j(Vz, { "number, number": Q, "Complex, Complex": function W(G, H) {
+  return j(zz, { "number, number": Q, "Complex, Complex": function W(G, H) {
     return G.pow(H);
   }, "BigNumber, BigNumber": function W(G, H) {
     if (H.isInteger() || G >= 0 || q.predictable)
@@ -69428,14 +69432,14 @@ var $W = Q0(Vz, Qw, (C10) => {
   }
 });
 var w$ = "Number of decimals in function round must be an integer";
-var zz = "round";
-var Zw = ["typed", "config", "matrix", "equalScalar", "zeros", "BigNumber", "DenseMatrix"];
-var JW = Q0(zz, Zw, (C10) => {
+var Fz = "round";
+var Hw = ["typed", "config", "matrix", "equalScalar", "zeros", "BigNumber", "DenseMatrix"];
+var JW = Q0(Fz, Hw, (C10) => {
   var { typed: j, config: q, matrix: S, equalScalar: U, zeros: P, BigNumber: $, DenseMatrix: Y } = C10, X = u8({ typed: j, equalScalar: U }), K = f8({ typed: j, DenseMatrix: Y }), Q = M6({ typed: j });
   function J(Z) {
     return Math.abs(P$(Z).exponent);
   }
-  return j(zz, { number: function Z(W) {
+  return j(Fz, { number: function Z(W) {
     var G = A$(W, J(q.epsilon)), H = R6(W, G, q.epsilon) ? G : W;
     return A$(H);
   }, "number, number": function Z(W, G) {
@@ -69505,13 +69509,13 @@ var JW = Q0(zz, Zw, (C10) => {
     return Q(S(G), W, Z, true).valueOf();
   }) });
 });
-var Fz = "log";
-var Kw = ["config", "typed", "divideScalar", "Complex"];
-var QW = Q0(Fz, Kw, (C10) => {
+var Pz = "log";
+var Ww = ["config", "typed", "divideScalar", "Complex"];
+var QW = Q0(Pz, Ww, (C10) => {
   var { typed: j, config: q, divideScalar: S, Complex: U } = C10;
-  return j(Fz, { number: function P($) {
+  return j(Pz, { number: function P($) {
     if ($ >= 0 || q.predictable)
-      return BR($);
+      return TR($);
     else
       return new U($, 0).log();
   }, Complex: function P($) {
@@ -69525,11 +69529,11 @@ var QW = Q0(Fz, Kw, (C10) => {
     return S(P($), P(Y));
   }) });
 });
-var Pz = "log1p";
-var Hw = ["typed", "config", "divideScalar", "log", "Complex"];
-var ZW = Q0(Pz, Hw, (C10) => {
+var Iz = "log1p";
+var Yw = ["typed", "config", "divideScalar", "log", "Complex"];
+var ZW = Q0(Iz, Yw, (C10) => {
   var { typed: j, config: q, divideScalar: S, log: U, Complex: P } = C10;
-  return j(Pz, { number: function Y(X) {
+  return j(Iz, { number: function Y(X) {
     if (X >= -1 || q.predictable)
       return P5(X);
     else
@@ -69548,9 +69552,9 @@ var ZW = Q0(Pz, Hw, (C10) => {
     return new P(Math.log(Math.sqrt(X * X + Y.im * Y.im)), Math.atan2(Y.im, X));
   }
 });
-var Iz = "nthRoots";
-var Ww = ["config", "typed", "divideScalar", "Complex"];
-var KW = Q0(Iz, Ww, (C10) => {
+var Bz = "nthRoots";
+var Uw = ["config", "typed", "divideScalar", "Complex"];
+var KW = Q0(Bz, Uw, (C10) => {
   var { typed: j, config: q, divideScalar: S, Complex: U } = C10, P = [function Y(X) {
     return new U(X, 0);
   }, function Y(X) {
@@ -69588,13 +69592,13 @@ var KW = Q0(Iz, Ww, (C10) => {
     }
     return W;
   }
-  return j(Iz, { Complex: function Y(X) {
+  return j(Bz, { Complex: function Y(X) {
     return $(X, 2);
   }, "Complex, number": $ });
 });
-var Bz = "dotPow";
-var Yw = ["typed", "equalScalar", "matrix", "pow", "DenseMatrix", "concat"];
-var HW = Q0(Bz, Yw, (C10) => {
+var Tz = "dotPow";
+var Gw = ["typed", "equalScalar", "matrix", "pow", "DenseMatrix", "concat"];
+var HW = Q0(Tz, Gw, (C10) => {
   var { typed: j, equalScalar: q, matrix: S, pow: U, DenseMatrix: P, concat: $ } = C10, Y = i8({ typed: j }), X = A6({ typed: j, DenseMatrix: P }), K = u8({ typed: j, equalScalar: q }), Q = f8({ typed: j, DenseMatrix: P }), J = z8({ typed: j, matrix: S, concat: $ }), Z = {};
   for (var W in U.signatures)
     if (Object.prototype.hasOwnProperty.call(U.signatures, W)) {
@@ -69602,19 +69606,19 @@ var HW = Q0(Bz, Yw, (C10) => {
         Z[W] = U.signatures[W];
     }
   var G = j(Z);
-  return j(Bz, J({ elop: G, SS: X, DS: Y, Ss: K, sS: Q }));
+  return j(Tz, J({ elop: G, SS: X, DS: Y, Ss: K, sS: Q }));
 });
-var Tz = "dotDivide";
-var Uw = ["typed", "matrix", "equalScalar", "divideScalar", "DenseMatrix", "concat"];
-var WW = Q0(Tz, Uw, (C10) => {
+var Mz = "dotDivide";
+var Lw = ["typed", "matrix", "equalScalar", "divideScalar", "DenseMatrix", "concat"];
+var WW = Q0(Mz, Lw, (C10) => {
   var { typed: j, matrix: q, equalScalar: S, divideScalar: U, DenseMatrix: P, concat: $ } = C10, Y = E6({ typed: j, equalScalar: S }), X = i8({ typed: j }), K = A6({ typed: j, DenseMatrix: P }), Q = u8({ typed: j, equalScalar: S }), J = f8({ typed: j, DenseMatrix: P }), Z = z8({ typed: j, matrix: q, concat: $ });
-  return j(Tz, Z({ elop: U, SS: K, DS: X, SD: Y, Ss: Q, sS: J }));
+  return j(Mz, Z({ elop: U, SS: K, DS: X, SD: Y, Ss: Q, sS: J }));
 });
-var Mz = "lsolve";
-var Gw = ["typed", "matrix", "divideScalar", "multiplyScalar", "subtractScalar", "equalScalar", "DenseMatrix"];
-var YW = Q0(Mz, Gw, (C10) => {
+var Ez = "lsolve";
+var Xw = ["typed", "matrix", "divideScalar", "multiplyScalar", "subtractScalar", "equalScalar", "DenseMatrix"];
+var YW = Q0(Ez, Xw, (C10) => {
   var { typed: j, matrix: q, divideScalar: S, multiplyScalar: U, subtractScalar: P, equalScalar: $, DenseMatrix: Y } = C10, X = u9({ DenseMatrix: Y });
-  return j(Mz, { "SparseMatrix, Array | Matrix": function J(Z, W) {
+  return j(Ez, { "SparseMatrix, Array | Matrix": function J(Z, W) {
     return Q(Z, W);
   }, "DenseMatrix, Array | Matrix": function J(Z, W) {
     return K(Z, W);
@@ -69668,11 +69672,11 @@ var YW = Q0(Mz, Gw, (C10) => {
     return new Y({ data: D, size: [G, 1] });
   }
 });
-var Ez = "usolve";
-var Lw = ["typed", "matrix", "divideScalar", "multiplyScalar", "subtractScalar", "equalScalar", "DenseMatrix"];
-var UW = Q0(Ez, Lw, (C10) => {
+var Oz = "usolve";
+var Dw = ["typed", "matrix", "divideScalar", "multiplyScalar", "subtractScalar", "equalScalar", "DenseMatrix"];
+var UW = Q0(Oz, Dw, (C10) => {
   var { typed: j, matrix: q, divideScalar: S, multiplyScalar: U, subtractScalar: P, equalScalar: $, DenseMatrix: Y } = C10, X = u9({ DenseMatrix: Y });
-  return j(Ez, { "SparseMatrix, Array | Matrix": function J(Z, W) {
+  return j(Oz, { "SparseMatrix, Array | Matrix": function J(Z, W) {
     return Q(Z, W);
   }, "DenseMatrix, Array | Matrix": function J(Z, W) {
     return K(Z, W);
@@ -69726,11 +69730,11 @@ var UW = Q0(Ez, Lw, (C10) => {
     return new Y({ data: D, size: [G, 1] });
   }
 });
-var Oz = "lsolveAll";
-var Xw = ["typed", "matrix", "divideScalar", "multiplyScalar", "subtractScalar", "equalScalar", "DenseMatrix"];
-var GW = Q0(Oz, Xw, (C10) => {
+var Nz = "lsolveAll";
+var Rw = ["typed", "matrix", "divideScalar", "multiplyScalar", "subtractScalar", "equalScalar", "DenseMatrix"];
+var GW = Q0(Nz, Rw, (C10) => {
   var { typed: j, matrix: q, divideScalar: S, multiplyScalar: U, subtractScalar: P, equalScalar: $, DenseMatrix: Y } = C10, X = u9({ DenseMatrix: Y });
-  return j(Oz, { "SparseMatrix, Array | Matrix": function J(Z, W) {
+  return j(Nz, { "SparseMatrix, Array | Matrix": function J(Z, W) {
     return Q(Z, W);
   }, "DenseMatrix, Array | Matrix": function J(Z, W) {
     return K(Z, W);
@@ -69802,11 +69806,11 @@ var GW = Q0(Oz, Xw, (C10) => {
     return W.map((f) => new Y({ data: f.map((m) => [m]), size: [G, 1] }));
   }
 });
-var Nz = "usolveAll";
-var Dw = ["typed", "matrix", "divideScalar", "multiplyScalar", "subtractScalar", "equalScalar", "DenseMatrix"];
-var LW = Q0(Nz, Dw, (C10) => {
+var Az = "usolveAll";
+var Vw = ["typed", "matrix", "divideScalar", "multiplyScalar", "subtractScalar", "equalScalar", "DenseMatrix"];
+var LW = Q0(Az, Vw, (C10) => {
   var { typed: j, matrix: q, divideScalar: S, multiplyScalar: U, subtractScalar: P, equalScalar: $, DenseMatrix: Y } = C10, X = u9({ DenseMatrix: Y });
-  return j(Nz, { "SparseMatrix, Array | Matrix": function J(Z, W) {
+  return j(Az, { "SparseMatrix, Array | Matrix": function J(Z, W) {
     return Q(Z, W);
   }, "DenseMatrix, Array | Matrix": function J(Z, W) {
     return K(Z, W);
@@ -69878,9 +69882,9 @@ var LW = Q0(Nz, Dw, (C10) => {
     return W.map((f) => new Y({ data: f.map((m) => [m]), size: [G, 1] }));
   }
 });
-var Rw = "matAlgo08xS0Sid";
-var Vw = ["typed", "equalScalar"];
-var k$ = Q0(Rw, Vw, (C10) => {
+var zw = "matAlgo08xS0Sid";
+var Fw = ["typed", "equalScalar"];
+var k$ = Q0(zw, Fw, (C10) => {
   var { typed: j, equalScalar: q } = C10;
   return function S(U, P, $) {
     var { _values: Y, _index: X, _ptr: K, _size: Q } = U, J = U._datatype || U._data === undefined ? U._datatype : U.getDataType(), Z = P._values, W = P._index, G = P._ptr, H = P._size, L = P._datatype || P._data === undefined ? P._datatype : P.getDataType();
@@ -69919,55 +69923,11 @@ var h$ = Q0("useMatrixForArrayScalar", ["typed", "matrix"], (C10) => {
   var { typed: j, matrix: q } = C10;
   return { "Array, number": j.referTo("DenseMatrix, number", (S) => (U, P) => S(q(U), P).valueOf()), "Array, BigNumber": j.referTo("DenseMatrix, BigNumber", (S) => (U, P) => S(q(U), P).valueOf()), "number, Array": j.referTo("number, DenseMatrix", (S) => (U, P) => S(U, q(P)).valueOf()), "BigNumber, Array": j.referTo("BigNumber, DenseMatrix", (S) => (U, P) => S(U, q(P)).valueOf()) };
 });
-var Az = "leftShift";
-var zw = ["typed", "matrix", "equalScalar", "zeros", "DenseMatrix", "concat"];
-var XW = Q0(Az, zw, (C10) => {
-  var { typed: j, matrix: q, equalScalar: S, zeros: U, DenseMatrix: P, concat: $ } = C10, Y = _6({ typed: j }), X = E6({ typed: j, equalScalar: S }), K = k$({ typed: j, equalScalar: S }), Q = Z9({ typed: j, DenseMatrix: P }), J = u8({ typed: j, equalScalar: S }), Z = M6({ typed: j }), W = z8({ typed: j, matrix: q, concat: $ }), G = h$({ typed: j, matrix: q });
-  return j(Az, { "number, number": gK, "BigNumber, BigNumber": zV, "SparseMatrix, number | BigNumber": j.referToSelf((H) => (L, R) => {
-    if (S(R, 0))
-      return L.clone();
-    return J(L, R, H, false);
-  }), "DenseMatrix, number | BigNumber": j.referToSelf((H) => (L, R) => {
-    if (S(R, 0))
-      return L.clone();
-    return Z(L, R, H, false);
-  }), "number | BigNumber, SparseMatrix": j.referToSelf((H) => (L, R) => {
-    if (S(L, 0))
-      return U(R.size(), R.storage());
-    return Q(R, L, H, true);
-  }), "number | BigNumber, DenseMatrix": j.referToSelf((H) => (L, R) => {
-    if (S(L, 0))
-      return U(R.size(), R.storage());
-    return Z(R, L, H, true);
-  }) }, G, W({ SS: K, DS: Y, SD: X }));
-});
-var Cz = "rightArithShift";
-var Fw = ["typed", "matrix", "equalScalar", "zeros", "DenseMatrix", "concat"];
-var DW = Q0(Cz, Fw, (C10) => {
-  var { typed: j, matrix: q, equalScalar: S, zeros: U, DenseMatrix: P, concat: $ } = C10, Y = _6({ typed: j }), X = E6({ typed: j, equalScalar: S }), K = k$({ typed: j, equalScalar: S }), Q = Z9({ typed: j, DenseMatrix: P }), J = u8({ typed: j, equalScalar: S }), Z = M6({ typed: j }), W = z8({ typed: j, matrix: q, concat: $ }), G = h$({ typed: j, matrix: q });
-  return j(Cz, { "number, number": yK, "BigNumber, BigNumber": FV, "SparseMatrix, number | BigNumber": j.referToSelf((H) => (L, R) => {
-    if (S(R, 0))
-      return L.clone();
-    return J(L, R, H, false);
-  }), "DenseMatrix, number | BigNumber": j.referToSelf((H) => (L, R) => {
-    if (S(R, 0))
-      return L.clone();
-    return Z(L, R, H, false);
-  }), "number | BigNumber, SparseMatrix": j.referToSelf((H) => (L, R) => {
-    if (S(L, 0))
-      return U(R.size(), R.storage());
-    return Q(R, L, H, true);
-  }), "number | BigNumber, DenseMatrix": j.referToSelf((H) => (L, R) => {
-    if (S(L, 0))
-      return U(R.size(), R.storage());
-    return Z(R, L, H, true);
-  }) }, G, W({ SS: K, DS: Y, SD: X }));
-});
-var jz = "rightLogShift";
+var Cz = "leftShift";
 var Pw = ["typed", "matrix", "equalScalar", "zeros", "DenseMatrix", "concat"];
-var RW = Q0(jz, Pw, (C10) => {
+var XW = Q0(Cz, Pw, (C10) => {
   var { typed: j, matrix: q, equalScalar: S, zeros: U, DenseMatrix: P, concat: $ } = C10, Y = _6({ typed: j }), X = E6({ typed: j, equalScalar: S }), K = k$({ typed: j, equalScalar: S }), Q = Z9({ typed: j, DenseMatrix: P }), J = u8({ typed: j, equalScalar: S }), Z = M6({ typed: j }), W = z8({ typed: j, matrix: q, concat: $ }), G = h$({ typed: j, matrix: q });
-  return j(jz, { "number, number": bK, "SparseMatrix, number | BigNumber": j.referToSelf((H) => (L, R) => {
+  return j(Cz, { "number, number": gK, "BigNumber, BigNumber": FV, "SparseMatrix, number | BigNumber": j.referToSelf((H) => (L, R) => {
     if (S(R, 0))
       return L.clone();
     return J(L, R, H, false);
@@ -69985,11 +69945,55 @@ var RW = Q0(jz, Pw, (C10) => {
     return Z(R, L, H, true);
   }) }, G, W({ SS: K, DS: Y, SD: X }));
 });
-var Sz = "and";
-var Iw = ["typed", "matrix", "equalScalar", "zeros", "not", "concat"];
-var qJ = Q0(Sz, Iw, (C10) => {
+var jz = "rightArithShift";
+var Iw = ["typed", "matrix", "equalScalar", "zeros", "DenseMatrix", "concat"];
+var DW = Q0(jz, Iw, (C10) => {
+  var { typed: j, matrix: q, equalScalar: S, zeros: U, DenseMatrix: P, concat: $ } = C10, Y = _6({ typed: j }), X = E6({ typed: j, equalScalar: S }), K = k$({ typed: j, equalScalar: S }), Q = Z9({ typed: j, DenseMatrix: P }), J = u8({ typed: j, equalScalar: S }), Z = M6({ typed: j }), W = z8({ typed: j, matrix: q, concat: $ }), G = h$({ typed: j, matrix: q });
+  return j(jz, { "number, number": yK, "BigNumber, BigNumber": PV, "SparseMatrix, number | BigNumber": j.referToSelf((H) => (L, R) => {
+    if (S(R, 0))
+      return L.clone();
+    return J(L, R, H, false);
+  }), "DenseMatrix, number | BigNumber": j.referToSelf((H) => (L, R) => {
+    if (S(R, 0))
+      return L.clone();
+    return Z(L, R, H, false);
+  }), "number | BigNumber, SparseMatrix": j.referToSelf((H) => (L, R) => {
+    if (S(L, 0))
+      return U(R.size(), R.storage());
+    return Q(R, L, H, true);
+  }), "number | BigNumber, DenseMatrix": j.referToSelf((H) => (L, R) => {
+    if (S(L, 0))
+      return U(R.size(), R.storage());
+    return Z(R, L, H, true);
+  }) }, G, W({ SS: K, DS: Y, SD: X }));
+});
+var Sz = "rightLogShift";
+var Bw = ["typed", "matrix", "equalScalar", "zeros", "DenseMatrix", "concat"];
+var RW = Q0(Sz, Bw, (C10) => {
+  var { typed: j, matrix: q, equalScalar: S, zeros: U, DenseMatrix: P, concat: $ } = C10, Y = _6({ typed: j }), X = E6({ typed: j, equalScalar: S }), K = k$({ typed: j, equalScalar: S }), Q = Z9({ typed: j, DenseMatrix: P }), J = u8({ typed: j, equalScalar: S }), Z = M6({ typed: j }), W = z8({ typed: j, matrix: q, concat: $ }), G = h$({ typed: j, matrix: q });
+  return j(Sz, { "number, number": bK, "SparseMatrix, number | BigNumber": j.referToSelf((H) => (L, R) => {
+    if (S(R, 0))
+      return L.clone();
+    return J(L, R, H, false);
+  }), "DenseMatrix, number | BigNumber": j.referToSelf((H) => (L, R) => {
+    if (S(R, 0))
+      return L.clone();
+    return Z(L, R, H, false);
+  }), "number | BigNumber, SparseMatrix": j.referToSelf((H) => (L, R) => {
+    if (S(L, 0))
+      return U(R.size(), R.storage());
+    return Q(R, L, H, true);
+  }), "number | BigNumber, DenseMatrix": j.referToSelf((H) => (L, R) => {
+    if (S(L, 0))
+      return U(R.size(), R.storage());
+    return Z(R, L, H, true);
+  }) }, G, W({ SS: K, DS: Y, SD: X }));
+});
+var qz = "and";
+var Tw = ["typed", "matrix", "equalScalar", "zeros", "not", "concat"];
+var qJ = Q0(qz, Tw, (C10) => {
   var { typed: j, matrix: q, equalScalar: S, zeros: U, not: P, concat: $ } = C10, Y = E6({ typed: j, equalScalar: S }), X = N7({ typed: j, equalScalar: S }), K = u8({ typed: j, equalScalar: S }), Q = M6({ typed: j }), J = z8({ typed: j, matrix: q, concat: $ });
-  return j(Sz, { "number, number": cK, "Complex, Complex": function Z(W, G) {
+  return j(qz, { "number, number": cK, "Complex, Complex": function Z(W, G) {
     return (W.re !== 0 || W.im !== 0) && (G.re !== 0 || G.im !== 0);
   }, "BigNumber, BigNumber": function Z(W, G) {
     return !W.isZero() && !G.isZero() && !W.isNaN() && !G.isNaN();
@@ -70016,10 +70020,10 @@ var qJ = Q0(Sz, Iw, (C10) => {
   }) }, J({ SS: X, DS: Y }));
 });
 var c5 = "compare";
-var Bw = ["typed", "config", "matrix", "equalScalar", "BigNumber", "Fraction", "DenseMatrix", "concat"];
-var VW = Q0(c5, Bw, (C10) => {
+var Mw = ["typed", "config", "matrix", "equalScalar", "BigNumber", "Fraction", "DenseMatrix", "concat"];
+var VW = Q0(c5, Mw, (C10) => {
   var { typed: j, config: q, equalScalar: S, matrix: U, BigNumber: P, Fraction: $, DenseMatrix: Y, concat: X } = C10, K = i8({ typed: j }), Q = O7({ typed: j, equalScalar: S }), J = f8({ typed: j, DenseMatrix: Y }), Z = z8({ typed: j, matrix: U, concat: X }), W = I9({ typed: j });
-  return j(c5, Tw({ typed: j, config: q }), { "boolean, boolean": function G(H, L) {
+  return j(c5, Ew({ typed: j, config: q }), { "boolean, boolean": function G(H, L) {
     return H === L ? 0 : H > L ? 1 : -1;
   }, "BigNumber, BigNumber": function G(H, L) {
     return N6(H, L, q.epsilon) ? new P(0) : new P(H.cmp(L));
@@ -70029,14 +70033,14 @@ var VW = Q0(c5, Bw, (C10) => {
     throw new TypeError("No ordering relation is defined for complex numbers");
   } }, W, Z({ SS: Q, DS: K, Ss: J }));
 });
-var Tw = Q0(c5, ["typed", "config"], (C10) => {
+var Ew = Q0(c5, ["typed", "config"], (C10) => {
   var { typed: j, config: q } = C10;
   return j(c5, { "number, number": function S(U, P) {
     return R6(U, P, q.epsilon) ? 0 : U > P ? 1 : -1;
   } });
 });
-var t7 = C9(vz(), 1);
-var Ew = function(C10, j) {
+var t7 = C9(wz(), 1);
+var Nw = function(C10, j) {
   if (C10.re > j.re)
     return 1;
   if (C10.re < j.re)
@@ -70047,11 +70051,11 @@ var Ew = function(C10, j) {
     return -1;
   return 0;
 };
-var wz = "compareNatural";
-var Mw = ["typed", "compare"];
-var zW = Q0(wz, Mw, (C10) => {
+var kz = "compareNatural";
+var Ow = ["typed", "compare"];
+var zW = Q0(kz, Ow, (C10) => {
   var { typed: j, compare: q } = C10, S = q.signatures["boolean,boolean"];
-  return j(wz, { "any, any": U });
+  return j(kz, { "any, any": U });
   function U(X, K) {
     var Q = O8(X), J = O8(K), Z;
     if ((Q === "number" || Q === "BigNumber" || Q === "Fraction") && (J === "number" || J === "BigNumber" || J === "Fraction"))
@@ -70068,7 +70072,7 @@ var zW = Q0(wz, Mw, (C10) => {
     if (Q !== J)
       return t7.default(Q, J);
     if (Q === "Complex")
-      return Ew(X, K);
+      return Nw(X, K);
     if (Q === "Unit") {
       if (X.equalBase(K))
         return U(X.value, K.value);
@@ -70129,20 +70133,20 @@ var zW = Q0(wz, Mw, (C10) => {
     return 0;
   }
 });
-var kz = "compareText";
-var Ow = ["typed", "matrix", "concat"];
+var hz = "compareText";
+var Aw = ["typed", "matrix", "concat"];
 M5.signature = "any, any";
-var FW = Q0(kz, Ow, (C10) => {
+var FW = Q0(hz, Aw, (C10) => {
   var { typed: j, matrix: q, concat: S } = C10, U = z8({ typed: j, matrix: q, concat: S });
-  return j(kz, M5, U({ elop: M5, Ds: true }));
+  return j(hz, M5, U({ elop: M5, Ds: true }));
 });
 var l5 = "equal";
-var Nw = ["typed", "matrix", "equalScalar", "DenseMatrix", "concat"];
-var PW = Q0(l5, Nw, (C10) => {
+var Cw = ["typed", "matrix", "equalScalar", "DenseMatrix", "concat"];
+var PW = Q0(l5, Cw, (C10) => {
   var { typed: j, matrix: q, equalScalar: S, DenseMatrix: U, concat: P } = C10, $ = i8({ typed: j }), Y = A6({ typed: j, DenseMatrix: U }), X = f8({ typed: j, DenseMatrix: U }), K = z8({ typed: j, matrix: q, concat: P });
-  return j(l5, Aw({ typed: j, equalScalar: S }), K({ elop: S, SS: Y, DS: $, Ss: X }));
+  return j(l5, jw({ typed: j, equalScalar: S }), K({ elop: S, SS: Y, DS: $, Ss: X }));
 });
-var Aw = Q0(l5, ["typed", "equalScalar"], (C10) => {
+var jw = Q0(l5, ["typed", "equalScalar"], (C10) => {
   var { typed: j, equalScalar: q } = C10;
   return j(l5, { "any, any": function S(U, P) {
     if (U === null)
@@ -70156,83 +70160,83 @@ var Aw = Q0(l5, ["typed", "equalScalar"], (C10) => {
     return q(U, P);
   } });
 });
-var hz = "equalText";
-var Cw = ["typed", "compareText", "isZero"];
-var IW = Q0(hz, Cw, (C10) => {
+var fz = "equalText";
+var Sw = ["typed", "compareText", "isZero"];
+var IW = Q0(fz, Sw, (C10) => {
   var { typed: j, compareText: q, isZero: S } = C10;
-  return j(hz, { "any, any": function U(P, $) {
+  return j(fz, { "any, any": function U(P, $) {
     return S(q(P, $));
   } });
 });
 var s5 = "smaller";
-var jw = ["typed", "config", "matrix", "DenseMatrix", "concat"];
-var BW = Q0(s5, jw, (C10) => {
+var qw = ["typed", "config", "matrix", "DenseMatrix", "concat"];
+var BW = Q0(s5, qw, (C10) => {
   var { typed: j, config: q, matrix: S, DenseMatrix: U, concat: P } = C10, $ = i8({ typed: j }), Y = A6({ typed: j, DenseMatrix: U }), X = f8({ typed: j, DenseMatrix: U }), K = z8({ typed: j, matrix: S, concat: P }), Q = I9({ typed: j });
-  return j(s5, Sw({ typed: j, config: q }), { "boolean, boolean": (J, Z) => J < Z, "BigNumber, BigNumber": function J(Z, W) {
+  return j(s5, vw({ typed: j, config: q }), { "boolean, boolean": (J, Z) => J < Z, "BigNumber, BigNumber": function J(Z, W) {
     return Z.lt(W) && !N6(Z, W, q.epsilon);
   }, "Fraction, Fraction": (J, Z) => J.compare(Z) === -1, "Complex, Complex": function J(Z, W) {
     throw new TypeError("No ordering relation is defined for complex numbers");
   } }, Q, K({ SS: Y, DS: $, Ss: X }));
 });
-var Sw = Q0(s5, ["typed", "config"], (C10) => {
+var vw = Q0(s5, ["typed", "config"], (C10) => {
   var { typed: j, config: q } = C10;
   return j(s5, { "number, number": function S(U, P) {
     return U < P && !R6(U, P, q.epsilon);
   } });
 });
 var n5 = "smallerEq";
-var qw = ["typed", "config", "matrix", "DenseMatrix", "concat"];
-var TW = Q0(n5, qw, (C10) => {
+var ww = ["typed", "config", "matrix", "DenseMatrix", "concat"];
+var TW = Q0(n5, ww, (C10) => {
   var { typed: j, config: q, matrix: S, DenseMatrix: U, concat: P } = C10, $ = i8({ typed: j }), Y = A6({ typed: j, DenseMatrix: U }), X = f8({ typed: j, DenseMatrix: U }), K = z8({ typed: j, matrix: S, concat: P }), Q = I9({ typed: j });
-  return j(n5, vw({ typed: j, config: q }), { "boolean, boolean": (J, Z) => J <= Z, "BigNumber, BigNumber": function J(Z, W) {
+  return j(n5, kw({ typed: j, config: q }), { "boolean, boolean": (J, Z) => J <= Z, "BigNumber, BigNumber": function J(Z, W) {
     return Z.lte(W) || N6(Z, W, q.epsilon);
   }, "Fraction, Fraction": (J, Z) => J.compare(Z) !== 1, "Complex, Complex": function J() {
     throw new TypeError("No ordering relation is defined for complex numbers");
   } }, Q, K({ SS: Y, DS: $, Ss: X }));
 });
-var vw = Q0(n5, ["typed", "config"], (C10) => {
+var kw = Q0(n5, ["typed", "config"], (C10) => {
   var { typed: j, config: q } = C10;
   return j(n5, { "number, number": function S(U, P) {
     return U <= P || R6(U, P, q.epsilon);
   } });
 });
 var o5 = "larger";
-var ww = ["typed", "config", "matrix", "DenseMatrix", "concat"];
-var MW = Q0(o5, ww, (C10) => {
+var hw = ["typed", "config", "matrix", "DenseMatrix", "concat"];
+var MW = Q0(o5, hw, (C10) => {
   var { typed: j, config: q, matrix: S, DenseMatrix: U, concat: P } = C10, $ = i8({ typed: j }), Y = A6({ typed: j, DenseMatrix: U }), X = f8({ typed: j, DenseMatrix: U }), K = z8({ typed: j, matrix: S, concat: P }), Q = I9({ typed: j });
-  return j(o5, kw({ typed: j, config: q }), { "boolean, boolean": (J, Z) => J > Z, "BigNumber, BigNumber": function J(Z, W) {
+  return j(o5, fw({ typed: j, config: q }), { "boolean, boolean": (J, Z) => J > Z, "BigNumber, BigNumber": function J(Z, W) {
     return Z.gt(W) && !N6(Z, W, q.epsilon);
   }, "Fraction, Fraction": (J, Z) => J.compare(Z) === 1, "Complex, Complex": function J() {
     throw new TypeError("No ordering relation is defined for complex numbers");
   } }, Q, K({ SS: Y, DS: $, Ss: X }));
 });
-var kw = Q0(o5, ["typed", "config"], (C10) => {
+var fw = Q0(o5, ["typed", "config"], (C10) => {
   var { typed: j, config: q } = C10;
   return j(o5, { "number, number": function S(U, P) {
     return U > P && !R6(U, P, q.epsilon);
   } });
 });
 var i5 = "largerEq";
-var hw = ["typed", "config", "matrix", "DenseMatrix", "concat"];
-var EW = Q0(i5, hw, (C10) => {
+var xw = ["typed", "config", "matrix", "DenseMatrix", "concat"];
+var EW = Q0(i5, xw, (C10) => {
   var { typed: j, config: q, matrix: S, DenseMatrix: U, concat: P } = C10, $ = i8({ typed: j }), Y = A6({ typed: j, DenseMatrix: U }), X = f8({ typed: j, DenseMatrix: U }), K = z8({ typed: j, matrix: S, concat: P }), Q = I9({ typed: j });
-  return j(i5, fw({ typed: j, config: q }), { "boolean, boolean": (J, Z) => J >= Z, "BigNumber, BigNumber": function J(Z, W) {
+  return j(i5, gw({ typed: j, config: q }), { "boolean, boolean": (J, Z) => J >= Z, "BigNumber, BigNumber": function J(Z, W) {
     return Z.gte(W) || N6(Z, W, q.epsilon);
   }, "Fraction, Fraction": (J, Z) => J.compare(Z) !== -1, "Complex, Complex": function J() {
     throw new TypeError("No ordering relation is defined for complex numbers");
   } }, Q, K({ SS: Y, DS: $, Ss: X }));
 });
-var fw = Q0(i5, ["typed", "config"], (C10) => {
+var gw = Q0(i5, ["typed", "config"], (C10) => {
   var { typed: j, config: q } = C10;
   return j(i5, { "number, number": function S(U, P) {
     return U >= P || R6(U, P, q.epsilon);
   } });
 });
-var fz = "deepEqual";
-var xw = ["typed", "equal"];
-var OW = Q0(fz, xw, (C10) => {
+var xz = "deepEqual";
+var yw = ["typed", "equal"];
+var OW = Q0(xz, yw, (C10) => {
   var { typed: j, equal: q } = C10;
-  return j(fz, { "any, any": function U(P, $) {
+  return j(xz, { "any, any": function U(P, $) {
     return S(P.valueOf(), $.valueOf());
   } });
   function S(U, P) {
@@ -70254,15 +70258,15 @@ var OW = Q0(fz, xw, (C10) => {
   }
 });
 var a5 = "unequal";
-var gw = ["typed", "config", "equalScalar", "matrix", "DenseMatrix", "concat"];
-var NW = Q0(a5, gw, (C10) => {
+var bw = ["typed", "config", "equalScalar", "matrix", "DenseMatrix", "concat"];
+var NW = Q0(a5, bw, (C10) => {
   var { typed: j, config: q, equalScalar: S, matrix: U, DenseMatrix: P, concat: $ } = C10, Y = i8({ typed: j }), X = A6({ typed: j, DenseMatrix: P }), K = f8({ typed: j, DenseMatrix: P }), Q = z8({ typed: j, matrix: U, concat: $ });
-  return j(a5, yw({ typed: j, equalScalar: S }), Q({ elop: J, SS: X, DS: Y, Ss: K }));
+  return j(a5, mw({ typed: j, equalScalar: S }), Q({ elop: J, SS: X, DS: Y, Ss: K }));
   function J(Z, W) {
     return !S(Z, W);
   }
 });
-var yw = Q0(a5, ["typed", "equalScalar"], (C10) => {
+var mw = Q0(a5, ["typed", "equalScalar"], (C10) => {
   var { typed: j, equalScalar: q } = C10;
   return j(a5, { "any, any": function S(U, P) {
     if (U === null)
@@ -70276,11 +70280,11 @@ var yw = Q0(a5, ["typed", "equalScalar"], (C10) => {
     return !q(U, P);
   } });
 });
-var xz = "partitionSelect";
-var bw = ["typed", "isNumeric", "isNaN", "compare"];
-var AW = Q0(xz, bw, (C10) => {
+var gz = "partitionSelect";
+var pw = ["typed", "isNumeric", "isNaN", "compare"];
+var AW = Q0(gz, pw, (C10) => {
   var { typed: j, isNumeric: q, isNaN: S, compare: U } = C10, P = U, $ = (K, Q) => -U(K, Q);
-  return j(xz, { "Array | Matrix, number": function K(Q, J) {
+  return j(gz, { "Array | Matrix, number": function K(Q, J) {
     return Y(Q, J, P);
   }, "Array | Matrix, number, string": function K(Q, J, Z) {
     if (Z === "asc")
@@ -70327,11 +70331,11 @@ var AW = Q0(xz, bw, (C10) => {
     return K[Q];
   }
 });
-var gz = "sort";
-var mw = ["typed", "matrix", "compare", "compareNatural"];
-var CW = Q0(gz, mw, (C10) => {
+var yz = "sort";
+var dw = ["typed", "matrix", "compare", "compareNatural"];
+var CW = Q0(yz, dw, (C10) => {
   var { typed: j, matrix: q, compare: S, compareNatural: U } = C10, P = S, $ = (Q, J) => -S(Q, J);
-  return j(gz, { Array: function Q(J) {
+  return j(yz, { Array: function Q(J) {
     return X(J), J.sort(P);
   }, Matrix: function Q(J) {
     return K(J), q(J.toArray().sort(P), J.storage());
@@ -70363,11 +70367,11 @@ var CW = Q0(gz, mw, (C10) => {
       throw new Error("One dimensional matrix expected");
   }
 });
-var yz = "max";
-var pw = ["typed", "config", "numeric", "larger"];
-var vJ = Q0(yz, pw, (C10) => {
+var bz = "max";
+var uw = ["typed", "config", "numeric", "larger"];
+var vJ = Q0(bz, uw, (C10) => {
   var { typed: j, config: q, numeric: S, larger: U } = C10;
-  return j(yz, { "Array | Matrix": $, "Array | Matrix, number | BigNumber": function Y(X, K) {
+  return j(bz, { "Array | Matrix": $, "Array | Matrix, number | BigNumber": function Y(X, K) {
     return E7(X, K.valueOf(), P);
   }, "...": function Y(X) {
     if (P9(X))
@@ -70399,11 +70403,11 @@ var vJ = Q0(yz, pw, (C10) => {
     return X;
   }
 });
-var bz = "min";
-var dw = ["typed", "config", "numeric", "smaller"];
-var wJ = Q0(bz, dw, (C10) => {
+var mz = "min";
+var _w = ["typed", "config", "numeric", "smaller"];
+var wJ = Q0(mz, _w, (C10) => {
   var { typed: j, config: q, numeric: S, smaller: U } = C10;
-  return j(bz, { "Array | Matrix": $, "Array | Matrix, number | BigNumber": function Y(X, K) {
+  return j(mz, { "Array | Matrix": $, "Array | Matrix, number | BigNumber": function Y(X, K) {
     return E7(X, K.valueOf(), P);
   }, "...": function Y(X) {
     if (P9(X))
@@ -70435,9 +70439,9 @@ var wJ = Q0(bz, dw, (C10) => {
     return X;
   }
 });
-var uw = "ImmutableDenseMatrix";
-var _w = ["smaller", "DenseMatrix"];
-var jW = Q0(uw, _w, (C10) => {
+var cw = "ImmutableDenseMatrix";
+var lw = ["smaller", "DenseMatrix"];
+var jW = Q0(cw, lw, (C10) => {
   var { smaller: j, DenseMatrix: q } = C10;
   function S(U, P) {
     if (!(this instanceof S))
@@ -70502,16 +70506,16 @@ var jW = Q0(uw, _w, (C10) => {
     return this._max;
   }, S;
 }, { isClass: true });
-var mz = function(C10) {
+var pz = function(C10) {
   var j = [];
   return C10.forEach((q, S) => {
     if (q)
       j.push(S);
   }), j;
 };
-var cw = "Index";
-var lw = ["ImmutableDenseMatrix", "getMatrixDataType"];
-var SW = Q0(cw, lw, (C10) => {
+var sw = "Index";
+var nw = ["ImmutableDenseMatrix", "getMatrixDataType"];
+var SW = Q0(sw, nw, (C10) => {
   var { ImmutableDenseMatrix: j, getMatrixDataType: q } = C10;
   function S(P) {
     if (!(this instanceof S))
@@ -70525,9 +70529,9 @@ var SW = Q0(cw, lw, (C10) => {
         var Z = undefined;
         if (q(X) === "boolean") {
           if (K)
-            Z = U(mz(X).valueOf());
+            Z = U(pz(X).valueOf());
           if (Q)
-            Z = U(mz(X._data).valueOf());
+            Z = U(pz(X._data).valueOf());
           J = X.valueOf().length;
         } else
           Z = U(X.valueOf());
@@ -70612,9 +70616,9 @@ var SW = Q0(cw, lw, (C10) => {
     return S.create(P.dimensions);
   }, S;
 }, { isClass: true });
-var sw = "FibonacciHeap";
-var nw = ["smaller", "larger"];
-var qW = Q0(sw, nw, (C10) => {
+var ow = "FibonacciHeap";
+var iw = ["smaller", "larger"];
+var qW = Q0(ow, iw, (C10) => {
   var { smaller: j, larger: q } = C10, S = 1 / Math.log((1 + Math.sqrt(5)) / 2);
   function U() {
     if (!(this instanceof U))
@@ -70720,9 +70724,9 @@ var qW = Q0(sw, nw, (C10) => {
   }
   return U;
 }, { isClass: true });
-var ow = "Spa";
-var iw = ["addScalar", "equalScalar", "FibonacciHeap"];
-var vW = Q0(ow, iw, (C10) => {
+var aw = "Spa";
+var rw = ["addScalar", "equalScalar", "FibonacciHeap"];
+var vW = Q0(aw, rw, (C10) => {
   var { addScalar: j, equalScalar: q, FibonacciHeap: S } = C10;
   function U() {
     if (!(this instanceof U))
@@ -70774,7 +70778,7 @@ var vW = Q0(ow, iw, (C10) => {
     }
   }, U;
 }, { isClass: true });
-var _z = function(C10, j) {
+var cz = function(C10, j) {
   var q = Object.keys(C10);
   if (Object.getOwnPropertySymbols) {
     var S = Object.getOwnPropertySymbols(C10);
@@ -70787,9 +70791,9 @@ var _z = function(C10, j) {
 var wW = function(C10) {
   for (var j = 1;j < arguments.length; j++) {
     var q = arguments[j] != null ? arguments[j] : {};
-    j % 2 ? _z(Object(q), true).forEach(function(S) {
+    j % 2 ? cz(Object(q), true).forEach(function(S) {
       y8(C10, S, q[S]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(C10, Object.getOwnPropertyDescriptors(q)) : _z(Object(q)).forEach(function(S) {
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(C10, Object.getOwnPropertyDescriptors(q)) : cz(Object(q)).forEach(function(S) {
       Object.defineProperty(C10, S, Object.getOwnPropertyDescriptor(q, S));
     });
   }
@@ -70798,21 +70802,21 @@ var wW = function(C10) {
 var r5 = function(C10) {
   return C10[0].precision;
 };
-var pz = i7(function(C10) {
+var dz = i7(function(C10) {
   return new C10(1).exp();
 }, { hasher: r5 });
-var dz = i7(function(C10) {
+var uz = i7(function(C10) {
   return new C10(1).plus(new C10(5).sqrt()).div(2);
 }, { hasher: r5 });
 var kJ = i7(function(C10) {
   return C10.acos(-1);
 }, { hasher: r5 });
-var uz = i7(function(C10) {
+var _z = i7(function(C10) {
   return kJ(C10).times(2);
 }, { hasher: r5 });
-var aw = "Unit";
-var rw = ["?on", "config", "addScalar", "subtractScalar", "multiplyScalar", "divideScalar", "pow", "abs", "fix", "round", "equal", "isNumeric", "format", "number", "Complex", "BigNumber", "Fraction"];
-var kW = Q0(aw, rw, (C10) => {
+var tw = "Unit";
+var ew = ["?on", "config", "addScalar", "subtractScalar", "multiplyScalar", "divideScalar", "pow", "abs", "fix", "round", "equal", "isNumeric", "format", "number", "Complex", "BigNumber", "Fraction"];
+var kW = Q0(tw, ew, (C10) => {
   var { on: j, config: q, addScalar: S, subtractScalar: U, multiplyScalar: P, divideScalar: $, pow: Y, abs: X, fix: K, round: Q, equal: J, isNumeric: Z, format: W, number: G, Complex: H, BigNumber: L, Fraction: R } = C10, V = G;
   function D(d, a) {
     if (!(this instanceof D))
@@ -71013,7 +71017,7 @@ var kW = Q0(aw, rw, (C10) => {
     }
     for (var Z0 in y)
       if (Q8(y, Z0)) {
-        if (bD(d, Z0)) {
+        if (mD(d, Z0)) {
           var K0 = y[Z0], D0 = d.length - Z0.length, R0 = d.substring(0, D0), V0 = Q8(K0.prefixes, R0) ? K0.prefixes[R0] : undefined;
           if (V0 !== undefined)
             return { unit: K0, prefix: V0 };
@@ -71459,11 +71463,11 @@ var kW = Q0(aw, rw, (C10) => {
     delete D.UNITS[d], delete M.cache;
   }, D.PREFIXES = v, D.BASE_DIMENSIONS = g, D.BASE_UNITS = k, D.UNIT_SYSTEMS = c, D.UNITS = y, D;
 }, { isClass: true });
-var cz = "unit";
-var tw = ["typed", "Unit"];
-var hW = Q0(cz, tw, (C10) => {
+var lz = "unit";
+var $k = ["typed", "Unit"];
+var hW = Q0(lz, $k, (C10) => {
   var { typed: j, Unit: q } = C10;
-  return j(cz, { Unit: function S(U) {
+  return j(lz, { Unit: function S(U) {
     return U.clone();
   }, string: function S(U) {
     if (q.isValuelessUnit(U))
@@ -71475,11 +71479,11 @@ var hW = Q0(cz, tw, (C10) => {
     return new q(U);
   }, "Array | Matrix": j.referToSelf((S) => (U) => Z8(U, S)) });
 });
-var lz = "sparse";
-var ew = ["typed", "SparseMatrix"];
-var fW = Q0(lz, ew, (C10) => {
+var sz = "sparse";
+var Jk = ["typed", "SparseMatrix"];
+var fW = Q0(sz, Jk, (C10) => {
   var { typed: j, SparseMatrix: q } = C10;
-  return j(lz, { "": function S() {
+  return j(sz, { "": function S() {
     return new q([]);
   }, string: function S(U) {
     return new q([], U);
@@ -71489,11 +71493,11 @@ var fW = Q0(lz, ew, (C10) => {
     return new q(U, P);
   } });
 });
-var sz = "createUnit";
-var $k = ["typed", "Unit"];
-var xW = Q0(sz, $k, (C10) => {
+var nz = "createUnit";
+var Qk = ["typed", "Unit"];
+var xW = Q0(nz, Qk, (C10) => {
   var { typed: j, Unit: q } = C10;
-  return j(sz, { "Object, Object": function S(U, P) {
+  return j(nz, { "Object, Object": function S(U, P) {
     return q.createUnit(U, P);
   }, Object: function S(U) {
     return q.createUnit(U, {});
@@ -71508,11 +71512,11 @@ var xW = Q0(sz, $k, (C10) => {
     return P[U] = {}, q.createUnit(P, {});
   } });
 });
-var nz = "acos";
-var Jk = ["typed", "config", "Complex"];
-var gW = Q0(nz, Jk, (C10) => {
+var oz = "acos";
+var Zk = ["typed", "config", "Complex"];
+var gW = Q0(oz, Zk, (C10) => {
   var { typed: j, config: q, Complex: S } = C10;
-  return j(nz, { number: function U(P) {
+  return j(oz, { number: function U(P) {
     if (P >= -1 && P <= 1 || q.predictable)
       return Math.acos(P);
     else
@@ -71523,11 +71527,11 @@ var gW = Q0(nz, Jk, (C10) => {
     return P.acos();
   } });
 });
-var oz = "acosh";
-var Qk = ["typed", "config", "Complex"];
-var yW = Q0(oz, Qk, (C10) => {
+var iz = "acosh";
+var Kk = ["typed", "config", "Complex"];
+var yW = Q0(iz, Kk, (C10) => {
   var { typed: j, config: q, Complex: S } = C10;
-  return j(oz, { number: function U(P) {
+  return j(iz, { number: function U(P) {
     if (P >= 1 || q.predictable)
       return nK(P);
     if (P <= -1)
@@ -71539,21 +71543,21 @@ var yW = Q0(oz, Qk, (C10) => {
     return P.acosh();
   } });
 });
-var iz = "acot";
-var Zk = ["typed", "BigNumber"];
-var bW = Q0(iz, Zk, (C10) => {
+var az = "acot";
+var Hk = ["typed", "BigNumber"];
+var bW = Q0(az, Hk, (C10) => {
   var { typed: j, BigNumber: q } = C10;
-  return j(iz, { number: oK, Complex: function S(U) {
+  return j(az, { number: oK, Complex: function S(U) {
     return U.acot();
   }, BigNumber: function S(U) {
     return new q(1).div(U).atan();
   } });
 });
-var az = "acoth";
-var Kk = ["typed", "config", "Complex", "BigNumber"];
-var mW = Q0(az, Kk, (C10) => {
+var rz = "acoth";
+var Wk = ["typed", "config", "Complex", "BigNumber"];
+var mW = Q0(rz, Wk, (C10) => {
   var { typed: j, config: q, Complex: S, BigNumber: U } = C10;
-  return j(az, { number: function P($) {
+  return j(rz, { number: function P($) {
     if ($ >= 1 || $ <= -1 || q.predictable)
       return iK($);
     return new S($, 0).acoth();
@@ -71563,11 +71567,11 @@ var mW = Q0(az, Kk, (C10) => {
     return new U(1).div($).atanh();
   } });
 });
-var rz = "acsc";
-var Hk = ["typed", "config", "Complex", "BigNumber"];
-var pW = Q0(rz, Hk, (C10) => {
+var tz = "acsc";
+var Yk = ["typed", "config", "Complex", "BigNumber"];
+var pW = Q0(tz, Yk, (C10) => {
   var { typed: j, config: q, Complex: S, BigNumber: U } = C10;
-  return j(rz, { number: function P($) {
+  return j(tz, { number: function P($) {
     if ($ <= -1 || $ >= 1 || q.predictable)
       return aK($);
     return new S($, 0).acsc();
@@ -71577,21 +71581,21 @@ var pW = Q0(rz, Hk, (C10) => {
     return new U(1).div($).asin();
   } });
 });
-var tz = "acsch";
-var Wk = ["typed", "BigNumber"];
-var dW = Q0(tz, Wk, (C10) => {
+var ez = "acsch";
+var Uk = ["typed", "BigNumber"];
+var dW = Q0(ez, Uk, (C10) => {
   var { typed: j, BigNumber: q } = C10;
-  return j(tz, { number: rK, Complex: function S(U) {
+  return j(ez, { number: rK, Complex: function S(U) {
     return U.acsch();
   }, BigNumber: function S(U) {
     return new q(1).div(U).asinh();
   } });
 });
-var ez = "asec";
-var Yk = ["typed", "config", "Complex", "BigNumber"];
-var uW = Q0(ez, Yk, (C10) => {
+var $2 = "asec";
+var Gk = ["typed", "config", "Complex", "BigNumber"];
+var uW = Q0($2, Gk, (C10) => {
   var { typed: j, config: q, Complex: S, BigNumber: U } = C10;
-  return j(ez, { number: function P($) {
+  return j($2, { number: function P($) {
     if ($ <= -1 || $ >= 1 || q.predictable)
       return tK($);
     return new S($, 0).asec();
@@ -71601,11 +71605,11 @@ var uW = Q0(ez, Yk, (C10) => {
     return new U(1).div($).acos();
   } });
 });
-var $2 = "asech";
-var Uk = ["typed", "config", "Complex", "BigNumber"];
-var _W = Q0($2, Uk, (C10) => {
+var J2 = "asech";
+var Lk = ["typed", "config", "Complex", "BigNumber"];
+var _W = Q0(J2, Lk, (C10) => {
   var { typed: j, config: q, Complex: S, BigNumber: U } = C10;
-  return j($2, { number: function P($) {
+  return j(J2, { number: function P($) {
     if ($ <= 1 && $ >= -1 || q.predictable) {
       var Y = 1 / $;
       if (Y > 0 || q.predictable)
@@ -71620,11 +71624,11 @@ var _W = Q0($2, Uk, (C10) => {
     return new U(1).div($).acosh();
   } });
 });
-var J2 = "asin";
-var Gk = ["typed", "config", "Complex"];
-var cW = Q0(J2, Gk, (C10) => {
+var Q2 = "asin";
+var Xk = ["typed", "config", "Complex"];
+var cW = Q0(Q2, Xk, (C10) => {
   var { typed: j, config: q, Complex: S } = C10;
-  return j(J2, { number: function U(P) {
+  return j(Q2, { number: function U(P) {
     if (P >= -1 && P <= 1 || q.predictable)
       return Math.asin(P);
     else
@@ -71635,9 +71639,9 @@ var cW = Q0(J2, Gk, (C10) => {
     return P.asin();
   } });
 });
-var Lk = "asinh";
-var Xk = ["typed"];
-var lW = Q0(Lk, Xk, (C10) => {
+var Dk = "asinh";
+var Rk = ["typed"];
+var lW = Q0(Dk, Rk, (C10) => {
   var { typed: j } = C10;
   return j("asinh", { number: $4, Complex: function q(S) {
     return S.asinh();
@@ -71645,9 +71649,9 @@ var lW = Q0(Lk, Xk, (C10) => {
     return S.asinh();
   } });
 });
-var Dk = "atan";
-var Rk = ["typed"];
-var sW = Q0(Dk, Rk, (C10) => {
+var Vk = "atan";
+var zk = ["typed"];
+var sW = Q0(Vk, zk, (C10) => {
   var { typed: j } = C10;
   return j("atan", { number: function q(S) {
     return Math.atan(S);
@@ -71657,17 +71661,17 @@ var sW = Q0(Dk, Rk, (C10) => {
     return S.atan();
   } });
 });
-var Q2 = "atan2";
-var Vk = ["typed", "matrix", "equalScalar", "BigNumber", "DenseMatrix", "concat"];
-var nW = Q0(Q2, Vk, (C10) => {
+var Z2 = "atan2";
+var Fk = ["typed", "matrix", "equalScalar", "BigNumber", "DenseMatrix", "concat"];
+var nW = Q0(Z2, Fk, (C10) => {
   var { typed: j, matrix: q, equalScalar: S, BigNumber: U, DenseMatrix: P, concat: $ } = C10, Y = E6({ typed: j, equalScalar: S }), X = i8({ typed: j }), K = m5({ typed: j, equalScalar: S }), Q = u8({ typed: j, equalScalar: S }), J = f8({ typed: j, DenseMatrix: P }), Z = z8({ typed: j, matrix: q, concat: $ });
-  return j(Q2, { "number, number": Math.atan2, "BigNumber, BigNumber": (W, G) => U.atan2(W, G) }, Z({ scalar: "number | BigNumber", SS: K, DS: X, SD: Y, Ss: Q, sS: J }));
+  return j(Z2, { "number, number": Math.atan2, "BigNumber, BigNumber": (W, G) => U.atan2(W, G) }, Z({ scalar: "number | BigNumber", SS: K, DS: X, SD: Y, Ss: Q, sS: J }));
 });
-var Z2 = "atanh";
-var zk = ["typed", "config", "Complex"];
-var oW = Q0(Z2, zk, (C10) => {
+var K2 = "atanh";
+var Pk = ["typed", "config", "Complex"];
+var oW = Q0(K2, Pk, (C10) => {
   var { typed: j, config: q, Complex: S } = C10;
-  return j(Z2, { number: function U(P) {
+  return j(K2, { number: function U(P) {
     if (P <= 1 && P >= -1 || q.predictable)
       return J4(P);
     return new S(P, 0).atanh();
@@ -71685,83 +71689,83 @@ var T9 = Q0("trigUnit", ["typed"], (C10) => {
     return j.find(q, S.valueType())(S.value);
   }) };
 });
-var K2 = "cos";
-var Fk = ["typed"];
-var iW = Q0(K2, Fk, (C10) => {
+var H2 = "cos";
+var Ik = ["typed"];
+var iW = Q0(H2, Ik, (C10) => {
   var { typed: j } = C10, q = T9({ typed: j });
-  return j(K2, { number: Math.cos, "Complex | BigNumber": (S) => S.cos() }, q);
+  return j(H2, { number: Math.cos, "Complex | BigNumber": (S) => S.cos() }, q);
 });
-var H2 = "cosh";
-var Pk = ["typed"];
-var aW = Q0(H2, Pk, (C10) => {
+var W2 = "cosh";
+var Bk = ["typed"];
+var aW = Q0(W2, Bk, (C10) => {
   var { typed: j } = C10;
-  return j(H2, { number: B5, "Complex | BigNumber": (q) => q.cosh() });
+  return j(W2, { number: B5, "Complex | BigNumber": (q) => q.cosh() });
 });
-var W2 = "cot";
-var Ik = ["typed", "BigNumber"];
-var rW = Q0(W2, Ik, (C10) => {
-  var { typed: j, BigNumber: q } = C10, S = T9({ typed: j });
-  return j(W2, { number: Q4, Complex: (U) => U.cot(), BigNumber: (U) => new q(1).div(U.tan()) }, S);
-});
-var Y2 = "coth";
-var Bk = ["typed", "BigNumber"];
-var tW = Q0(Y2, Bk, (C10) => {
-  var { typed: j, BigNumber: q } = C10;
-  return j(Y2, { number: Z4, Complex: (S) => S.coth(), BigNumber: (S) => new q(1).div(S.tanh()) });
-});
-var U2 = "csc";
+var Y2 = "cot";
 var Tk = ["typed", "BigNumber"];
-var eW = Q0(U2, Tk, (C10) => {
+var rW = Q0(Y2, Tk, (C10) => {
   var { typed: j, BigNumber: q } = C10, S = T9({ typed: j });
-  return j(U2, { number: K4, Complex: (U) => U.csc(), BigNumber: (U) => new q(1).div(U.sin()) }, S);
+  return j(Y2, { number: Q4, Complex: (U) => U.cot(), BigNumber: (U) => new q(1).div(U.tan()) }, S);
 });
-var G2 = "csch";
+var U2 = "coth";
 var Mk = ["typed", "BigNumber"];
-var $1 = Q0(G2, Mk, (C10) => {
+var tW = Q0(U2, Mk, (C10) => {
   var { typed: j, BigNumber: q } = C10;
-  return j(G2, { number: H4, Complex: (S) => S.csch(), BigNumber: (S) => new q(1).div(S.sinh()) });
+  return j(U2, { number: Z4, Complex: (S) => S.coth(), BigNumber: (S) => new q(1).div(S.tanh()) });
 });
-var L2 = "sec";
+var G2 = "csc";
 var Ek = ["typed", "BigNumber"];
-var J1 = Q0(L2, Ek, (C10) => {
+var eW = Q0(G2, Ek, (C10) => {
   var { typed: j, BigNumber: q } = C10, S = T9({ typed: j });
-  return j(L2, { number: W4, Complex: (U) => U.sec(), BigNumber: (U) => new q(1).div(U.cos()) }, S);
+  return j(G2, { number: K4, Complex: (U) => U.csc(), BigNumber: (U) => new q(1).div(U.sin()) }, S);
 });
-var X2 = "sech";
+var L2 = "csch";
 var Ok = ["typed", "BigNumber"];
-var Q1 = Q0(X2, Ok, (C10) => {
+var $1 = Q0(L2, Ok, (C10) => {
   var { typed: j, BigNumber: q } = C10;
-  return j(X2, { number: Y4, Complex: (S) => S.sech(), BigNumber: (S) => new q(1).div(S.cosh()) });
+  return j(L2, { number: H4, Complex: (S) => S.csch(), BigNumber: (S) => new q(1).div(S.sinh()) });
 });
-var D2 = "sin";
-var Nk = ["typed"];
-var Z1 = Q0(D2, Nk, (C10) => {
-  var { typed: j } = C10, q = T9({ typed: j });
-  return j(D2, { number: Math.sin, "Complex | BigNumber": (S) => S.sin() }, q);
+var X2 = "sec";
+var Nk = ["typed", "BigNumber"];
+var J1 = Q0(X2, Nk, (C10) => {
+  var { typed: j, BigNumber: q } = C10, S = T9({ typed: j });
+  return j(X2, { number: W4, Complex: (U) => U.sec(), BigNumber: (U) => new q(1).div(U.cos()) }, S);
 });
-var R2 = "sinh";
-var Ak = ["typed"];
-var K1 = Q0(R2, Ak, (C10) => {
-  var { typed: j } = C10;
-  return j(R2, { number: U4, "Complex | BigNumber": (q) => q.sinh() });
+var D2 = "sech";
+var Ak = ["typed", "BigNumber"];
+var Q1 = Q0(D2, Ak, (C10) => {
+  var { typed: j, BigNumber: q } = C10;
+  return j(D2, { number: Y4, Complex: (S) => S.sech(), BigNumber: (S) => new q(1).div(S.cosh()) });
 });
-var V2 = "tan";
+var R2 = "sin";
 var Ck = ["typed"];
-var H1 = Q0(V2, Ck, (C10) => {
+var Z1 = Q0(R2, Ck, (C10) => {
   var { typed: j } = C10, q = T9({ typed: j });
-  return j(V2, { number: Math.tan, "Complex | BigNumber": (S) => S.tan() }, q);
+  return j(R2, { number: Math.sin, "Complex | BigNumber": (S) => S.sin() }, q);
 });
-var jk = "tanh";
+var V2 = "sinh";
+var jk = ["typed"];
+var K1 = Q0(V2, jk, (C10) => {
+  var { typed: j } = C10;
+  return j(V2, { number: U4, "Complex | BigNumber": (q) => q.sinh() });
+});
+var z2 = "tan";
 var Sk = ["typed"];
-var W1 = Q0(jk, Sk, (C10) => {
+var H1 = Q0(z2, Sk, (C10) => {
+  var { typed: j } = C10, q = T9({ typed: j });
+  return j(z2, { number: Math.tan, "Complex | BigNumber": (S) => S.tan() }, q);
+});
+var qk = "tanh";
+var vk = ["typed"];
+var W1 = Q0(qk, vk, (C10) => {
   var { typed: j } = C10;
   return j("tanh", { number: T5, "Complex | BigNumber": (q) => q.tanh() });
 });
-var z2 = "setCartesian";
-var qk = ["typed", "size", "subset", "compareNatural", "Index", "DenseMatrix"];
-var Y1 = Q0(z2, qk, (C10) => {
+var F2 = "setCartesian";
+var wk = ["typed", "size", "subset", "compareNatural", "Index", "DenseMatrix"];
+var Y1 = Q0(F2, wk, (C10) => {
   var { typed: j, size: q, subset: S, compareNatural: U, Index: P, DenseMatrix: $ } = C10;
-  return j(z2, { "Array | Matrix, Array | Matrix": function Y(X, K) {
+  return j(F2, { "Array | Matrix, Array | Matrix": function Y(X, K) {
     var Q = [];
     if (S(q(X), new P(0)) !== 0 && S(q(K), new P(0)) !== 0) {
       var J = F8(Array.isArray(X) ? X : X.toArray()).sort(U), Z = F8(Array.isArray(K) ? K : K.toArray()).sort(U);
@@ -71775,11 +71779,11 @@ var Y1 = Q0(z2, qk, (C10) => {
     return new $(Q);
   } });
 });
-var F2 = "setDifference";
-var vk = ["typed", "size", "subset", "compareNatural", "Index", "DenseMatrix"];
-var U1 = Q0(F2, vk, (C10) => {
+var P2 = "setDifference";
+var kk = ["typed", "size", "subset", "compareNatural", "Index", "DenseMatrix"];
+var U1 = Q0(P2, kk, (C10) => {
   var { typed: j, size: q, subset: S, compareNatural: U, Index: P, DenseMatrix: $ } = C10;
-  return j(F2, { "Array | Matrix, Array | Matrix": function Y(X, K) {
+  return j(P2, { "Array | Matrix, Array | Matrix": function Y(X, K) {
     var Q;
     if (S(q(X), new P(0)) === 0)
       Q = [];
@@ -71805,11 +71809,11 @@ var U1 = Q0(F2, vk, (C10) => {
     return new $(T$(Q));
   } });
 });
-var P2 = "setDistinct";
-var wk = ["typed", "size", "subset", "compareNatural", "Index", "DenseMatrix"];
-var G1 = Q0(P2, wk, (C10) => {
+var I2 = "setDistinct";
+var hk = ["typed", "size", "subset", "compareNatural", "Index", "DenseMatrix"];
+var G1 = Q0(I2, hk, (C10) => {
   var { typed: j, size: q, subset: S, compareNatural: U, Index: P, DenseMatrix: $ } = C10;
-  return j(P2, { "Array | Matrix": function Y(X) {
+  return j(I2, { "Array | Matrix": function Y(X) {
     var K;
     if (S(q(X), new P(0)) === 0)
       K = [];
@@ -71825,11 +71829,11 @@ var G1 = Q0(P2, wk, (C10) => {
     return new $(K);
   } });
 });
-var I2 = "setIntersect";
-var kk = ["typed", "size", "subset", "compareNatural", "Index", "DenseMatrix"];
-var L1 = Q0(I2, kk, (C10) => {
+var B2 = "setIntersect";
+var fk = ["typed", "size", "subset", "compareNatural", "Index", "DenseMatrix"];
+var L1 = Q0(B2, fk, (C10) => {
   var { typed: j, size: q, subset: S, compareNatural: U, Index: P, DenseMatrix: $ } = C10;
-  return j(I2, { "Array | Matrix, Array | Matrix": function Y(X, K) {
+  return j(B2, { "Array | Matrix, Array | Matrix": function Y(X, K) {
     var Q;
     if (S(q(X), new P(0)) === 0 || S(q(K), new P(0)) === 0)
       Q = [];
@@ -71848,11 +71852,11 @@ var L1 = Q0(I2, kk, (C10) => {
     return new $(T$(Q));
   } });
 });
-var B2 = "setIsSubset";
-var hk = ["typed", "size", "subset", "compareNatural", "Index"];
-var X1 = Q0(B2, hk, (C10) => {
+var T2 = "setIsSubset";
+var xk = ["typed", "size", "subset", "compareNatural", "Index"];
+var X1 = Q0(T2, xk, (C10) => {
   var { typed: j, size: q, subset: S, compareNatural: U, Index: P } = C10;
-  return j(B2, { "Array | Matrix, Array | Matrix": function $(Y, X) {
+  return j(T2, { "Array | Matrix, Array | Matrix": function $(Y, X) {
     if (S(q(Y), new P(0)) === 0)
       return true;
     else if (S(q(X), new P(0)) === 0)
@@ -71871,11 +71875,11 @@ var X1 = Q0(B2, hk, (C10) => {
     return true;
   } });
 });
-var T2 = "setMultiplicity";
-var fk = ["typed", "size", "subset", "compareNatural", "Index"];
-var D1 = Q0(T2, fk, (C10) => {
+var M2 = "setMultiplicity";
+var gk = ["typed", "size", "subset", "compareNatural", "Index"];
+var D1 = Q0(M2, gk, (C10) => {
   var { typed: j, size: q, subset: S, compareNatural: U, Index: P } = C10;
-  return j(T2, { "number | BigNumber | Fraction | Complex, Array | Matrix": function $(Y, X) {
+  return j(M2, { "number | BigNumber | Fraction | Complex, Array | Matrix": function $(Y, X) {
     if (S(q(X), new P(0)) === 0)
       return 0;
     var K = F8(Array.isArray(X) ? X : X.toArray()), Q = 0;
@@ -71885,11 +71889,11 @@ var D1 = Q0(T2, fk, (C10) => {
     return Q;
   } });
 });
-var M2 = "setPowerset";
-var xk = ["typed", "size", "subset", "compareNatural", "Index"];
-var R1 = Q0(M2, xk, (C10) => {
+var E2 = "setPowerset";
+var yk = ["typed", "size", "subset", "compareNatural", "Index"];
+var R1 = Q0(E2, yk, (C10) => {
   var { typed: j, size: q, subset: S, compareNatural: U, Index: P } = C10;
-  return j(M2, { "Array | Matrix": function X(K) {
+  return j(E2, { "Array | Matrix": function X(K) {
     if (S(q(K), new P(0)) === 0)
       return [];
     var Q = F8(Array.isArray(K) ? K : K.toArray()).sort(U), J = [], Z = 0;
@@ -71913,11 +71917,11 @@ var R1 = Q0(M2, xk, (C10) => {
     return X;
   }
 });
-var E2 = "setSize";
-var gk = ["typed", "compareNatural"];
-var V1 = Q0(E2, gk, (C10) => {
+var O2 = "setSize";
+var bk = ["typed", "compareNatural"];
+var V1 = Q0(O2, bk, (C10) => {
   var { typed: j, compareNatural: q } = C10;
-  return j(E2, { "Array | Matrix": function S(U) {
+  return j(O2, { "Array | Matrix": function S(U) {
     return Array.isArray(U) ? F8(U).length : F8(U.toArray()).length;
   }, "Array | Matrix, boolean": function S(U, P) {
     if (P === false || U.length === 0)
@@ -71931,11 +71935,11 @@ var V1 = Q0(E2, gk, (C10) => {
     }
   } });
 });
-var O2 = "setSymDifference";
-var yk = ["typed", "size", "concat", "subset", "setDifference", "Index"];
-var z1 = Q0(O2, yk, (C10) => {
+var N2 = "setSymDifference";
+var mk = ["typed", "size", "concat", "subset", "setDifference", "Index"];
+var z1 = Q0(N2, mk, (C10) => {
   var { typed: j, size: q, concat: S, subset: U, setDifference: P, Index: $ } = C10;
-  return j(O2, { "Array | Matrix, Array | Matrix": function Y(X, K) {
+  return j(N2, { "Array | Matrix, Array | Matrix": function Y(X, K) {
     if (U(q(X), new $(0)) === 0)
       return F8(K);
     else if (U(q(K), new $(0)) === 0)
@@ -71944,11 +71948,11 @@ var z1 = Q0(O2, yk, (C10) => {
     return S(P(Q, J), P(J, Q));
   } });
 });
-var N2 = "setUnion";
-var bk = ["typed", "size", "concat", "subset", "setIntersect", "setSymDifference", "Index"];
-var F1 = Q0(N2, bk, (C10) => {
+var A2 = "setUnion";
+var pk = ["typed", "size", "concat", "subset", "setIntersect", "setSymDifference", "Index"];
+var F1 = Q0(A2, pk, (C10) => {
   var { typed: j, size: q, concat: S, subset: U, setIntersect: P, setSymDifference: $, Index: Y } = C10;
-  return j(N2, { "Array | Matrix, Array | Matrix": function X(K, Q) {
+  return j(A2, { "Array | Matrix, Array | Matrix": function X(K, Q) {
     if (U(q(K), new Y(0)) === 0)
       return F8(Q);
     else if (U(q(Q), new Y(0)) === 0)
@@ -71957,22 +71961,22 @@ var F1 = Q0(N2, bk, (C10) => {
     return S($(J, Z), P(J, Z));
   } });
 });
-var A2 = "add";
-var mk = ["typed", "matrix", "addScalar", "equalScalar", "DenseMatrix", "SparseMatrix", "concat"];
-var P1 = Q0(A2, mk, (C10) => {
+var C22 = "add";
+var dk = ["typed", "matrix", "addScalar", "equalScalar", "DenseMatrix", "SparseMatrix", "concat"];
+var P1 = Q0(C22, dk, (C10) => {
   var { typed: j, matrix: q, addScalar: S, equalScalar: U, DenseMatrix: P, SparseMatrix: $, concat: Y } = C10, X = _6({ typed: j }), K = j$({ typed: j, equalScalar: U }), Q = Z9({ typed: j, DenseMatrix: P }), J = z8({ typed: j, matrix: q, concat: Y });
-  return j(A2, { "any, any": S, "any, any, ...any": j.referToSelf((Z) => (W, G, H) => {
+  return j(C22, { "any, any": S, "any, any, ...any": j.referToSelf((Z) => (W, G, H) => {
     var L = Z(W, G);
     for (var R = 0;R < H.length; R++)
       L = Z(L, H[R]);
     return L;
   }) }, J({ elop: S, DS: X, SS: K, Ss: Q }));
 });
-var C22 = "hypot";
-var pk = ["typed", "abs", "addScalar", "divideScalar", "multiplyScalar", "sqrt", "smaller", "isPositive"];
-var I1 = Q0(C22, pk, (C10) => {
+var j2 = "hypot";
+var uk = ["typed", "abs", "addScalar", "divideScalar", "multiplyScalar", "sqrt", "smaller", "isPositive"];
+var I1 = Q0(j2, uk, (C10) => {
   var { typed: j, abs: q, addScalar: S, divideScalar: U, multiplyScalar: P, sqrt: $, smaller: Y, isPositive: X } = C10;
-  return j(C22, { "... number | BigNumber": K, Array: K, Matrix: (Q) => K(F8(Q.toArray())) });
+  return j(j2, { "... number | BigNumber": K, Array: K, Matrix: (Q) => K(F8(Q.toArray())) });
   function K(Q) {
     var J = 0, Z = 0;
     for (var W = 0;W < Q.length; W++) {
@@ -71987,11 +71991,11 @@ var I1 = Q0(C22, pk, (C10) => {
     return P(Z, $(J));
   }
 });
-var j2 = "norm";
-var dk = ["typed", "abs", "add", "pow", "conj", "sqrt", "multiply", "equalScalar", "larger", "smaller", "matrix", "ctranspose", "eigs"];
-var B1 = Q0(j2, dk, (C10) => {
+var S2 = "norm";
+var _k = ["typed", "abs", "add", "pow", "conj", "sqrt", "multiply", "equalScalar", "larger", "smaller", "matrix", "ctranspose", "eigs"];
+var B1 = Q0(S2, _k, (C10) => {
   var { typed: j, abs: q, add: S, pow: U, conj: P, sqrt: $, multiply: Y, equalScalar: X, larger: K, smaller: Q, matrix: J, ctranspose: Z, eigs: W } = C10;
-  return j(j2, { number: Math.abs, Complex: function N(w) {
+  return j(S2, { number: Math.abs, Complex: function N(w) {
     return w.abs();
   }, BigNumber: function N(w) {
     return w.abs();
@@ -72093,11 +72097,11 @@ var B1 = Q0(j2, dk, (C10) => {
         throw new RangeError("Invalid matrix dimensions");
   }
 });
-var S2 = "dot";
-var uk = ["typed", "addScalar", "multiplyScalar", "conj", "size"];
-var T1 = Q0(S2, uk, (C10) => {
+var q2 = "dot";
+var ck = ["typed", "addScalar", "multiplyScalar", "conj", "size"];
+var T1 = Q0(q2, ck, (C10) => {
   var { typed: j, addScalar: q, multiplyScalar: S, conj: U, size: P } = C10;
-  return j(S2, { "Array | DenseMatrix, Array | DenseMatrix": Y, "SparseMatrix, SparseMatrix": X });
+  return j(q2, { "Array | DenseMatrix, Array | DenseMatrix": Y, "SparseMatrix, SparseMatrix": X });
   function $(Q, J) {
     var Z = K(Q), W = K(J), G, H;
     if (Z.length === 1)
@@ -72171,9 +72175,9 @@ var T1 = Q0(S2, uk, (C10) => {
     return $8(Q) ? Q.size() : P(Q);
   }
 });
-var _k = "trace";
-var ck = ["typed", "matrix", "add"];
-var M1 = Q0(_k, ck, (C10) => {
+var lk = "trace";
+var sk = ["typed", "matrix", "add"];
+var M1 = Q0(lk, sk, (C10) => {
   var { typed: j, matrix: q, add: S } = C10;
   return j("trace", { Array: function $(Y) {
     return U(q(Y));
@@ -72221,11 +72225,11 @@ var M1 = Q0(_k, ck, (C10) => {
     throw new RangeError("Matrix must be square (size: " + G8(Q) + ")");
   }
 });
-var q2 = "index";
-var lk = ["typed", "Index"];
-var E1 = Q0(q2, lk, (C10) => {
+var v2 = "index";
+var nk = ["typed", "Index"];
+var E1 = Q0(v2, nk, (C10) => {
   var { typed: j, Index: q } = C10;
-  return j(q2, { "...number | string | BigNumber | Range | Array | Matrix": function S(U) {
+  return j(v2, { "...number | string | BigNumber | Range | Array | Matrix": function S(U) {
     var P = U.map(function(Y) {
       if (K8(Y))
         return Y.toNumber();
@@ -72240,9 +72244,9 @@ var E1 = Q0(q2, lk, (C10) => {
   } });
 });
 var t5 = new Set(["end"]);
-var sk = "Node";
-var nk = ["mathWithTransform"];
-var O1 = Q0(sk, nk, (C10) => {
+var ok = "Node";
+var ik = ["mathWithTransform"];
+var O1 = Q0(ok, ik, (C10) => {
   var { mathWithTransform: j } = C10;
   function q(U) {
     for (var P of [...t5])
@@ -72370,8 +72374,8 @@ var O1 = Q0(sk, nk, (C10) => {
   return S;
 }, { isClass: true, isNode: true });
 var $Q = "AccessorNode";
-var ok = ["subset", "Node"];
-var N1 = Q0($Q, ok, (C10) => {
+var ak = ["subset", "Node"];
+var N1 = Q0($Q, ak, (C10) => {
   var { subset: j, Node: q } = C10, S = e5({ subset: j });
   function U($) {
     return !(W9($) || x6($) || B8($) || r6($) || V7($) || g6($) || o8($));
@@ -72448,8 +72452,8 @@ var N1 = Q0($Q, ok, (C10) => {
   return y8(P, "name", $Q), P;
 }, { isClass: true, isNode: true });
 var JQ = "ArrayNode";
-var ik = ["Node"];
-var A1 = Q0(JQ, ik, (C10) => {
+var rk = ["Node"];
+var A1 = Q0(JQ, rk, (C10) => {
   var { Node: j } = C10;
 
   class q extends j {
@@ -72540,9 +72544,9 @@ var QQ = function(C10, j) {
 };
 var M9 = [{ AssignmentNode: {}, FunctionAssignmentNode: {} }, { ConditionalNode: { latexLeftParens: false, latexRightParens: false, latexParens: false } }, { "OperatorNode:or": { op: "or", associativity: "left", associativeWith: [] } }, { "OperatorNode:xor": { op: "xor", associativity: "left", associativeWith: [] } }, { "OperatorNode:and": { op: "and", associativity: "left", associativeWith: [] } }, { "OperatorNode:bitOr": { op: "|", associativity: "left", associativeWith: [] } }, { "OperatorNode:bitXor": { op: "^|", associativity: "left", associativeWith: [] } }, { "OperatorNode:bitAnd": { op: "&", associativity: "left", associativeWith: [] } }, { "OperatorNode:equal": { op: "==", associativity: "left", associativeWith: [] }, "OperatorNode:unequal": { op: "!=", associativity: "left", associativeWith: [] }, "OperatorNode:smaller": { op: "<", associativity: "left", associativeWith: [] }, "OperatorNode:larger": { op: ">", associativity: "left", associativeWith: [] }, "OperatorNode:smallerEq": { op: "<=", associativity: "left", associativeWith: [] }, "OperatorNode:largerEq": { op: ">=", associativity: "left", associativeWith: [] }, RelationalNode: { associativity: "left", associativeWith: [] } }, { "OperatorNode:leftShift": { op: "<<", associativity: "left", associativeWith: [] }, "OperatorNode:rightArithShift": { op: ">>", associativity: "left", associativeWith: [] }, "OperatorNode:rightLogShift": { op: ">>>", associativity: "left", associativeWith: [] } }, { "OperatorNode:to": { op: "to", associativity: "left", associativeWith: [] } }, { RangeNode: {} }, { "OperatorNode:add": { op: "+", associativity: "left", associativeWith: ["OperatorNode:add", "OperatorNode:subtract"] }, "OperatorNode:subtract": { op: "-", associativity: "left", associativeWith: [] } }, { "OperatorNode:multiply": { op: "*", associativity: "left", associativeWith: ["OperatorNode:multiply", "OperatorNode:divide", "Operator:dotMultiply", "Operator:dotDivide"] }, "OperatorNode:divide": { op: "/", associativity: "left", associativeWith: [], latexLeftParens: false, latexRightParens: false, latexParens: false }, "OperatorNode:dotMultiply": { op: ".*", associativity: "left", associativeWith: ["OperatorNode:multiply", "OperatorNode:divide", "OperatorNode:dotMultiply", "OperatorNode:doDivide"] }, "OperatorNode:dotDivide": { op: "./", associativity: "left", associativeWith: [] }, "OperatorNode:mod": { op: "mod", associativity: "left", associativeWith: [] } }, { "OperatorNode:multiply": { associativity: "left", associativeWith: ["OperatorNode:multiply", "OperatorNode:divide", "Operator:dotMultiply", "Operator:dotDivide"] } }, { "OperatorNode:unaryPlus": { op: "+", associativity: "right" }, "OperatorNode:unaryMinus": { op: "-", associativity: "right" }, "OperatorNode:bitNot": { op: "~", associativity: "right" }, "OperatorNode:not": { op: "not", associativity: "right" } }, { "OperatorNode:pow": { op: "^", associativity: "right", associativeWith: [], latexRightParens: false }, "OperatorNode:dotPow": { op: ".^", associativity: "right", associativeWith: [] } }, { "OperatorNode:factorial": { op: "!", associativity: "left" } }, { "OperatorNode:ctranspose": { op: "'", associativity: "left" } }];
 var KQ = "AssignmentNode";
-var ak = ["subset", "?matrix", "Node"];
-var C1 = Q0(KQ, ak, (C10) => {
-  var { subset: j, matrix: q, Node: S } = C10, U = e5({ subset: j }), P = v2({ subset: j, matrix: q });
+var tk = ["subset", "?matrix", "Node"];
+var C1 = Q0(KQ, tk, (C10) => {
+  var { subset: j, matrix: q, Node: S } = C10, U = e5({ subset: j }), P = w2({ subset: j, matrix: q });
   function $(X, K, Q) {
     if (!K)
       K = "keep";
@@ -72651,8 +72655,8 @@ var C1 = Q0(KQ, ak, (C10) => {
   return y8(Y, "name", KQ), Y;
 }, { isClass: true, isNode: true });
 var HQ = "BlockNode";
-var rk = ["ResultSet", "Node"];
-var j1 = Q0(HQ, rk, (C10) => {
+var ek = ["ResultSet", "Node"];
+var j1 = Q0(HQ, ek, (C10) => {
   var { ResultSet: j, Node: q } = C10;
 
   class S extends q {
@@ -72731,8 +72735,8 @@ var j1 = Q0(HQ, rk, (C10) => {
   return y8(S, "name", HQ), S;
 }, { isClass: true, isNode: true });
 var WQ = "ConditionalNode";
-var tk = ["Node"];
-var S1 = Q0(WQ, tk, (C10) => {
+var $h = ["Node"];
+var S1 = Q0(WQ, $h, (C10) => {
   var { Node: j } = C10;
   function q(U) {
     if (typeof U === "number" || typeof U === "boolean" || typeof U === "string")
@@ -72818,17 +72822,17 @@ var S1 = Q0(WQ, tk, (C10) => {
   }
   return y8(S, "name", WQ), S;
 }, { isClass: true, isNode: true });
-var x2 = C9(h2(), 1);
+var g2 = C9(f2(), 1);
 var v1 = { Alpha: "A", alpha: "\\alpha", Beta: "B", beta: "\\beta", Gamma: "\\Gamma", gamma: "\\gamma", Delta: "\\Delta", delta: "\\delta", Epsilon: "E", epsilon: "\\epsilon", varepsilon: "\\varepsilon", Zeta: "Z", zeta: "\\zeta", Eta: "H", eta: "\\eta", Theta: "\\Theta", theta: "\\theta", vartheta: "\\vartheta", Iota: "I", iota: "\\iota", Kappa: "K", kappa: "\\kappa", varkappa: "\\varkappa", Lambda: "\\Lambda", lambda: "\\lambda", Mu: "M", mu: "\\mu", Nu: "N", nu: "\\nu", Xi: "\\Xi", xi: "\\xi", Omicron: "O", omicron: "o", Pi: "\\Pi", pi: "\\pi", varpi: "\\varpi", Rho: "P", rho: "\\rho", varrho: "\\varrho", Sigma: "\\Sigma", sigma: "\\sigma", varsigma: "\\varsigma", Tau: "T", tau: "\\tau", Upsilon: "\\Upsilon", upsilon: "\\upsilon", Phi: "\\Phi", phi: "\\phi", varphi: "\\varphi", Chi: "X", chi: "\\chi", Psi: "\\Psi", psi: "\\psi", Omega: "\\Omega", omega: "\\omega", true: "\\mathrm{True}", false: "\\mathrm{False}", i: "i", inf: "\\infty", Inf: "\\infty", infinity: "\\infty", Infinity: "\\infty", oo: "\\infty", lim: "\\lim", undefined: "\\mathbf{?}" };
 var b8 = { transpose: "^\\top", ctranspose: "^H", factorial: "!", pow: "^", dotPow: ".^\\wedge", unaryPlus: "+", unaryMinus: "-", bitNot: "\\~", not: "\\neg", multiply: "\\cdot", divide: "\\frac", dotMultiply: ".\\cdot", dotDivide: ".:", mod: "\\mod", add: "+", subtract: "-", to: "\\rightarrow", leftShift: "<<", rightArithShift: ">>", rightLogShift: ">>>", equal: "=", unequal: "\\neq", smaller: "<", larger: ">", smallerEq: "\\leq", largerEq: "\\geq", bitAnd: "\\&", bitXor: "\\underline{|}", bitOr: "|", and: "\\wedge", xor: "\\veebar", or: "\\vee" };
 var w1 = { abs: { 1: "\\left|${args[0]}\\right|" }, add: { 2: "\\left(${args[0]}".concat(b8.add, "${args[1]}\\right)") }, cbrt: { 1: "\\sqrt[3]{${args[0]}}" }, ceil: { 1: "\\left\\lceil${args[0]}\\right\\rceil" }, cube: { 1: "\\left(${args[0]}\\right)^3" }, divide: { 2: "\\frac{${args[0]}}{${args[1]}}" }, dotDivide: { 2: "\\left(${args[0]}".concat(b8.dotDivide, "${args[1]}\\right)") }, dotMultiply: { 2: "\\left(${args[0]}".concat(b8.dotMultiply, "${args[1]}\\right)") }, dotPow: { 2: "\\left(${args[0]}".concat(b8.dotPow, "${args[1]}\\right)") }, exp: { 1: "\\exp\\left(${args[0]}\\right)" }, expm1: "\\left(e".concat(b8.pow, "{${args[0]}}-1\\right)"), fix: { 1: "\\mathrm{${name}}\\left(${args[0]}\\right)" }, floor: { 1: "\\left\\lfloor${args[0]}\\right\\rfloor" }, gcd: "\\gcd\\left(${args}\\right)", hypot: "\\hypot\\left(${args}\\right)", log: { 1: "\\ln\\left(${args[0]}\\right)", 2: "\\log_{${args[1]}}\\left(${args[0]}\\right)" }, log10: { 1: "\\log_{10}\\left(${args[0]}\\right)" }, log1p: { 1: "\\ln\\left(${args[0]}+1\\right)", 2: "\\log_{${args[1]}}\\left(${args[0]}+1\\right)" }, log2: "\\log_{2}\\left(${args[0]}\\right)", mod: { 2: "\\left(${args[0]}".concat(b8.mod, "${args[1]}\\right)") }, multiply: { 2: "\\left(${args[0]}".concat(b8.multiply, "${args[1]}\\right)") }, norm: { 1: "\\left\\|${args[0]}\\right\\|", 2: undefined }, nthRoot: { 2: "\\sqrt[${args[1]}]{${args[0]}}" }, nthRoots: { 2: "\\{y : $y^{args[1]} = {${args[0]}}\\}" }, pow: { 2: "\\left(${args[0]}\\right)".concat(b8.pow, "{${args[1]}}") }, round: { 1: "\\left\\lfloor${args[0]}\\right\\rceil", 2: undefined }, sign: { 1: "\\mathrm{${name}}\\left(${args[0]}\\right)" }, sqrt: { 1: "\\sqrt{${args[0]}}" }, square: { 1: "\\left(${args[0]}\\right)^2" }, subtract: { 2: "\\left(${args[0]}".concat(b8.subtract, "${args[1]}\\right)") }, unaryMinus: { 1: "".concat(b8.unaryMinus, "\\left(${args[0]}\\right)") }, unaryPlus: { 1: "".concat(b8.unaryPlus, "\\left(${args[0]}\\right)") }, bitAnd: { 2: "\\left(${args[0]}".concat(b8.bitAnd, "${args[1]}\\right)") }, bitNot: { 1: b8.bitNot + "\\left(${args[0]}\\right)" }, bitOr: { 2: "\\left(${args[0]}".concat(b8.bitOr, "${args[1]}\\right)") }, bitXor: { 2: "\\left(${args[0]}".concat(b8.bitXor, "${args[1]}\\right)") }, leftShift: { 2: "\\left(${args[0]}".concat(b8.leftShift, "${args[1]}\\right)") }, rightArithShift: { 2: "\\left(${args[0]}".concat(b8.rightArithShift, "${args[1]}\\right)") }, rightLogShift: { 2: "\\left(${args[0]}".concat(b8.rightLogShift, "${args[1]}\\right)") }, bellNumbers: { 1: "\\mathrm{B}_{${args[0]}}" }, catalan: { 1: "\\mathrm{C}_{${args[0]}}" }, stirlingS2: { 2: "\\mathrm{S}\\left(${args}\\right)" }, arg: { 1: "\\arg\\left(${args[0]}\\right)" }, conj: { 1: "\\left(${args[0]}\\right)^*" }, im: { 1: "\\Im\\left\\lbrace${args[0]}\\right\\rbrace" }, re: { 1: "\\Re\\left\\lbrace${args[0]}\\right\\rbrace" }, and: { 2: "\\left(${args[0]}".concat(b8.and, "${args[1]}\\right)") }, not: { 1: b8.not + "\\left(${args[0]}\\right)" }, or: { 2: "\\left(${args[0]}".concat(b8.or, "${args[1]}\\right)") }, xor: { 2: "\\left(${args[0]}".concat(b8.xor, "${args[1]}\\right)") }, cross: { 2: "\\left(${args[0]}\\right)\\times\\left(${args[1]}\\right)" }, ctranspose: { 1: "\\left(${args[0]}\\right)".concat(b8.ctranspose) }, det: { 1: "\\det\\left(${args[0]}\\right)" }, dot: { 2: "\\left(${args[0]}\\cdot${args[1]}\\right)" }, expm: { 1: "\\exp\\left(${args[0]}\\right)" }, inv: { 1: "\\left(${args[0]}\\right)^{-1}" }, pinv: { 1: "\\left(${args[0]}\\right)^{+}" }, sqrtm: { 1: "{${args[0]}}".concat(b8.pow, "{\\frac{1}{2}}") }, trace: { 1: "\\mathrm{tr}\\left(${args[0]}\\right)" }, transpose: { 1: "\\left(${args[0]}\\right)".concat(b8.transpose) }, combinations: { 2: "\\binom{${args[0]}}{${args[1]}}" }, combinationsWithRep: { 2: "\\left(\\!\\!{\\binom{${args[0]}}{${args[1]}}}\\!\\!\\right)" }, factorial: { 1: "\\left(${args[0]}\\right)".concat(b8.factorial) }, gamma: { 1: "\\Gamma\\left(${args[0]}\\right)" }, lgamma: { 1: "\\ln\\Gamma\\left(${args[0]}\\right)" }, equal: { 2: "\\left(${args[0]}".concat(b8.equal, "${args[1]}\\right)") }, larger: { 2: "\\left(${args[0]}".concat(b8.larger, "${args[1]}\\right)") }, largerEq: { 2: "\\left(${args[0]}".concat(b8.largerEq, "${args[1]}\\right)") }, smaller: { 2: "\\left(${args[0]}".concat(b8.smaller, "${args[1]}\\right)") }, smallerEq: { 2: "\\left(${args[0]}".concat(b8.smallerEq, "${args[1]}\\right)") }, unequal: { 2: "\\left(${args[0]}".concat(b8.unequal, "${args[1]}\\right)") }, erf: { 1: "erf\\left(${args[0]}\\right)" }, max: "\\max\\left(${args}\\right)", min: "\\min\\left(${args}\\right)", variance: "\\mathrm{Var}\\left(${args}\\right)", acos: { 1: "\\cos^{-1}\\left(${args[0]}\\right)" }, acosh: { 1: "\\cosh^{-1}\\left(${args[0]}\\right)" }, acot: { 1: "\\cot^{-1}\\left(${args[0]}\\right)" }, acoth: { 1: "\\coth^{-1}\\left(${args[0]}\\right)" }, acsc: { 1: "\\csc^{-1}\\left(${args[0]}\\right)" }, acsch: { 1: "\\mathrm{csch}^{-1}\\left(${args[0]}\\right)" }, asec: { 1: "\\sec^{-1}\\left(${args[0]}\\right)" }, asech: { 1: "\\mathrm{sech}^{-1}\\left(${args[0]}\\right)" }, asin: { 1: "\\sin^{-1}\\left(${args[0]}\\right)" }, asinh: { 1: "\\sinh^{-1}\\left(${args[0]}\\right)" }, atan: { 1: "\\tan^{-1}\\left(${args[0]}\\right)" }, atan2: { 2: "\\mathrm{atan2}\\left(${args}\\right)" }, atanh: { 1: "\\tanh^{-1}\\left(${args[0]}\\right)" }, cos: { 1: "\\cos\\left(${args[0]}\\right)" }, cosh: { 1: "\\cosh\\left(${args[0]}\\right)" }, cot: { 1: "\\cot\\left(${args[0]}\\right)" }, coth: { 1: "\\coth\\left(${args[0]}\\right)" }, csc: { 1: "\\csc\\left(${args[0]}\\right)" }, csch: { 1: "\\mathrm{csch}\\left(${args[0]}\\right)" }, sec: { 1: "\\sec\\left(${args[0]}\\right)" }, sech: { 1: "\\mathrm{sech}\\left(${args[0]}\\right)" }, sin: { 1: "\\sin\\left(${args[0]}\\right)" }, sinh: { 1: "\\sinh\\left(${args[0]}\\right)" }, tan: { 1: "\\tan\\left(${args[0]}\\right)" }, tanh: { 1: "\\tanh\\left(${args[0]}\\right)" }, to: { 2: "\\left(${args[0]}".concat(b8.to, "${args[1]}\\right)") }, numeric: function C10(j, q) {
   return j.args[0].toTex();
 }, number: { 0: "0", 1: "\\left(${args[0]}\\right)", 2: "\\left(\\left(${args[0]}\\right)${args[1]}\\right)" }, string: { 0: '\\mathtt{""}', 1: "\\mathrm{string}\\left(${args[0]}\\right)" }, bignumber: { 0: "0", 1: "\\left(${args[0]}\\right)" }, complex: { 0: "0", 1: "\\left(${args[0]}\\right)", 2: "\\left(\\left(${args[0]}\\right)+".concat(v1.i, "\\cdot\\left(${args[1]}\\right)\\right)") }, matrix: { 0: "\\begin{bmatrix}\\end{bmatrix}", 1: "\\left(${args[0]}\\right)", 2: "\\left(${args[0]}\\right)" }, sparse: { 0: "\\begin{bsparse}\\end{bsparse}", 1: "\\left(${args[0]}\\right)" }, unit: { 1: "\\left(${args[0]}\\right)", 2: "\\left(\\left(${args[0]}\\right)${args[1]}\\right)" } };
-var g2 = "\\mathrm{${name}}\\left(${args}\\right)";
-var f2 = { deg: "^\\circ" };
+var y2 = "\\mathrm{${name}}\\left(${args}\\right)";
+var x2 = { deg: "^\\circ" };
 var GQ = "ConstantNode";
-var Qh = ["Node"];
-var k1 = Q0(GQ, Qh, (C11) => {
+var Kh = ["Node"];
+var k1 = Q0(GQ, Kh, (C11) => {
   var { Node: j } = C11;
 
   class q extends j {
@@ -72909,8 +72913,8 @@ var k1 = Q0(GQ, Qh, (C11) => {
   return y8(q, "name", GQ), q;
 }, { isClass: true, isNode: true });
 var LQ = "FunctionAssignmentNode";
-var Zh = ["typed", "Node"];
-var h1 = Q0(LQ, Zh, (C11) => {
+var Hh = ["typed", "Node"];
+var h1 = Q0(LQ, Hh, (C11) => {
   var { typed: j, Node: q } = C11;
   function S(P, $, Y) {
     var X = p8(P, $, Y), K = p8(P.expr, $, Y);
@@ -73010,8 +73014,8 @@ var h1 = Q0(LQ, Zh, (C11) => {
   return y8(U, "name", LQ), U;
 }, { isClass: true, isNode: true });
 var XQ = "IndexNode";
-var Kh = ["Node", "size"];
-var f1 = Q0(XQ, Kh, (C11) => {
+var Wh = ["Node", "size"];
+var f1 = Q0(XQ, Wh, (C11) => {
   var { Node: j, size: q } = C11;
 
   class S extends j {
@@ -73098,8 +73102,8 @@ var f1 = Q0(XQ, Kh, (C11) => {
   return y8(S, "name", XQ), S;
 }, { isClass: true, isNode: true });
 var DQ = "ObjectNode";
-var Hh = ["Node"];
-var x1 = Q0(DQ, Hh, (C11) => {
+var Yh = ["Node"];
+var x1 = Q0(DQ, Yh, (C11) => {
   var { Node: j } = C11;
 
   class q extends j {
@@ -73184,8 +73188,8 @@ var x1 = Q0(DQ, Hh, (C11) => {
   return y8(q, "name", DQ), q;
 }, { isClass: true, isNode: true });
 var RQ = "OperatorNode";
-var Wh = ["Node"];
-var g1 = Q0(RQ, Wh, (C11) => {
+var Uh = ["Node"];
+var g1 = Q0(RQ, Uh, (C11) => {
   var { Node: j } = C11;
   function q(P, $) {
     var Y = P;
@@ -73508,8 +73512,8 @@ var g1 = Q0(RQ, Wh, (C11) => {
   return y8(U, "name", RQ), U;
 }, { isClass: true, isNode: true });
 var VQ = "ParenthesisNode";
-var Yh = ["Node"];
-var y1 = Q0(VQ, Yh, (C11) => {
+var Gh = ["Node"];
+var y1 = Q0(VQ, Gh, (C11) => {
   var { Node: j } = C11;
 
   class q extends j {
@@ -73566,8 +73570,8 @@ var y1 = Q0(VQ, Yh, (C11) => {
   return y8(q, "name", VQ), q;
 }, { isClass: true, isNode: true });
 var zQ = "RangeNode";
-var Uh = ["Node"];
-var b1 = Q0(zQ, Uh, (C11) => {
+var Lh = ["Node"];
+var b1 = Q0(zQ, Lh, (C11) => {
   var { Node: j } = C11;
   function q(U, P, $) {
     var Y = p8(U, P, $), X = {}, K = p8(U.start, P, $);
@@ -73681,8 +73685,8 @@ var b1 = Q0(zQ, Uh, (C11) => {
   return y8(S, "name", zQ), S;
 }, { isClass: true, isNode: true });
 var FQ = "RelationalNode";
-var Gh = ["Node"];
-var m1 = Q0(FQ, Gh, (C11) => {
+var Xh = ["Node"];
+var m1 = Q0(FQ, Xh, (C11) => {
   var { Node: j } = C11, q = { equal: "==", unequal: "!=", smaller: "<", larger: ">", smallerEq: "<=", largerEq: ">=" };
 
   class S extends j {
@@ -73760,9 +73764,9 @@ var m1 = Q0(FQ, Gh, (C11) => {
   }
   return y8(S, "name", FQ), S;
 }, { isClass: true, isNode: true });
-var Lh = "SymbolNode";
-var Xh = ["math", "?Unit", "Node"];
-var p1 = Q0(Lh, Xh, (C11) => {
+var Dh = "SymbolNode";
+var Rh = ["math", "?Unit", "Node"];
+var p1 = Q0(Dh, Rh, (C11) => {
   var { math: j, Unit: q, Node: S } = C11;
   function U($) {
     return q ? q.isValuelessUnit($) : false;
@@ -73847,8 +73851,8 @@ var p1 = Q0(Lh, Xh, (C11) => {
   return P;
 }, { isClass: true, isNode: true });
 var PQ = "FunctionNode";
-var Dh = ["math", "Node", "SymbolNode"];
-var d1 = Q0(PQ, Dh, (C11) => {
+var Vh = ["math", "Node", "SymbolNode"];
+var d1 = Q0(PQ, Vh, (C11) => {
   var j, { math: q, Node: S, SymbolNode: U } = C11, P = (X) => G8(X, { truncate: 78 });
   function $(X, K, Q) {
     var J = "", Z = /\$(?:\{([a-z_][a-z_0-9]*)(?:\[([0-9]+)\])?\}|\$)/gi, W = 0, G;
@@ -73971,7 +73975,7 @@ var d1 = Q0(PQ, Dh, (C11) => {
       } else if (W9(this.fn) && z9(this.fn.index) && this.fn.index.isObjectProperty()) {
         var R = this.fn.object._compile(X, K), V = this.fn.index.getObjectProperty(), D = this.args;
         return function N(w, h, x) {
-          var b = R(w, h, x), z = nD(b, V);
+          var b = R(w, h, x), z = oD(b, V);
           if (z !== null && z !== undefined && z.rawArgs)
             return z(D, X, e7(w, h));
           else {
@@ -74067,7 +74071,7 @@ var d1 = Q0(PQ, Dh, (C11) => {
       }
       if (typeof J !== "undefined")
         return J;
-      return $(g2, this, X);
+      return $(y2, this, X);
     }
     getIdentifier() {
       return this.type + ":" + this.name;
@@ -74079,10 +74083,10 @@ var d1 = Q0(PQ, Dh, (C11) => {
     return new j(X.fn, X.args);
   }), Y;
 }, { isClass: true, isNode: true });
-var y2 = "parse";
-var Rh = ["typed", "numeric", "config", "AccessorNode", "ArrayNode", "AssignmentNode", "BlockNode", "ConditionalNode", "ConstantNode", "FunctionAssignmentNode", "FunctionNode", "IndexNode", "ObjectNode", "OperatorNode", "ParenthesisNode", "RangeNode", "RelationalNode", "SymbolNode"];
-var u1 = Q0(y2, Rh, (C11) => {
-  var { typed: j, numeric: q, config: S, AccessorNode: U, ArrayNode: P, AssignmentNode: $, BlockNode: Y, ConditionalNode: X, ConstantNode: K, FunctionAssignmentNode: Q, FunctionNode: J, IndexNode: Z, ObjectNode: W, OperatorNode: G, ParenthesisNode: H, RangeNode: L, RelationalNode: R, SymbolNode: V } = C11, D = j(y2, { string: function $0(P0) {
+var b2 = "parse";
+var zh = ["typed", "numeric", "config", "AccessorNode", "ArrayNode", "AssignmentNode", "BlockNode", "ConditionalNode", "ConstantNode", "FunctionAssignmentNode", "FunctionNode", "IndexNode", "ObjectNode", "OperatorNode", "ParenthesisNode", "RangeNode", "RelationalNode", "SymbolNode"];
+var u1 = Q0(b2, zh, (C11) => {
+  var { typed: j, numeric: q, config: S, AccessorNode: U, ArrayNode: P, AssignmentNode: $, BlockNode: Y, ConditionalNode: X, ConstantNode: K, FunctionAssignmentNode: Q, FunctionNode: J, IndexNode: Z, ObjectNode: W, OperatorNode: G, ParenthesisNode: H, RangeNode: L, RelationalNode: R, SymbolNode: V } = C11, D = j(b2, { string: function $0(P0) {
     return f(P0, {});
   }, "Array | Matrix": function $0(P0) {
     return F(P0, {});
@@ -74669,11 +74673,11 @@ var u1 = Q0(y2, Rh, (C11) => {
   }
   return j.addConversion({ from: "string", to: "Node", convert: D }), D;
 });
-var b2 = "compile";
-var Vh = ["typed", "parse"];
-var _1 = Q0(b2, Vh, (C11) => {
+var m2 = "compile";
+var Fh = ["typed", "parse"];
+var _1 = Q0(m2, Fh, (C11) => {
   var { typed: j, parse: q } = C11;
-  return j(b2, { string: function S(U) {
+  return j(m2, { string: function S(U) {
     return q(U).compile();
   }, "Array | Matrix": function S(U) {
     return Z8(U, function(P) {
@@ -74681,11 +74685,11 @@ var _1 = Q0(b2, Vh, (C11) => {
     });
   } });
 });
-var m2 = "evaluate";
-var zh = ["typed", "parse"];
-var c1 = Q0(m2, zh, (C11) => {
+var p2 = "evaluate";
+var Ph = ["typed", "parse"];
+var c1 = Q0(p2, Ph, (C11) => {
   var { typed: j, parse: q } = C11;
-  return j(m2, { string: function S(U) {
+  return j(p2, { string: function S(U) {
     var P = P7();
     return q(U).compile().evaluate(P);
   }, "string, Map | Object": function S(U, P) {
@@ -74701,9 +74705,9 @@ var c1 = Q0(m2, zh, (C11) => {
     });
   } });
 });
-var Fh = "Parser";
-var Ph = ["evaluate"];
-var l1 = Q0(Fh, Ph, (C11) => {
+var Ih = "Parser";
+var Bh = ["evaluate"];
+var l1 = Q0(Ih, Bh, (C11) => {
   var { evaluate: j } = C11;
   function q() {
     if (!(this instanceof q))
@@ -74716,7 +74720,7 @@ var l1 = Q0(Fh, Ph, (C11) => {
     if (this.scope.has(S))
       return this.scope.get(S);
   }, q.prototype.getAll = function() {
-    return aD(this.scope);
+    return rD(this.scope);
   }, q.prototype.getAllAsMap = function() {
     return this.scope;
   }, q.prototype.set = function(S, U) {
@@ -74727,19 +74731,19 @@ var l1 = Q0(Fh, Ph, (C11) => {
     this.scope.clear();
   }, q;
 }, { isClass: true });
-var p2 = "parser";
-var Ih = ["typed", "Parser"];
-var s1 = Q0(p2, Ih, (C11) => {
+var d2 = "parser";
+var Th = ["typed", "Parser"];
+var s1 = Q0(d2, Th, (C11) => {
   var { typed: j, Parser: q } = C11;
-  return j(p2, { "": function S() {
+  return j(d2, { "": function S() {
     return new q;
   } });
 });
-var d2 = "lup";
-var Bh = ["typed", "matrix", "abs", "addScalar", "divideScalar", "multiplyScalar", "subtractScalar", "larger", "equalScalar", "unaryMinus", "DenseMatrix", "SparseMatrix", "Spa"];
-var n1 = Q0(d2, Bh, (C11) => {
+var u2 = "lup";
+var Mh = ["typed", "matrix", "abs", "addScalar", "divideScalar", "multiplyScalar", "subtractScalar", "larger", "equalScalar", "unaryMinus", "DenseMatrix", "SparseMatrix", "Spa"];
+var n1 = Q0(u2, Mh, (C11) => {
   var { typed: j, matrix: q, abs: S, addScalar: U, divideScalar: P, multiplyScalar: $, subtractScalar: Y, larger: X, equalScalar: K, unaryMinus: Q, DenseMatrix: J, SparseMatrix: Z, Spa: W } = C11;
-  return j(d2, { DenseMatrix: function L(R) {
+  return j(u2, { DenseMatrix: function L(R) {
     return G(R);
   }, SparseMatrix: function L(R) {
     return H(R);
@@ -74850,11 +74854,11 @@ var n1 = Q0(d2, Bh, (C11) => {
     } };
   }
 });
-var u2 = "qr";
-var Th = ["typed", "matrix", "zeros", "identity", "isZero", "equal", "sign", "sqrt", "conj", "unaryMinus", "addScalar", "divideScalar", "multiplyScalar", "subtractScalar", "complex"];
-var o1 = Q0(u2, Th, (C11) => {
+var _2 = "qr";
+var Eh = ["typed", "matrix", "zeros", "identity", "isZero", "equal", "sign", "sqrt", "conj", "unaryMinus", "addScalar", "divideScalar", "multiplyScalar", "subtractScalar", "complex"];
+var o1 = Q0(_2, Eh, (C11) => {
   var { typed: j, matrix: q, zeros: S, identity: U, isZero: P, equal: $, sign: Y, sqrt: X, conj: K, unaryMinus: Q, addScalar: J, divideScalar: Z, multiplyScalar: W, subtractScalar: G, complex: H } = C11;
-  return G6(j(u2, { DenseMatrix: function D(F) {
+  return G6(j(_2, { DenseMatrix: function D(F) {
     return R(F);
   }, SparseMatrix: function D(F) {
     return V(F);
@@ -74911,9 +74915,9 @@ var o1 = Q0(u2, Th, (C11) => {
     throw new Error("qr not implemented for sparse matrices yet");
   }
 });
-var Mh = "csAmd";
-var Eh = ["add", "multiply", "transpose"];
-var n2 = Q0(Mh, Eh, (C11) => {
+var Oh = "csAmd";
+var Nh = ["add", "multiply", "transpose"];
+var o2 = Q0(Oh, Nh, (C11) => {
   var { add: j, multiply: q, transpose: S } = C11;
   return function K(Q, J) {
     if (!J || Q <= 0 || Q > 3)
@@ -74921,7 +74925,7 @@ var n2 = Q0(Mh, Eh, (C11) => {
     var Z = J._size, W = Z[0], G = Z[1], H = 0, L = Math.max(16, 10 * Math.sqrt(G));
     L = Math.min(G - 2, L);
     var R = U(Q, J, W, G, L);
-    s2(R, X, null);
+    n2(R, X, null);
     var { _index: V, _ptr: D } = R, F = D[G], T = [], E = [], N = 0, w = G + 1, h = 2 * (G + 1), x = 3 * (G + 1), b = 4 * (G + 1), z = 5 * (G + 1), I = 6 * (G + 1), A = 7 * (G + 1), M = T, O = P(G, D, E, N, x, M, h, A, w, I, b, z), v = $(G, D, E, z, b, I, L, w, x, M, h), g = 0, k, B, f, m, y, p, u, c, n, s, l, e, Y0, H0, L0, r;
     while (v < G) {
       for (f = -1;g < G && (f = E[x + g]) === -1; g++)
@@ -75100,9 +75104,9 @@ var n2 = Q0(Mh, Eh, (C11) => {
     return K !== Q;
   }
 });
-var Oh = "csCounts";
-var Nh = ["transpose"];
-var i2 = Q0(Oh, Nh, (C11) => {
+var Ah = "csCounts";
+var Ch = ["transpose"];
+var a2 = Q0(Ah, Ch, (C11) => {
   var { transpose: j } = C11;
   return function(q, S, U, P) {
     if (!q || !S || !U)
@@ -75133,7 +75137,7 @@ var i2 = Q0(Oh, Nh, (C11) => {
       for (Z = P ? R[E + J] : Q;Z !== -1; Z = P ? R[N + Z] : -1)
         for (W = b[Z];W < b[Z + 1]; W++) {
           K = x[W];
-          var z = o2(K, Q, R, T, D, F, V);
+          var z = i2(K, Q, R, T, D, F, V);
           if (z.jleaf >= 1)
             w[Q]++;
           if (z.jleaf === 2)
@@ -75148,18 +75152,18 @@ var i2 = Q0(Oh, Nh, (C11) => {
     return w;
   };
 });
-var Ah = "csSqr";
-var Ch = ["add", "multiply", "transpose"];
-var a2 = Q0(Ah, Ch, (C11) => {
-  var { add: j, multiply: q, transpose: S } = C11, U = n2({ add: j, multiply: q, transpose: S }), P = i2({ transpose: S });
+var jh = "csSqr";
+var Sh = ["add", "multiply", "transpose"];
+var r2 = Q0(jh, Sh, (C11) => {
+  var { add: j, multiply: q, transpose: S } = C11, U = o2({ add: j, multiply: q, transpose: S }), P = a2({ transpose: S });
   return function Y(X, K, Q) {
     var { _ptr: J, _size: Z } = K, W = Z[1], G, H = {};
     if (H.q = U(X, K), X && !H.q)
       return null;
     if (Q) {
-      var L = X ? _2(K, null, H.q, 0) : K;
-      H.parent = l2(L, 1);
-      var R = c2(H.parent, W);
+      var L = X ? c2(K, null, H.q, 0) : K;
+      H.parent = s2(L, 1);
+      var R = l2(H.parent, W);
       if (H.cp = P(L, H.parent, R, 1), L && H.parent && H.cp && $(L, H))
         for (H.unz = 0, G = 0;G < W; G++)
           H.unz += H.cp[G];
@@ -75205,12 +75209,12 @@ var a2 = Q0(Ah, Ch, (C11) => {
     return true;
   }
 });
-var jh = "csSpsolve";
-var Sh = ["divideScalar", "multiply", "subtract"];
-var e2 = Q0(jh, Sh, (C11) => {
+var qh = "csSpsolve";
+var vh = ["divideScalar", "multiply", "subtract"];
+var $3 = Q0(qh, vh, (C11) => {
   var { divideScalar: j, multiply: q, subtract: S } = C11;
   return function U(P, $, Y, X, K, Q, J) {
-    var { _values: Z, _index: W, _ptr: G, _size: H } = P, L = H[1], R = $._values, V = $._index, D = $._ptr, F, T, E, N, w = t2(P, $, Y, X, Q);
+    var { _values: Z, _index: W, _ptr: G, _size: H } = P, L = H[1], R = $._values, V = $._index, D = $._ptr, F, T, E, N, w = e2(P, $, Y, X, Q);
     for (F = w;F < L; F++)
       K[X[F]] = 0;
     for (T = D[Y], E = D[Y + 1], F = T;F < E; F++)
@@ -75228,10 +75232,10 @@ var e2 = Q0(jh, Sh, (C11) => {
     return w;
   };
 });
-var qh = "csLu";
-var vh = ["abs", "divideScalar", "multiply", "subtract", "larger", "largerEq", "SparseMatrix"];
-var $3 = Q0(qh, vh, (C11) => {
-  var { abs: j, divideScalar: q, multiply: S, subtract: U, larger: P, largerEq: $, SparseMatrix: Y } = C11, X = e2({ divideScalar: q, multiply: S, subtract: U });
+var wh = "csLu";
+var kh = ["abs", "divideScalar", "multiply", "subtract", "larger", "largerEq", "SparseMatrix"];
+var J3 = Q0(wh, kh, (C11) => {
+  var { abs: j, divideScalar: q, multiply: S, subtract: U, larger: P, largerEq: $, SparseMatrix: Y } = C11, X = $3({ divideScalar: q, multiply: S, subtract: U });
   return function K(Q, J, Z) {
     if (!Q)
       return null;
@@ -75270,11 +75274,11 @@ var $3 = Q0(qh, vh, (C11) => {
     return V.splice(L, V.length - L), D.splice(L, D.length - L), E.splice(R, E.length - R), N.splice(R, N.length - R), { L: T, U: h, pinv: x };
   };
 });
-var J3 = "slu";
-var wh = ["typed", "abs", "add", "multiply", "transpose", "divideScalar", "subtract", "larger", "largerEq", "SparseMatrix"];
-var a1 = Q0(J3, wh, (C11) => {
-  var { typed: j, abs: q, add: S, multiply: U, transpose: P, divideScalar: $, subtract: Y, larger: X, largerEq: K, SparseMatrix: Q } = C11, J = a2({ add: S, multiply: U, transpose: P }), Z = $3({ abs: q, divideScalar: $, multiply: U, subtract: Y, larger: X, largerEq: K, SparseMatrix: Q });
-  return j(J3, { "SparseMatrix, number, number": function W(G, H, L) {
+var Q3 = "slu";
+var hh = ["typed", "abs", "add", "multiply", "transpose", "divideScalar", "subtract", "larger", "largerEq", "SparseMatrix"];
+var a1 = Q0(Q3, hh, (C11) => {
+  var { typed: j, abs: q, add: S, multiply: U, transpose: P, divideScalar: $, subtract: Y, larger: X, largerEq: K, SparseMatrix: Q } = C11, J = r2({ add: S, multiply: U, transpose: P }), Z = J3({ abs: q, divideScalar: $, multiply: U, subtract: Y, larger: X, largerEq: K, SparseMatrix: Q });
+  return j(Q3, { "SparseMatrix, number, number": function W(G, H, L) {
     if (!e0(H) || H < 0 || H > 3)
       throw new Error("Symbolic Ordering and Analysis order must be an integer number in the interval [0, 3]");
     if (L < 0 || L > 1)
@@ -75285,11 +75289,11 @@ var a1 = Q0(J3, wh, (C11) => {
     } };
   } });
 });
-var Q3 = "lusolve";
-var kh = ["typed", "matrix", "lup", "slu", "usolve", "lsolve", "DenseMatrix"];
-var t1 = Q0(Q3, kh, (C11) => {
+var Z3 = "lusolve";
+var fh = ["typed", "matrix", "lup", "slu", "usolve", "lsolve", "DenseMatrix"];
+var t1 = Q0(Z3, fh, (C11) => {
   var { typed: j, matrix: q, lup: S, slu: U, usolve: P, lsolve: $, DenseMatrix: Y } = C11, X = u9({ DenseMatrix: Y });
-  return j(Q3, { "Array, Array | Matrix": function J(Z, W) {
+  return j(Z3, { "Array, Array | Matrix": function J(Z, W) {
     Z = q(Z);
     var G = S(Z), H = Q(G.L, G.U, G.p, null, W);
     return H.valueOf();
@@ -75321,11 +75325,11 @@ var t1 = Q0(Q3, kh, (C11) => {
     return R;
   }
 });
-var Z3 = "polynomialRoot";
-var hh = ["typed", "isZero", "equalScalar", "add", "subtract", "multiply", "divide", "sqrt", "unaryMinus", "cbrt", "typeOf", "im", "re"];
-var e1 = Q0(Z3, hh, (C11) => {
+var K3 = "polynomialRoot";
+var xh = ["typed", "isZero", "equalScalar", "add", "subtract", "multiply", "divide", "sqrt", "unaryMinus", "cbrt", "typeOf", "im", "re"];
+var e1 = Q0(K3, xh, (C11) => {
   var { typed: j, isZero: q, equalScalar: S, add: U, subtract: P, multiply: $, divide: Y, sqrt: X, unaryMinus: K, cbrt: Q, typeOf: J, im: Z, re: W } = C11;
-  return j(Z3, { "number|Complex, ...number|Complex": (G, H) => {
+  return j(K3, { "number|Complex, ...number|Complex": (G, H) => {
     var L = [G, ...H];
     while (L.length > 0 && q(L[L.length - 1]))
       L.pop();
@@ -75365,9 +75369,9 @@ var e1 = Q0(Z3, hh, (C11) => {
     }
   } });
 });
-var fh = "Help";
-var xh = ["evaluate"];
-var $Y = Q0(fh, xh, (C11) => {
+var gh = "Help";
+var yh = ["evaluate"];
+var $Y = Q0(gh, yh, (C11) => {
   var { evaluate: j } = C11;
   function q(S) {
     if (!(this instanceof q))
@@ -75421,9 +75425,9 @@ var $Y = Q0(fh, xh, (C11) => {
     }), new q(U);
   }, q.prototype.valueOf = q.prototype.toString, q;
 }, { isClass: true });
-var gh = "Chain";
-var yh = ["?on", "math", "typed"];
-var JY = Q0(gh, yh, (C11) => {
+var bh = "Chain";
+var mh = ["?on", "math", "typed"];
+var JY = Q0(bh, mh, (C11) => {
   var { on: j, math: q, typed: S } = C11;
   function U(K) {
     if (!(this instanceof U))
@@ -75449,7 +75453,7 @@ var JY = Q0(gh, yh, (C11) => {
       U.prototype[K] = Y(Q);
   }
   function $(K, Q) {
-    PD(U.prototype, K, function J() {
+    ID(U.prototype, K, function J() {
       var Z = Q();
       if (typeof Z === "function")
         return Y(Z);
@@ -75493,254 +75497,254 @@ var JY = Q0(gh, yh, (C11) => {
   return U;
 }, { isClass: true });
 var QY = { name: "e", category: "Constants", syntax: ["e"], description: "Euler\'s number, the base of the natural logarithm. Approximately equal to 2.71828", examples: ["e", "e ^ 2", "exp(2)", "log(e)"], seealso: ["exp"] };
-var K3 = { name: "false", category: "Constants", syntax: ["false"], description: "Boolean value false", examples: ["false"], seealso: ["true"] };
-var H3 = { name: "i", category: "Constants", syntax: ["i"], description: "Imaginary unit, defined as i*i=-1. A complex number is described as a + b*i, where a is the real part, and b is the imaginary part.", examples: ["i", "i * i", "sqrt(-1)"], seealso: [] };
-var W3 = { name: "Infinity", category: "Constants", syntax: ["Infinity"], description: "Infinity, a number which is larger than the maximum number that can be handled by a floating point number.", examples: ["Infinity", "1 / 0"], seealso: [] };
-var Y3 = { name: "LN10", category: "Constants", syntax: ["LN10"], description: "Returns the natural logarithm of 10, approximately equal to 2.302", examples: ["LN10", "log(10)"], seealso: [] };
-var U3 = { name: "LN2", category: "Constants", syntax: ["LN2"], description: "Returns the natural logarithm of 2, approximately equal to 0.693", examples: ["LN2", "log(2)"], seealso: [] };
-var G3 = { name: "LOG10E", category: "Constants", syntax: ["LOG10E"], description: "Returns the base-10 logarithm of E, approximately equal to 0.434", examples: ["LOG10E", "log(e, 10)"], seealso: [] };
-var L3 = { name: "LOG2E", category: "Constants", syntax: ["LOG2E"], description: "Returns the base-2 logarithm of E, approximately equal to 1.442", examples: ["LOG2E", "log(e, 2)"], seealso: [] };
-var X3 = { name: "NaN", category: "Constants", syntax: ["NaN"], description: "Not a number", examples: ["NaN", "0 / 0"], seealso: [] };
-var D3 = { name: "null", category: "Constants", syntax: ["null"], description: "Value null", examples: ["null"], seealso: ["true", "false"] };
-var R3 = { name: "phi", category: "Constants", syntax: ["phi"], description: "Phi is the golden ratio. Two quantities are in the golden ratio if their ratio is the same as the ratio of their sum to the larger of the two quantities. Phi is defined as `(1 + sqrt(5)) / 2` and is approximately 1.618034...", examples: ["phi"], seealso: [] };
+var H3 = { name: "false", category: "Constants", syntax: ["false"], description: "Boolean value false", examples: ["false"], seealso: ["true"] };
+var W3 = { name: "i", category: "Constants", syntax: ["i"], description: "Imaginary unit, defined as i*i=-1. A complex number is described as a + b*i, where a is the real part, and b is the imaginary part.", examples: ["i", "i * i", "sqrt(-1)"], seealso: [] };
+var Y3 = { name: "Infinity", category: "Constants", syntax: ["Infinity"], description: "Infinity, a number which is larger than the maximum number that can be handled by a floating point number.", examples: ["Infinity", "1 / 0"], seealso: [] };
+var U3 = { name: "LN10", category: "Constants", syntax: ["LN10"], description: "Returns the natural logarithm of 10, approximately equal to 2.302", examples: ["LN10", "log(10)"], seealso: [] };
+var G3 = { name: "LN2", category: "Constants", syntax: ["LN2"], description: "Returns the natural logarithm of 2, approximately equal to 0.693", examples: ["LN2", "log(2)"], seealso: [] };
+var L3 = { name: "LOG10E", category: "Constants", syntax: ["LOG10E"], description: "Returns the base-10 logarithm of E, approximately equal to 0.434", examples: ["LOG10E", "log(e, 10)"], seealso: [] };
+var X3 = { name: "LOG2E", category: "Constants", syntax: ["LOG2E"], description: "Returns the base-2 logarithm of E, approximately equal to 1.442", examples: ["LOG2E", "log(e, 2)"], seealso: [] };
+var D3 = { name: "NaN", category: "Constants", syntax: ["NaN"], description: "Not a number", examples: ["NaN", "0 / 0"], seealso: [] };
+var R3 = { name: "null", category: "Constants", syntax: ["null"], description: "Value null", examples: ["null"], seealso: ["true", "false"] };
+var V3 = { name: "phi", category: "Constants", syntax: ["phi"], description: "Phi is the golden ratio. Two quantities are in the golden ratio if their ratio is the same as the ratio of their sum to the larger of the two quantities. Phi is defined as `(1 + sqrt(5)) / 2` and is approximately 1.618034...", examples: ["phi"], seealso: [] };
 var ZY = { name: "pi", category: "Constants", syntax: ["pi"], description: "The number pi is a mathematical constant that is the ratio of a circle\'s circumference to its diameter, and is approximately equal to 3.14159", examples: ["pi", "sin(pi/2)"], seealso: ["tau"] };
-var V3 = { name: "SQRT1_2", category: "Constants", syntax: ["SQRT1_2"], description: "Returns the square root of 1/2, approximately equal to 0.707", examples: ["SQRT1_2", "sqrt(1/2)"], seealso: [] };
-var z3 = { name: "SQRT2", category: "Constants", syntax: ["SQRT2"], description: "Returns the square root of 2, approximately equal to 1.414", examples: ["SQRT2", "sqrt(2)"], seealso: [] };
-var F3 = { name: "tau", category: "Constants", syntax: ["tau"], description: "Tau is the ratio constant of a circle\'s circumference to radius, equal to 2 * pi, approximately 6.2832.", examples: ["tau", "2 * pi"], seealso: ["pi"] };
-var P3 = { name: "true", category: "Constants", syntax: ["true"], description: "Boolean value true", examples: ["true"], seealso: ["false"] };
-var I3 = { name: "version", category: "Constants", syntax: ["version"], description: "A string with the version number of math.js", examples: ["version"], seealso: [] };
-var B3 = { name: "bignumber", category: "Construction", syntax: ["bignumber(x)"], description: "Create a big number from a number or string.", examples: ["0.1 + 0.2", "bignumber(0.1) + bignumber(0.2)", 'bignumber("7.2")', 'bignumber("7.2e500")', "bignumber([0.1, 0.2, 0.3])"], seealso: ["boolean", "complex", "fraction", "index", "matrix", "string", "unit"] };
-var T3 = { name: "boolean", category: "Construction", syntax: ["x", "boolean(x)"], description: "Convert a string or number into a boolean.", examples: ["boolean(0)", "boolean(1)", "boolean(3)", 'boolean("true")', 'boolean("false")', "boolean([1, 0, 1, 1])"], seealso: ["bignumber", "complex", "index", "matrix", "number", "string", "unit"] };
-var M3 = { name: "complex", category: "Construction", syntax: ["complex()", "complex(re, im)", "complex(string)"], description: "Create a complex number.", examples: ["complex()", "complex(2, 3)", 'complex("7 - 2i")'], seealso: ["bignumber", "boolean", "index", "matrix", "number", "string", "unit"] };
-var E3 = { name: "createUnit", category: "Construction", syntax: ["createUnit(definitions)", "createUnit(name, definition)"], description: "Create a user-defined unit and register it with the Unit type.", examples: ['createUnit("foo")', 'createUnit("knot", {definition: "0.514444444 m/s", aliases: ["knots", "kt", "kts"]})', 'createUnit("mph", "1 mile/hour")'], seealso: ["unit", "splitUnit"] };
-var O3 = { name: "fraction", category: "Construction", syntax: ["fraction(num)", "fraction(matrix)", "fraction(num,den)", "fraction({n: num, d: den})"], description: "Create a fraction from a number or from integer numerator and denominator.", examples: ["fraction(0.125)", "fraction(1, 3) + fraction(2, 5)", "fraction({n: 333, d: 53})", "fraction([sqrt(9), sqrt(10), sqrt(11)])"], seealso: ["bignumber", "boolean", "complex", "index", "matrix", "string", "unit"] };
-var N3 = { name: "index", category: "Construction", syntax: ["[start]", "[start:end]", "[start:step:end]", "[start1, start 2, ...]", "[start1:end1, start2:end2, ...]", "[start1:step1:end1, start2:step2:end2, ...]"], description: "Create an index to get or replace a subset of a matrix", examples: ["A = [1, 2, 3; 4, 5, 6]", "A[1, :]", "A[1, 2] = 50", "A[1:2, 1:2] = 1", "B = [1, 2, 3]", "B[B>1 and B<3]"], seealso: ["bignumber", "boolean", "complex", "matrix,", "number", "range", "string", "unit"] };
-var A3 = { name: "matrix", category: "Construction", syntax: ["[]", "[a1, b1, ...; a2, b2, ...]", "matrix()", 'matrix("dense")', "matrix([...])"], description: "Create a matrix.", examples: ["[]", "[1, 2, 3]", "[1, 2, 3; 4, 5, 6]", "matrix()", "matrix([3, 4])", 'matrix([3, 4; 5, 6], "sparse")', 'matrix([3, 4; 5, 6], "sparse", "number")'], seealso: ["bignumber", "boolean", "complex", "index", "number", "string", "unit", "sparse"] };
-var C32 = { name: "number", category: "Construction", syntax: ["x", "number(x)", "number(unit, valuelessUnit)"], description: "Create a number or convert a string or boolean into a number.", examples: ["2", "2e3", "4.05", "number(2)", 'number("7.2")', "number(true)", "number([true, false, true, true])", 'number(unit("52cm"), "m")'], seealso: ["bignumber", "boolean", "complex", "fraction", "index", "matrix", "string", "unit"] };
-var j3 = { name: "sparse", category: "Construction", syntax: ["sparse()", "sparse([a1, b1, ...; a1, b2, ...])", 'sparse([a1, b1, ...; a1, b2, ...], "number")'], description: "Create a sparse matrix.", examples: ["sparse()", "sparse([3, 4; 5, 6])", 'sparse([3, 0; 5, 0], "number")'], seealso: ["bignumber", "boolean", "complex", "index", "number", "string", "unit", "matrix"] };
-var S3 = { name: "splitUnit", category: "Construction", syntax: ["splitUnit(unit: Unit, parts: Unit[])"], description: "Split a unit in an array of units whose sum is equal to the original unit.", examples: ['splitUnit(1 m, ["feet", "inch"])'], seealso: ["unit", "createUnit"] };
-var q3 = { name: "string", category: "Construction", syntax: ['"text"', "string(x)"], description: "Create a string or convert a value to a string", examples: ['"Hello World!"', "string(4.2)", "string(3 + 2i)"], seealso: ["bignumber", "boolean", "complex", "index", "matrix", "number", "unit"] };
-var v3 = { name: "unit", category: "Construction", syntax: ["value unit", "unit(value, unit)", "unit(string)"], description: "Create a unit.", examples: ["5.5 mm", "3 inch", 'unit(7.1, "kilogram")', 'unit("23 deg")'], seealso: ["bignumber", "boolean", "complex", "index", "matrix", "number", "string"] };
-var w3 = { name: "config", category: "Core", syntax: ["config()", "config(options)"], description: "Get configuration or change configuration.", examples: ["config()", "1/3 + 1/4", 'config({number: "Fraction"})', "1/3 + 1/4"], seealso: [] };
-var k3 = { name: "import", category: "Core", syntax: ["import(functions)", "import(functions, options)"], description: "Import functions or constants from an object.", examples: ["import({myFn: f(x)=x^2, myConstant: 32 })", "myFn(2)", "myConstant"], seealso: [] };
-var h3 = { name: "typed", category: "Core", syntax: ["typed(signatures)", "typed(name, signatures)"], description: "Create a typed function.", examples: ['double = typed({ "number": f(x)=x+x, "string": f(x)=concat(x,x) })', "double(2)", 'double("hello")'], seealso: [] };
-var f3 = { name: "derivative", category: "Algebra", syntax: ["derivative(expr, variable)", "derivative(expr, variable, {simplify: boolean})"], description: "Takes the derivative of an expression expressed in parser Nodes. The derivative will be taken over the supplied variable in the second parameter. If there are multiple variables in the expression, it will return a partial derivative.", examples: ['derivative("2x^3", "x")', 'derivative("2x^3", "x", {simplify: false})', 'derivative("2x^2 + 3x + 4", "x")', 'derivative("sin(2x)", "x")', 'f = parse("x^2 + x")', 'x = parse("x")', "df = derivative(f, x)", "df.evaluate({x: 3})"], seealso: ["simplify", "parse", "evaluate"] };
-var x3 = { name: "leafCount", category: "Algebra", syntax: ["leafCount(expr)"], description: "Computes the number of leaves in the parse tree of the given expression", examples: ['leafCount("e^(i*pi)-1")', 'leafCount(parse("{a: 22/7, b: 10^(1/2)}"))'], seealso: ["simplify"] };
-var g3 = { name: "lsolve", category: "Algebra", syntax: ["x=lsolve(L, b)"], description: "Finds one solution of the linear system L * x = b where L is an [n x n] lower triangular matrix and b is a [n] column vector.", examples: ["a = [-2, 3; 2, 1]", "b = [11, 9]", "x = lsolve(a, b)"], seealso: ["lsolveAll", "lup", "lusolve", "usolve", "matrix", "sparse"] };
-var y3 = { name: "lsolveAll", category: "Algebra", syntax: ["x=lsolveAll(L, b)"], description: "Finds all solutions of the linear system L * x = b where L is an [n x n] lower triangular matrix and b is a [n] column vector.", examples: ["a = [-2, 3; 2, 1]", "b = [11, 9]", "x = lsolve(a, b)"], seealso: ["lsolve", "lup", "lusolve", "usolve", "matrix", "sparse"] };
-var b3 = { name: "lup", category: "Algebra", syntax: ["lup(m)"], description: "Calculate the Matrix LU decomposition with partial pivoting. Matrix A is decomposed in three matrices (L, U, P) where P * A = L * U", examples: ["lup([[2, 1], [1, 4]])", "lup(matrix([[2, 1], [1, 4]]))", "lup(sparse([[2, 1], [1, 4]]))"], seealso: ["lusolve", "lsolve", "usolve", "matrix", "sparse", "slu", "qr"] };
-var m3 = { name: "lusolve", category: "Algebra", syntax: ["x=lusolve(A, b)", "x=lusolve(lu, b)"], description: "Solves the linear system A * x = b where A is an [n x n] matrix and b is a [n] column vector.", examples: ["a = [-2, 3; 2, 1]", "b = [11, 9]", "x = lusolve(a, b)"], seealso: ["lup", "slu", "lsolve", "usolve", "matrix", "sparse"] };
-var p3 = { name: "polynomialRoot", category: "Algebra", syntax: ["x=polynomialRoot(-6, 3)", "x=polynomialRoot(4, -4, 1)", "x=polynomialRoot(-8, 12, -6, 1)"], description: "Finds the roots of a univariate polynomial given by its coefficients starting from constant, linear, and so on, increasing in degree.", examples: ["a = polynomialRoot(-6, 11, -6, 1)"], seealso: ["cbrt", "sqrt"] };
-var d3 = { name: "qr", category: "Algebra", syntax: ["qr(A)"], description: "Calculates the Matrix QR decomposition. Matrix `A` is decomposed in two matrices (`Q`, `R`) where `Q` is an orthogonal matrix and `R` is an upper triangular matrix.", examples: ["qr([[1, -1,  4], [1,  4, -2], [1,  4,  2], [1,  -1, 0]])"], seealso: ["lup", "slu", "matrix"] };
-var u3 = { name: "rationalize", category: "Algebra", syntax: ["rationalize(expr)", "rationalize(expr, scope)", "rationalize(expr, scope, detailed)"], description: "Transform a rationalizable expression in a rational fraction. If rational fraction is one variable polynomial then converts the numerator and denominator in canonical form, with decreasing exponents, returning the coefficients of numerator.", examples: ['rationalize("2x/y - y/(x+1)")', 'rationalize("2x/y - y/(x+1)", true)'], seealso: ["simplify"] };
-var _3 = { name: "resolve", category: "Algebra", syntax: ["resolve(node, scope)"], description: "Recursively substitute variables in an expression tree.", examples: ['resolve(parse("1 + x"), { x: 7 })', 'resolve(parse("size(text)"), { text: "Hello World" })', 'resolve(parse("x + y"), { x: parse("3z") })', 'resolve(parse("3x"), { x: parse("y+z"), z: parse("w^y") })'], seealso: ["simplify", "evaluate"], mayThrow: ["ReferenceError"] };
-var c3 = { name: "simplify", category: "Algebra", syntax: ["simplify(expr)", "simplify(expr, rules)"], description: "Simplify an expression tree.", examples: ['simplify("3 + 2 / 4")', 'simplify("2x + x")', 'f = parse("x * (x + 2 + x)")', "simplified = simplify(f)", "simplified.evaluate({x: 2})"], seealso: ["simplifyCore", "derivative", "evaluate", "parse", "rationalize", "resolve"] };
-var l3 = { name: "simplifyConstant", category: "Algebra", syntax: ["simplifyConstant(expr)", "simplifyConstant(expr, options)"], description: "Replace constant subexpressions of node with their values.", examples: ['simplifyConstant("(3-3)*x")', 'simplifyConstant(parse("z-cos(tau/8)"))'], seealso: ["simplify", "simplifyCore", "evaluate"] };
-var s3 = { name: "simplifyCore", category: "Algebra", syntax: ["simplifyCore(node)"], description: "Perform simple one-pass simplifications on an expression tree.", examples: ['simplifyCore(parse("0*x"))', 'simplifyCore(parse("(x+0)*2"))'], seealso: ["simplify", "simplifyConstant", "evaluate"] };
-var n3 = { name: "slu", category: "Algebra", syntax: ["slu(A, order, threshold)"], description: "Calculate the Matrix LU decomposition with full pivoting. Matrix A is decomposed in two matrices (L, U) and two permutation vectors (pinv, q) where P * A * Q = L * U", examples: ["slu(sparse([4.5, 0, 3.2, 0; 3.1, 2.9, 0, 0.9; 0, 1.7, 3, 0; 3.5, 0.4, 0, 1]), 1, 0.001)"], seealso: ["lusolve", "lsolve", "usolve", "matrix", "sparse", "lup", "qr"] };
-var o3 = { name: "symbolicEqual", category: "Algebra", syntax: ["symbolicEqual(expr1, expr2)", "symbolicEqual(expr1, expr2, options)"], description: "Returns true if the difference of the expressions simplifies to 0", examples: ['symbolicEqual("x*y","y*x")', 'symbolicEqual("abs(x^2)", "x^2")', 'symbolicEqual("abs(x)", "x", {context: {abs: {trivial: true}}})'], seealso: ["simplify", "evaluate"] };
-var i3 = { name: "usolve", category: "Algebra", syntax: ["x=usolve(U, b)"], description: "Finds one solution of the linear system U * x = b where U is an [n x n] upper triangular matrix and b is a [n] column vector.", examples: ["x=usolve(sparse([1, 1, 1, 1; 0, 1, 1, 1; 0, 0, 1, 1; 0, 0, 0, 1]), [1; 2; 3; 4])"], seealso: ["usolveAll", "lup", "lusolve", "lsolve", "matrix", "sparse"] };
-var a3 = { name: "usolveAll", category: "Algebra", syntax: ["x=usolve(U, b)"], description: "Finds all solutions of the linear system U * x = b where U is an [n x n] upper triangular matrix and b is a [n] column vector.", examples: ["x=usolve(sparse([1, 1, 1, 1; 0, 1, 1, 1; 0, 0, 1, 1; 0, 0, 0, 1]), [1; 2; 3; 4])"], seealso: ["usolve", "lup", "lusolve", "lsolve", "matrix", "sparse"] };
-var r3 = { name: "abs", category: "Arithmetic", syntax: ["abs(x)"], description: "Compute the absolute value.", examples: ["abs(3.5)", "abs(-4.2)"], seealso: ["sign"] };
-var t3 = { name: "add", category: "Operators", syntax: ["x + y", "add(x, y)"], description: "Add two values.", examples: ["a = 2.1 + 3.6", "a - 3.6", "3 + 2i", "3 cm + 2 inch", '"2.3" + "4"'], seealso: ["subtract"] };
-var e3 = { name: "cbrt", category: "Arithmetic", syntax: ["cbrt(x)", "cbrt(x, allRoots)"], description: "Compute the cubic root value. If x = y * y * y, then y is the cubic root of x. When `x` is a number or complex number, an optional second argument `allRoots` can be provided to return all three cubic roots. If not provided, the principal root is returned", examples: ["cbrt(64)", "cube(4)", "cbrt(-8)", "cbrt(2 + 3i)", "cbrt(8i)", "cbrt(8i, true)", "cbrt(27 m^3)"], seealso: ["square", "sqrt", "cube", "multiply"] };
-var $F = { name: "ceil", category: "Arithmetic", syntax: ["ceil(x)"], description: "Round a value towards plus infinity. If x is complex, both real and imaginary part are rounded towards plus infinity.", examples: ["ceil(3.2)", "ceil(3.8)", "ceil(-4.2)"], seealso: ["floor", "fix", "round"] };
-var JF = { name: "cube", category: "Arithmetic", syntax: ["cube(x)"], description: "Compute the cube of a value. The cube of x is x * x * x.", examples: ["cube(2)", "2^3", "2 * 2 * 2"], seealso: ["multiply", "square", "pow"] };
-var QF = { name: "divide", category: "Operators", syntax: ["x / y", "divide(x, y)"], description: "Divide two values.", examples: ["a = 2 / 3", "a * 3", "4.5 / 2", "3 + 4 / 2", "(3 + 4) / 2", "18 km / 4.5"], seealso: ["multiply"] };
-var ZF = { name: "dotDivide", category: "Operators", syntax: ["x ./ y", "dotDivide(x, y)"], description: "Divide two values element wise.", examples: ["a = [1, 2, 3; 4, 5, 6]", "b = [2, 1, 1; 3, 2, 5]", "a ./ b"], seealso: ["multiply", "dotMultiply", "divide"] };
-var KF = { name: "dotMultiply", category: "Operators", syntax: ["x .* y", "dotMultiply(x, y)"], description: "Multiply two values element wise.", examples: ["a = [1, 2, 3; 4, 5, 6]", "b = [2, 1, 1; 3, 2, 5]", "a .* b"], seealso: ["multiply", "divide", "dotDivide"] };
-var HF = { name: "dotPow", category: "Operators", syntax: ["x .^ y", "dotPow(x, y)"], description: "Calculates the power of x to y element wise.", examples: ["a = [1, 2, 3; 4, 5, 6]", "a .^ 2"], seealso: ["pow"] };
-var WF = { name: "exp", category: "Arithmetic", syntax: ["exp(x)"], description: "Calculate the exponent of a value.", examples: ["exp(1.3)", "e ^ 1.3", "log(exp(1.3))", "x = 2.4", "(exp(i*x) == cos(x) + i*sin(x))   # Euler\'s formula"], seealso: ["expm", "expm1", "pow", "log"] };
-var YF = { name: "expm", category: "Arithmetic", syntax: ["exp(x)"], description: "Compute the matrix exponential, expm(A) = e^A. The matrix must be square. Not to be confused with exp(a), which performs element-wise exponentiation.", examples: ["expm([[0,2],[0,0]])"], seealso: ["exp"] };
-var UF = { name: "expm1", category: "Arithmetic", syntax: ["expm1(x)"], description: "Calculate the value of subtracting 1 from the exponential value.", examples: ["expm1(2)", "pow(e, 2) - 1", "log(expm1(2) + 1)"], seealso: ["exp", "pow", "log"] };
-var GF = { name: "fix", category: "Arithmetic", syntax: ["fix(x)"], description: "Round a value towards zero. If x is complex, both real and imaginary part are rounded towards zero.", examples: ["fix(3.2)", "fix(3.8)", "fix(-4.2)", "fix(-4.8)"], seealso: ["ceil", "floor", "round"] };
-var LF = { name: "floor", category: "Arithmetic", syntax: ["floor(x)"], description: "Round a value towards minus infinity.If x is complex, both real and imaginary part are rounded towards minus infinity.", examples: ["floor(3.2)", "floor(3.8)", "floor(-4.2)"], seealso: ["ceil", "fix", "round"] };
-var XF = { name: "gcd", category: "Arithmetic", syntax: ["gcd(a, b)", "gcd(a, b, c, ...)"], description: "Compute the greatest common divisor.", examples: ["gcd(8, 12)", "gcd(-4, 6)", "gcd(25, 15, -10)"], seealso: ["lcm", "xgcd"] };
-var DF = { name: "hypot", category: "Arithmetic", syntax: ["hypot(a, b, c, ...)", "hypot([a, b, c, ...])"], description: "Calculate the hypotenusa of a list with values. ", examples: ["hypot(3, 4)", "sqrt(3^2 + 4^2)", "hypot(-2)", "hypot([3, 4, 5])"], seealso: ["abs", "norm"] };
-var RF = { name: "invmod", category: "Arithmetic", syntax: ["invmod(a, b)"], description: "Calculate the (modular) multiplicative inverse of a modulo b. Solution to the equation ax \u2263 1 (mod b)", examples: ["invmod(8, 12)", "invmod(7, 13)", "invmod(15151, 15122)"], seealso: ["gcd", "xgcd"] };
-var VF = { name: "lcm", category: "Arithmetic", syntax: ["lcm(x, y)"], description: "Compute the least common multiple.", examples: ["lcm(4, 6)", "lcm(6, 21)", "lcm(6, 21, 5)"], seealso: ["gcd"] };
-var zF = { name: "log", category: "Arithmetic", syntax: ["log(x)", "log(x, base)"], description: "Compute the logarithm of a value. If no base is provided, the natural logarithm of x is calculated. If base if provided, the logarithm is calculated for the specified base. log(x, base) is defined as log(x) / log(base).", examples: ["log(3.5)", "a = log(2.4)", "exp(a)", "10 ^ 4", "log(10000, 10)", "log(10000) / log(10)", "b = log(1024, 2)", "2 ^ b"], seealso: ["exp", "log1p", "log2", "log10"] };
-var FF = { name: "log10", category: "Arithmetic", syntax: ["log10(x)"], description: "Compute the 10-base logarithm of a value.", examples: ["log10(0.00001)", "log10(10000)", "10 ^ 4", "log(10000) / log(10)", "log(10000, 10)"], seealso: ["exp", "log"] };
-var PF = { name: "log1p", category: "Arithmetic", syntax: ["log1p(x)", "log1p(x, base)"], description: "Calculate the logarithm of a `value+1`", examples: ["log1p(2.5)", "exp(log1p(1.4))", "pow(10, 4)", "log1p(9999, 10)", "log1p(9999) / log(10)"], seealso: ["exp", "log", "log2", "log10"] };
-var IF = { name: "log2", category: "Arithmetic", syntax: ["log2(x)"], description: "Calculate the 2-base of a value. This is the same as calculating `log(x, 2)`.", examples: ["log2(0.03125)", "log2(16)", "log2(16) / log2(2)", "pow(2, 4)"], seealso: ["exp", "log1p", "log", "log10"] };
-var BF = { name: "mod", category: "Operators", syntax: ["x % y", "x mod y", "mod(x, y)"], description: "Calculates the modulus, the remainder of an integer division.", examples: ["7 % 3", "11 % 2", "10 mod 4", "isOdd(x) = x % 2", "isOdd(2)", "isOdd(3)"], seealso: ["divide"] };
-var TF = { name: "multiply", category: "Operators", syntax: ["x * y", "multiply(x, y)"], description: "multiply two values.", examples: ["a = 2.1 * 3.4", "a / 3.4", "2 * 3 + 4", "2 * (3 + 4)", "3 * 2.1 km"], seealso: ["divide"] };
-var MF = { name: "norm", category: "Arithmetic", syntax: ["norm(x)", "norm(x, p)"], description: "Calculate the norm of a number, vector or matrix.", examples: ["abs(-3.5)", "norm(-3.5)", "norm(3 - 4i)", "norm([1, 2, -3], Infinity)", "norm([1, 2, -3], -Infinity)", "norm([3, 4], 2)", "norm([[1, 2], [3, 4]], 1)", 'norm([[1, 2], [3, 4]], "inf")', 'norm([[1, 2], [3, 4]], "fro")'] };
-var EF = { name: "nthRoot", category: "Arithmetic", syntax: ["nthRoot(a)", "nthRoot(a, root)"], description: 'Calculate the nth root of a value. The principal nth root of a positive real number A, is the positive real solution of the equation "x^root = A".', examples: ["4 ^ 3", "nthRoot(64, 3)", "nthRoot(9, 2)", "sqrt(9)"], seealso: ["nthRoots", "pow", "sqrt"] };
-var OF = { name: "nthRoots", category: "Arithmetic", syntax: ["nthRoots(A)", "nthRoots(A, root)"], description: 'Calculate the nth roots of a value. An nth root of a positive real number A, is a positive real solution of the equation "x^root = A". This function returns an array of complex values.', examples: ["nthRoots(1)", "nthRoots(1, 3)"], seealso: ["sqrt", "pow", "nthRoot"] };
-var NF = { name: "pow", category: "Operators", syntax: ["x ^ y", "pow(x, y)"], description: "Calculates the power of x to y, x^y.", examples: ["2^3", "2*2*2", "1 + e ^ (pi * i)", "pow([[1, 2], [4, 3]], 2)", "pow([[1, 2], [4, 3]], -1)"], seealso: ["multiply", "nthRoot", "nthRoots", "sqrt"] };
-var AF = { name: "round", category: "Arithmetic", syntax: ["round(x)", "round(x, n)", "round(unit, valuelessUnit)", "round(unit, n, valuelessUnit)"], description: "round a value towards the nearest integer.If x is complex, both real and imaginary part are rounded towards the nearest integer. When n is specified, the value is rounded to n decimals.", examples: ["round(3.2)", "round(3.8)", "round(-4.2)", "round(-4.8)", "round(pi, 3)", "round(123.45678, 2)", "round(3.241cm, 2, cm)", "round([3.2, 3.8, -4.7])"], seealso: ["ceil", "floor", "fix"] };
-var CF = { name: "sign", category: "Arithmetic", syntax: ["sign(x)"], description: "Compute the sign of a value. The sign of a value x is 1 when x>1, -1 when x<0, and 0 when x=0.", examples: ["sign(3.5)", "sign(-4.2)", "sign(0)"], seealso: ["abs"] };
-var jF = { name: "sqrt", category: "Arithmetic", syntax: ["sqrt(x)"], description: "Compute the square root value. If x = y * y, then y is the square root of x.", examples: ["sqrt(25)", "5 * 5", "sqrt(-1)"], seealso: ["square", "sqrtm", "multiply", "nthRoot", "nthRoots", "pow"] };
-var SF = { name: "sqrtm", category: "Arithmetic", syntax: ["sqrtm(x)"], description: "Calculate the principal square root of a square matrix. The principal square root matrix `X` of another matrix `A` is such that `X * X = A`.", examples: ["sqrtm([[33, 24], [48, 57]])"], seealso: ["sqrt", "abs", "square", "multiply"] };
-var qF = { name: "sylvester", category: "Algebra", syntax: ["sylvester(A,B,C)"], description: "Solves the real-valued Sylvester equation AX+XB=C for X", examples: ["sylvester([[-1, -2], [1, 1]], [[-2, 1], [-1, 2]], [[-3, 2], [3, 0]])", "A = [[-1, -2], [1, 1]]; B = [[2, -1], [1, -2]]; C = [[-3, 2], [3, 0]]", "sylvester(A, B, C)"], seealso: ["schur", "lyap"] };
-var vF = { name: "schur", category: "Algebra", syntax: ["schur(A)"], description: "Performs a real Schur decomposition of the real matrix A = UTU\'", examples: ["schur([[1, 0], [-4, 3]])", "A = [[1, 0], [-4, 3]]", "schur(A)"], seealso: ["lyap", "sylvester"] };
-var wF = { name: "lyap", category: "Algebra", syntax: ["lyap(A,Q)"], description: "Solves the Continuous-time Lyapunov equation AP+PA\'+Q=0 for P", examples: ["lyap([[-2, 0], [1, -4]], [[3, 1], [1, 3]])", "A = [[-2, 0], [1, -4]]", "Q = [[3, 1], [1, 3]]", "lyap(A,Q)"], seealso: ["schur", "sylvester"] };
-var kF = { name: "square", category: "Arithmetic", syntax: ["square(x)"], description: "Compute the square of a value. The square of x is x * x.", examples: ["square(3)", "sqrt(9)", "3^2", "3 * 3"], seealso: ["multiply", "pow", "sqrt", "cube"] };
-var hF = { name: "subtract", category: "Operators", syntax: ["x - y", "subtract(x, y)"], description: "subtract two values.", examples: ["a = 5.3 - 2", "a + 2", "2/3 - 1/6", "2 * 3 - 3", "2.1 km - 500m"], seealso: ["add"] };
-var fF = { name: "unaryMinus", category: "Operators", syntax: ["-x", "unaryMinus(x)"], description: "Inverse the sign of a value. Converts booleans and strings to numbers.", examples: ["-4.5", "-(-5.6)", '-"22"'], seealso: ["add", "subtract", "unaryPlus"] };
-var xF = { name: "unaryPlus", category: "Operators", syntax: ["+x", "unaryPlus(x)"], description: "Converts booleans and strings to numbers.", examples: ["+true", '+"2"'], seealso: ["add", "subtract", "unaryMinus"] };
-var gF = { name: "xgcd", category: "Arithmetic", syntax: ["xgcd(a, b)"], description: "Calculate the extended greatest common divisor for two values. The result is an array [d, x, y] with 3 entries, where d is the greatest common divisor, and d = x * a + y * b.", examples: ["xgcd(8, 12)", "gcd(8, 12)", "xgcd(36163, 21199)"], seealso: ["gcd", "lcm"] };
-var yF = { name: "bitAnd", category: "Bitwise", syntax: ["x & y", "bitAnd(x, y)"], description: "Bitwise AND operation. Performs the logical AND operation on each pair of the corresponding bits of the two given values by multiplying them. If both bits in the compared position are 1, the bit in the resulting binary representation is 1, otherwise, the result is 0", examples: ["5 & 3", "bitAnd(53, 131)", "[1, 12, 31] & 42"], seealso: ["bitNot", "bitOr", "bitXor", "leftShift", "rightArithShift", "rightLogShift"] };
-var bF = { name: "bitNot", category: "Bitwise", syntax: ["~x", "bitNot(x)"], description: "Bitwise NOT operation. Performs a logical negation on each bit of the given value. Bits that are 0 become 1, and those that are 1 become 0.", examples: ["~1", "~2", "bitNot([2, -3, 4])"], seealso: ["bitAnd", "bitOr", "bitXor", "leftShift", "rightArithShift", "rightLogShift"] };
-var mF = { name: "bitOr", category: "Bitwise", syntax: ["x | y", "bitOr(x, y)"], description: "Bitwise OR operation. Performs the logical inclusive OR operation on each pair of corresponding bits of the two given values. The result in each position is 1 if the first bit is 1 or the second bit is 1 or both bits are 1, otherwise, the result is 0.", examples: ["5 | 3", "bitOr([1, 2, 3], 4)"], seealso: ["bitAnd", "bitNot", "bitXor", "leftShift", "rightArithShift", "rightLogShift"] };
-var pF = { name: "bitXor", category: "Bitwise", syntax: ["bitXor(x, y)"], description: "Bitwise XOR operation, exclusive OR. Performs the logical exclusive OR operation on each pair of corresponding bits of the two given values. The result in each position is 1 if only the first bit is 1 or only the second bit is 1, but will be 0 if both are 0 or both are 1.", examples: ["bitOr(1, 2)", "bitXor([2, 3, 4], 4)"], seealso: ["bitAnd", "bitNot", "bitOr", "leftShift", "rightArithShift", "rightLogShift"] };
-var dF = { name: "leftShift", category: "Bitwise", syntax: ["x << y", "leftShift(x, y)"], description: "Bitwise left logical shift of a value x by y number of bits.", examples: ["4 << 1", "8 >> 1"], seealso: ["bitAnd", "bitNot", "bitOr", "bitXor", "rightArithShift", "rightLogShift"] };
-var uF = { name: "rightArithShift", category: "Bitwise", syntax: ["x >> y", "rightArithShift(x, y)"], description: "Bitwise right arithmetic shift of a value x by y number of bits.", examples: ["8 >> 1", "4 << 1", "-12 >> 2"], seealso: ["bitAnd", "bitNot", "bitOr", "bitXor", "leftShift", "rightLogShift"] };
-var _F = { name: "rightLogShift", category: "Bitwise", syntax: ["x >>> y", "rightLogShift(x, y)"], description: "Bitwise right logical shift of a value x by y number of bits.", examples: ["8 >>> 1", "4 << 1", "-12 >>> 2"], seealso: ["bitAnd", "bitNot", "bitOr", "bitXor", "leftShift", "rightArithShift"] };
-var cF = { name: "bellNumbers", category: "Combinatorics", syntax: ["bellNumbers(n)"], description: "The Bell Numbers count the number of partitions of a set. A partition is a pairwise disjoint subset of S whose union is S. `bellNumbers` only takes integer arguments. The following condition must be enforced: n >= 0.", examples: ["bellNumbers(3)", "bellNumbers(8)"], seealso: ["stirlingS2"] };
-var lF = { name: "catalan", category: "Combinatorics", syntax: ["catalan(n)"], description: "The Catalan Numbers enumerate combinatorial structures of many different types. catalan only takes integer arguments. The following condition must be enforced: n >= 0.", examples: ["catalan(3)", "catalan(8)"], seealso: ["bellNumbers"] };
-var sF = { name: "composition", category: "Combinatorics", syntax: ["composition(n, k)"], description: "The composition counts of n into k parts. composition only takes integer arguments. The following condition must be enforced: k <= n.", examples: ["composition(5, 3)"], seealso: ["combinations"] };
-var nF = { name: "stirlingS2", category: "Combinatorics", syntax: ["stirlingS2(n, k)"], description: "he Stirling numbers of the second kind, counts the number of ways to partition a set of n labelled objects into k nonempty unlabelled subsets. `stirlingS2` only takes integer arguments. The following condition must be enforced: k <= n. If n = k or k = 1, then s(n,k) = 1.", examples: ["stirlingS2(5, 3)"], seealso: ["bellNumbers"] };
-var oF = { name: "arg", category: "Complex", syntax: ["arg(x)"], description: "Compute the argument of a complex value. If x = a+bi, the argument is computed as atan2(b, a).", examples: ["arg(2 + 2i)", "atan2(3, 2)", "arg(2 + 3i)"], seealso: ["re", "im", "conj", "abs"] };
-var iF = { name: "conj", category: "Complex", syntax: ["conj(x)"], description: "Compute the complex conjugate of a complex value. If x = a+bi, the complex conjugate is a-bi.", examples: ["conj(2 + 3i)", "conj(2 - 3i)", "conj(-5.2i)"], seealso: ["re", "im", "abs", "arg"] };
-var aF = { name: "im", category: "Complex", syntax: ["im(x)"], description: "Get the imaginary part of a complex number.", examples: ["im(2 + 3i)", "re(2 + 3i)", "im(-5.2i)", "im(2.4)"], seealso: ["re", "conj", "abs", "arg"] };
-var rF = { name: "re", category: "Complex", syntax: ["re(x)"], description: "Get the real part of a complex number.", examples: ["re(2 + 3i)", "im(2 + 3i)", "re(-5.2i)", "re(2.4)"], seealso: ["im", "conj", "abs", "arg"] };
-var tF = { name: "evaluate", category: "Expression", syntax: ["evaluate(expression)", "evaluate(expression, scope)", "evaluate([expr1, expr2, expr3, ...])", "evaluate([expr1, expr2, expr3, ...], scope)"], description: "Evaluate an expression or an array with expressions.", examples: ['evaluate("2 + 3")', 'evaluate("sqrt(16)")', 'evaluate("2 inch to cm")', 'evaluate("sin(x * pi)", { "x": 1/2 })', 'evaluate(["width=2", "height=4","width*height"])'], seealso: [] };
-var eF = { name: "help", category: "Expression", syntax: ["help(object)", "help(string)"], description: "Display documentation on a function or data type.", examples: ["help(sqrt)", 'help("complex")'], seealso: [] };
-var $P = { name: "distance", category: "Geometry", syntax: ["distance([x1, y1], [x2, y2])", "distance([[x1, y1], [x2, y2]])"], description: "Calculates the Euclidean distance between two points.", examples: ["distance([0,0], [4,4])", "distance([[0,0], [4,4]])"], seealso: [] };
-var JP = { name: "intersect", category: "Geometry", syntax: ["intersect(expr1, expr2, expr3, expr4)", "intersect(expr1, expr2, expr3)"], description: "Computes the intersection point of lines and/or planes.", examples: ["intersect([0, 0], [10, 10], [10, 0], [0, 10])", "intersect([1, 0, 1],  [4, -2, 2], [1, 1, 1, 6])"], seealso: [] };
-var QP = { name: "and", category: "Logical", syntax: ["x and y", "and(x, y)"], description: "Logical and. Test whether two values are both defined with a nonzero/nonempty value.", examples: ["true and false", "true and true", "2 and 4"], seealso: ["not", "or", "xor"] };
-var ZP = { name: "not", category: "Logical", syntax: ["not x", "not(x)"], description: "Logical not. Flips the boolean value of given argument.", examples: ["not true", "not false", "not 2", "not 0"], seealso: ["and", "or", "xor"] };
-var KP = { name: "or", category: "Logical", syntax: ["x or y", "or(x, y)"], description: "Logical or. Test if at least one value is defined with a nonzero/nonempty value.", examples: ["true or false", "false or false", "0 or 4"], seealso: ["not", "and", "xor"] };
-var HP = { name: "xor", category: "Logical", syntax: ["x xor y", "xor(x, y)"], description: "Logical exclusive or, xor. Test whether one and only one value is defined with a nonzero/nonempty value.", examples: ["true xor false", "false xor false", "true xor true", "0 xor 4"], seealso: ["not", "and", "or"] };
-var WP = { name: "column", category: "Matrix", syntax: ["column(x, index)"], description: "Return a column from a matrix or array.", examples: ["A = [[1, 2], [3, 4]]", "column(A, 1)", "column(A, 2)"], seealso: ["row", "matrixFromColumns"] };
-var YP = { name: "concat", category: "Matrix", syntax: ["concat(A, B, C, ...)", "concat(A, B, C, ..., dim)"], description: "Concatenate matrices. By default, the matrices are concatenated by the last dimension. The dimension on which to concatenate can be provided as last argument.", examples: ["A = [1, 2; 5, 6]", "B = [3, 4; 7, 8]", "concat(A, B)", "concat(A, B, 1)", "concat(A, B, 2)"], seealso: ["det", "diag", "identity", "inv", "ones", "range", "size", "squeeze", "subset", "trace", "transpose", "zeros"] };
-var UP = { name: "count", category: "Matrix", syntax: ["count(x)"], description: "Count the number of elements of a matrix, array or string.", examples: ["a = [1, 2; 3, 4; 5, 6]", "count(a)", "size(a)", 'count("hello world")'], seealso: ["size"] };
-var GP = { name: "cross", category: "Matrix", syntax: ["cross(A, B)"], description: "Calculate the cross product for two vectors in three dimensional space.", examples: ["cross([1, 1, 0],  [0, 1, 1])", "cross([3, -3, 1], [4, 9, 2])", "cross([2, 3, 4],  [5, 6, 7])"], seealso: ["multiply", "dot"] };
-var LP = { name: "ctranspose", category: "Matrix", syntax: ["x\'", "ctranspose(x)"], description: "Complex Conjugate and Transpose a matrix", examples: ["a = [1, 2, 3; 4, 5, 6]", "a\'", "ctranspose(a)"], seealso: ["concat", "det", "diag", "identity", "inv", "ones", "range", "size", "squeeze", "subset", "trace", "zeros"] };
-var XP = { name: "det", category: "Matrix", syntax: ["det(x)"], description: "Calculate the determinant of a matrix", examples: ["det([1, 2; 3, 4])", "det([-2, 2, 3; -1, 1, 3; 2, 0, -1])"], seealso: ["concat", "diag", "identity", "inv", "ones", "range", "size", "squeeze", "subset", "trace", "transpose", "zeros"] };
-var DP = { name: "diag", category: "Matrix", syntax: ["diag(x)", "diag(x, k)"], description: "Create a diagonal matrix or retrieve the diagonal of a matrix. When x is a vector, a matrix with the vector values on the diagonal will be returned. When x is a matrix, a vector with the diagonal values of the matrix is returned. When k is provided, the k-th diagonal will be filled in or retrieved, if k is positive, the values are placed on the super diagonal. When k is negative, the values are placed on the sub diagonal.", examples: ["diag(1:3)", "diag(1:3, 1)", "a = [1, 2, 3; 4, 5, 6; 7, 8, 9]", "diag(a)"], seealso: ["concat", "det", "identity", "inv", "ones", "range", "size", "squeeze", "subset", "trace", "transpose", "zeros"] };
-var RP = { name: "diff", category: "Matrix", syntax: ["diff(arr)", "diff(arr, dim)"], description: ["Create a new matrix or array with the difference of the passed matrix or array.", "Dim parameter is optional and used to indicant the dimension of the array/matrix to apply the difference", "If no dimension parameter is passed it is assumed as dimension 0", "Dimension is zero-based in javascript and one-based in the parser", "Arrays must be \'rectangular\' meaning arrays like [1, 2]", "If something is passed as a matrix it will be returned as a matrix but other than that all matrices are converted to arrays"], examples: ["A = [1, 2, 4, 7, 0]", "diff(A)", "diff(A, 1)", "B = [[1, 2], [3, 4]]", "diff(B)", "diff(B, 1)", "diff(B, 2)", "diff(B, bignumber(2))", "diff([[1, 2], matrix([3, 4])], 2)"], seealso: ["subtract", "partitionSelect"] };
-var VP = { name: "dot", category: "Matrix", syntax: ["dot(A, B)", "A * B"], description: "Calculate the dot product of two vectors. The dot product of A = [a1, a2, a3, ..., an] and B = [b1, b2, b3, ..., bn] is defined as dot(A, B) = a1 * b1 + a2 * b2 + a3 * b3 + ... + an * bn", examples: ["dot([2, 4, 1], [2, 2, 3])", "[2, 4, 1] * [2, 2, 3]"], seealso: ["multiply", "cross"] };
-var zP = { name: "eigs", category: "Matrix", syntax: ["eigs(x)"], description: "Calculate the eigenvalues and optionally eigenvectors of a square matrix", examples: ["eigs([[5, 2.3], [2.3, 1]])", "eigs([[1, 2, 3], [4, 5, 6], [7, 8, 9]], { precision: 1e-6, eigenvectors: false })"], seealso: ["inv"] };
-var FP = { name: "filter", category: "Matrix", syntax: ["filter(x, test)"], description: "Filter items in a matrix.", examples: ["isPositive(x) = x > 0", "filter([6, -2, -1, 4, 3], isPositive)", "filter([6, -2, 0, 1, 0], x != 0)"], seealso: ["sort", "map", "forEach"] };
-var PP = { name: "flatten", category: "Matrix", syntax: ["flatten(x)"], description: "Flatten a multi dimensional matrix into a single dimensional matrix.", examples: ["a = [1, 2, 3; 4, 5, 6]", "size(a)", "b = flatten(a)", "size(b)"], seealso: ["concat", "resize", "size", "squeeze"] };
-var IP = { name: "forEach", category: "Matrix", syntax: ["forEach(x, callback)"], description: "Iterates over all elements of a matrix/array, and executes the given callback function.", examples: ["numberOfPets = {}", "addPet(n) = numberOfPets[n] = (numberOfPets[n] ? numberOfPets[n]:0 ) + 1;", 'forEach(["Dog","Cat","Cat"], addPet)', "numberOfPets"], seealso: ["map", "sort", "filter"] };
-var BP = { name: "getMatrixDataType", category: "Matrix", syntax: ["getMatrixDataType(x)"], description: 'Find the data type of all elements in a matrix or array, for example "number" if all items are a number and "Complex" if all values are complex numbers. If a matrix contains more than one data type, it will return "mixed".', examples: ["getMatrixDataType([1, 2, 3])", "getMatrixDataType([[5 cm], [2 inch]])", 'getMatrixDataType([1, "text"])', "getMatrixDataType([1, bignumber(4)])"], seealso: ["matrix", "sparse", "typeOf"] };
-var TP = { name: "identity", category: "Matrix", syntax: ["identity(n)", "identity(m, n)", "identity([m, n])"], description: "Returns the identity matrix with size m-by-n. The matrix has ones on the diagonal and zeros elsewhere.", examples: ["identity(3)", "identity(3, 5)", "a = [1, 2, 3; 4, 5, 6]", "identity(size(a))"], seealso: ["concat", "det", "diag", "inv", "ones", "range", "size", "squeeze", "subset", "trace", "transpose", "zeros"] };
-var MP = { name: "inv", category: "Matrix", syntax: ["inv(x)"], description: "Calculate the inverse of a matrix", examples: ["inv([1, 2; 3, 4])", "inv(4)", "1 / 4"], seealso: ["concat", "det", "diag", "identity", "ones", "range", "size", "squeeze", "subset", "trace", "transpose", "zeros"] };
-var EP = { name: "pinv", category: "Matrix", syntax: ["pinv(x)"], description: "Calculate the Moore\u2013Penrose inverse of a matrix", examples: ["pinv([1, 2; 3, 4])", "pinv([[1, 0], [0, 1], [0, 1]])", "pinv(4)"], seealso: ["inv"] };
-var OP = { name: "kron", category: "Matrix", syntax: ["kron(x, y)"], description: "Calculates the kronecker product of 2 matrices or vectors.", examples: ["kron([[1, 0], [0, 1]], [[1, 2], [3, 4]])", "kron([1,1], [2,3,4])"], seealso: ["multiply", "dot", "cross"] };
-var NP = { name: "map", category: "Matrix", syntax: ["map(x, callback)"], description: "Create a new matrix or array with the results of the callback function executed on each entry of the matrix/array.", examples: ["map([1, 2, 3], square)"], seealso: ["filter", "forEach"] };
-var AP = { name: "matrixFromColumns", category: "Matrix", syntax: ["matrixFromColumns(...arr)", "matrixFromColumns(row1, row2)", "matrixFromColumns(row1, row2, row3)"], description: "Create a dense matrix from vectors as individual columns.", examples: ["matrixFromColumns([1, 2, 3], [[4],[5],[6]])"], seealso: ["matrix", "matrixFromRows", "matrixFromFunction", "zeros"] };
-var CP = { name: "matrixFromFunction", category: "Matrix", syntax: ["matrixFromFunction(size, fn)", "matrixFromFunction(size, fn, format)", "matrixFromFunction(size, fn, format, datatype)", "matrixFromFunction(size, format, fn)", "matrixFromFunction(size, format, datatype, fn)"], description: "Create a matrix by evaluating a generating function at each index.", examples: ["f(I) = I[1] - I[2]", "matrixFromFunction([3,3], f)", "g(I) = I[1] - I[2] == 1 ? 4 : 0", 'matrixFromFunction([100, 100], "sparse", g)', "matrixFromFunction([5], random)"], seealso: ["matrix", "matrixFromRows", "matrixFromColumns", "zeros"] };
-var jP = { name: "matrixFromRows", category: "Matrix", syntax: ["matrixFromRows(...arr)", "matrixFromRows(row1, row2)", "matrixFromRows(row1, row2, row3)"], description: "Create a dense matrix from vectors as individual rows.", examples: ["matrixFromRows([1, 2, 3], [[4],[5],[6]])"], seealso: ["matrix", "matrixFromColumns", "matrixFromFunction", "zeros"] };
-var SP = { name: "ones", category: "Matrix", syntax: ["ones(m)", "ones(m, n)", "ones(m, n, p, ...)", "ones([m])", "ones([m, n])", "ones([m, n, p, ...])"], description: "Create a matrix containing ones.", examples: ["ones(3)", "ones(3, 5)", "ones([2,3]) * 4.5", "a = [1, 2, 3; 4, 5, 6]", "ones(size(a))"], seealso: ["concat", "det", "diag", "identity", "inv", "range", "size", "squeeze", "subset", "trace", "transpose", "zeros"] };
-var qP = { name: "partitionSelect", category: "Matrix", syntax: ["partitionSelect(x, k)", "partitionSelect(x, k, compare)"], description: "Partition-based selection of an array or 1D matrix. Will find the kth smallest value, and mutates the input array. Uses Quickselect.", examples: ["partitionSelect([5, 10, 1], 2)", 'partitionSelect(["C", "B", "A", "D"], 1, compareText)', "arr = [5, 2, 1]", "partitionSelect(arr, 0) # returns 1, arr is now: [1, 2, 5]", "arr", "partitionSelect(arr, 1, \'desc\') # returns 2, arr is now: [5, 2, 1]", "arr"], seealso: ["sort"] };
-var vP = { name: "range", category: "Type", syntax: ["start:end", "start:step:end", "range(start, end)", "range(start, end, step)", "range(string)"], description: "Create a range. Lower bound of the range is included, upper bound is excluded.", examples: ["1:5", "3:-1:-3", "range(3, 7)", "range(0, 12, 2)", 'range("4:10")', "range(1m, 1m, 3m)", "a = [1, 2, 3, 4; 5, 6, 7, 8]", "a[1:2, 1:2]"], seealso: ["concat", "det", "diag", "identity", "inv", "ones", "size", "squeeze", "subset", "trace", "transpose", "zeros"] };
-var wP = { name: "reshape", category: "Matrix", syntax: ["reshape(x, sizes)"], description: "Reshape a multi dimensional array to fit the specified dimensions.", examples: ["reshape([1, 2, 3, 4, 5, 6], [2, 3])", "reshape([[1, 2], [3, 4]], [1, 4])", "reshape([[1, 2], [3, 4]], [4])", "reshape([1, 2, 3, 4], [-1, 2])"], seealso: ["size", "squeeze", "resize"] };
-var kP = { name: "resize", category: "Matrix", syntax: ["resize(x, size)", "resize(x, size, defaultValue)"], description: "Resize a matrix.", examples: ["resize([1,2,3,4,5], [3])", "resize([1,2,3], [5])", "resize([1,2,3], [5], -1)", "resize(2, [2, 3])", 'resize("hello", [8], "!")'], seealso: ["size", "subset", "squeeze", "reshape"] };
-var hP = { name: "rotate", category: "Matrix", syntax: ["rotate(w, theta)", "rotate(w, theta, v)"], description: "Returns a 2-D rotation matrix (2x2) for a given angle (in radians). Returns a 2-D rotation matrix (3x3) of a given angle (in radians) around given axis.", examples: ["rotate([1, 0], pi / 2)", 'rotate(matrix([1, 0]), unit("35deg"))', 'rotate([1, 0, 0], unit("90deg"), [0, 0, 1])', 'rotate(matrix([1, 0, 0]), unit("90deg"), matrix([0, 0, 1]))'], seealso: ["matrix", "rotationMatrix"] };
-var fP = { name: "rotationMatrix", category: "Matrix", syntax: ["rotationMatrix(theta)", "rotationMatrix(theta, v)", "rotationMatrix(theta, v, format)"], description: "Returns a 2-D rotation matrix (2x2) for a given angle (in radians). Returns a 2-D rotation matrix (3x3) of a given angle (in radians) around given axis.", examples: ["rotationMatrix(pi / 2)", 'rotationMatrix(unit("45deg"), [0, 0, 1])', 'rotationMatrix(1, matrix([0, 0, 1]), "sparse")'], seealso: ["cos", "sin"] };
-var xP = { name: "row", category: "Matrix", syntax: ["row(x, index)"], description: "Return a row from a matrix or array.", examples: ["A = [[1, 2], [3, 4]]", "row(A, 1)", "row(A, 2)"], seealso: ["column", "matrixFromRows"] };
-var gP = { name: "size", category: "Matrix", syntax: ["size(x)"], description: "Calculate the size of a matrix.", examples: ["size(2.3)", 'size("hello world")', "a = [1, 2; 3, 4; 5, 6]", "size(a)", "size(1:6)"], seealso: ["concat", "count", "det", "diag", "identity", "inv", "ones", "range", "squeeze", "subset", "trace", "transpose", "zeros"] };
-var yP = { name: "sort", category: "Matrix", syntax: ["sort(x)", "sort(x, compare)"], description: 'Sort the items in a matrix. Compare can be a string "asc", "desc", "natural", or a custom sort function.', examples: ["sort([5, 10, 1])", 'sort(["C", "B", "A", "D"], "natural")', "sortByLength(a, b) = size(a)[1] - size(b)[1]", 'sort(["Langdon", "Tom", "Sara"], sortByLength)', 'sort(["10", "1", "2"], "natural")'], seealso: ["map", "filter", "forEach"] };
-var bP = { name: "squeeze", category: "Matrix", syntax: ["squeeze(x)"], description: "Remove inner and outer singleton dimensions from a matrix.", examples: ["a = zeros(3,2,1)", "size(squeeze(a))", "b = zeros(1,1,3)", "size(squeeze(b))"], seealso: ["concat", "det", "diag", "identity", "inv", "ones", "range", "size", "subset", "trace", "transpose", "zeros"] };
-var mP = { name: "subset", category: "Matrix", syntax: ["value(index)", "value(index) = replacement", "subset(value, [index])", "subset(value, [index], replacement)"], description: "Get or set a subset of the entries of a matrix or characters of a string. Indexes are one-based. There should be one index specification for each dimension of the target. Each specification can be a single index, a list of indices, or a range in colon notation `l:u`. In a range, both the lower bound l and upper bound u are included; and if a bound is omitted it defaults to the most extreme valid value. The cartesian product of the indices specified in each dimension determines the target of the operation.", examples: ["d = [1, 2; 3, 4]", "e = []", "e[1, 1:2] = [5, 6]", "e[2, :] = [7, 8]", "f = d * e", "f[2, 1]", "f[:, 1]", "f[[1,2], [1,3]] = [9, 10; 11, 12]", "f"], seealso: ["concat", "det", "diag", "identity", "inv", "ones", "range", "size", "squeeze", "trace", "transpose", "zeros"] };
-var pP = { name: "trace", category: "Matrix", syntax: ["trace(A)"], description: "Calculate the trace of a matrix: the sum of the elements on the main diagonal of a square matrix.", examples: ["A = [1, 2, 3; -1, 2, 3; 2, 0, 3]", "trace(A)"], seealso: ["concat", "det", "diag", "identity", "inv", "ones", "range", "size", "squeeze", "subset", "transpose", "zeros"] };
-var dP = { name: "transpose", category: "Matrix", syntax: ["x\'", "transpose(x)"], description: "Transpose a matrix", examples: ["a = [1, 2, 3; 4, 5, 6]", "a\'", "transpose(a)"], seealso: ["concat", "det", "diag", "identity", "inv", "ones", "range", "size", "squeeze", "subset", "trace", "zeros"] };
-var uP = { name: "zeros", category: "Matrix", syntax: ["zeros(m)", "zeros(m, n)", "zeros(m, n, p, ...)", "zeros([m])", "zeros([m, n])", "zeros([m, n, p, ...])"], description: "Create a matrix containing zeros.", examples: ["zeros(3)", "zeros(3, 5)", "a = [1, 2, 3; 4, 5, 6]", "zeros(size(a))"], seealso: ["concat", "det", "diag", "identity", "inv", "ones", "range", "size", "squeeze", "subset", "trace", "transpose"] };
-var _P = { name: "fft", category: "Matrix", syntax: ["fft(x)"], description: "Calculate N-dimensional fourier transform", examples: ["fft([[1, 0], [1, 0]])"], seealso: ["ifft"] };
-var cP = { name: "ifft", category: "Matrix", syntax: ["ifft(x)"], description: "Calculate N-dimensional inverse fourier transform", examples: ["ifft([[2, 2], [0, 0]])"], seealso: ["fft"] };
-var lP = { name: "combinations", category: "Probability", syntax: ["combinations(n, k)"], description: "Compute the number of combinations of n items taken k at a time", examples: ["combinations(7, 5)"], seealso: ["combinationsWithRep", "permutations", "factorial"] };
-var sP = { name: "combinationsWithRep", category: "Probability", syntax: ["combinationsWithRep(n, k)"], description: "Compute the number of combinations of n items taken k at a time with replacements.", examples: ["combinationsWithRep(7, 5)"], seealso: ["combinations", "permutations", "factorial"] };
-var nP = { name: "factorial", category: "Probability", syntax: ["n!", "factorial(n)"], description: "Compute the factorial of a value", examples: ["5!", "5 * 4 * 3 * 2 * 1", "3!"], seealso: ["combinations", "combinationsWithRep", "permutations", "gamma"] };
-var oP = { name: "gamma", category: "Probability", syntax: ["gamma(n)"], description: "Compute the gamma function. For small values, the Lanczos approximation is used, and for large values the extended Stirling approximation.", examples: ["gamma(4)", "3!", "gamma(1/2)", "sqrt(pi)"], seealso: ["factorial"] };
-var iP = { name: "lgamma", category: "Probability", syntax: ["lgamma(n)"], description: "Logarithm of the gamma function for real, positive numbers and complex numbers, using Lanczos approximation for numbers and Stirling series for complex numbers.", examples: ["lgamma(4)", "lgamma(1/2)", "lgamma(i)", "lgamma(complex(1.1, 2))"], seealso: ["gamma"] };
-var aP = { name: "kldivergence", category: "Probability", syntax: ["kldivergence(x, y)"], description: "Calculate the Kullback-Leibler (KL) divergence  between two distributions.", examples: ["kldivergence([0.7,0.5,0.4], [0.2,0.9,0.5])"], seealso: [] };
-var rP = { name: "multinomial", category: "Probability", syntax: ["multinomial(A)"], description: "Multinomial Coefficients compute the number of ways of picking a1, a2, ..., ai unordered outcomes from `n` possibilities. multinomial takes one array of integers as an argument. The following condition must be enforced: every ai > 0.", examples: ["multinomial([1, 2, 1])"], seealso: ["combinations", "factorial"] };
-var tP = { name: "permutations", category: "Probability", syntax: ["permutations(n)", "permutations(n, k)"], description: "Compute the number of permutations of n items taken k at a time", examples: ["permutations(5)", "permutations(5, 3)"], seealso: ["combinations", "combinationsWithRep", "factorial"] };
-var eP = { name: "pickRandom", category: "Probability", syntax: ["pickRandom(array)", "pickRandom(array, number)", "pickRandom(array, weights)", "pickRandom(array, number, weights)", "pickRandom(array, weights, number)"], description: "Pick a random entry from a given array.", examples: ["pickRandom(0:10)", "pickRandom([1, 3, 1, 6])", "pickRandom([1, 3, 1, 6], 2)", "pickRandom([1, 3, 1, 6], [2, 3, 2, 1])", "pickRandom([1, 3, 1, 6], 2, [2, 3, 2, 1])", "pickRandom([1, 3, 1, 6], [2, 3, 2, 1], 2)"], seealso: ["random", "randomInt"] };
-var $I = { name: "random", category: "Probability", syntax: ["random()", "random(max)", "random(min, max)", "random(size)", "random(size, max)", "random(size, min, max)"], description: "Return a random number.", examples: ["random()", "random(10, 20)", "random([2, 3])"], seealso: ["pickRandom", "randomInt"] };
-var JI = { name: "randomInt", category: "Probability", syntax: ["randomInt(max)", "randomInt(min, max)", "randomInt(size)", "randomInt(size, max)", "randomInt(size, min, max)"], description: "Return a random integer number", examples: ["randomInt(10, 20)", "randomInt([2, 3], 10)"], seealso: ["pickRandom", "random"] };
-var QI = { name: "compare", category: "Relational", syntax: ["compare(x, y)"], description: "Compare two values. Returns 1 when x > y, -1 when x < y, and 0 when x == y.", examples: ["compare(2, 3)", "compare(3, 2)", "compare(2, 2)", "compare(5cm, 40mm)", "compare(2, [1, 2, 3])"], seealso: ["equal", "unequal", "smaller", "smallerEq", "largerEq", "compareNatural", "compareText"] };
-var ZI = { name: "compareNatural", category: "Relational", syntax: ["compareNatural(x, y)"], description: "Compare two values of any type in a deterministic, natural way. Returns 1 when x > y, -1 when x < y, and 0 when x == y.", examples: ["compareNatural(2, 3)", "compareNatural(3, 2)", "compareNatural(2, 2)", "compareNatural(5cm, 40mm)", 'compareNatural("2", "10")', "compareNatural(2 + 3i, 2 + 4i)", "compareNatural([1, 2, 4], [1, 2, 3])", "compareNatural([1, 5], [1, 2, 3])", "compareNatural([1, 2], [1, 2])", "compareNatural({a: 2}, {a: 4})"], seealso: ["equal", "unequal", "smaller", "smallerEq", "largerEq", "compare", "compareText"] };
-var KI = { name: "compareText", category: "Relational", syntax: ["compareText(x, y)"], description: "Compare two strings lexically. Comparison is case sensitive. Returns 1 when x > y, -1 when x < y, and 0 when x == y.", examples: ['compareText("B", "A")', 'compareText("A", "B")', 'compareText("A", "A")', 'compareText("2", "10")', 'compare("2", "10")', "compare(2, 10)", 'compareNatural("2", "10")', 'compareText("B", ["A", "B", "C"])'], seealso: ["compare", "compareNatural"] };
-var HI = { name: "deepEqual", category: "Relational", syntax: ["deepEqual(x, y)"], description: "Check equality of two matrices element wise. Returns true if the size of both matrices is equal and when and each of the elements are equal.", examples: ["deepEqual([1,3,4], [1,3,4])", "deepEqual([1,3,4], [1,3])"], seealso: ["equal", "unequal", "smaller", "larger", "smallerEq", "largerEq", "compare"] };
-var WI = { name: "equal", category: "Relational", syntax: ["x == y", "equal(x, y)"], description: "Check equality of two values. Returns true if the values are equal, and false if not.", examples: ["2+2 == 3", "2+2 == 4", "a = 3.2", "b = 6-2.8", "a == b", "50cm == 0.5m"], seealso: ["unequal", "smaller", "larger", "smallerEq", "largerEq", "compare", "deepEqual", "equalText"] };
-var YI = { name: "equalText", category: "Relational", syntax: ["equalText(x, y)"], description: "Check equality of two strings. Comparison is case sensitive. Returns true if the values are equal, and false if not.", examples: ['equalText("Hello", "Hello")', 'equalText("a", "A")', 'equal("2e3", "2000")', 'equalText("2e3", "2000")', 'equalText("B", ["A", "B", "C"])'], seealso: ["compare", "compareNatural", "compareText", "equal"] };
-var UI = { name: "larger", category: "Relational", syntax: ["x > y", "larger(x, y)"], description: "Check if value x is larger than y. Returns true if x is larger than y, and false if not.", examples: ["2 > 3", "5 > 2*2", "a = 3.3", "b = 6-2.8", "(a > b)", "(b < a)", "5 cm > 2 inch"], seealso: ["equal", "unequal", "smaller", "smallerEq", "largerEq", "compare"] };
-var GI = { name: "largerEq", category: "Relational", syntax: ["x >= y", "largerEq(x, y)"], description: "Check if value x is larger or equal to y. Returns true if x is larger or equal to y, and false if not.", examples: ["2 >= 1+1", "2 > 1+1", "a = 3.2", "b = 6-2.8", "(a >= b)"], seealso: ["equal", "unequal", "smallerEq", "smaller", "compare"] };
-var LI = { name: "smaller", category: "Relational", syntax: ["x < y", "smaller(x, y)"], description: "Check if value x is smaller than value y. Returns true if x is smaller than y, and false if not.", examples: ["2 < 3", "5 < 2*2", "a = 3.3", "b = 6-2.8", "(a < b)", "5 cm < 2 inch"], seealso: ["equal", "unequal", "larger", "smallerEq", "largerEq", "compare"] };
-var XI = { name: "smallerEq", category: "Relational", syntax: ["x <= y", "smallerEq(x, y)"], description: "Check if value x is smaller or equal to value y. Returns true if x is smaller than y, and false if not.", examples: ["2 <= 1+1", "2 < 1+1", "a = 3.2", "b = 6-2.8", "(a <= b)"], seealso: ["equal", "unequal", "larger", "smaller", "largerEq", "compare"] };
-var DI = { name: "unequal", category: "Relational", syntax: ["x != y", "unequal(x, y)"], description: "Check unequality of two values. Returns true if the values are unequal, and false if they are equal.", examples: ["2+2 != 3", "2+2 != 4", "a = 3.2", "b = 6-2.8", "a != b", "50cm != 0.5m", "5 cm != 2 inch"], seealso: ["equal", "smaller", "larger", "smallerEq", "largerEq", "compare", "deepEqual"] };
-var RI = { name: "setCartesian", category: "Set", syntax: ["setCartesian(set1, set2)"], description: "Create the cartesian product of two (multi)sets. Multi-dimension arrays will be converted to single-dimension arrays and the values will be sorted in ascending order before the operation.", examples: ["setCartesian([1, 2], [3, 4])"], seealso: ["setUnion", "setIntersect", "setDifference", "setPowerset"] };
-var VI = { name: "setDifference", category: "Set", syntax: ["setDifference(set1, set2)"], description: "Create the difference of two (multi)sets: every element of set1, that is not the element of set2. Multi-dimension arrays will be converted to single-dimension arrays before the operation.", examples: ["setDifference([1, 2, 3, 4], [3, 4, 5, 6])", "setDifference([[1, 2], [3, 4]], [[3, 4], [5, 6]])"], seealso: ["setUnion", "setIntersect", "setSymDifference"] };
-var zI = { name: "setDistinct", category: "Set", syntax: ["setDistinct(set)"], description: "Collect the distinct elements of a multiset. A multi-dimension array will be converted to a single-dimension array before the operation.", examples: ["setDistinct([1, 1, 1, 2, 2, 3])"], seealso: ["setMultiplicity"] };
-var FI = { name: "setIntersect", category: "Set", syntax: ["setIntersect(set1, set2)"], description: "Create the intersection of two (multi)sets. Multi-dimension arrays will be converted to single-dimension arrays before the operation.", examples: ["setIntersect([1, 2, 3, 4], [3, 4, 5, 6])", "setIntersect([[1, 2], [3, 4]], [[3, 4], [5, 6]])"], seealso: ["setUnion", "setDifference"] };
-var PI = { name: "setIsSubset", category: "Set", syntax: ["setIsSubset(set1, set2)"], description: "Check whether a (multi)set is a subset of another (multi)set: every element of set1 is the element of set2. Multi-dimension arrays will be converted to single-dimension arrays before the operation.", examples: ["setIsSubset([1, 2], [3, 4, 5, 6])", "setIsSubset([3, 4], [3, 4, 5, 6])"], seealso: ["setUnion", "setIntersect", "setDifference"] };
-var II = { name: "setMultiplicity", category: "Set", syntax: ["setMultiplicity(element, set)"], description: "Count the multiplicity of an element in a multiset. A multi-dimension array will be converted to a single-dimension array before the operation.", examples: ["setMultiplicity(1, [1, 2, 2, 4])", "setMultiplicity(2, [1, 2, 2, 4])"], seealso: ["setDistinct", "setSize"] };
-var BI = { name: "setPowerset", category: "Set", syntax: ["setPowerset(set)"], description: "Create the powerset of a (multi)set: the powerset contains very possible subsets of a (multi)set. A multi-dimension array will be converted to a single-dimension array before the operation.", examples: ["setPowerset([1, 2, 3])"], seealso: ["setCartesian"] };
-var TI = { name: "setSize", category: "Set", syntax: ["setSize(set)", "setSize(set, unique)"], description: 'Count the number of elements of a (multi)set. When the second parameter "unique" is true, count only the unique values. A multi-dimension array will be converted to a single-dimension array before the operation.', examples: ["setSize([1, 2, 2, 4])", "setSize([1, 2, 2, 4], true)"], seealso: ["setUnion", "setIntersect", "setDifference"] };
-var MI = { name: "setSymDifference", category: "Set", syntax: ["setSymDifference(set1, set2)"], description: "Create the symmetric difference of two (multi)sets. Multi-dimension arrays will be converted to single-dimension arrays before the operation.", examples: ["setSymDifference([1, 2, 3, 4], [3, 4, 5, 6])", "setSymDifference([[1, 2], [3, 4]], [[3, 4], [5, 6]])"], seealso: ["setUnion", "setIntersect", "setDifference"] };
-var EI = { name: "setUnion", category: "Set", syntax: ["setUnion(set1, set2)"], description: "Create the union of two (multi)sets. Multi-dimension arrays will be converted to single-dimension arrays before the operation.", examples: ["setUnion([1, 2, 3, 4], [3, 4, 5, 6])", "setUnion([[1, 2], [3, 4]], [[3, 4], [5, 6]])"], seealso: ["setIntersect", "setDifference"] };
-var OI = { name: "zpk2tf", category: "Signal", syntax: ["zpk2tf(z, p, k)"], description: "Compute the transfer function of a zero-pole-gain model.", examples: ["zpk2tf([1, 2], [-1, -2], 1)", "zpk2tf([1, 2], [-1, -2])", "zpk2tf([1 - 3i, 2 + 2i], [-1, -2])"], seealso: [] };
-var NI = { name: "freqz", category: "Signal", syntax: ["freqz(b, a)", "freqz(b, a, w)"], description: "Calculates the frequency response of a filter given its numerator and denominator coefficients.", examples: ["freqz([1, 2], [1, 2, 3])", "freqz([1, 2], [1, 2, 3], [0, 1])", "freqz([1, 2], [1, 2, 3], 512)"], seealso: [] };
-var AI = { name: "erf", category: "Special", syntax: ["erf(x)"], description: "Compute the erf function of a value using a rational Chebyshev approximations for different intervals of x", examples: ["erf(0.2)", "erf(-0.5)", "erf(4)"], seealso: [] };
-var CI = { name: "zeta", category: "Special", syntax: ["zeta(s)"], description: "Compute the Riemann Zeta Function using an infinite series and Riemanns Functional Equation for the entire complex plane", examples: ["zeta(0.2)", "zeta(-0.5)", "zeta(4)"], seealso: [] };
-var jI = { name: "mad", category: "Statistics", syntax: ["mad(a, b, c, ...)", "mad(A)"], description: "Compute the median absolute deviation of a matrix or a list with values. The median absolute deviation is defined as the median of the absolute deviations from the median.", examples: ["mad(10, 20, 30)", "mad([1, 2, 3])"], seealso: ["mean", "median", "std", "abs"] };
-var SI = { name: "max", category: "Statistics", syntax: ["max(a, b, c, ...)", "max(A)", "max(A, dimension)"], description: "Compute the maximum value of a list of values.", examples: ["max(2, 3, 4, 1)", "max([2, 3, 4, 1])", "max([2, 5; 4, 3])", "max([2, 5; 4, 3], 1)", "max([2, 5; 4, 3], 2)", "max(2.7, 7.1, -4.5, 2.0, 4.1)", "min(2.7, 7.1, -4.5, 2.0, 4.1)"], seealso: ["mean", "median", "min", "prod", "std", "sum", "variance"] };
-var qI = { name: "mean", category: "Statistics", syntax: ["mean(a, b, c, ...)", "mean(A)", "mean(A, dimension)"], description: "Compute the arithmetic mean of a list of values.", examples: ["mean(2, 3, 4, 1)", "mean([2, 3, 4, 1])", "mean([2, 5; 4, 3])", "mean([2, 5; 4, 3], 1)", "mean([2, 5; 4, 3], 2)", "mean([1.0, 2.7, 3.2, 4.0])"], seealso: ["max", "median", "min", "prod", "std", "sum", "variance"] };
-var vI = { name: "median", category: "Statistics", syntax: ["median(a, b, c, ...)", "median(A)"], description: "Compute the median of all values. The values are sorted and the middle value is returned. In case of an even number of values, the average of the two middle values is returned.", examples: ["median(5, 2, 7)", "median([3, -1, 5, 7])"], seealso: ["max", "mean", "min", "prod", "std", "sum", "variance", "quantileSeq"] };
-var wI = { name: "min", category: "Statistics", syntax: ["min(a, b, c, ...)", "min(A)", "min(A, dimension)"], description: "Compute the minimum value of a list of values.", examples: ["min(2, 3, 4, 1)", "min([2, 3, 4, 1])", "min([2, 5; 4, 3])", "min([2, 5; 4, 3], 1)", "min([2, 5; 4, 3], 2)", "min(2.7, 7.1, -4.5, 2.0, 4.1)", "max(2.7, 7.1, -4.5, 2.0, 4.1)"], seealso: ["max", "mean", "median", "prod", "std", "sum", "variance"] };
-var kI = { name: "mode", category: "Statistics", syntax: ["mode(a, b, c, ...)", "mode(A)", "mode(A, a, b, B, c, ...)"], description: "Computes the mode of all values as an array. In case mode being more than one, multiple values are returned in an array.", examples: ["mode(2, 1, 4, 3, 1)", "mode([1, 2.7, 3.2, 4, 2.7])", "mode(1, 4, 6, 1, 6)"], seealso: ["max", "mean", "min", "median", "prod", "std", "sum", "variance"] };
-var hI = { name: "prod", category: "Statistics", syntax: ["prod(a, b, c, ...)", "prod(A)"], description: "Compute the product of all values.", examples: ["prod(2, 3, 4)", "prod([2, 3, 4])", "prod([2, 5; 4, 3])"], seealso: ["max", "mean", "min", "median", "min", "std", "sum", "variance"] };
-var fI = { name: "quantileSeq", category: "Statistics", syntax: ["quantileSeq(A, prob[, sorted])", "quantileSeq(A, [prob1, prob2, ...][, sorted])", "quantileSeq(A, N[, sorted])"], description: "Compute the prob order quantile of a matrix or a list with values. The sequence is sorted and the middle value is returned. Supported types of sequence values are: Number, BigNumber, Unit Supported types of probablity are: Number, BigNumber. \n\nIn case of a (multi dimensional) array or matrix, the prob order quantile of all elements will be calculated.", examples: ["quantileSeq([3, -1, 5, 7], 0.5)", "quantileSeq([3, -1, 5, 7], [1/3, 2/3])", "quantileSeq([3, -1, 5, 7], 2)", "quantileSeq([-1, 3, 5, 7], 0.5, true)"], seealso: ["mean", "median", "min", "max", "prod", "std", "sum", "variance"] };
-var xI = { name: "std", category: "Statistics", syntax: ["std(a, b, c, ...)", "std(A)", "std(A, dimension)", "std(A, normalization)", "std(A, dimension, normalization)"], description: 'Compute the standard deviation of all values, defined as std(A) = sqrt(variance(A)). Optional parameter normalization can be "unbiased" (default), "uncorrected", or "biased".', examples: ["std(2, 4, 6)", "std([2, 4, 6, 8])", 'std([2, 4, 6, 8], "uncorrected")', 'std([2, 4, 6, 8], "biased")', "std([1, 2, 3; 4, 5, 6])"], seealso: ["max", "mean", "min", "median", "prod", "sum", "variance"] };
-var gI = { name: "cumsum", category: "Statistics", syntax: ["cumsum(a, b, c, ...)", "cumsum(A)"], description: "Compute the cumulative sum of all values.", examples: ["cumsum(2, 3, 4, 1)", "cumsum([2, 3, 4, 1])", "cumsum([1, 2; 3, 4])", "cumsum([1, 2; 3, 4], 1)", "cumsum([1, 2; 3, 4], 2)"], seealso: ["max", "mean", "median", "min", "prod", "std", "sum", "variance"] };
-var yI = { name: "sum", category: "Statistics", syntax: ["sum(a, b, c, ...)", "sum(A)", "sum(A, dimension)"], description: "Compute the sum of all values.", examples: ["sum(2, 3, 4, 1)", "sum([2, 3, 4, 1])", "sum([2, 5; 4, 3])"], seealso: ["max", "mean", "median", "min", "prod", "std", "sum", "variance"] };
-var bI = { name: "variance", category: "Statistics", syntax: ["variance(a, b, c, ...)", "variance(A)", "variance(A, dimension)", "variance(A, normalization)", "variance(A, dimension, normalization)"], description: 'Compute the variance of all values. Optional parameter normalization can be "unbiased" (default), "uncorrected", or "biased".', examples: ["variance(2, 4, 6)", "variance([2, 4, 6, 8])", 'variance([2, 4, 6, 8], "uncorrected")', 'variance([2, 4, 6, 8], "biased")', "variance([1, 2, 3; 4, 5, 6])"], seealso: ["max", "mean", "min", "median", "min", "prod", "std", "sum"] };
-var mI = { name: "corr", category: "Statistics", syntax: ["corr(A,B)"], description: "Compute the correlation coefficient of a two list with values, For matrices, the matrix correlation coefficient is calculated.", examples: ["corr([2, 4, 6, 8],[1, 2, 3, 6])", "corr(matrix([[1, 2.2, 3, 4.8, 5], [1, 2, 3, 4, 5]]), matrix([[4, 5.3, 6.6, 7, 8], [1, 2, 3, 4, 5]]))"], seealso: ["max", "mean", "min", "median", "min", "prod", "std", "sum"] };
-var pI = { name: "acos", category: "Trigonometry", syntax: ["acos(x)"], description: "Compute the inverse cosine of a value in radians.", examples: ["acos(0.5)", "acos(cos(2.3))"], seealso: ["cos", "atan", "asin"] };
-var dI = { name: "acosh", category: "Trigonometry", syntax: ["acosh(x)"], description: "Calculate the hyperbolic arccos of a value, defined as `acosh(x) = ln(sqrt(x^2 - 1) + x)`.", examples: ["acosh(1.5)"], seealso: ["cosh", "asinh", "atanh"] };
-var uI = { name: "acot", category: "Trigonometry", syntax: ["acot(x)"], description: "Calculate the inverse cotangent of a value.", examples: ["acot(0.5)", "acot(cot(0.5))", "acot(2)"], seealso: ["cot", "atan"] };
-var _I = { name: "acoth", category: "Trigonometry", syntax: ["acoth(x)"], description: "Calculate the hyperbolic arccotangent of a value, defined as `acoth(x) = (ln((x+1)/x) + ln(x/(x-1))) / 2`.", examples: ["acoth(2)", "acoth(0.5)"], seealso: ["acsch", "asech"] };
-var cI = { name: "acsc", category: "Trigonometry", syntax: ["acsc(x)"], description: "Calculate the inverse cotangent of a value.", examples: ["acsc(2)", "acsc(csc(0.5))", "acsc(0.5)"], seealso: ["csc", "asin", "asec"] };
-var lI = { name: "acsch", category: "Trigonometry", syntax: ["acsch(x)"], description: "Calculate the hyperbolic arccosecant of a value, defined as `acsch(x) = ln(1/x + sqrt(1/x^2 + 1))`.", examples: ["acsch(0.5)"], seealso: ["asech", "acoth"] };
-var sI = { name: "asec", category: "Trigonometry", syntax: ["asec(x)"], description: "Calculate the inverse secant of a value.", examples: ["asec(0.5)", "asec(sec(0.5))", "asec(2)"], seealso: ["acos", "acot", "acsc"] };
-var nI = { name: "asech", category: "Trigonometry", syntax: ["asech(x)"], description: "Calculate the inverse secant of a value.", examples: ["asech(0.5)"], seealso: ["acsch", "acoth"] };
-var oI = { name: "asin", category: "Trigonometry", syntax: ["asin(x)"], description: "Compute the inverse sine of a value in radians.", examples: ["asin(0.5)", "asin(sin(0.5))"], seealso: ["sin", "acos", "atan"] };
-var iI = { name: "asinh", category: "Trigonometry", syntax: ["asinh(x)"], description: "Calculate the hyperbolic arcsine of a value, defined as `asinh(x) = ln(x + sqrt(x^2 + 1))`.", examples: ["asinh(0.5)"], seealso: ["acosh", "atanh"] };
-var aI = { name: "atan", category: "Trigonometry", syntax: ["atan(x)"], description: "Compute the inverse tangent of a value in radians.", examples: ["atan(0.5)", "atan(tan(0.5))"], seealso: ["tan", "acos", "asin"] };
-var rI = { name: "atan2", category: "Trigonometry", syntax: ["atan2(y, x)"], description: "Computes the principal value of the arc tangent of y/x in radians.", examples: ["atan2(2, 2) / pi", "angle = 60 deg in rad", "x = cos(angle)", "y = sin(angle)", "atan2(y, x)"], seealso: ["sin", "cos", "tan"] };
-var tI = { name: "atanh", category: "Trigonometry", syntax: ["atanh(x)"], description: "Calculate the hyperbolic arctangent of a value, defined as `atanh(x) = ln((1 + x)/(1 - x)) / 2`.", examples: ["atanh(0.5)"], seealso: ["acosh", "asinh"] };
-var eI = { name: "cos", category: "Trigonometry", syntax: ["cos(x)"], description: "Compute the cosine of x in radians.", examples: ["cos(2)", "cos(pi / 4) ^ 2", "cos(180 deg)", "cos(60 deg)", "sin(0.2)^2 + cos(0.2)^2"], seealso: ["acos", "sin", "tan"] };
-var $B = { name: "cosh", category: "Trigonometry", syntax: ["cosh(x)"], description: "Compute the hyperbolic cosine of x in radians.", examples: ["cosh(0.5)"], seealso: ["sinh", "tanh", "coth"] };
-var JB = { name: "cot", category: "Trigonometry", syntax: ["cot(x)"], description: "Compute the cotangent of x in radians. Defined as 1/tan(x)", examples: ["cot(2)", "1 / tan(2)"], seealso: ["sec", "csc", "tan"] };
-var QB = { name: "coth", category: "Trigonometry", syntax: ["coth(x)"], description: "Compute the hyperbolic cotangent of x in radians.", examples: ["coth(2)", "1 / tanh(2)"], seealso: ["sech", "csch", "tanh"] };
-var ZB = { name: "csc", category: "Trigonometry", syntax: ["csc(x)"], description: "Compute the cosecant of x in radians. Defined as 1/sin(x)", examples: ["csc(2)", "1 / sin(2)"], seealso: ["sec", "cot", "sin"] };
-var KB = { name: "csch", category: "Trigonometry", syntax: ["csch(x)"], description: "Compute the hyperbolic cosecant of x in radians. Defined as 1/sinh(x)", examples: ["csch(2)", "1 / sinh(2)"], seealso: ["sech", "coth", "sinh"] };
-var HB = { name: "sec", category: "Trigonometry", syntax: ["sec(x)"], description: "Compute the secant of x in radians. Defined as 1/cos(x)", examples: ["sec(2)", "1 / cos(2)"], seealso: ["cot", "csc", "cos"] };
-var WB = { name: "sech", category: "Trigonometry", syntax: ["sech(x)"], description: "Compute the hyperbolic secant of x in radians. Defined as 1/cosh(x)", examples: ["sech(2)", "1 / cosh(2)"], seealso: ["coth", "csch", "cosh"] };
-var YB = { name: "sin", category: "Trigonometry", syntax: ["sin(x)"], description: "Compute the sine of x in radians.", examples: ["sin(2)", "sin(pi / 4) ^ 2", "sin(90 deg)", "sin(30 deg)", "sin(0.2)^2 + cos(0.2)^2"], seealso: ["asin", "cos", "tan"] };
-var UB = { name: "sinh", category: "Trigonometry", syntax: ["sinh(x)"], description: "Compute the hyperbolic sine of x in radians.", examples: ["sinh(0.5)"], seealso: ["cosh", "tanh"] };
-var GB = { name: "tan", category: "Trigonometry", syntax: ["tan(x)"], description: "Compute the tangent of x in radians.", examples: ["tan(0.5)", "sin(0.5) / cos(0.5)", "tan(pi / 4)", "tan(45 deg)"], seealso: ["atan", "sin", "cos"] };
-var LB = { name: "tanh", category: "Trigonometry", syntax: ["tanh(x)"], description: "Compute the hyperbolic tangent of x in radians.", examples: ["tanh(0.5)", "sinh(0.5) / cosh(0.5)"], seealso: ["sinh", "cosh"] };
-var XB = { name: "to", category: "Units", syntax: ["x to unit", "to(x, unit)"], description: "Change the unit of a value.", examples: ["5 inch to cm", "3.2kg to g", "16 bytes in bits"], seealso: [] };
-var DB = { name: "bin", category: "Utils", syntax: ["bin(value)"], description: "Format a number as binary", examples: ["bin(2)"], seealso: ["oct", "hex"] };
-var RB = { name: "clone", category: "Utils", syntax: ["clone(x)"], description: "Clone a variable. Creates a copy of primitive variables,and a deep copy of matrices", examples: ["clone(3.5)", "clone(2 - 4i)", "clone(45 deg)", "clone([1, 2; 3, 4])", 'clone("hello world")'], seealso: [] };
-var VB = { name: "format", category: "Utils", syntax: ["format(value)", "format(value, precision)"], description: "Format a value of any type as string.", examples: ["format(2.3)", "format(3 - 4i)", "format([])", "format(pi, 3)"], seealso: ["print"] };
-var zB = { name: "hasNumericValue", category: "Utils", syntax: ["hasNumericValue(x)"], description: "Test whether a value is an numeric value. In case of a string, true is returned if the string contains a numeric value.", examples: ["hasNumericValue(2)", 'hasNumericValue("2")', 'isNumeric("2")', "hasNumericValue(0)", "hasNumericValue(bignumber(500))", "hasNumericValue(fraction(0.125))", "hasNumericValue(2 + 3i)", 'hasNumericValue([2.3, "foo", false])'], seealso: ["isInteger", "isZero", "isNegative", "isPositive", "isNaN", "isNumeric"] };
-var FB = { name: "hex", category: "Utils", syntax: ["hex(value)"], description: "Format a number as hexadecimal", examples: ["hex(240)"], seealso: ["bin", "oct"] };
-var PB = { name: "isInteger", category: "Utils", syntax: ["isInteger(x)"], description: "Test whether a value is an integer number.", examples: ["isInteger(2)", "isInteger(3.5)", "isInteger([3, 0.5, -2])"], seealso: ["isNegative", "isNumeric", "isPositive", "isZero"] };
-var IB = { name: "isNaN", category: "Utils", syntax: ["isNaN(x)"], description: "Test whether a value is NaN (not a number)", examples: ["isNaN(2)", "isNaN(0 / 0)", "isNaN(NaN)", "isNaN(Infinity)"], seealso: ["isNegative", "isNumeric", "isPositive", "isZero"] };
-var BB = { name: "isNegative", category: "Utils", syntax: ["isNegative(x)"], description: "Test whether a value is negative: smaller than zero.", examples: ["isNegative(2)", "isNegative(0)", "isNegative(-4)", "isNegative([3, 0.5, -2])"], seealso: ["isInteger", "isNumeric", "isPositive", "isZero"] };
-var TB = { name: "isNumeric", category: "Utils", syntax: ["isNumeric(x)"], description: "Test whether a value is a numeric value. Returns true when the input is a number, BigNumber, Fraction, or boolean.", examples: ["isNumeric(2)", 'isNumeric("2")', 'hasNumericValue("2")', "isNumeric(0)", "isNumeric(bignumber(500))", "isNumeric(fraction(0.125))", "isNumeric(2 + 3i)", 'isNumeric([2.3, "foo", false])'], seealso: ["isInteger", "isZero", "isNegative", "isPositive", "isNaN", "hasNumericValue"] };
-var MB = { name: "isPositive", category: "Utils", syntax: ["isPositive(x)"], description: "Test whether a value is positive: larger than zero.", examples: ["isPositive(2)", "isPositive(0)", "isPositive(-4)", "isPositive([3, 0.5, -2])"], seealso: ["isInteger", "isNumeric", "isNegative", "isZero"] };
-var EB = { name: "isPrime", category: "Utils", syntax: ["isPrime(x)"], description: "Test whether a value is prime: has no divisors other than itself and one.", examples: ["isPrime(3)", "isPrime(-2)", "isPrime([2, 17, 100])"], seealso: ["isInteger", "isNumeric", "isNegative", "isZero"] };
-var OB = { name: "isZero", category: "Utils", syntax: ["isZero(x)"], description: "Test whether a value is zero.", examples: ["isZero(2)", "isZero(0)", "isZero(-4)", "isZero([3, 0, -2, 0])"], seealso: ["isInteger", "isNumeric", "isNegative", "isPositive"] };
-var NB = { name: "numeric", category: "Utils", syntax: ["numeric(x)"], description: "Convert a numeric input to a specific numeric type: number, BigNumber, or Fraction.", examples: ['numeric("4")', 'numeric("4", "number")', 'numeric("4", "BigNumber")', 'numeric("4", "Fraction")', 'numeric(4, "Fraction")', 'numeric(fraction(2, 5), "number")'], seealso: ["number", "fraction", "bignumber", "string", "format"] };
-var AB = { name: "oct", category: "Utils", syntax: ["oct(value)"], description: "Format a number as octal", examples: ["oct(56)"], seealso: ["bin", "hex"] };
-var CB = { name: "print", category: "Utils", syntax: ["print(template, values)", "print(template, values, precision)"], description: "Interpolate values into a string template.", examples: ['print("Lucy is $age years old", {age: 5})', 'print("The value of pi is $pi", {pi: pi}, 3)', 'print("Hello, $user.name!", {user: {name: "John"}})', 'print("Values: $1, $2, $3", [6, 9, 4])'], seealso: ["format"] };
-var jB = { name: "typeOf", category: "Utils", syntax: ["typeOf(x)"], description: "Get the type of a variable.", examples: ["typeOf(3.5)", "typeOf(2 - 4i)", "typeOf(45 deg)", 'typeOf("hello world")'], seealso: ["getMatrixDataType"] };
-var SB = { name: "solveODE", category: "Numeric", syntax: ["solveODE(func, tspan, y0)", "solveODE(func, tspan, y0, options)"], description: "Numerical Integration of Ordinary Differential Equations.", examples: ["f(t,y) = y", "tspan = [0, 4]", "solveODE(f, tspan, 1)", "solveODE(f, tspan, [1, 2])", 'solveODE(f, tspan, 1, { method:"RK23", maxStep:0.1 })'], seealso: ["derivative", "simplifyCore"] };
-var qB = { bignumber: B3, boolean: T3, complex: M3, createUnit: E3, fraction: O3, index: N3, matrix: A3, number: C32, sparse: j3, splitUnit: S3, string: q3, unit: v3, e: QY, E: QY, false: K3, i: H3, Infinity: W3, LN2: U3, LN10: Y3, LOG2E: L3, LOG10E: G3, NaN: X3, null: D3, pi: ZY, PI: ZY, phi: R3, SQRT1_2: V3, SQRT2: z3, tau: F3, true: P3, version: I3, speedOfLight: { description: "Speed of light in vacuum", examples: ["speedOfLight"] }, gravitationConstant: { description: "Newtonian constant of gravitation", examples: ["gravitationConstant"] }, planckConstant: { description: "Planck constant", examples: ["planckConstant"] }, reducedPlanckConstant: { description: "Reduced Planck constant", examples: ["reducedPlanckConstant"] }, magneticConstant: { description: "Magnetic constant (vacuum permeability)", examples: ["magneticConstant"] }, electricConstant: { description: "Electric constant (vacuum permeability)", examples: ["electricConstant"] }, vacuumImpedance: { description: "Characteristic impedance of vacuum", examples: ["vacuumImpedance"] }, coulomb: { description: "Coulomb\'s constant", examples: ["coulomb"] }, elementaryCharge: { description: "Elementary charge", examples: ["elementaryCharge"] }, bohrMagneton: { description: "Borh magneton", examples: ["bohrMagneton"] }, conductanceQuantum: { description: "Conductance quantum", examples: ["conductanceQuantum"] }, inverseConductanceQuantum: { description: "Inverse conductance quantum", examples: ["inverseConductanceQuantum"] }, magneticFluxQuantum: { description: "Magnetic flux quantum", examples: ["magneticFluxQuantum"] }, nuclearMagneton: { description: "Nuclear magneton", examples: ["nuclearMagneton"] }, klitzing: { description: "Von Klitzing constant", examples: ["klitzing"] }, bohrRadius: { description: "Borh radius", examples: ["bohrRadius"] }, classicalElectronRadius: { description: "Classical electron radius", examples: ["classicalElectronRadius"] }, electronMass: { description: "Electron mass", examples: ["electronMass"] }, fermiCoupling: { description: "Fermi coupling constant", examples: ["fermiCoupling"] }, fineStructure: { description: "Fine-structure constant", examples: ["fineStructure"] }, hartreeEnergy: { description: "Hartree energy", examples: ["hartreeEnergy"] }, protonMass: { description: "Proton mass", examples: ["protonMass"] }, deuteronMass: { description: "Deuteron Mass", examples: ["deuteronMass"] }, neutronMass: { description: "Neutron mass", examples: ["neutronMass"] }, quantumOfCirculation: { description: "Quantum of circulation", examples: ["quantumOfCirculation"] }, rydberg: { description: "Rydberg constant", examples: ["rydberg"] }, thomsonCrossSection: { description: "Thomson cross section", examples: ["thomsonCrossSection"] }, weakMixingAngle: { description: "Weak mixing angle", examples: ["weakMixingAngle"] }, efimovFactor: { description: "Efimov factor", examples: ["efimovFactor"] }, atomicMass: { description: "Atomic mass constant", examples: ["atomicMass"] }, avogadro: { description: "Avogadro\'s number", examples: ["avogadro"] }, boltzmann: { description: "Boltzmann constant", examples: ["boltzmann"] }, faraday: { description: "Faraday constant", examples: ["faraday"] }, firstRadiation: { description: "First radiation constant", examples: ["firstRadiation"] }, loschmidt: { description: "Loschmidt constant at T=273.15 K and p=101.325 kPa", examples: ["loschmidt"] }, gasConstant: { description: "Gas constant", examples: ["gasConstant"] }, molarPlanckConstant: { description: "Molar Planck constant", examples: ["molarPlanckConstant"] }, molarVolume: { description: "Molar volume of an ideal gas at T=273.15 K and p=101.325 kPa", examples: ["molarVolume"] }, sackurTetrode: { description: "Sackur-Tetrode constant at T=1 K and p=101.325 kPa", examples: ["sackurTetrode"] }, secondRadiation: { description: "Second radiation constant", examples: ["secondRadiation"] }, stefanBoltzmann: { description: "Stefan-Boltzmann constant", examples: ["stefanBoltzmann"] }, wienDisplacement: { description: "Wien displacement law constant", examples: ["wienDisplacement"] }, molarMass: { description: "Molar mass constant", examples: ["molarMass"] }, molarMassC12: { description: "Molar mass constant of carbon-12", examples: ["molarMassC12"] }, gravity: { description: "Standard acceleration of gravity (standard acceleration of free-fall on Earth)", examples: ["gravity"] }, planckLength: { description: "Planck length", examples: ["planckLength"] }, planckMass: { description: "Planck mass", examples: ["planckMass"] }, planckTime: { description: "Planck time", examples: ["planckTime"] }, planckCharge: { description: "Planck charge", examples: ["planckCharge"] }, planckTemperature: { description: "Planck temperature", examples: ["planckTemperature"] }, derivative: f3, lsolve: g3, lsolveAll: y3, lup: b3, lusolve: m3, leafCount: x3, polynomialRoot: p3, resolve: _3, simplify: c3, simplifyConstant: l3, simplifyCore: s3, symbolicEqual: o3, rationalize: u3, slu: n3, usolve: i3, usolveAll: a3, qr: d3, abs: r3, add: t3, cbrt: e3, ceil: $F, cube: JF, divide: QF, dotDivide: ZF, dotMultiply: KF, dotPow: HF, exp: WF, expm: YF, expm1: UF, fix: GF, floor: LF, gcd: XF, hypot: DF, lcm: VF, log: zF, log2: IF, log1p: PF, log10: FF, mod: BF, multiply: TF, norm: MF, nthRoot: EF, nthRoots: OF, pow: NF, round: AF, sign: CF, sqrt: jF, sqrtm: SF, square: kF, subtract: hF, unaryMinus: fF, unaryPlus: xF, xgcd: gF, invmod: RF, bitAnd: yF, bitNot: bF, bitOr: mF, bitXor: pF, leftShift: dF, rightArithShift: uF, rightLogShift: _F, bellNumbers: cF, catalan: lF, composition: sF, stirlingS2: nF, config: w3, import: k3, typed: h3, arg: oF, conj: iF, re: rF, im: aF, evaluate: tF, help: eF, distance: $P, intersect: JP, and: QP, not: ZP, or: KP, xor: HP, concat: YP, count: UP, cross: GP, column: WP, ctranspose: LP, det: XP, diag: DP, diff: RP, dot: VP, getMatrixDataType: BP, identity: TP, filter: FP, flatten: PP, forEach: IP, inv: MP, pinv: EP, eigs: zP, kron: OP, matrixFromFunction: CP, matrixFromRows: jP, matrixFromColumns: AP, map: NP, ones: SP, partitionSelect: qP, range: vP, resize: kP, reshape: wP, rotate: hP, rotationMatrix: fP, row: xP, size: gP, sort: yP, squeeze: bP, subset: mP, trace: pP, transpose: dP, zeros: uP, fft: _P, ifft: cP, sylvester: qF, schur: vF, lyap: wF, solveODE: SB, combinations: lP, combinationsWithRep: sP, factorial: nP, gamma: oP, kldivergence: aP, lgamma: iP, multinomial: rP, permutations: tP, pickRandom: eP, random: $I, randomInt: JI, compare: QI, compareNatural: ZI, compareText: KI, deepEqual: HI, equal: WI, equalText: YI, larger: UI, largerEq: GI, smaller: LI, smallerEq: XI, unequal: DI, setCartesian: RI, setDifference: VI, setDistinct: zI, setIntersect: FI, setIsSubset: PI, setMultiplicity: II, setPowerset: BI, setSize: TI, setSymDifference: MI, setUnion: EI, zpk2tf: OI, freqz: NI, erf: AI, zeta: CI, cumsum: gI, mad: jI, max: SI, mean: qI, median: vI, min: wI, mode: kI, prod: hI, quantileSeq: fI, std: xI, sum: yI, variance: bI, corr: mI, acos: pI, acosh: dI, acot: uI, acoth: _I, acsc: cI, acsch: lI, asec: sI, asech: nI, asin: oI, asinh: iI, atan: aI, atanh: tI, atan2: rI, cos: eI, cosh: $B, cot: JB, coth: QB, csc: ZB, csch: KB, sec: HB, sech: WB, sin: YB, sinh: UB, tan: GB, tanh: LB, to: XB, clone: RB, format: VB, bin: DB, oct: AB, hex: FB, isNaN: IB, isInteger: PB, isNegative: BB, isNumeric: TB, hasNumericValue: zB, isPositive: MB, isPrime: EB, isZero: OB, print: CB, typeOf: jB, numeric: NB };
-var vB = "help";
-var bh = ["typed", "mathWithTransform", "Help"];
-var KY = Q0(vB, bh, (C11) => {
+var z3 = { name: "SQRT1_2", category: "Constants", syntax: ["SQRT1_2"], description: "Returns the square root of 1/2, approximately equal to 0.707", examples: ["SQRT1_2", "sqrt(1/2)"], seealso: [] };
+var F3 = { name: "SQRT2", category: "Constants", syntax: ["SQRT2"], description: "Returns the square root of 2, approximately equal to 1.414", examples: ["SQRT2", "sqrt(2)"], seealso: [] };
+var P3 = { name: "tau", category: "Constants", syntax: ["tau"], description: "Tau is the ratio constant of a circle\'s circumference to radius, equal to 2 * pi, approximately 6.2832.", examples: ["tau", "2 * pi"], seealso: ["pi"] };
+var I3 = { name: "true", category: "Constants", syntax: ["true"], description: "Boolean value true", examples: ["true"], seealso: ["false"] };
+var B3 = { name: "version", category: "Constants", syntax: ["version"], description: "A string with the version number of math.js", examples: ["version"], seealso: [] };
+var T3 = { name: "bignumber", category: "Construction", syntax: ["bignumber(x)"], description: "Create a big number from a number or string.", examples: ["0.1 + 0.2", "bignumber(0.1) + bignumber(0.2)", 'bignumber("7.2")', 'bignumber("7.2e500")', "bignumber([0.1, 0.2, 0.3])"], seealso: ["boolean", "complex", "fraction", "index", "matrix", "string", "unit"] };
+var M3 = { name: "boolean", category: "Construction", syntax: ["x", "boolean(x)"], description: "Convert a string or number into a boolean.", examples: ["boolean(0)", "boolean(1)", "boolean(3)", 'boolean("true")', 'boolean("false")', "boolean([1, 0, 1, 1])"], seealso: ["bignumber", "complex", "index", "matrix", "number", "string", "unit"] };
+var E3 = { name: "complex", category: "Construction", syntax: ["complex()", "complex(re, im)", "complex(string)"], description: "Create a complex number.", examples: ["complex()", "complex(2, 3)", 'complex("7 - 2i")'], seealso: ["bignumber", "boolean", "index", "matrix", "number", "string", "unit"] };
+var O3 = { name: "createUnit", category: "Construction", syntax: ["createUnit(definitions)", "createUnit(name, definition)"], description: "Create a user-defined unit and register it with the Unit type.", examples: ['createUnit("foo")', 'createUnit("knot", {definition: "0.514444444 m/s", aliases: ["knots", "kt", "kts"]})', 'createUnit("mph", "1 mile/hour")'], seealso: ["unit", "splitUnit"] };
+var N3 = { name: "fraction", category: "Construction", syntax: ["fraction(num)", "fraction(matrix)", "fraction(num,den)", "fraction({n: num, d: den})"], description: "Create a fraction from a number or from integer numerator and denominator.", examples: ["fraction(0.125)", "fraction(1, 3) + fraction(2, 5)", "fraction({n: 333, d: 53})", "fraction([sqrt(9), sqrt(10), sqrt(11)])"], seealso: ["bignumber", "boolean", "complex", "index", "matrix", "string", "unit"] };
+var A3 = { name: "index", category: "Construction", syntax: ["[start]", "[start:end]", "[start:step:end]", "[start1, start 2, ...]", "[start1:end1, start2:end2, ...]", "[start1:step1:end1, start2:step2:end2, ...]"], description: "Create an index to get or replace a subset of a matrix", examples: ["A = [1, 2, 3; 4, 5, 6]", "A[1, :]", "A[1, 2] = 50", "A[1:2, 1:2] = 1", "B = [1, 2, 3]", "B[B>1 and B<3]"], seealso: ["bignumber", "boolean", "complex", "matrix,", "number", "range", "string", "unit"] };
+var C32 = { name: "matrix", category: "Construction", syntax: ["[]", "[a1, b1, ...; a2, b2, ...]", "matrix()", 'matrix("dense")', "matrix([...])"], description: "Create a matrix.", examples: ["[]", "[1, 2, 3]", "[1, 2, 3; 4, 5, 6]", "matrix()", "matrix([3, 4])", 'matrix([3, 4; 5, 6], "sparse")', 'matrix([3, 4; 5, 6], "sparse", "number")'], seealso: ["bignumber", "boolean", "complex", "index", "number", "string", "unit", "sparse"] };
+var j3 = { name: "number", category: "Construction", syntax: ["x", "number(x)", "number(unit, valuelessUnit)"], description: "Create a number or convert a string or boolean into a number.", examples: ["2", "2e3", "4.05", "number(2)", 'number("7.2")', "number(true)", "number([true, false, true, true])", 'number(unit("52cm"), "m")'], seealso: ["bignumber", "boolean", "complex", "fraction", "index", "matrix", "string", "unit"] };
+var S3 = { name: "sparse", category: "Construction", syntax: ["sparse()", "sparse([a1, b1, ...; a1, b2, ...])", 'sparse([a1, b1, ...; a1, b2, ...], "number")'], description: "Create a sparse matrix.", examples: ["sparse()", "sparse([3, 4; 5, 6])", 'sparse([3, 0; 5, 0], "number")'], seealso: ["bignumber", "boolean", "complex", "index", "number", "string", "unit", "matrix"] };
+var q3 = { name: "splitUnit", category: "Construction", syntax: ["splitUnit(unit: Unit, parts: Unit[])"], description: "Split a unit in an array of units whose sum is equal to the original unit.", examples: ['splitUnit(1 m, ["feet", "inch"])'], seealso: ["unit", "createUnit"] };
+var v3 = { name: "string", category: "Construction", syntax: ['"text"', "string(x)"], description: "Create a string or convert a value to a string", examples: ['"Hello World!"', "string(4.2)", "string(3 + 2i)"], seealso: ["bignumber", "boolean", "complex", "index", "matrix", "number", "unit"] };
+var w3 = { name: "unit", category: "Construction", syntax: ["value unit", "unit(value, unit)", "unit(string)"], description: "Create a unit.", examples: ["5.5 mm", "3 inch", 'unit(7.1, "kilogram")', 'unit("23 deg")'], seealso: ["bignumber", "boolean", "complex", "index", "matrix", "number", "string"] };
+var k3 = { name: "config", category: "Core", syntax: ["config()", "config(options)"], description: "Get configuration or change configuration.", examples: ["config()", "1/3 + 1/4", 'config({number: "Fraction"})', "1/3 + 1/4"], seealso: [] };
+var h3 = { name: "import", category: "Core", syntax: ["import(functions)", "import(functions, options)"], description: "Import functions or constants from an object.", examples: ["import({myFn: f(x)=x^2, myConstant: 32 })", "myFn(2)", "myConstant"], seealso: [] };
+var f3 = { name: "typed", category: "Core", syntax: ["typed(signatures)", "typed(name, signatures)"], description: "Create a typed function.", examples: ['double = typed({ "number": f(x)=x+x, "string": f(x)=concat(x,x) })', "double(2)", 'double("hello")'], seealso: [] };
+var x3 = { name: "derivative", category: "Algebra", syntax: ["derivative(expr, variable)", "derivative(expr, variable, {simplify: boolean})"], description: "Takes the derivative of an expression expressed in parser Nodes. The derivative will be taken over the supplied variable in the second parameter. If there are multiple variables in the expression, it will return a partial derivative.", examples: ['derivative("2x^3", "x")', 'derivative("2x^3", "x", {simplify: false})', 'derivative("2x^2 + 3x + 4", "x")', 'derivative("sin(2x)", "x")', 'f = parse("x^2 + x")', 'x = parse("x")', "df = derivative(f, x)", "df.evaluate({x: 3})"], seealso: ["simplify", "parse", "evaluate"] };
+var g3 = { name: "leafCount", category: "Algebra", syntax: ["leafCount(expr)"], description: "Computes the number of leaves in the parse tree of the given expression", examples: ['leafCount("e^(i*pi)-1")', 'leafCount(parse("{a: 22/7, b: 10^(1/2)}"))'], seealso: ["simplify"] };
+var y3 = { name: "lsolve", category: "Algebra", syntax: ["x=lsolve(L, b)"], description: "Finds one solution of the linear system L * x = b where L is an [n x n] lower triangular matrix and b is a [n] column vector.", examples: ["a = [-2, 3; 2, 1]", "b = [11, 9]", "x = lsolve(a, b)"], seealso: ["lsolveAll", "lup", "lusolve", "usolve", "matrix", "sparse"] };
+var b3 = { name: "lsolveAll", category: "Algebra", syntax: ["x=lsolveAll(L, b)"], description: "Finds all solutions of the linear system L * x = b where L is an [n x n] lower triangular matrix and b is a [n] column vector.", examples: ["a = [-2, 3; 2, 1]", "b = [11, 9]", "x = lsolve(a, b)"], seealso: ["lsolve", "lup", "lusolve", "usolve", "matrix", "sparse"] };
+var m3 = { name: "lup", category: "Algebra", syntax: ["lup(m)"], description: "Calculate the Matrix LU decomposition with partial pivoting. Matrix A is decomposed in three matrices (L, U, P) where P * A = L * U", examples: ["lup([[2, 1], [1, 4]])", "lup(matrix([[2, 1], [1, 4]]))", "lup(sparse([[2, 1], [1, 4]]))"], seealso: ["lusolve", "lsolve", "usolve", "matrix", "sparse", "slu", "qr"] };
+var p3 = { name: "lusolve", category: "Algebra", syntax: ["x=lusolve(A, b)", "x=lusolve(lu, b)"], description: "Solves the linear system A * x = b where A is an [n x n] matrix and b is a [n] column vector.", examples: ["a = [-2, 3; 2, 1]", "b = [11, 9]", "x = lusolve(a, b)"], seealso: ["lup", "slu", "lsolve", "usolve", "matrix", "sparse"] };
+var d3 = { name: "polynomialRoot", category: "Algebra", syntax: ["x=polynomialRoot(-6, 3)", "x=polynomialRoot(4, -4, 1)", "x=polynomialRoot(-8, 12, -6, 1)"], description: "Finds the roots of a univariate polynomial given by its coefficients starting from constant, linear, and so on, increasing in degree.", examples: ["a = polynomialRoot(-6, 11, -6, 1)"], seealso: ["cbrt", "sqrt"] };
+var u3 = { name: "qr", category: "Algebra", syntax: ["qr(A)"], description: "Calculates the Matrix QR decomposition. Matrix `A` is decomposed in two matrices (`Q`, `R`) where `Q` is an orthogonal matrix and `R` is an upper triangular matrix.", examples: ["qr([[1, -1,  4], [1,  4, -2], [1,  4,  2], [1,  -1, 0]])"], seealso: ["lup", "slu", "matrix"] };
+var _3 = { name: "rationalize", category: "Algebra", syntax: ["rationalize(expr)", "rationalize(expr, scope)", "rationalize(expr, scope, detailed)"], description: "Transform a rationalizable expression in a rational fraction. If rational fraction is one variable polynomial then converts the numerator and denominator in canonical form, with decreasing exponents, returning the coefficients of numerator.", examples: ['rationalize("2x/y - y/(x+1)")', 'rationalize("2x/y - y/(x+1)", true)'], seealso: ["simplify"] };
+var c3 = { name: "resolve", category: "Algebra", syntax: ["resolve(node, scope)"], description: "Recursively substitute variables in an expression tree.", examples: ['resolve(parse("1 + x"), { x: 7 })', 'resolve(parse("size(text)"), { text: "Hello World" })', 'resolve(parse("x + y"), { x: parse("3z") })', 'resolve(parse("3x"), { x: parse("y+z"), z: parse("w^y") })'], seealso: ["simplify", "evaluate"], mayThrow: ["ReferenceError"] };
+var l3 = { name: "simplify", category: "Algebra", syntax: ["simplify(expr)", "simplify(expr, rules)"], description: "Simplify an expression tree.", examples: ['simplify("3 + 2 / 4")', 'simplify("2x + x")', 'f = parse("x * (x + 2 + x)")', "simplified = simplify(f)", "simplified.evaluate({x: 2})"], seealso: ["simplifyCore", "derivative", "evaluate", "parse", "rationalize", "resolve"] };
+var s3 = { name: "simplifyConstant", category: "Algebra", syntax: ["simplifyConstant(expr)", "simplifyConstant(expr, options)"], description: "Replace constant subexpressions of node with their values.", examples: ['simplifyConstant("(3-3)*x")', 'simplifyConstant(parse("z-cos(tau/8)"))'], seealso: ["simplify", "simplifyCore", "evaluate"] };
+var n3 = { name: "simplifyCore", category: "Algebra", syntax: ["simplifyCore(node)"], description: "Perform simple one-pass simplifications on an expression tree.", examples: ['simplifyCore(parse("0*x"))', 'simplifyCore(parse("(x+0)*2"))'], seealso: ["simplify", "simplifyConstant", "evaluate"] };
+var o3 = { name: "slu", category: "Algebra", syntax: ["slu(A, order, threshold)"], description: "Calculate the Matrix LU decomposition with full pivoting. Matrix A is decomposed in two matrices (L, U) and two permutation vectors (pinv, q) where P * A * Q = L * U", examples: ["slu(sparse([4.5, 0, 3.2, 0; 3.1, 2.9, 0, 0.9; 0, 1.7, 3, 0; 3.5, 0.4, 0, 1]), 1, 0.001)"], seealso: ["lusolve", "lsolve", "usolve", "matrix", "sparse", "lup", "qr"] };
+var i3 = { name: "symbolicEqual", category: "Algebra", syntax: ["symbolicEqual(expr1, expr2)", "symbolicEqual(expr1, expr2, options)"], description: "Returns true if the difference of the expressions simplifies to 0", examples: ['symbolicEqual("x*y","y*x")', 'symbolicEqual("abs(x^2)", "x^2")', 'symbolicEqual("abs(x)", "x", {context: {abs: {trivial: true}}})'], seealso: ["simplify", "evaluate"] };
+var a3 = { name: "usolve", category: "Algebra", syntax: ["x=usolve(U, b)"], description: "Finds one solution of the linear system U * x = b where U is an [n x n] upper triangular matrix and b is a [n] column vector.", examples: ["x=usolve(sparse([1, 1, 1, 1; 0, 1, 1, 1; 0, 0, 1, 1; 0, 0, 0, 1]), [1; 2; 3; 4])"], seealso: ["usolveAll", "lup", "lusolve", "lsolve", "matrix", "sparse"] };
+var r3 = { name: "usolveAll", category: "Algebra", syntax: ["x=usolve(U, b)"], description: "Finds all solutions of the linear system U * x = b where U is an [n x n] upper triangular matrix and b is a [n] column vector.", examples: ["x=usolve(sparse([1, 1, 1, 1; 0, 1, 1, 1; 0, 0, 1, 1; 0, 0, 0, 1]), [1; 2; 3; 4])"], seealso: ["usolve", "lup", "lusolve", "lsolve", "matrix", "sparse"] };
+var t3 = { name: "abs", category: "Arithmetic", syntax: ["abs(x)"], description: "Compute the absolute value.", examples: ["abs(3.5)", "abs(-4.2)"], seealso: ["sign"] };
+var e3 = { name: "add", category: "Operators", syntax: ["x + y", "add(x, y)"], description: "Add two values.", examples: ["a = 2.1 + 3.6", "a - 3.6", "3 + 2i", "3 cm + 2 inch", '"2.3" + "4"'], seealso: ["subtract"] };
+var $F = { name: "cbrt", category: "Arithmetic", syntax: ["cbrt(x)", "cbrt(x, allRoots)"], description: "Compute the cubic root value. If x = y * y * y, then y is the cubic root of x. When `x` is a number or complex number, an optional second argument `allRoots` can be provided to return all three cubic roots. If not provided, the principal root is returned", examples: ["cbrt(64)", "cube(4)", "cbrt(-8)", "cbrt(2 + 3i)", "cbrt(8i)", "cbrt(8i, true)", "cbrt(27 m^3)"], seealso: ["square", "sqrt", "cube", "multiply"] };
+var JF = { name: "ceil", category: "Arithmetic", syntax: ["ceil(x)"], description: "Round a value towards plus infinity. If x is complex, both real and imaginary part are rounded towards plus infinity.", examples: ["ceil(3.2)", "ceil(3.8)", "ceil(-4.2)"], seealso: ["floor", "fix", "round"] };
+var QF = { name: "cube", category: "Arithmetic", syntax: ["cube(x)"], description: "Compute the cube of a value. The cube of x is x * x * x.", examples: ["cube(2)", "2^3", "2 * 2 * 2"], seealso: ["multiply", "square", "pow"] };
+var ZF = { name: "divide", category: "Operators", syntax: ["x / y", "divide(x, y)"], description: "Divide two values.", examples: ["a = 2 / 3", "a * 3", "4.5 / 2", "3 + 4 / 2", "(3 + 4) / 2", "18 km / 4.5"], seealso: ["multiply"] };
+var KF = { name: "dotDivide", category: "Operators", syntax: ["x ./ y", "dotDivide(x, y)"], description: "Divide two values element wise.", examples: ["a = [1, 2, 3; 4, 5, 6]", "b = [2, 1, 1; 3, 2, 5]", "a ./ b"], seealso: ["multiply", "dotMultiply", "divide"] };
+var HF = { name: "dotMultiply", category: "Operators", syntax: ["x .* y", "dotMultiply(x, y)"], description: "Multiply two values element wise.", examples: ["a = [1, 2, 3; 4, 5, 6]", "b = [2, 1, 1; 3, 2, 5]", "a .* b"], seealso: ["multiply", "divide", "dotDivide"] };
+var WF = { name: "dotPow", category: "Operators", syntax: ["x .^ y", "dotPow(x, y)"], description: "Calculates the power of x to y element wise.", examples: ["a = [1, 2, 3; 4, 5, 6]", "a .^ 2"], seealso: ["pow"] };
+var YF = { name: "exp", category: "Arithmetic", syntax: ["exp(x)"], description: "Calculate the exponent of a value.", examples: ["exp(1.3)", "e ^ 1.3", "log(exp(1.3))", "x = 2.4", "(exp(i*x) == cos(x) + i*sin(x))   # Euler\'s formula"], seealso: ["expm", "expm1", "pow", "log"] };
+var UF = { name: "expm", category: "Arithmetic", syntax: ["exp(x)"], description: "Compute the matrix exponential, expm(A) = e^A. The matrix must be square. Not to be confused with exp(a), which performs element-wise exponentiation.", examples: ["expm([[0,2],[0,0]])"], seealso: ["exp"] };
+var GF = { name: "expm1", category: "Arithmetic", syntax: ["expm1(x)"], description: "Calculate the value of subtracting 1 from the exponential value.", examples: ["expm1(2)", "pow(e, 2) - 1", "log(expm1(2) + 1)"], seealso: ["exp", "pow", "log"] };
+var LF = { name: "fix", category: "Arithmetic", syntax: ["fix(x)"], description: "Round a value towards zero. If x is complex, both real and imaginary part are rounded towards zero.", examples: ["fix(3.2)", "fix(3.8)", "fix(-4.2)", "fix(-4.8)"], seealso: ["ceil", "floor", "round"] };
+var XF = { name: "floor", category: "Arithmetic", syntax: ["floor(x)"], description: "Round a value towards minus infinity.If x is complex, both real and imaginary part are rounded towards minus infinity.", examples: ["floor(3.2)", "floor(3.8)", "floor(-4.2)"], seealso: ["ceil", "fix", "round"] };
+var DF = { name: "gcd", category: "Arithmetic", syntax: ["gcd(a, b)", "gcd(a, b, c, ...)"], description: "Compute the greatest common divisor.", examples: ["gcd(8, 12)", "gcd(-4, 6)", "gcd(25, 15, -10)"], seealso: ["lcm", "xgcd"] };
+var RF = { name: "hypot", category: "Arithmetic", syntax: ["hypot(a, b, c, ...)", "hypot([a, b, c, ...])"], description: "Calculate the hypotenusa of a list with values. ", examples: ["hypot(3, 4)", "sqrt(3^2 + 4^2)", "hypot(-2)", "hypot([3, 4, 5])"], seealso: ["abs", "norm"] };
+var VF = { name: "invmod", category: "Arithmetic", syntax: ["invmod(a, b)"], description: "Calculate the (modular) multiplicative inverse of a modulo b. Solution to the equation ax \u2263 1 (mod b)", examples: ["invmod(8, 12)", "invmod(7, 13)", "invmod(15151, 15122)"], seealso: ["gcd", "xgcd"] };
+var zF = { name: "lcm", category: "Arithmetic", syntax: ["lcm(x, y)"], description: "Compute the least common multiple.", examples: ["lcm(4, 6)", "lcm(6, 21)", "lcm(6, 21, 5)"], seealso: ["gcd"] };
+var FF = { name: "log", category: "Arithmetic", syntax: ["log(x)", "log(x, base)"], description: "Compute the logarithm of a value. If no base is provided, the natural logarithm of x is calculated. If base if provided, the logarithm is calculated for the specified base. log(x, base) is defined as log(x) / log(base).", examples: ["log(3.5)", "a = log(2.4)", "exp(a)", "10 ^ 4", "log(10000, 10)", "log(10000) / log(10)", "b = log(1024, 2)", "2 ^ b"], seealso: ["exp", "log1p", "log2", "log10"] };
+var PF = { name: "log10", category: "Arithmetic", syntax: ["log10(x)"], description: "Compute the 10-base logarithm of a value.", examples: ["log10(0.00001)", "log10(10000)", "10 ^ 4", "log(10000) / log(10)", "log(10000, 10)"], seealso: ["exp", "log"] };
+var IF = { name: "log1p", category: "Arithmetic", syntax: ["log1p(x)", "log1p(x, base)"], description: "Calculate the logarithm of a `value+1`", examples: ["log1p(2.5)", "exp(log1p(1.4))", "pow(10, 4)", "log1p(9999, 10)", "log1p(9999) / log(10)"], seealso: ["exp", "log", "log2", "log10"] };
+var BF = { name: "log2", category: "Arithmetic", syntax: ["log2(x)"], description: "Calculate the 2-base of a value. This is the same as calculating `log(x, 2)`.", examples: ["log2(0.03125)", "log2(16)", "log2(16) / log2(2)", "pow(2, 4)"], seealso: ["exp", "log1p", "log", "log10"] };
+var TF = { name: "mod", category: "Operators", syntax: ["x % y", "x mod y", "mod(x, y)"], description: "Calculates the modulus, the remainder of an integer division.", examples: ["7 % 3", "11 % 2", "10 mod 4", "isOdd(x) = x % 2", "isOdd(2)", "isOdd(3)"], seealso: ["divide"] };
+var MF = { name: "multiply", category: "Operators", syntax: ["x * y", "multiply(x, y)"], description: "multiply two values.", examples: ["a = 2.1 * 3.4", "a / 3.4", "2 * 3 + 4", "2 * (3 + 4)", "3 * 2.1 km"], seealso: ["divide"] };
+var EF = { name: "norm", category: "Arithmetic", syntax: ["norm(x)", "norm(x, p)"], description: "Calculate the norm of a number, vector or matrix.", examples: ["abs(-3.5)", "norm(-3.5)", "norm(3 - 4i)", "norm([1, 2, -3], Infinity)", "norm([1, 2, -3], -Infinity)", "norm([3, 4], 2)", "norm([[1, 2], [3, 4]], 1)", 'norm([[1, 2], [3, 4]], "inf")', 'norm([[1, 2], [3, 4]], "fro")'] };
+var OF = { name: "nthRoot", category: "Arithmetic", syntax: ["nthRoot(a)", "nthRoot(a, root)"], description: 'Calculate the nth root of a value. The principal nth root of a positive real number A, is the positive real solution of the equation "x^root = A".', examples: ["4 ^ 3", "nthRoot(64, 3)", "nthRoot(9, 2)", "sqrt(9)"], seealso: ["nthRoots", "pow", "sqrt"] };
+var NF = { name: "nthRoots", category: "Arithmetic", syntax: ["nthRoots(A)", "nthRoots(A, root)"], description: 'Calculate the nth roots of a value. An nth root of a positive real number A, is a positive real solution of the equation "x^root = A". This function returns an array of complex values.', examples: ["nthRoots(1)", "nthRoots(1, 3)"], seealso: ["sqrt", "pow", "nthRoot"] };
+var AF = { name: "pow", category: "Operators", syntax: ["x ^ y", "pow(x, y)"], description: "Calculates the power of x to y, x^y.", examples: ["2^3", "2*2*2", "1 + e ^ (pi * i)", "pow([[1, 2], [4, 3]], 2)", "pow([[1, 2], [4, 3]], -1)"], seealso: ["multiply", "nthRoot", "nthRoots", "sqrt"] };
+var CF = { name: "round", category: "Arithmetic", syntax: ["round(x)", "round(x, n)", "round(unit, valuelessUnit)", "round(unit, n, valuelessUnit)"], description: "round a value towards the nearest integer.If x is complex, both real and imaginary part are rounded towards the nearest integer. When n is specified, the value is rounded to n decimals.", examples: ["round(3.2)", "round(3.8)", "round(-4.2)", "round(-4.8)", "round(pi, 3)", "round(123.45678, 2)", "round(3.241cm, 2, cm)", "round([3.2, 3.8, -4.7])"], seealso: ["ceil", "floor", "fix"] };
+var jF = { name: "sign", category: "Arithmetic", syntax: ["sign(x)"], description: "Compute the sign of a value. The sign of a value x is 1 when x>1, -1 when x<0, and 0 when x=0.", examples: ["sign(3.5)", "sign(-4.2)", "sign(0)"], seealso: ["abs"] };
+var SF = { name: "sqrt", category: "Arithmetic", syntax: ["sqrt(x)"], description: "Compute the square root value. If x = y * y, then y is the square root of x.", examples: ["sqrt(25)", "5 * 5", "sqrt(-1)"], seealso: ["square", "sqrtm", "multiply", "nthRoot", "nthRoots", "pow"] };
+var qF = { name: "sqrtm", category: "Arithmetic", syntax: ["sqrtm(x)"], description: "Calculate the principal square root of a square matrix. The principal square root matrix `X` of another matrix `A` is such that `X * X = A`.", examples: ["sqrtm([[33, 24], [48, 57]])"], seealso: ["sqrt", "abs", "square", "multiply"] };
+var vF = { name: "sylvester", category: "Algebra", syntax: ["sylvester(A,B,C)"], description: "Solves the real-valued Sylvester equation AX+XB=C for X", examples: ["sylvester([[-1, -2], [1, 1]], [[-2, 1], [-1, 2]], [[-3, 2], [3, 0]])", "A = [[-1, -2], [1, 1]]; B = [[2, -1], [1, -2]]; C = [[-3, 2], [3, 0]]", "sylvester(A, B, C)"], seealso: ["schur", "lyap"] };
+var wF = { name: "schur", category: "Algebra", syntax: ["schur(A)"], description: "Performs a real Schur decomposition of the real matrix A = UTU\'", examples: ["schur([[1, 0], [-4, 3]])", "A = [[1, 0], [-4, 3]]", "schur(A)"], seealso: ["lyap", "sylvester"] };
+var kF = { name: "lyap", category: "Algebra", syntax: ["lyap(A,Q)"], description: "Solves the Continuous-time Lyapunov equation AP+PA\'+Q=0 for P", examples: ["lyap([[-2, 0], [1, -4]], [[3, 1], [1, 3]])", "A = [[-2, 0], [1, -4]]", "Q = [[3, 1], [1, 3]]", "lyap(A,Q)"], seealso: ["schur", "sylvester"] };
+var hF = { name: "square", category: "Arithmetic", syntax: ["square(x)"], description: "Compute the square of a value. The square of x is x * x.", examples: ["square(3)", "sqrt(9)", "3^2", "3 * 3"], seealso: ["multiply", "pow", "sqrt", "cube"] };
+var fF = { name: "subtract", category: "Operators", syntax: ["x - y", "subtract(x, y)"], description: "subtract two values.", examples: ["a = 5.3 - 2", "a + 2", "2/3 - 1/6", "2 * 3 - 3", "2.1 km - 500m"], seealso: ["add"] };
+var xF = { name: "unaryMinus", category: "Operators", syntax: ["-x", "unaryMinus(x)"], description: "Inverse the sign of a value. Converts booleans and strings to numbers.", examples: ["-4.5", "-(-5.6)", '-"22"'], seealso: ["add", "subtract", "unaryPlus"] };
+var gF = { name: "unaryPlus", category: "Operators", syntax: ["+x", "unaryPlus(x)"], description: "Converts booleans and strings to numbers.", examples: ["+true", '+"2"'], seealso: ["add", "subtract", "unaryMinus"] };
+var yF = { name: "xgcd", category: "Arithmetic", syntax: ["xgcd(a, b)"], description: "Calculate the extended greatest common divisor for two values. The result is an array [d, x, y] with 3 entries, where d is the greatest common divisor, and d = x * a + y * b.", examples: ["xgcd(8, 12)", "gcd(8, 12)", "xgcd(36163, 21199)"], seealso: ["gcd", "lcm"] };
+var bF = { name: "bitAnd", category: "Bitwise", syntax: ["x & y", "bitAnd(x, y)"], description: "Bitwise AND operation. Performs the logical AND operation on each pair of the corresponding bits of the two given values by multiplying them. If both bits in the compared position are 1, the bit in the resulting binary representation is 1, otherwise, the result is 0", examples: ["5 & 3", "bitAnd(53, 131)", "[1, 12, 31] & 42"], seealso: ["bitNot", "bitOr", "bitXor", "leftShift", "rightArithShift", "rightLogShift"] };
+var mF = { name: "bitNot", category: "Bitwise", syntax: ["~x", "bitNot(x)"], description: "Bitwise NOT operation. Performs a logical negation on each bit of the given value. Bits that are 0 become 1, and those that are 1 become 0.", examples: ["~1", "~2", "bitNot([2, -3, 4])"], seealso: ["bitAnd", "bitOr", "bitXor", "leftShift", "rightArithShift", "rightLogShift"] };
+var pF = { name: "bitOr", category: "Bitwise", syntax: ["x | y", "bitOr(x, y)"], description: "Bitwise OR operation. Performs the logical inclusive OR operation on each pair of corresponding bits of the two given values. The result in each position is 1 if the first bit is 1 or the second bit is 1 or both bits are 1, otherwise, the result is 0.", examples: ["5 | 3", "bitOr([1, 2, 3], 4)"], seealso: ["bitAnd", "bitNot", "bitXor", "leftShift", "rightArithShift", "rightLogShift"] };
+var dF = { name: "bitXor", category: "Bitwise", syntax: ["bitXor(x, y)"], description: "Bitwise XOR operation, exclusive OR. Performs the logical exclusive OR operation on each pair of corresponding bits of the two given values. The result in each position is 1 if only the first bit is 1 or only the second bit is 1, but will be 0 if both are 0 or both are 1.", examples: ["bitOr(1, 2)", "bitXor([2, 3, 4], 4)"], seealso: ["bitAnd", "bitNot", "bitOr", "leftShift", "rightArithShift", "rightLogShift"] };
+var uF = { name: "leftShift", category: "Bitwise", syntax: ["x << y", "leftShift(x, y)"], description: "Bitwise left logical shift of a value x by y number of bits.", examples: ["4 << 1", "8 >> 1"], seealso: ["bitAnd", "bitNot", "bitOr", "bitXor", "rightArithShift", "rightLogShift"] };
+var _F = { name: "rightArithShift", category: "Bitwise", syntax: ["x >> y", "rightArithShift(x, y)"], description: "Bitwise right arithmetic shift of a value x by y number of bits.", examples: ["8 >> 1", "4 << 1", "-12 >> 2"], seealso: ["bitAnd", "bitNot", "bitOr", "bitXor", "leftShift", "rightLogShift"] };
+var cF = { name: "rightLogShift", category: "Bitwise", syntax: ["x >>> y", "rightLogShift(x, y)"], description: "Bitwise right logical shift of a value x by y number of bits.", examples: ["8 >>> 1", "4 << 1", "-12 >>> 2"], seealso: ["bitAnd", "bitNot", "bitOr", "bitXor", "leftShift", "rightArithShift"] };
+var lF = { name: "bellNumbers", category: "Combinatorics", syntax: ["bellNumbers(n)"], description: "The Bell Numbers count the number of partitions of a set. A partition is a pairwise disjoint subset of S whose union is S. `bellNumbers` only takes integer arguments. The following condition must be enforced: n >= 0.", examples: ["bellNumbers(3)", "bellNumbers(8)"], seealso: ["stirlingS2"] };
+var sF = { name: "catalan", category: "Combinatorics", syntax: ["catalan(n)"], description: "The Catalan Numbers enumerate combinatorial structures of many different types. catalan only takes integer arguments. The following condition must be enforced: n >= 0.", examples: ["catalan(3)", "catalan(8)"], seealso: ["bellNumbers"] };
+var nF = { name: "composition", category: "Combinatorics", syntax: ["composition(n, k)"], description: "The composition counts of n into k parts. composition only takes integer arguments. The following condition must be enforced: k <= n.", examples: ["composition(5, 3)"], seealso: ["combinations"] };
+var oF = { name: "stirlingS2", category: "Combinatorics", syntax: ["stirlingS2(n, k)"], description: "he Stirling numbers of the second kind, counts the number of ways to partition a set of n labelled objects into k nonempty unlabelled subsets. `stirlingS2` only takes integer arguments. The following condition must be enforced: k <= n. If n = k or k = 1, then s(n,k) = 1.", examples: ["stirlingS2(5, 3)"], seealso: ["bellNumbers"] };
+var iF = { name: "arg", category: "Complex", syntax: ["arg(x)"], description: "Compute the argument of a complex value. If x = a+bi, the argument is computed as atan2(b, a).", examples: ["arg(2 + 2i)", "atan2(3, 2)", "arg(2 + 3i)"], seealso: ["re", "im", "conj", "abs"] };
+var aF = { name: "conj", category: "Complex", syntax: ["conj(x)"], description: "Compute the complex conjugate of a complex value. If x = a+bi, the complex conjugate is a-bi.", examples: ["conj(2 + 3i)", "conj(2 - 3i)", "conj(-5.2i)"], seealso: ["re", "im", "abs", "arg"] };
+var rF = { name: "im", category: "Complex", syntax: ["im(x)"], description: "Get the imaginary part of a complex number.", examples: ["im(2 + 3i)", "re(2 + 3i)", "im(-5.2i)", "im(2.4)"], seealso: ["re", "conj", "abs", "arg"] };
+var tF = { name: "re", category: "Complex", syntax: ["re(x)"], description: "Get the real part of a complex number.", examples: ["re(2 + 3i)", "im(2 + 3i)", "re(-5.2i)", "re(2.4)"], seealso: ["im", "conj", "abs", "arg"] };
+var eF = { name: "evaluate", category: "Expression", syntax: ["evaluate(expression)", "evaluate(expression, scope)", "evaluate([expr1, expr2, expr3, ...])", "evaluate([expr1, expr2, expr3, ...], scope)"], description: "Evaluate an expression or an array with expressions.", examples: ['evaluate("2 + 3")', 'evaluate("sqrt(16)")', 'evaluate("2 inch to cm")', 'evaluate("sin(x * pi)", { "x": 1/2 })', 'evaluate(["width=2", "height=4","width*height"])'], seealso: [] };
+var $P = { name: "help", category: "Expression", syntax: ["help(object)", "help(string)"], description: "Display documentation on a function or data type.", examples: ["help(sqrt)", 'help("complex")'], seealso: [] };
+var JP = { name: "distance", category: "Geometry", syntax: ["distance([x1, y1], [x2, y2])", "distance([[x1, y1], [x2, y2]])"], description: "Calculates the Euclidean distance between two points.", examples: ["distance([0,0], [4,4])", "distance([[0,0], [4,4]])"], seealso: [] };
+var QP = { name: "intersect", category: "Geometry", syntax: ["intersect(expr1, expr2, expr3, expr4)", "intersect(expr1, expr2, expr3)"], description: "Computes the intersection point of lines and/or planes.", examples: ["intersect([0, 0], [10, 10], [10, 0], [0, 10])", "intersect([1, 0, 1],  [4, -2, 2], [1, 1, 1, 6])"], seealso: [] };
+var ZP = { name: "and", category: "Logical", syntax: ["x and y", "and(x, y)"], description: "Logical and. Test whether two values are both defined with a nonzero/nonempty value.", examples: ["true and false", "true and true", "2 and 4"], seealso: ["not", "or", "xor"] };
+var KP = { name: "not", category: "Logical", syntax: ["not x", "not(x)"], description: "Logical not. Flips the boolean value of given argument.", examples: ["not true", "not false", "not 2", "not 0"], seealso: ["and", "or", "xor"] };
+var HP = { name: "or", category: "Logical", syntax: ["x or y", "or(x, y)"], description: "Logical or. Test if at least one value is defined with a nonzero/nonempty value.", examples: ["true or false", "false or false", "0 or 4"], seealso: ["not", "and", "xor"] };
+var WP = { name: "xor", category: "Logical", syntax: ["x xor y", "xor(x, y)"], description: "Logical exclusive or, xor. Test whether one and only one value is defined with a nonzero/nonempty value.", examples: ["true xor false", "false xor false", "true xor true", "0 xor 4"], seealso: ["not", "and", "or"] };
+var YP = { name: "column", category: "Matrix", syntax: ["column(x, index)"], description: "Return a column from a matrix or array.", examples: ["A = [[1, 2], [3, 4]]", "column(A, 1)", "column(A, 2)"], seealso: ["row", "matrixFromColumns"] };
+var UP = { name: "concat", category: "Matrix", syntax: ["concat(A, B, C, ...)", "concat(A, B, C, ..., dim)"], description: "Concatenate matrices. By default, the matrices are concatenated by the last dimension. The dimension on which to concatenate can be provided as last argument.", examples: ["A = [1, 2; 5, 6]", "B = [3, 4; 7, 8]", "concat(A, B)", "concat(A, B, 1)", "concat(A, B, 2)"], seealso: ["det", "diag", "identity", "inv", "ones", "range", "size", "squeeze", "subset", "trace", "transpose", "zeros"] };
+var GP = { name: "count", category: "Matrix", syntax: ["count(x)"], description: "Count the number of elements of a matrix, array or string.", examples: ["a = [1, 2; 3, 4; 5, 6]", "count(a)", "size(a)", 'count("hello world")'], seealso: ["size"] };
+var LP = { name: "cross", category: "Matrix", syntax: ["cross(A, B)"], description: "Calculate the cross product for two vectors in three dimensional space.", examples: ["cross([1, 1, 0],  [0, 1, 1])", "cross([3, -3, 1], [4, 9, 2])", "cross([2, 3, 4],  [5, 6, 7])"], seealso: ["multiply", "dot"] };
+var XP = { name: "ctranspose", category: "Matrix", syntax: ["x\'", "ctranspose(x)"], description: "Complex Conjugate and Transpose a matrix", examples: ["a = [1, 2, 3; 4, 5, 6]", "a\'", "ctranspose(a)"], seealso: ["concat", "det", "diag", "identity", "inv", "ones", "range", "size", "squeeze", "subset", "trace", "zeros"] };
+var DP = { name: "det", category: "Matrix", syntax: ["det(x)"], description: "Calculate the determinant of a matrix", examples: ["det([1, 2; 3, 4])", "det([-2, 2, 3; -1, 1, 3; 2, 0, -1])"], seealso: ["concat", "diag", "identity", "inv", "ones", "range", "size", "squeeze", "subset", "trace", "transpose", "zeros"] };
+var RP = { name: "diag", category: "Matrix", syntax: ["diag(x)", "diag(x, k)"], description: "Create a diagonal matrix or retrieve the diagonal of a matrix. When x is a vector, a matrix with the vector values on the diagonal will be returned. When x is a matrix, a vector with the diagonal values of the matrix is returned. When k is provided, the k-th diagonal will be filled in or retrieved, if k is positive, the values are placed on the super diagonal. When k is negative, the values are placed on the sub diagonal.", examples: ["diag(1:3)", "diag(1:3, 1)", "a = [1, 2, 3; 4, 5, 6; 7, 8, 9]", "diag(a)"], seealso: ["concat", "det", "identity", "inv", "ones", "range", "size", "squeeze", "subset", "trace", "transpose", "zeros"] };
+var VP = { name: "diff", category: "Matrix", syntax: ["diff(arr)", "diff(arr, dim)"], description: ["Create a new matrix or array with the difference of the passed matrix or array.", "Dim parameter is optional and used to indicant the dimension of the array/matrix to apply the difference", "If no dimension parameter is passed it is assumed as dimension 0", "Dimension is zero-based in javascript and one-based in the parser", "Arrays must be \'rectangular\' meaning arrays like [1, 2]", "If something is passed as a matrix it will be returned as a matrix but other than that all matrices are converted to arrays"], examples: ["A = [1, 2, 4, 7, 0]", "diff(A)", "diff(A, 1)", "B = [[1, 2], [3, 4]]", "diff(B)", "diff(B, 1)", "diff(B, 2)", "diff(B, bignumber(2))", "diff([[1, 2], matrix([3, 4])], 2)"], seealso: ["subtract", "partitionSelect"] };
+var zP = { name: "dot", category: "Matrix", syntax: ["dot(A, B)", "A * B"], description: "Calculate the dot product of two vectors. The dot product of A = [a1, a2, a3, ..., an] and B = [b1, b2, b3, ..., bn] is defined as dot(A, B) = a1 * b1 + a2 * b2 + a3 * b3 + ... + an * bn", examples: ["dot([2, 4, 1], [2, 2, 3])", "[2, 4, 1] * [2, 2, 3]"], seealso: ["multiply", "cross"] };
+var FP = { name: "eigs", category: "Matrix", syntax: ["eigs(x)"], description: "Calculate the eigenvalues and optionally eigenvectors of a square matrix", examples: ["eigs([[5, 2.3], [2.3, 1]])", "eigs([[1, 2, 3], [4, 5, 6], [7, 8, 9]], { precision: 1e-6, eigenvectors: false })"], seealso: ["inv"] };
+var PP = { name: "filter", category: "Matrix", syntax: ["filter(x, test)"], description: "Filter items in a matrix.", examples: ["isPositive(x) = x > 0", "filter([6, -2, -1, 4, 3], isPositive)", "filter([6, -2, 0, 1, 0], x != 0)"], seealso: ["sort", "map", "forEach"] };
+var IP = { name: "flatten", category: "Matrix", syntax: ["flatten(x)"], description: "Flatten a multi dimensional matrix into a single dimensional matrix.", examples: ["a = [1, 2, 3; 4, 5, 6]", "size(a)", "b = flatten(a)", "size(b)"], seealso: ["concat", "resize", "size", "squeeze"] };
+var BP = { name: "forEach", category: "Matrix", syntax: ["forEach(x, callback)"], description: "Iterates over all elements of a matrix/array, and executes the given callback function.", examples: ["numberOfPets = {}", "addPet(n) = numberOfPets[n] = (numberOfPets[n] ? numberOfPets[n]:0 ) + 1;", 'forEach(["Dog","Cat","Cat"], addPet)', "numberOfPets"], seealso: ["map", "sort", "filter"] };
+var TP = { name: "getMatrixDataType", category: "Matrix", syntax: ["getMatrixDataType(x)"], description: 'Find the data type of all elements in a matrix or array, for example "number" if all items are a number and "Complex" if all values are complex numbers. If a matrix contains more than one data type, it will return "mixed".', examples: ["getMatrixDataType([1, 2, 3])", "getMatrixDataType([[5 cm], [2 inch]])", 'getMatrixDataType([1, "text"])', "getMatrixDataType([1, bignumber(4)])"], seealso: ["matrix", "sparse", "typeOf"] };
+var MP = { name: "identity", category: "Matrix", syntax: ["identity(n)", "identity(m, n)", "identity([m, n])"], description: "Returns the identity matrix with size m-by-n. The matrix has ones on the diagonal and zeros elsewhere.", examples: ["identity(3)", "identity(3, 5)", "a = [1, 2, 3; 4, 5, 6]", "identity(size(a))"], seealso: ["concat", "det", "diag", "inv", "ones", "range", "size", "squeeze", "subset", "trace", "transpose", "zeros"] };
+var EP = { name: "inv", category: "Matrix", syntax: ["inv(x)"], description: "Calculate the inverse of a matrix", examples: ["inv([1, 2; 3, 4])", "inv(4)", "1 / 4"], seealso: ["concat", "det", "diag", "identity", "ones", "range", "size", "squeeze", "subset", "trace", "transpose", "zeros"] };
+var OP = { name: "pinv", category: "Matrix", syntax: ["pinv(x)"], description: "Calculate the Moore\u2013Penrose inverse of a matrix", examples: ["pinv([1, 2; 3, 4])", "pinv([[1, 0], [0, 1], [0, 1]])", "pinv(4)"], seealso: ["inv"] };
+var NP = { name: "kron", category: "Matrix", syntax: ["kron(x, y)"], description: "Calculates the kronecker product of 2 matrices or vectors.", examples: ["kron([[1, 0], [0, 1]], [[1, 2], [3, 4]])", "kron([1,1], [2,3,4])"], seealso: ["multiply", "dot", "cross"] };
+var AP = { name: "map", category: "Matrix", syntax: ["map(x, callback)"], description: "Create a new matrix or array with the results of the callback function executed on each entry of the matrix/array.", examples: ["map([1, 2, 3], square)"], seealso: ["filter", "forEach"] };
+var CP = { name: "matrixFromColumns", category: "Matrix", syntax: ["matrixFromColumns(...arr)", "matrixFromColumns(row1, row2)", "matrixFromColumns(row1, row2, row3)"], description: "Create a dense matrix from vectors as individual columns.", examples: ["matrixFromColumns([1, 2, 3], [[4],[5],[6]])"], seealso: ["matrix", "matrixFromRows", "matrixFromFunction", "zeros"] };
+var jP = { name: "matrixFromFunction", category: "Matrix", syntax: ["matrixFromFunction(size, fn)", "matrixFromFunction(size, fn, format)", "matrixFromFunction(size, fn, format, datatype)", "matrixFromFunction(size, format, fn)", "matrixFromFunction(size, format, datatype, fn)"], description: "Create a matrix by evaluating a generating function at each index.", examples: ["f(I) = I[1] - I[2]", "matrixFromFunction([3,3], f)", "g(I) = I[1] - I[2] == 1 ? 4 : 0", 'matrixFromFunction([100, 100], "sparse", g)', "matrixFromFunction([5], random)"], seealso: ["matrix", "matrixFromRows", "matrixFromColumns", "zeros"] };
+var SP = { name: "matrixFromRows", category: "Matrix", syntax: ["matrixFromRows(...arr)", "matrixFromRows(row1, row2)", "matrixFromRows(row1, row2, row3)"], description: "Create a dense matrix from vectors as individual rows.", examples: ["matrixFromRows([1, 2, 3], [[4],[5],[6]])"], seealso: ["matrix", "matrixFromColumns", "matrixFromFunction", "zeros"] };
+var qP = { name: "ones", category: "Matrix", syntax: ["ones(m)", "ones(m, n)", "ones(m, n, p, ...)", "ones([m])", "ones([m, n])", "ones([m, n, p, ...])"], description: "Create a matrix containing ones.", examples: ["ones(3)", "ones(3, 5)", "ones([2,3]) * 4.5", "a = [1, 2, 3; 4, 5, 6]", "ones(size(a))"], seealso: ["concat", "det", "diag", "identity", "inv", "range", "size", "squeeze", "subset", "trace", "transpose", "zeros"] };
+var vP = { name: "partitionSelect", category: "Matrix", syntax: ["partitionSelect(x, k)", "partitionSelect(x, k, compare)"], description: "Partition-based selection of an array or 1D matrix. Will find the kth smallest value, and mutates the input array. Uses Quickselect.", examples: ["partitionSelect([5, 10, 1], 2)", 'partitionSelect(["C", "B", "A", "D"], 1, compareText)', "arr = [5, 2, 1]", "partitionSelect(arr, 0) # returns 1, arr is now: [1, 2, 5]", "arr", "partitionSelect(arr, 1, \'desc\') # returns 2, arr is now: [5, 2, 1]", "arr"], seealso: ["sort"] };
+var wP = { name: "range", category: "Type", syntax: ["start:end", "start:step:end", "range(start, end)", "range(start, end, step)", "range(string)"], description: "Create a range. Lower bound of the range is included, upper bound is excluded.", examples: ["1:5", "3:-1:-3", "range(3, 7)", "range(0, 12, 2)", 'range("4:10")', "range(1m, 1m, 3m)", "a = [1, 2, 3, 4; 5, 6, 7, 8]", "a[1:2, 1:2]"], seealso: ["concat", "det", "diag", "identity", "inv", "ones", "size", "squeeze", "subset", "trace", "transpose", "zeros"] };
+var kP = { name: "reshape", category: "Matrix", syntax: ["reshape(x, sizes)"], description: "Reshape a multi dimensional array to fit the specified dimensions.", examples: ["reshape([1, 2, 3, 4, 5, 6], [2, 3])", "reshape([[1, 2], [3, 4]], [1, 4])", "reshape([[1, 2], [3, 4]], [4])", "reshape([1, 2, 3, 4], [-1, 2])"], seealso: ["size", "squeeze", "resize"] };
+var hP = { name: "resize", category: "Matrix", syntax: ["resize(x, size)", "resize(x, size, defaultValue)"], description: "Resize a matrix.", examples: ["resize([1,2,3,4,5], [3])", "resize([1,2,3], [5])", "resize([1,2,3], [5], -1)", "resize(2, [2, 3])", 'resize("hello", [8], "!")'], seealso: ["size", "subset", "squeeze", "reshape"] };
+var fP = { name: "rotate", category: "Matrix", syntax: ["rotate(w, theta)", "rotate(w, theta, v)"], description: "Returns a 2-D rotation matrix (2x2) for a given angle (in radians). Returns a 2-D rotation matrix (3x3) of a given angle (in radians) around given axis.", examples: ["rotate([1, 0], pi / 2)", 'rotate(matrix([1, 0]), unit("35deg"))', 'rotate([1, 0, 0], unit("90deg"), [0, 0, 1])', 'rotate(matrix([1, 0, 0]), unit("90deg"), matrix([0, 0, 1]))'], seealso: ["matrix", "rotationMatrix"] };
+var xP = { name: "rotationMatrix", category: "Matrix", syntax: ["rotationMatrix(theta)", "rotationMatrix(theta, v)", "rotationMatrix(theta, v, format)"], description: "Returns a 2-D rotation matrix (2x2) for a given angle (in radians). Returns a 2-D rotation matrix (3x3) of a given angle (in radians) around given axis.", examples: ["rotationMatrix(pi / 2)", 'rotationMatrix(unit("45deg"), [0, 0, 1])', 'rotationMatrix(1, matrix([0, 0, 1]), "sparse")'], seealso: ["cos", "sin"] };
+var gP = { name: "row", category: "Matrix", syntax: ["row(x, index)"], description: "Return a row from a matrix or array.", examples: ["A = [[1, 2], [3, 4]]", "row(A, 1)", "row(A, 2)"], seealso: ["column", "matrixFromRows"] };
+var yP = { name: "size", category: "Matrix", syntax: ["size(x)"], description: "Calculate the size of a matrix.", examples: ["size(2.3)", 'size("hello world")', "a = [1, 2; 3, 4; 5, 6]", "size(a)", "size(1:6)"], seealso: ["concat", "count", "det", "diag", "identity", "inv", "ones", "range", "squeeze", "subset", "trace", "transpose", "zeros"] };
+var bP = { name: "sort", category: "Matrix", syntax: ["sort(x)", "sort(x, compare)"], description: 'Sort the items in a matrix. Compare can be a string "asc", "desc", "natural", or a custom sort function.', examples: ["sort([5, 10, 1])", 'sort(["C", "B", "A", "D"], "natural")', "sortByLength(a, b) = size(a)[1] - size(b)[1]", 'sort(["Langdon", "Tom", "Sara"], sortByLength)', 'sort(["10", "1", "2"], "natural")'], seealso: ["map", "filter", "forEach"] };
+var mP = { name: "squeeze", category: "Matrix", syntax: ["squeeze(x)"], description: "Remove inner and outer singleton dimensions from a matrix.", examples: ["a = zeros(3,2,1)", "size(squeeze(a))", "b = zeros(1,1,3)", "size(squeeze(b))"], seealso: ["concat", "det", "diag", "identity", "inv", "ones", "range", "size", "subset", "trace", "transpose", "zeros"] };
+var pP = { name: "subset", category: "Matrix", syntax: ["value(index)", "value(index) = replacement", "subset(value, [index])", "subset(value, [index], replacement)"], description: "Get or set a subset of the entries of a matrix or characters of a string. Indexes are one-based. There should be one index specification for each dimension of the target. Each specification can be a single index, a list of indices, or a range in colon notation `l:u`. In a range, both the lower bound l and upper bound u are included; and if a bound is omitted it defaults to the most extreme valid value. The cartesian product of the indices specified in each dimension determines the target of the operation.", examples: ["d = [1, 2; 3, 4]", "e = []", "e[1, 1:2] = [5, 6]", "e[2, :] = [7, 8]", "f = d * e", "f[2, 1]", "f[:, 1]", "f[[1,2], [1,3]] = [9, 10; 11, 12]", "f"], seealso: ["concat", "det", "diag", "identity", "inv", "ones", "range", "size", "squeeze", "trace", "transpose", "zeros"] };
+var dP = { name: "trace", category: "Matrix", syntax: ["trace(A)"], description: "Calculate the trace of a matrix: the sum of the elements on the main diagonal of a square matrix.", examples: ["A = [1, 2, 3; -1, 2, 3; 2, 0, 3]", "trace(A)"], seealso: ["concat", "det", "diag", "identity", "inv", "ones", "range", "size", "squeeze", "subset", "transpose", "zeros"] };
+var uP = { name: "transpose", category: "Matrix", syntax: ["x\'", "transpose(x)"], description: "Transpose a matrix", examples: ["a = [1, 2, 3; 4, 5, 6]", "a\'", "transpose(a)"], seealso: ["concat", "det", "diag", "identity", "inv", "ones", "range", "size", "squeeze", "subset", "trace", "zeros"] };
+var _P = { name: "zeros", category: "Matrix", syntax: ["zeros(m)", "zeros(m, n)", "zeros(m, n, p, ...)", "zeros([m])", "zeros([m, n])", "zeros([m, n, p, ...])"], description: "Create a matrix containing zeros.", examples: ["zeros(3)", "zeros(3, 5)", "a = [1, 2, 3; 4, 5, 6]", "zeros(size(a))"], seealso: ["concat", "det", "diag", "identity", "inv", "ones", "range", "size", "squeeze", "subset", "trace", "transpose"] };
+var cP = { name: "fft", category: "Matrix", syntax: ["fft(x)"], description: "Calculate N-dimensional fourier transform", examples: ["fft([[1, 0], [1, 0]])"], seealso: ["ifft"] };
+var lP = { name: "ifft", category: "Matrix", syntax: ["ifft(x)"], description: "Calculate N-dimensional inverse fourier transform", examples: ["ifft([[2, 2], [0, 0]])"], seealso: ["fft"] };
+var sP = { name: "combinations", category: "Probability", syntax: ["combinations(n, k)"], description: "Compute the number of combinations of n items taken k at a time", examples: ["combinations(7, 5)"], seealso: ["combinationsWithRep", "permutations", "factorial"] };
+var nP = { name: "combinationsWithRep", category: "Probability", syntax: ["combinationsWithRep(n, k)"], description: "Compute the number of combinations of n items taken k at a time with replacements.", examples: ["combinationsWithRep(7, 5)"], seealso: ["combinations", "permutations", "factorial"] };
+var oP = { name: "factorial", category: "Probability", syntax: ["n!", "factorial(n)"], description: "Compute the factorial of a value", examples: ["5!", "5 * 4 * 3 * 2 * 1", "3!"], seealso: ["combinations", "combinationsWithRep", "permutations", "gamma"] };
+var iP = { name: "gamma", category: "Probability", syntax: ["gamma(n)"], description: "Compute the gamma function. For small values, the Lanczos approximation is used, and for large values the extended Stirling approximation.", examples: ["gamma(4)", "3!", "gamma(1/2)", "sqrt(pi)"], seealso: ["factorial"] };
+var aP = { name: "lgamma", category: "Probability", syntax: ["lgamma(n)"], description: "Logarithm of the gamma function for real, positive numbers and complex numbers, using Lanczos approximation for numbers and Stirling series for complex numbers.", examples: ["lgamma(4)", "lgamma(1/2)", "lgamma(i)", "lgamma(complex(1.1, 2))"], seealso: ["gamma"] };
+var rP = { name: "kldivergence", category: "Probability", syntax: ["kldivergence(x, y)"], description: "Calculate the Kullback-Leibler (KL) divergence  between two distributions.", examples: ["kldivergence([0.7,0.5,0.4], [0.2,0.9,0.5])"], seealso: [] };
+var tP = { name: "multinomial", category: "Probability", syntax: ["multinomial(A)"], description: "Multinomial Coefficients compute the number of ways of picking a1, a2, ..., ai unordered outcomes from `n` possibilities. multinomial takes one array of integers as an argument. The following condition must be enforced: every ai > 0.", examples: ["multinomial([1, 2, 1])"], seealso: ["combinations", "factorial"] };
+var eP = { name: "permutations", category: "Probability", syntax: ["permutations(n)", "permutations(n, k)"], description: "Compute the number of permutations of n items taken k at a time", examples: ["permutations(5)", "permutations(5, 3)"], seealso: ["combinations", "combinationsWithRep", "factorial"] };
+var $I = { name: "pickRandom", category: "Probability", syntax: ["pickRandom(array)", "pickRandom(array, number)", "pickRandom(array, weights)", "pickRandom(array, number, weights)", "pickRandom(array, weights, number)"], description: "Pick a random entry from a given array.", examples: ["pickRandom(0:10)", "pickRandom([1, 3, 1, 6])", "pickRandom([1, 3, 1, 6], 2)", "pickRandom([1, 3, 1, 6], [2, 3, 2, 1])", "pickRandom([1, 3, 1, 6], 2, [2, 3, 2, 1])", "pickRandom([1, 3, 1, 6], [2, 3, 2, 1], 2)"], seealso: ["random", "randomInt"] };
+var JI = { name: "random", category: "Probability", syntax: ["random()", "random(max)", "random(min, max)", "random(size)", "random(size, max)", "random(size, min, max)"], description: "Return a random number.", examples: ["random()", "random(10, 20)", "random([2, 3])"], seealso: ["pickRandom", "randomInt"] };
+var QI = { name: "randomInt", category: "Probability", syntax: ["randomInt(max)", "randomInt(min, max)", "randomInt(size)", "randomInt(size, max)", "randomInt(size, min, max)"], description: "Return a random integer number", examples: ["randomInt(10, 20)", "randomInt([2, 3], 10)"], seealso: ["pickRandom", "random"] };
+var ZI = { name: "compare", category: "Relational", syntax: ["compare(x, y)"], description: "Compare two values. Returns 1 when x > y, -1 when x < y, and 0 when x == y.", examples: ["compare(2, 3)", "compare(3, 2)", "compare(2, 2)", "compare(5cm, 40mm)", "compare(2, [1, 2, 3])"], seealso: ["equal", "unequal", "smaller", "smallerEq", "largerEq", "compareNatural", "compareText"] };
+var KI = { name: "compareNatural", category: "Relational", syntax: ["compareNatural(x, y)"], description: "Compare two values of any type in a deterministic, natural way. Returns 1 when x > y, -1 when x < y, and 0 when x == y.", examples: ["compareNatural(2, 3)", "compareNatural(3, 2)", "compareNatural(2, 2)", "compareNatural(5cm, 40mm)", 'compareNatural("2", "10")', "compareNatural(2 + 3i, 2 + 4i)", "compareNatural([1, 2, 4], [1, 2, 3])", "compareNatural([1, 5], [1, 2, 3])", "compareNatural([1, 2], [1, 2])", "compareNatural({a: 2}, {a: 4})"], seealso: ["equal", "unequal", "smaller", "smallerEq", "largerEq", "compare", "compareText"] };
+var HI = { name: "compareText", category: "Relational", syntax: ["compareText(x, y)"], description: "Compare two strings lexically. Comparison is case sensitive. Returns 1 when x > y, -1 when x < y, and 0 when x == y.", examples: ['compareText("B", "A")', 'compareText("A", "B")', 'compareText("A", "A")', 'compareText("2", "10")', 'compare("2", "10")', "compare(2, 10)", 'compareNatural("2", "10")', 'compareText("B", ["A", "B", "C"])'], seealso: ["compare", "compareNatural"] };
+var WI = { name: "deepEqual", category: "Relational", syntax: ["deepEqual(x, y)"], description: "Check equality of two matrices element wise. Returns true if the size of both matrices is equal and when and each of the elements are equal.", examples: ["deepEqual([1,3,4], [1,3,4])", "deepEqual([1,3,4], [1,3])"], seealso: ["equal", "unequal", "smaller", "larger", "smallerEq", "largerEq", "compare"] };
+var YI = { name: "equal", category: "Relational", syntax: ["x == y", "equal(x, y)"], description: "Check equality of two values. Returns true if the values are equal, and false if not.", examples: ["2+2 == 3", "2+2 == 4", "a = 3.2", "b = 6-2.8", "a == b", "50cm == 0.5m"], seealso: ["unequal", "smaller", "larger", "smallerEq", "largerEq", "compare", "deepEqual", "equalText"] };
+var UI = { name: "equalText", category: "Relational", syntax: ["equalText(x, y)"], description: "Check equality of two strings. Comparison is case sensitive. Returns true if the values are equal, and false if not.", examples: ['equalText("Hello", "Hello")', 'equalText("a", "A")', 'equal("2e3", "2000")', 'equalText("2e3", "2000")', 'equalText("B", ["A", "B", "C"])'], seealso: ["compare", "compareNatural", "compareText", "equal"] };
+var GI = { name: "larger", category: "Relational", syntax: ["x > y", "larger(x, y)"], description: "Check if value x is larger than y. Returns true if x is larger than y, and false if not.", examples: ["2 > 3", "5 > 2*2", "a = 3.3", "b = 6-2.8", "(a > b)", "(b < a)", "5 cm > 2 inch"], seealso: ["equal", "unequal", "smaller", "smallerEq", "largerEq", "compare"] };
+var LI = { name: "largerEq", category: "Relational", syntax: ["x >= y", "largerEq(x, y)"], description: "Check if value x is larger or equal to y. Returns true if x is larger or equal to y, and false if not.", examples: ["2 >= 1+1", "2 > 1+1", "a = 3.2", "b = 6-2.8", "(a >= b)"], seealso: ["equal", "unequal", "smallerEq", "smaller", "compare"] };
+var XI = { name: "smaller", category: "Relational", syntax: ["x < y", "smaller(x, y)"], description: "Check if value x is smaller than value y. Returns true if x is smaller than y, and false if not.", examples: ["2 < 3", "5 < 2*2", "a = 3.3", "b = 6-2.8", "(a < b)", "5 cm < 2 inch"], seealso: ["equal", "unequal", "larger", "smallerEq", "largerEq", "compare"] };
+var DI = { name: "smallerEq", category: "Relational", syntax: ["x <= y", "smallerEq(x, y)"], description: "Check if value x is smaller or equal to value y. Returns true if x is smaller than y, and false if not.", examples: ["2 <= 1+1", "2 < 1+1", "a = 3.2", "b = 6-2.8", "(a <= b)"], seealso: ["equal", "unequal", "larger", "smaller", "largerEq", "compare"] };
+var RI = { name: "unequal", category: "Relational", syntax: ["x != y", "unequal(x, y)"], description: "Check unequality of two values. Returns true if the values are unequal, and false if they are equal.", examples: ["2+2 != 3", "2+2 != 4", "a = 3.2", "b = 6-2.8", "a != b", "50cm != 0.5m", "5 cm != 2 inch"], seealso: ["equal", "smaller", "larger", "smallerEq", "largerEq", "compare", "deepEqual"] };
+var VI = { name: "setCartesian", category: "Set", syntax: ["setCartesian(set1, set2)"], description: "Create the cartesian product of two (multi)sets. Multi-dimension arrays will be converted to single-dimension arrays and the values will be sorted in ascending order before the operation.", examples: ["setCartesian([1, 2], [3, 4])"], seealso: ["setUnion", "setIntersect", "setDifference", "setPowerset"] };
+var zI = { name: "setDifference", category: "Set", syntax: ["setDifference(set1, set2)"], description: "Create the difference of two (multi)sets: every element of set1, that is not the element of set2. Multi-dimension arrays will be converted to single-dimension arrays before the operation.", examples: ["setDifference([1, 2, 3, 4], [3, 4, 5, 6])", "setDifference([[1, 2], [3, 4]], [[3, 4], [5, 6]])"], seealso: ["setUnion", "setIntersect", "setSymDifference"] };
+var FI = { name: "setDistinct", category: "Set", syntax: ["setDistinct(set)"], description: "Collect the distinct elements of a multiset. A multi-dimension array will be converted to a single-dimension array before the operation.", examples: ["setDistinct([1, 1, 1, 2, 2, 3])"], seealso: ["setMultiplicity"] };
+var PI = { name: "setIntersect", category: "Set", syntax: ["setIntersect(set1, set2)"], description: "Create the intersection of two (multi)sets. Multi-dimension arrays will be converted to single-dimension arrays before the operation.", examples: ["setIntersect([1, 2, 3, 4], [3, 4, 5, 6])", "setIntersect([[1, 2], [3, 4]], [[3, 4], [5, 6]])"], seealso: ["setUnion", "setDifference"] };
+var II = { name: "setIsSubset", category: "Set", syntax: ["setIsSubset(set1, set2)"], description: "Check whether a (multi)set is a subset of another (multi)set: every element of set1 is the element of set2. Multi-dimension arrays will be converted to single-dimension arrays before the operation.", examples: ["setIsSubset([1, 2], [3, 4, 5, 6])", "setIsSubset([3, 4], [3, 4, 5, 6])"], seealso: ["setUnion", "setIntersect", "setDifference"] };
+var BI = { name: "setMultiplicity", category: "Set", syntax: ["setMultiplicity(element, set)"], description: "Count the multiplicity of an element in a multiset. A multi-dimension array will be converted to a single-dimension array before the operation.", examples: ["setMultiplicity(1, [1, 2, 2, 4])", "setMultiplicity(2, [1, 2, 2, 4])"], seealso: ["setDistinct", "setSize"] };
+var TI = { name: "setPowerset", category: "Set", syntax: ["setPowerset(set)"], description: "Create the powerset of a (multi)set: the powerset contains very possible subsets of a (multi)set. A multi-dimension array will be converted to a single-dimension array before the operation.", examples: ["setPowerset([1, 2, 3])"], seealso: ["setCartesian"] };
+var MI = { name: "setSize", category: "Set", syntax: ["setSize(set)", "setSize(set, unique)"], description: 'Count the number of elements of a (multi)set. When the second parameter "unique" is true, count only the unique values. A multi-dimension array will be converted to a single-dimension array before the operation.', examples: ["setSize([1, 2, 2, 4])", "setSize([1, 2, 2, 4], true)"], seealso: ["setUnion", "setIntersect", "setDifference"] };
+var EI = { name: "setSymDifference", category: "Set", syntax: ["setSymDifference(set1, set2)"], description: "Create the symmetric difference of two (multi)sets. Multi-dimension arrays will be converted to single-dimension arrays before the operation.", examples: ["setSymDifference([1, 2, 3, 4], [3, 4, 5, 6])", "setSymDifference([[1, 2], [3, 4]], [[3, 4], [5, 6]])"], seealso: ["setUnion", "setIntersect", "setDifference"] };
+var OI = { name: "setUnion", category: "Set", syntax: ["setUnion(set1, set2)"], description: "Create the union of two (multi)sets. Multi-dimension arrays will be converted to single-dimension arrays before the operation.", examples: ["setUnion([1, 2, 3, 4], [3, 4, 5, 6])", "setUnion([[1, 2], [3, 4]], [[3, 4], [5, 6]])"], seealso: ["setIntersect", "setDifference"] };
+var NI = { name: "zpk2tf", category: "Signal", syntax: ["zpk2tf(z, p, k)"], description: "Compute the transfer function of a zero-pole-gain model.", examples: ["zpk2tf([1, 2], [-1, -2], 1)", "zpk2tf([1, 2], [-1, -2])", "zpk2tf([1 - 3i, 2 + 2i], [-1, -2])"], seealso: [] };
+var AI = { name: "freqz", category: "Signal", syntax: ["freqz(b, a)", "freqz(b, a, w)"], description: "Calculates the frequency response of a filter given its numerator and denominator coefficients.", examples: ["freqz([1, 2], [1, 2, 3])", "freqz([1, 2], [1, 2, 3], [0, 1])", "freqz([1, 2], [1, 2, 3], 512)"], seealso: [] };
+var CI = { name: "erf", category: "Special", syntax: ["erf(x)"], description: "Compute the erf function of a value using a rational Chebyshev approximations for different intervals of x", examples: ["erf(0.2)", "erf(-0.5)", "erf(4)"], seealso: [] };
+var jI = { name: "zeta", category: "Special", syntax: ["zeta(s)"], description: "Compute the Riemann Zeta Function using an infinite series and Riemanns Functional Equation for the entire complex plane", examples: ["zeta(0.2)", "zeta(-0.5)", "zeta(4)"], seealso: [] };
+var SI = { name: "mad", category: "Statistics", syntax: ["mad(a, b, c, ...)", "mad(A)"], description: "Compute the median absolute deviation of a matrix or a list with values. The median absolute deviation is defined as the median of the absolute deviations from the median.", examples: ["mad(10, 20, 30)", "mad([1, 2, 3])"], seealso: ["mean", "median", "std", "abs"] };
+var qI = { name: "max", category: "Statistics", syntax: ["max(a, b, c, ...)", "max(A)", "max(A, dimension)"], description: "Compute the maximum value of a list of values.", examples: ["max(2, 3, 4, 1)", "max([2, 3, 4, 1])", "max([2, 5; 4, 3])", "max([2, 5; 4, 3], 1)", "max([2, 5; 4, 3], 2)", "max(2.7, 7.1, -4.5, 2.0, 4.1)", "min(2.7, 7.1, -4.5, 2.0, 4.1)"], seealso: ["mean", "median", "min", "prod", "std", "sum", "variance"] };
+var vI = { name: "mean", category: "Statistics", syntax: ["mean(a, b, c, ...)", "mean(A)", "mean(A, dimension)"], description: "Compute the arithmetic mean of a list of values.", examples: ["mean(2, 3, 4, 1)", "mean([2, 3, 4, 1])", "mean([2, 5; 4, 3])", "mean([2, 5; 4, 3], 1)", "mean([2, 5; 4, 3], 2)", "mean([1.0, 2.7, 3.2, 4.0])"], seealso: ["max", "median", "min", "prod", "std", "sum", "variance"] };
+var wI = { name: "median", category: "Statistics", syntax: ["median(a, b, c, ...)", "median(A)"], description: "Compute the median of all values. The values are sorted and the middle value is returned. In case of an even number of values, the average of the two middle values is returned.", examples: ["median(5, 2, 7)", "median([3, -1, 5, 7])"], seealso: ["max", "mean", "min", "prod", "std", "sum", "variance", "quantileSeq"] };
+var kI = { name: "min", category: "Statistics", syntax: ["min(a, b, c, ...)", "min(A)", "min(A, dimension)"], description: "Compute the minimum value of a list of values.", examples: ["min(2, 3, 4, 1)", "min([2, 3, 4, 1])", "min([2, 5; 4, 3])", "min([2, 5; 4, 3], 1)", "min([2, 5; 4, 3], 2)", "min(2.7, 7.1, -4.5, 2.0, 4.1)", "max(2.7, 7.1, -4.5, 2.0, 4.1)"], seealso: ["max", "mean", "median", "prod", "std", "sum", "variance"] };
+var hI = { name: "mode", category: "Statistics", syntax: ["mode(a, b, c, ...)", "mode(A)", "mode(A, a, b, B, c, ...)"], description: "Computes the mode of all values as an array. In case mode being more than one, multiple values are returned in an array.", examples: ["mode(2, 1, 4, 3, 1)", "mode([1, 2.7, 3.2, 4, 2.7])", "mode(1, 4, 6, 1, 6)"], seealso: ["max", "mean", "min", "median", "prod", "std", "sum", "variance"] };
+var fI = { name: "prod", category: "Statistics", syntax: ["prod(a, b, c, ...)", "prod(A)"], description: "Compute the product of all values.", examples: ["prod(2, 3, 4)", "prod([2, 3, 4])", "prod([2, 5; 4, 3])"], seealso: ["max", "mean", "min", "median", "min", "std", "sum", "variance"] };
+var xI = { name: "quantileSeq", category: "Statistics", syntax: ["quantileSeq(A, prob[, sorted])", "quantileSeq(A, [prob1, prob2, ...][, sorted])", "quantileSeq(A, N[, sorted])"], description: "Compute the prob order quantile of a matrix or a list with values. The sequence is sorted and the middle value is returned. Supported types of sequence values are: Number, BigNumber, Unit Supported types of probablity are: Number, BigNumber. \n\nIn case of a (multi dimensional) array or matrix, the prob order quantile of all elements will be calculated.", examples: ["quantileSeq([3, -1, 5, 7], 0.5)", "quantileSeq([3, -1, 5, 7], [1/3, 2/3])", "quantileSeq([3, -1, 5, 7], 2)", "quantileSeq([-1, 3, 5, 7], 0.5, true)"], seealso: ["mean", "median", "min", "max", "prod", "std", "sum", "variance"] };
+var gI = { name: "std", category: "Statistics", syntax: ["std(a, b, c, ...)", "std(A)", "std(A, dimension)", "std(A, normalization)", "std(A, dimension, normalization)"], description: 'Compute the standard deviation of all values, defined as std(A) = sqrt(variance(A)). Optional parameter normalization can be "unbiased" (default), "uncorrected", or "biased".', examples: ["std(2, 4, 6)", "std([2, 4, 6, 8])", 'std([2, 4, 6, 8], "uncorrected")', 'std([2, 4, 6, 8], "biased")', "std([1, 2, 3; 4, 5, 6])"], seealso: ["max", "mean", "min", "median", "prod", "sum", "variance"] };
+var yI = { name: "cumsum", category: "Statistics", syntax: ["cumsum(a, b, c, ...)", "cumsum(A)"], description: "Compute the cumulative sum of all values.", examples: ["cumsum(2, 3, 4, 1)", "cumsum([2, 3, 4, 1])", "cumsum([1, 2; 3, 4])", "cumsum([1, 2; 3, 4], 1)", "cumsum([1, 2; 3, 4], 2)"], seealso: ["max", "mean", "median", "min", "prod", "std", "sum", "variance"] };
+var bI = { name: "sum", category: "Statistics", syntax: ["sum(a, b, c, ...)", "sum(A)", "sum(A, dimension)"], description: "Compute the sum of all values.", examples: ["sum(2, 3, 4, 1)", "sum([2, 3, 4, 1])", "sum([2, 5; 4, 3])"], seealso: ["max", "mean", "median", "min", "prod", "std", "sum", "variance"] };
+var mI = { name: "variance", category: "Statistics", syntax: ["variance(a, b, c, ...)", "variance(A)", "variance(A, dimension)", "variance(A, normalization)", "variance(A, dimension, normalization)"], description: 'Compute the variance of all values. Optional parameter normalization can be "unbiased" (default), "uncorrected", or "biased".', examples: ["variance(2, 4, 6)", "variance([2, 4, 6, 8])", 'variance([2, 4, 6, 8], "uncorrected")', 'variance([2, 4, 6, 8], "biased")', "variance([1, 2, 3; 4, 5, 6])"], seealso: ["max", "mean", "min", "median", "min", "prod", "std", "sum"] };
+var pI = { name: "corr", category: "Statistics", syntax: ["corr(A,B)"], description: "Compute the correlation coefficient of a two list with values, For matrices, the matrix correlation coefficient is calculated.", examples: ["corr([2, 4, 6, 8],[1, 2, 3, 6])", "corr(matrix([[1, 2.2, 3, 4.8, 5], [1, 2, 3, 4, 5]]), matrix([[4, 5.3, 6.6, 7, 8], [1, 2, 3, 4, 5]]))"], seealso: ["max", "mean", "min", "median", "min", "prod", "std", "sum"] };
+var dI = { name: "acos", category: "Trigonometry", syntax: ["acos(x)"], description: "Compute the inverse cosine of a value in radians.", examples: ["acos(0.5)", "acos(cos(2.3))"], seealso: ["cos", "atan", "asin"] };
+var uI = { name: "acosh", category: "Trigonometry", syntax: ["acosh(x)"], description: "Calculate the hyperbolic arccos of a value, defined as `acosh(x) = ln(sqrt(x^2 - 1) + x)`.", examples: ["acosh(1.5)"], seealso: ["cosh", "asinh", "atanh"] };
+var _I = { name: "acot", category: "Trigonometry", syntax: ["acot(x)"], description: "Calculate the inverse cotangent of a value.", examples: ["acot(0.5)", "acot(cot(0.5))", "acot(2)"], seealso: ["cot", "atan"] };
+var cI = { name: "acoth", category: "Trigonometry", syntax: ["acoth(x)"], description: "Calculate the hyperbolic arccotangent of a value, defined as `acoth(x) = (ln((x+1)/x) + ln(x/(x-1))) / 2`.", examples: ["acoth(2)", "acoth(0.5)"], seealso: ["acsch", "asech"] };
+var lI = { name: "acsc", category: "Trigonometry", syntax: ["acsc(x)"], description: "Calculate the inverse cotangent of a value.", examples: ["acsc(2)", "acsc(csc(0.5))", "acsc(0.5)"], seealso: ["csc", "asin", "asec"] };
+var sI = { name: "acsch", category: "Trigonometry", syntax: ["acsch(x)"], description: "Calculate the hyperbolic arccosecant of a value, defined as `acsch(x) = ln(1/x + sqrt(1/x^2 + 1))`.", examples: ["acsch(0.5)"], seealso: ["asech", "acoth"] };
+var nI = { name: "asec", category: "Trigonometry", syntax: ["asec(x)"], description: "Calculate the inverse secant of a value.", examples: ["asec(0.5)", "asec(sec(0.5))", "asec(2)"], seealso: ["acos", "acot", "acsc"] };
+var oI = { name: "asech", category: "Trigonometry", syntax: ["asech(x)"], description: "Calculate the inverse secant of a value.", examples: ["asech(0.5)"], seealso: ["acsch", "acoth"] };
+var iI = { name: "asin", category: "Trigonometry", syntax: ["asin(x)"], description: "Compute the inverse sine of a value in radians.", examples: ["asin(0.5)", "asin(sin(0.5))"], seealso: ["sin", "acos", "atan"] };
+var aI = { name: "asinh", category: "Trigonometry", syntax: ["asinh(x)"], description: "Calculate the hyperbolic arcsine of a value, defined as `asinh(x) = ln(x + sqrt(x^2 + 1))`.", examples: ["asinh(0.5)"], seealso: ["acosh", "atanh"] };
+var rI = { name: "atan", category: "Trigonometry", syntax: ["atan(x)"], description: "Compute the inverse tangent of a value in radians.", examples: ["atan(0.5)", "atan(tan(0.5))"], seealso: ["tan", "acos", "asin"] };
+var tI = { name: "atan2", category: "Trigonometry", syntax: ["atan2(y, x)"], description: "Computes the principal value of the arc tangent of y/x in radians.", examples: ["atan2(2, 2) / pi", "angle = 60 deg in rad", "x = cos(angle)", "y = sin(angle)", "atan2(y, x)"], seealso: ["sin", "cos", "tan"] };
+var eI = { name: "atanh", category: "Trigonometry", syntax: ["atanh(x)"], description: "Calculate the hyperbolic arctangent of a value, defined as `atanh(x) = ln((1 + x)/(1 - x)) / 2`.", examples: ["atanh(0.5)"], seealso: ["acosh", "asinh"] };
+var $B = { name: "cos", category: "Trigonometry", syntax: ["cos(x)"], description: "Compute the cosine of x in radians.", examples: ["cos(2)", "cos(pi / 4) ^ 2", "cos(180 deg)", "cos(60 deg)", "sin(0.2)^2 + cos(0.2)^2"], seealso: ["acos", "sin", "tan"] };
+var JB = { name: "cosh", category: "Trigonometry", syntax: ["cosh(x)"], description: "Compute the hyperbolic cosine of x in radians.", examples: ["cosh(0.5)"], seealso: ["sinh", "tanh", "coth"] };
+var QB = { name: "cot", category: "Trigonometry", syntax: ["cot(x)"], description: "Compute the cotangent of x in radians. Defined as 1/tan(x)", examples: ["cot(2)", "1 / tan(2)"], seealso: ["sec", "csc", "tan"] };
+var ZB = { name: "coth", category: "Trigonometry", syntax: ["coth(x)"], description: "Compute the hyperbolic cotangent of x in radians.", examples: ["coth(2)", "1 / tanh(2)"], seealso: ["sech", "csch", "tanh"] };
+var KB = { name: "csc", category: "Trigonometry", syntax: ["csc(x)"], description: "Compute the cosecant of x in radians. Defined as 1/sin(x)", examples: ["csc(2)", "1 / sin(2)"], seealso: ["sec", "cot", "sin"] };
+var HB = { name: "csch", category: "Trigonometry", syntax: ["csch(x)"], description: "Compute the hyperbolic cosecant of x in radians. Defined as 1/sinh(x)", examples: ["csch(2)", "1 / sinh(2)"], seealso: ["sech", "coth", "sinh"] };
+var WB = { name: "sec", category: "Trigonometry", syntax: ["sec(x)"], description: "Compute the secant of x in radians. Defined as 1/cos(x)", examples: ["sec(2)", "1 / cos(2)"], seealso: ["cot", "csc", "cos"] };
+var YB = { name: "sech", category: "Trigonometry", syntax: ["sech(x)"], description: "Compute the hyperbolic secant of x in radians. Defined as 1/cosh(x)", examples: ["sech(2)", "1 / cosh(2)"], seealso: ["coth", "csch", "cosh"] };
+var UB = { name: "sin", category: "Trigonometry", syntax: ["sin(x)"], description: "Compute the sine of x in radians.", examples: ["sin(2)", "sin(pi / 4) ^ 2", "sin(90 deg)", "sin(30 deg)", "sin(0.2)^2 + cos(0.2)^2"], seealso: ["asin", "cos", "tan"] };
+var GB = { name: "sinh", category: "Trigonometry", syntax: ["sinh(x)"], description: "Compute the hyperbolic sine of x in radians.", examples: ["sinh(0.5)"], seealso: ["cosh", "tanh"] };
+var LB = { name: "tan", category: "Trigonometry", syntax: ["tan(x)"], description: "Compute the tangent of x in radians.", examples: ["tan(0.5)", "sin(0.5) / cos(0.5)", "tan(pi / 4)", "tan(45 deg)"], seealso: ["atan", "sin", "cos"] };
+var XB = { name: "tanh", category: "Trigonometry", syntax: ["tanh(x)"], description: "Compute the hyperbolic tangent of x in radians.", examples: ["tanh(0.5)", "sinh(0.5) / cosh(0.5)"], seealso: ["sinh", "cosh"] };
+var DB = { name: "to", category: "Units", syntax: ["x to unit", "to(x, unit)"], description: "Change the unit of a value.", examples: ["5 inch to cm", "3.2kg to g", "16 bytes in bits"], seealso: [] };
+var RB = { name: "bin", category: "Utils", syntax: ["bin(value)"], description: "Format a number as binary", examples: ["bin(2)"], seealso: ["oct", "hex"] };
+var VB = { name: "clone", category: "Utils", syntax: ["clone(x)"], description: "Clone a variable. Creates a copy of primitive variables,and a deep copy of matrices", examples: ["clone(3.5)", "clone(2 - 4i)", "clone(45 deg)", "clone([1, 2; 3, 4])", 'clone("hello world")'], seealso: [] };
+var zB = { name: "format", category: "Utils", syntax: ["format(value)", "format(value, precision)"], description: "Format a value of any type as string.", examples: ["format(2.3)", "format(3 - 4i)", "format([])", "format(pi, 3)"], seealso: ["print"] };
+var FB = { name: "hasNumericValue", category: "Utils", syntax: ["hasNumericValue(x)"], description: "Test whether a value is an numeric value. In case of a string, true is returned if the string contains a numeric value.", examples: ["hasNumericValue(2)", 'hasNumericValue("2")', 'isNumeric("2")', "hasNumericValue(0)", "hasNumericValue(bignumber(500))", "hasNumericValue(fraction(0.125))", "hasNumericValue(2 + 3i)", 'hasNumericValue([2.3, "foo", false])'], seealso: ["isInteger", "isZero", "isNegative", "isPositive", "isNaN", "isNumeric"] };
+var PB = { name: "hex", category: "Utils", syntax: ["hex(value)"], description: "Format a number as hexadecimal", examples: ["hex(240)"], seealso: ["bin", "oct"] };
+var IB = { name: "isInteger", category: "Utils", syntax: ["isInteger(x)"], description: "Test whether a value is an integer number.", examples: ["isInteger(2)", "isInteger(3.5)", "isInteger([3, 0.5, -2])"], seealso: ["isNegative", "isNumeric", "isPositive", "isZero"] };
+var BB = { name: "isNaN", category: "Utils", syntax: ["isNaN(x)"], description: "Test whether a value is NaN (not a number)", examples: ["isNaN(2)", "isNaN(0 / 0)", "isNaN(NaN)", "isNaN(Infinity)"], seealso: ["isNegative", "isNumeric", "isPositive", "isZero"] };
+var TB = { name: "isNegative", category: "Utils", syntax: ["isNegative(x)"], description: "Test whether a value is negative: smaller than zero.", examples: ["isNegative(2)", "isNegative(0)", "isNegative(-4)", "isNegative([3, 0.5, -2])"], seealso: ["isInteger", "isNumeric", "isPositive", "isZero"] };
+var MB = { name: "isNumeric", category: "Utils", syntax: ["isNumeric(x)"], description: "Test whether a value is a numeric value. Returns true when the input is a number, BigNumber, Fraction, or boolean.", examples: ["isNumeric(2)", 'isNumeric("2")', 'hasNumericValue("2")', "isNumeric(0)", "isNumeric(bignumber(500))", "isNumeric(fraction(0.125))", "isNumeric(2 + 3i)", 'isNumeric([2.3, "foo", false])'], seealso: ["isInteger", "isZero", "isNegative", "isPositive", "isNaN", "hasNumericValue"] };
+var EB = { name: "isPositive", category: "Utils", syntax: ["isPositive(x)"], description: "Test whether a value is positive: larger than zero.", examples: ["isPositive(2)", "isPositive(0)", "isPositive(-4)", "isPositive([3, 0.5, -2])"], seealso: ["isInteger", "isNumeric", "isNegative", "isZero"] };
+var OB = { name: "isPrime", category: "Utils", syntax: ["isPrime(x)"], description: "Test whether a value is prime: has no divisors other than itself and one.", examples: ["isPrime(3)", "isPrime(-2)", "isPrime([2, 17, 100])"], seealso: ["isInteger", "isNumeric", "isNegative", "isZero"] };
+var NB = { name: "isZero", category: "Utils", syntax: ["isZero(x)"], description: "Test whether a value is zero.", examples: ["isZero(2)", "isZero(0)", "isZero(-4)", "isZero([3, 0, -2, 0])"], seealso: ["isInteger", "isNumeric", "isNegative", "isPositive"] };
+var AB = { name: "numeric", category: "Utils", syntax: ["numeric(x)"], description: "Convert a numeric input to a specific numeric type: number, BigNumber, or Fraction.", examples: ['numeric("4")', 'numeric("4", "number")', 'numeric("4", "BigNumber")', 'numeric("4", "Fraction")', 'numeric(4, "Fraction")', 'numeric(fraction(2, 5), "number")'], seealso: ["number", "fraction", "bignumber", "string", "format"] };
+var CB = { name: "oct", category: "Utils", syntax: ["oct(value)"], description: "Format a number as octal", examples: ["oct(56)"], seealso: ["bin", "hex"] };
+var jB = { name: "print", category: "Utils", syntax: ["print(template, values)", "print(template, values, precision)"], description: "Interpolate values into a string template.", examples: ['print("Lucy is $age years old", {age: 5})', 'print("The value of pi is $pi", {pi: pi}, 3)', 'print("Hello, $user.name!", {user: {name: "John"}})', 'print("Values: $1, $2, $3", [6, 9, 4])'], seealso: ["format"] };
+var SB = { name: "typeOf", category: "Utils", syntax: ["typeOf(x)"], description: "Get the type of a variable.", examples: ["typeOf(3.5)", "typeOf(2 - 4i)", "typeOf(45 deg)", 'typeOf("hello world")'], seealso: ["getMatrixDataType"] };
+var qB = { name: "solveODE", category: "Numeric", syntax: ["solveODE(func, tspan, y0)", "solveODE(func, tspan, y0, options)"], description: "Numerical Integration of Ordinary Differential Equations.", examples: ["f(t,y) = y", "tspan = [0, 4]", "solveODE(f, tspan, 1)", "solveODE(f, tspan, [1, 2])", 'solveODE(f, tspan, 1, { method:"RK23", maxStep:0.1 })'], seealso: ["derivative", "simplifyCore"] };
+var vB = { bignumber: T3, boolean: M3, complex: E3, createUnit: O3, fraction: N3, index: A3, matrix: C32, number: j3, sparse: S3, splitUnit: q3, string: v3, unit: w3, e: QY, E: QY, false: H3, i: W3, Infinity: Y3, LN2: G3, LN10: U3, LOG2E: X3, LOG10E: L3, NaN: D3, null: R3, pi: ZY, PI: ZY, phi: V3, SQRT1_2: z3, SQRT2: F3, tau: P3, true: I3, version: B3, speedOfLight: { description: "Speed of light in vacuum", examples: ["speedOfLight"] }, gravitationConstant: { description: "Newtonian constant of gravitation", examples: ["gravitationConstant"] }, planckConstant: { description: "Planck constant", examples: ["planckConstant"] }, reducedPlanckConstant: { description: "Reduced Planck constant", examples: ["reducedPlanckConstant"] }, magneticConstant: { description: "Magnetic constant (vacuum permeability)", examples: ["magneticConstant"] }, electricConstant: { description: "Electric constant (vacuum permeability)", examples: ["electricConstant"] }, vacuumImpedance: { description: "Characteristic impedance of vacuum", examples: ["vacuumImpedance"] }, coulomb: { description: "Coulomb\'s constant", examples: ["coulomb"] }, elementaryCharge: { description: "Elementary charge", examples: ["elementaryCharge"] }, bohrMagneton: { description: "Borh magneton", examples: ["bohrMagneton"] }, conductanceQuantum: { description: "Conductance quantum", examples: ["conductanceQuantum"] }, inverseConductanceQuantum: { description: "Inverse conductance quantum", examples: ["inverseConductanceQuantum"] }, magneticFluxQuantum: { description: "Magnetic flux quantum", examples: ["magneticFluxQuantum"] }, nuclearMagneton: { description: "Nuclear magneton", examples: ["nuclearMagneton"] }, klitzing: { description: "Von Klitzing constant", examples: ["klitzing"] }, bohrRadius: { description: "Borh radius", examples: ["bohrRadius"] }, classicalElectronRadius: { description: "Classical electron radius", examples: ["classicalElectronRadius"] }, electronMass: { description: "Electron mass", examples: ["electronMass"] }, fermiCoupling: { description: "Fermi coupling constant", examples: ["fermiCoupling"] }, fineStructure: { description: "Fine-structure constant", examples: ["fineStructure"] }, hartreeEnergy: { description: "Hartree energy", examples: ["hartreeEnergy"] }, protonMass: { description: "Proton mass", examples: ["protonMass"] }, deuteronMass: { description: "Deuteron Mass", examples: ["deuteronMass"] }, neutronMass: { description: "Neutron mass", examples: ["neutronMass"] }, quantumOfCirculation: { description: "Quantum of circulation", examples: ["quantumOfCirculation"] }, rydberg: { description: "Rydberg constant", examples: ["rydberg"] }, thomsonCrossSection: { description: "Thomson cross section", examples: ["thomsonCrossSection"] }, weakMixingAngle: { description: "Weak mixing angle", examples: ["weakMixingAngle"] }, efimovFactor: { description: "Efimov factor", examples: ["efimovFactor"] }, atomicMass: { description: "Atomic mass constant", examples: ["atomicMass"] }, avogadro: { description: "Avogadro\'s number", examples: ["avogadro"] }, boltzmann: { description: "Boltzmann constant", examples: ["boltzmann"] }, faraday: { description: "Faraday constant", examples: ["faraday"] }, firstRadiation: { description: "First radiation constant", examples: ["firstRadiation"] }, loschmidt: { description: "Loschmidt constant at T=273.15 K and p=101.325 kPa", examples: ["loschmidt"] }, gasConstant: { description: "Gas constant", examples: ["gasConstant"] }, molarPlanckConstant: { description: "Molar Planck constant", examples: ["molarPlanckConstant"] }, molarVolume: { description: "Molar volume of an ideal gas at T=273.15 K and p=101.325 kPa", examples: ["molarVolume"] }, sackurTetrode: { description: "Sackur-Tetrode constant at T=1 K and p=101.325 kPa", examples: ["sackurTetrode"] }, secondRadiation: { description: "Second radiation constant", examples: ["secondRadiation"] }, stefanBoltzmann: { description: "Stefan-Boltzmann constant", examples: ["stefanBoltzmann"] }, wienDisplacement: { description: "Wien displacement law constant", examples: ["wienDisplacement"] }, molarMass: { description: "Molar mass constant", examples: ["molarMass"] }, molarMassC12: { description: "Molar mass constant of carbon-12", examples: ["molarMassC12"] }, gravity: { description: "Standard acceleration of gravity (standard acceleration of free-fall on Earth)", examples: ["gravity"] }, planckLength: { description: "Planck length", examples: ["planckLength"] }, planckMass: { description: "Planck mass", examples: ["planckMass"] }, planckTime: { description: "Planck time", examples: ["planckTime"] }, planckCharge: { description: "Planck charge", examples: ["planckCharge"] }, planckTemperature: { description: "Planck temperature", examples: ["planckTemperature"] }, derivative: x3, lsolve: y3, lsolveAll: b3, lup: m3, lusolve: p3, leafCount: g3, polynomialRoot: d3, resolve: c3, simplify: l3, simplifyConstant: s3, simplifyCore: n3, symbolicEqual: i3, rationalize: _3, slu: o3, usolve: a3, usolveAll: r3, qr: u3, abs: t3, add: e3, cbrt: $F, ceil: JF, cube: QF, divide: ZF, dotDivide: KF, dotMultiply: HF, dotPow: WF, exp: YF, expm: UF, expm1: GF, fix: LF, floor: XF, gcd: DF, hypot: RF, lcm: zF, log: FF, log2: BF, log1p: IF, log10: PF, mod: TF, multiply: MF, norm: EF, nthRoot: OF, nthRoots: NF, pow: AF, round: CF, sign: jF, sqrt: SF, sqrtm: qF, square: hF, subtract: fF, unaryMinus: xF, unaryPlus: gF, xgcd: yF, invmod: VF, bitAnd: bF, bitNot: mF, bitOr: pF, bitXor: dF, leftShift: uF, rightArithShift: _F, rightLogShift: cF, bellNumbers: lF, catalan: sF, composition: nF, stirlingS2: oF, config: k3, import: h3, typed: f3, arg: iF, conj: aF, re: tF, im: rF, evaluate: eF, help: $P, distance: JP, intersect: QP, and: ZP, not: KP, or: HP, xor: WP, concat: UP, count: GP, cross: LP, column: YP, ctranspose: XP, det: DP, diag: RP, diff: VP, dot: zP, getMatrixDataType: TP, identity: MP, filter: PP, flatten: IP, forEach: BP, inv: EP, pinv: OP, eigs: FP, kron: NP, matrixFromFunction: jP, matrixFromRows: SP, matrixFromColumns: CP, map: AP, ones: qP, partitionSelect: vP, range: wP, resize: hP, reshape: kP, rotate: fP, rotationMatrix: xP, row: gP, size: yP, sort: bP, squeeze: mP, subset: pP, trace: dP, transpose: uP, zeros: _P, fft: cP, ifft: lP, sylvester: vF, schur: wF, lyap: kF, solveODE: qB, combinations: sP, combinationsWithRep: nP, factorial: oP, gamma: iP, kldivergence: rP, lgamma: aP, multinomial: tP, permutations: eP, pickRandom: $I, random: JI, randomInt: QI, compare: ZI, compareNatural: KI, compareText: HI, deepEqual: WI, equal: YI, equalText: UI, larger: GI, largerEq: LI, smaller: XI, smallerEq: DI, unequal: RI, setCartesian: VI, setDifference: zI, setDistinct: FI, setIntersect: PI, setIsSubset: II, setMultiplicity: BI, setPowerset: TI, setSize: MI, setSymDifference: EI, setUnion: OI, zpk2tf: NI, freqz: AI, erf: CI, zeta: jI, cumsum: yI, mad: SI, max: qI, mean: vI, median: wI, min: kI, mode: hI, prod: fI, quantileSeq: xI, std: gI, sum: bI, variance: mI, corr: pI, acos: dI, acosh: uI, acot: _I, acoth: cI, acsc: lI, acsch: sI, asec: nI, asech: oI, asin: iI, asinh: aI, atan: rI, atanh: eI, atan2: tI, cos: $B, cosh: JB, cot: QB, coth: ZB, csc: KB, csch: HB, sec: WB, sech: YB, sin: UB, sinh: GB, tan: LB, tanh: XB, to: DB, clone: VB, format: zB, bin: RB, oct: CB, hex: PB, isNaN: BB, isInteger: IB, isNegative: TB, isNumeric: MB, hasNumericValue: FB, isPositive: EB, isPrime: OB, isZero: NB, print: jB, typeOf: SB, numeric: AB };
+var wB = "help";
+var ph = ["typed", "mathWithTransform", "Help"];
+var KY = Q0(wB, ph, (C11) => {
   var { typed: j, mathWithTransform: q, Help: S } = C11;
-  return j(vB, { any: function U(P) {
+  return j(wB, { any: function U(P) {
     var $, Y = P;
     if (typeof P !== "string") {
       for ($ in q)
@@ -75749,7 +75753,7 @@ var KY = Q0(vB, bh, (C11) => {
           break;
         }
     }
-    var X = L6(qB, Y);
+    var X = L6(vB, Y);
     if (!X) {
       var K = typeof Y === "function" ? Y.name : Y;
       throw new Error('No documentation found on "' + K + '"');
@@ -75757,21 +75761,21 @@ var KY = Q0(vB, bh, (C11) => {
     return new S(X);
   } });
 });
-var wB = "chain";
-var mh = ["typed", "Chain"];
-var HY = Q0(wB, mh, (C11) => {
+var kB = "chain";
+var dh = ["typed", "Chain"];
+var HY = Q0(kB, dh, (C11) => {
   var { typed: j, Chain: q } = C11;
-  return j(wB, { "": function S() {
+  return j(kB, { "": function S() {
     return new q;
   }, any: function S(U) {
     return new q(U);
   } });
 });
-var kB = "det";
-var ph = ["typed", "matrix", "subtractScalar", "multiply", "divideScalar", "isZero", "unaryMinus"];
-var WY = Q0(kB, ph, (C11) => {
+var hB = "det";
+var uh = ["typed", "matrix", "subtractScalar", "multiply", "divideScalar", "isZero", "unaryMinus"];
+var WY = Q0(hB, uh, (C11) => {
   var { typed: j, matrix: q, subtractScalar: S, multiply: U, divideScalar: P, isZero: $, unaryMinus: Y } = C11;
-  return j(kB, { any: function K(Q) {
+  return j(hB, { any: function K(Q) {
     return H8(Q);
   }, "Array | Matrix": function K(Q) {
     var J;
@@ -75835,11 +75839,11 @@ var WY = Q0(kB, ph, (C11) => {
     }
   }
 });
-var hB = "inv";
-var dh = ["typed", "matrix", "divideScalar", "addScalar", "multiply", "unaryMinus", "det", "identity", "abs"];
-var YY = Q0(hB, dh, (C11) => {
+var fB = "inv";
+var _h = ["typed", "matrix", "divideScalar", "addScalar", "multiply", "unaryMinus", "det", "identity", "abs"];
+var YY = Q0(fB, _h, (C11) => {
   var { typed: j, matrix: q, divideScalar: S, addScalar: U, multiply: P, unaryMinus: $, det: Y, identity: X, abs: K } = C11;
-  return j(hB, { "Array | Matrix": function J(Z) {
+  return j(fB, { "Array | Matrix": function J(Z) {
     var W = $8(Z) ? Z.size() : Y8(Z);
     switch (W.length) {
       case 1:
@@ -75918,11 +75922,11 @@ var YY = Q0(hB, dh, (C11) => {
     }
   }
 });
-var fB = "pinv";
-var uh = ["typed", "matrix", "inv", "deepEqual", "equal", "dotDivide", "dot", "ctranspose", "divideScalar", "multiply", "add", "Complex"];
-var UY = Q0(fB, uh, (C11) => {
+var xB = "pinv";
+var ch = ["typed", "matrix", "inv", "deepEqual", "equal", "dotDivide", "dot", "ctranspose", "divideScalar", "multiply", "add", "Complex"];
+var UY = Q0(xB, ch, (C11) => {
   var { typed: j, matrix: q, inv: S, deepEqual: U, equal: P, dotDivide: $, dot: Y, ctranspose: X, divideScalar: K, multiply: Q, add: J, Complex: Z } = C11;
-  return j(fB, { "Array | Matrix": function V(D) {
+  return j(xB, { "Array | Matrix": function V(D) {
     var F = $8(D) ? D.size() : Y8(D);
     switch (F.length) {
       case 1:
@@ -75999,10 +76003,10 @@ var UY = Q0(fB, uh, (C11) => {
     return U(J(V, Z(1, 1)), J(Q(V, 0), Z(1, 1)));
   }
 });
-var _h = "eigs";
-var ch = ["config", "typed", "matrix", "addScalar", "equal", "subtract", "abs", "atan", "cos", "sin", "multiplyScalar", "divideScalar", "inv", "bignumber", "multiply", "add", "larger", "column", "flatten", "number", "complex", "sqrt", "diag", "size", "reshape", "qr", "usolve", "usolveAll", "im", "re", "smaller", "matrixFromColumns", "dot"];
-var GY = Q0(_h, ch, (C11) => {
-  var { config: j, typed: q, matrix: S, addScalar: U, subtract: P, equal: $, abs: Y, atan: X, cos: K, sin: Q, multiplyScalar: J, divideScalar: Z, inv: W, bignumber: G, multiply: H, add: L, larger: R, column: V, flatten: D, number: F, complex: T, sqrt: E, diag: N, size: w, reshape: h, qr: x, usolve: b, usolveAll: z, im: I, re: A, smaller: M, matrixFromColumns: O, dot: v } = C11, g = gB({ config: j, addScalar: U, subtract: P, column: V, flatten: D, equal: $, abs: Y, atan: X, cos: K, sin: Q, multiplyScalar: J, inv: W, bignumber: G, complex: T, multiply: H, add: L }), k = xB({ config: j, addScalar: U, subtract: P, multiply: H, multiplyScalar: J, flatten: D, divideScalar: Z, sqrt: E, abs: Y, bignumber: G, diag: N, size: w, reshape: h, qr: x, inv: W, usolve: b, usolveAll: z, equal: $, complex: T, larger: R, smaller: M, matrixFromColumns: O, dot: v });
+var lh = "eigs";
+var sh = ["config", "typed", "matrix", "addScalar", "equal", "subtract", "abs", "atan", "cos", "sin", "multiplyScalar", "divideScalar", "inv", "bignumber", "multiply", "add", "larger", "column", "flatten", "number", "complex", "sqrt", "diag", "size", "reshape", "qr", "usolve", "usolveAll", "im", "re", "smaller", "matrixFromColumns", "dot"];
+var GY = Q0(lh, sh, (C11) => {
+  var { config: j, typed: q, matrix: S, addScalar: U, subtract: P, equal: $, abs: Y, atan: X, cos: K, sin: Q, multiplyScalar: J, divideScalar: Z, inv: W, bignumber: G, multiply: H, add: L, larger: R, column: V, flatten: D, number: F, complex: T, sqrt: E, diag: N, size: w, reshape: h, qr: x, usolve: b, usolveAll: z, im: I, re: A, smaller: M, matrixFromColumns: O, dot: v } = C11, g = yB({ config: j, addScalar: U, subtract: P, column: V, flatten: D, equal: $, abs: Y, atan: X, cos: K, sin: Q, multiplyScalar: J, inv: W, bignumber: G, complex: T, multiply: H, add: L }), k = gB({ config: j, addScalar: U, subtract: P, multiply: H, multiplyScalar: J, flatten: D, divideScalar: Z, sqrt: E, abs: Y, bignumber: G, diag: N, size: w, reshape: h, qr: x, inv: W, usolve: b, usolveAll: z, equal: $, complex: T, larger: R, smaller: M, matrixFromColumns: O, dot: v });
   return q("eigs", { Array: function c(n) {
     return B(S(n));
   }, "Array, number|BigNumber": function c(n, s) {
@@ -76105,11 +76109,11 @@ var GY = Q0(_h, ch, (C11) => {
       throw TypeError("Matrix contains unsupported types only.");
   }
 });
-var yB = "expm";
-var lh = ["typed", "abs", "add", "identity", "inv", "multiply"];
-var LY = Q0(yB, lh, (C11) => {
+var bB = "expm";
+var nh = ["typed", "abs", "add", "identity", "inv", "multiply"];
+var LY = Q0(bB, nh, (C11) => {
   var { typed: j, abs: q, add: S, identity: U, inv: P, multiply: $ } = C11;
-  return j(yB, { Matrix: function Q(J) {
+  return j(bB, { Matrix: function Q(J) {
     var Z = J.size();
     if (Z.length !== 2 || Z[0] !== Z[1])
       throw new RangeError("Matrix must be square (size: " + G8(Z) + ")");
@@ -76155,9 +76159,9 @@ var LY = Q0(yB, lh, (C11) => {
     return 8 * Math.pow(Q / Math.pow(2, Z), 2 * J) * W * W / (H * R);
   }
 });
-var bB = "sqrtm";
-var sh = ["typed", "abs", "add", "multiply", "map", "sqrt", "subtract", "inv", "size", "max", "identity"];
-var XY = Q0(bB, sh, (C11) => {
+var mB = "sqrtm";
+var oh = ["typed", "abs", "add", "multiply", "map", "sqrt", "subtract", "inv", "size", "max", "identity"];
+var XY = Q0(mB, oh, (C11) => {
   var { typed: j, abs: q, add: S, multiply: U, map: P, sqrt: $, subtract: Y, inv: X, size: K, max: Q, identity: J } = C11, Z = 1000, W = 0.000001;
   function G(H) {
     var L, R = 0, V = H, D = J(K(H));
@@ -76168,7 +76172,7 @@ var XY = Q0(bB, sh, (C11) => {
     } while (L > W);
     return V;
   }
-  return j(bB, { "Array | Matrix": function H(L) {
+  return j(mB, { "Array | Matrix": function H(L) {
     var R = $8(L) ? L.size() : Y8(L);
     switch (R.length) {
       case 1:
@@ -76188,11 +76192,11 @@ var XY = Q0(bB, sh, (C11) => {
     }
   } });
 });
-var mB = "sylvester";
-var nh = ["typed", "schur", "matrixFromColumns", "matrix", "multiply", "range", "concat", "transpose", "index", "subset", "add", "subtract", "identity", "lusolve", "abs"];
-var DY = Q0(mB, nh, (C11) => {
+var pB = "sylvester";
+var ih = ["typed", "schur", "matrixFromColumns", "matrix", "multiply", "range", "concat", "transpose", "index", "subset", "add", "subtract", "identity", "lusolve", "abs"];
+var DY = Q0(pB, ih, (C11) => {
   var { typed: j, schur: q, matrixFromColumns: S, matrix: U, multiply: P, range: $, concat: Y, transpose: X, index: K, subset: Q, add: J, subtract: Z, identity: W, lusolve: G, abs: H } = C11;
-  return j(mB, { "Matrix, Matrix, Matrix": L, "Array, Matrix, Matrix": function R(V, D, F) {
+  return j(pB, { "Matrix, Matrix, Matrix": L, "Array, Matrix, Matrix": function R(V, D, F) {
     return L(U(V), D, F);
   }, "Array, Array, Matrix": function R(V, D, F) {
     return L(U(V), U(D), F);
@@ -76227,11 +76231,11 @@ var DY = Q0(mB, nh, (C11) => {
     return Y0;
   }
 });
-var pB = "schur";
-var oh = ["typed", "matrix", "identity", "multiply", "qr", "norm", "subtract"];
-var RY = Q0(pB, oh, (C11) => {
+var dB = "schur";
+var ah = ["typed", "matrix", "identity", "multiply", "qr", "norm", "subtract"];
+var RY = Q0(dB, ah, (C11) => {
   var { typed: j, matrix: q, identity: S, multiply: U, qr: P, norm: $, subtract: Y } = C11;
-  return j(pB, { Array: function K(Q) {
+  return j(dB, { Array: function K(Q) {
     var J = X(q(Q));
     return { U: J.U.valueOf(), T: J.T.valueOf() };
   }, Matrix: function K(Q) {
@@ -76248,11 +76252,11 @@ var RY = Q0(pB, oh, (C11) => {
     return { U: Z, T: J };
   }
 });
-var dB = "lyap";
-var ih = ["typed", "matrix", "sylvester", "multiply", "transpose"];
-var VY = Q0(dB, ih, (C11) => {
+var uB = "lyap";
+var rh = ["typed", "matrix", "sylvester", "multiply", "transpose"];
+var VY = Q0(uB, rh, (C11) => {
   var { typed: j, matrix: q, sylvester: S, multiply: U, transpose: P } = C11;
-  return j(dB, { "Matrix, Matrix": function $(Y, X) {
+  return j(uB, { "Matrix, Matrix": function $(Y, X) {
     return S(Y, P(Y), U(-1, X));
   }, "Array, Matrix": function $(Y, X) {
     return S(q(Y), P(q(Y)), U(-1, X));
@@ -76262,9 +76266,9 @@ var VY = Q0(dB, ih, (C11) => {
     return S(q(Y), P(q(Y)), q(U(-1, X))).toArray();
   } });
 });
-var ah = "divide";
-var rh = ["typed", "matrix", "multiply", "equalScalar", "divideScalar", "inv"];
-var zY = Q0(ah, rh, (C11) => {
+var th = "divide";
+var eh = ["typed", "matrix", "multiply", "equalScalar", "divideScalar", "inv"];
+var zY = Q0(th, eh, (C11) => {
   var { typed: j, matrix: q, multiply: S, equalScalar: U, divideScalar: P, inv: $ } = C11, Y = u8({ typed: j, equalScalar: U }), X = M6({ typed: j });
   return j("divide", F5({ "Array | Matrix, Array | Matrix": function K(Q, J) {
     return S(Q, $(J));
@@ -76278,11 +76282,11 @@ var zY = Q0(ah, rh, (C11) => {
     return S(Q, $(J));
   } }, P.signatures));
 });
-var uB = "distance";
-var th = ["typed", "addScalar", "subtractScalar", "divideScalar", "multiplyScalar", "deepEqual", "sqrt", "abs"];
-var FY = Q0(uB, th, (C11) => {
+var _B = "distance";
+var $f = ["typed", "addScalar", "subtractScalar", "divideScalar", "multiplyScalar", "deepEqual", "sqrt", "abs"];
+var FY = Q0(_B, $f, (C11) => {
   var { typed: j, addScalar: q, subtractScalar: S, multiplyScalar: U, divideScalar: P, deepEqual: $, sqrt: Y, abs: X } = C11;
-  return j(uB, { "Array, Array, Array": function F(T, E, N) {
+  return j(_B, { "Array, Array, Array": function F(T, E, N) {
     if (T.length === 2 && E.length === 2 && N.length === 2) {
       if (!Q(T))
         throw new TypeError("Array with 2 numbers or BigNumbers expected for first argument");
@@ -76447,9 +76451,9 @@ var FY = Q0(uB, th, (C11) => {
     return T;
   }
 });
-var eh = "intersect";
-var $f = ["typed", "config", "abs", "add", "addScalar", "matrix", "multiply", "multiplyScalar", "divideScalar", "subtract", "smaller", "equalScalar", "flatten", "isZero", "isNumeric"];
-var PY = Q0(eh, $f, (C11) => {
+var Jf = "intersect";
+var Qf = ["typed", "config", "abs", "add", "addScalar", "matrix", "multiply", "multiplyScalar", "divideScalar", "subtract", "smaller", "equalScalar", "flatten", "isZero", "isNumeric"];
+var PY = Q0(Jf, Qf, (C11) => {
   var { typed: j, config: q, abs: S, add: U, addScalar: P, matrix: $, multiply: Y, multiplyScalar: X, divideScalar: K, subtract: Q, smaller: J, equalScalar: Z, flatten: W, isZero: G, isNumeric: H } = C11;
   return j("intersect", { "Array, Array, Array": L, "Array, Array, Array, Array": R, "Matrix, Matrix, Matrix": function x(b, z, I) {
     var A = L(b.valueOf(), z.valueOf(), I.valueOf());
@@ -76537,11 +76541,11 @@ var PY = Q0(eh, $f, (C11) => {
     return [l, e, Y0];
   }
 });
-var _B = "sum";
-var Jf = ["typed", "config", "add", "numeric"];
-var fJ = Q0(_B, Jf, (C11) => {
+var cB = "sum";
+var Zf = ["typed", "config", "add", "numeric"];
+var fJ = Q0(cB, Zf, (C11) => {
   var { typed: j, config: q, add: S, numeric: U } = C11;
-  return j(_B, { "Array | Matrix": P, "Array | Matrix, number | BigNumber": $, "...": function Y(X) {
+  return j(cB, { "Array | Matrix": P, "Array | Matrix, number | BigNumber": $, "...": function Y(X) {
     if (P9(X))
       throw new TypeError("Scalar values expected in function sum");
     return P(X);
@@ -76570,8 +76574,8 @@ var fJ = Q0(_B, Jf, (C11) => {
   }
 });
 var TQ = "cumsum";
-var Qf = ["typed", "add", "unaryPlus"];
-var xJ = Q0(TQ, Qf, (C11) => {
+var Kf = ["typed", "add", "unaryPlus"];
+var xJ = Q0(TQ, Kf, (C11) => {
   var { typed: j, add: q, unaryPlus: S } = C11;
   return j(TQ, { Array: U, Matrix: function X(K) {
     return K.create(U(K.valueOf()));
@@ -76627,11 +76631,11 @@ var xJ = Q0(TQ, Qf, (C11) => {
     }
   }
 });
-var cB = "mean";
-var Zf = ["typed", "add", "divide"];
-var gJ = Q0(cB, Zf, (C11) => {
+var lB = "mean";
+var Hf = ["typed", "add", "divide"];
+var gJ = Q0(lB, Hf, (C11) => {
   var { typed: j, add: q, divide: S } = C11;
-  return j(cB, { "Array | Matrix": P, "Array | Matrix, number | BigNumber": U, "...": function $(Y) {
+  return j(lB, { "Array | Matrix": P, "Array | Matrix, number | BigNumber": U, "...": function $(Y) {
     if (P9(Y))
       throw new TypeError("Scalar values expected in function mean");
     return P(Y);
@@ -76657,9 +76661,9 @@ var gJ = Q0(cB, Zf, (C11) => {
     return S(Y, X);
   }
 });
-var lB = "median";
-var Kf = ["typed", "add", "divide", "compare", "partitionSelect"];
-var IY = Q0(lB, Kf, (C11) => {
+var sB = "median";
+var Wf = ["typed", "add", "divide", "compare", "partitionSelect"];
+var IY = Q0(sB, Wf, (C11) => {
   var { typed: j, add: q, divide: S, compare: U, partitionSelect: P } = C11;
   function $(K) {
     try {
@@ -76686,7 +76690,7 @@ var IY = Q0(lB, Kf, (C11) => {
   } }), X = j({ "number | BigNumber | Complex | Unit, number | BigNumber | Complex | Unit": function K(Q, J) {
     return S(q(Q, J), 2);
   } });
-  return j(lB, { "Array | Matrix": $, "Array | Matrix, number | BigNumber": function K(Q, J) {
+  return j(sB, { "Array | Matrix": $, "Array | Matrix, number | BigNumber": function K(Q, J) {
     throw new Error("median(A, dim) is not yet supported");
   }, "...": function K(Q) {
     if (P9(Q))
@@ -76694,11 +76698,11 @@ var IY = Q0(lB, Kf, (C11) => {
     return $(Q);
   } });
 });
-var sB = "mad";
-var Hf = ["typed", "abs", "map", "median", "subtract"];
-var BY = Q0(sB, Hf, (C11) => {
+var nB = "mad";
+var Yf = ["typed", "abs", "map", "median", "subtract"];
+var BY = Q0(nB, Yf, (C11) => {
   var { typed: j, abs: q, map: S, median: U, subtract: P } = C11;
-  return j(sB, { "Array | Matrix": $, "...": function Y(X) {
+  return j(nB, { "Array | Matrix": $, "...": function Y(X) {
     return $(X);
   } });
   function $(Y) {
@@ -76718,11 +76722,11 @@ var BY = Q0(sB, Hf, (C11) => {
   }
 });
 var TY = "unbiased";
-var nB = "variance";
-var Wf = ["typed", "add", "subtract", "multiply", "divide", "apply", "isNaN"];
-var yJ = Q0(nB, Wf, (C11) => {
+var oB = "variance";
+var Uf = ["typed", "add", "subtract", "multiply", "divide", "apply", "isNaN"];
+var yJ = Q0(oB, Uf, (C11) => {
   var { typed: j, add: q, subtract: S, multiply: U, divide: P, apply: $, isNaN: Y } = C11;
-  return j(nB, { "Array | Matrix": function Q(J) {
+  return j(oB, { "Array | Matrix": function Q(J) {
     return X(J, TY);
   }, "Array | Matrix, string": X, "Array | Matrix, number | BigNumber": function Q(J, Z) {
     return K(J, Z, TY);
@@ -76770,11 +76774,11 @@ var yJ = Q0(nB, Wf, (C11) => {
     }
   }
 });
-var oB = "quantileSeq";
-var Yf = ["typed", "?bignumber", "add", "subtract", "divide", "multiply", "partitionSelect", "compare", "isInteger", "smaller", "smallerEq", "larger"];
-var bJ = Q0(oB, Yf, (C11) => {
+var iB = "quantileSeq";
+var Gf = ["typed", "?bignumber", "add", "subtract", "divide", "multiply", "partitionSelect", "compare", "isInteger", "smaller", "smallerEq", "larger"];
+var bJ = Q0(iB, Gf, (C11) => {
   var { typed: j, bignumber: q, add: S, subtract: U, divide: P, multiply: $, partitionSelect: Y, compare: X, isInteger: K, smaller: Q, smallerEq: J, larger: Z } = C11, W = r7({ typed: j, isInteger: K });
-  return j(oB, { "Array | Matrix, number | BigNumber": (V, D) => H(V, D, false), "Array | Matrix, number | BigNumber, number": (V, D, F) => G(V, D, false, F, H), "Array | Matrix, number | BigNumber, boolean": H, "Array | Matrix, number | BigNumber, boolean, number": (V, D, F, T) => G(V, D, F, T, H), "Array | Matrix, Array | Matrix": (V, D) => L(V, D, false), "Array | Matrix, Array | Matrix, number": (V, D, F) => G(V, D, false, F, L), "Array | Matrix, Array | Matrix, boolean": L, "Array | Matrix, Array | Matrix, boolean, number": (V, D, F, T) => G(V, D, F, T, L) });
+  return j(iB, { "Array | Matrix, number | BigNumber": (V, D) => H(V, D, false), "Array | Matrix, number | BigNumber, number": (V, D, F) => G(V, D, false, F, H), "Array | Matrix, number | BigNumber, boolean": H, "Array | Matrix, number | BigNumber, boolean, number": (V, D, F, T) => G(V, D, F, T, H), "Array | Matrix, Array | Matrix": (V, D) => L(V, D, false), "Array | Matrix, Array | Matrix, number": (V, D, F) => G(V, D, false, F, L), "Array | Matrix, Array | Matrix, boolean": L, "Array | Matrix, Array | Matrix, boolean, number": (V, D, F, T) => G(V, D, F, T, L) });
   function G(V, D, F, T, E) {
     return W(V, T, (N) => E(N, D, F));
   }
@@ -76823,11 +76827,11 @@ var bJ = Q0(oB, Yf, (C11) => {
     return S($(x, U(1, h)), $(b, h));
   }
 });
-var iB = "std";
-var Uf = ["typed", "map", "sqrt", "variance"];
-var mJ = Q0(iB, Uf, (C11) => {
+var aB = "std";
+var Lf = ["typed", "map", "sqrt", "variance"];
+var mJ = Q0(aB, Lf, (C11) => {
   var { typed: j, map: q, sqrt: S, variance: U } = C11;
-  return j(iB, { "Array | Matrix": P, "Array | Matrix, string": P, "Array | Matrix, number | BigNumber": P, "Array | Matrix, number | BigNumber, string": P, "...": function $(Y) {
+  return j(aB, { "Array | Matrix": P, "Array | Matrix, string": P, "Array | Matrix, number | BigNumber": P, "Array | Matrix, number | BigNumber, string": P, "...": function $(Y) {
     return P(Y);
   } });
   function P($, Y) {
@@ -76847,11 +76851,11 @@ var mJ = Q0(iB, Uf, (C11) => {
     }
   }
 });
-var aB = "corr";
-var Gf = ["typed", "matrix", "mean", "sqrt", "sum", "add", "subtract", "multiply", "pow", "divide"];
-var MY = Q0(aB, Gf, (C11) => {
+var rB = "corr";
+var Xf = ["typed", "matrix", "mean", "sqrt", "sum", "add", "subtract", "multiply", "pow", "divide"];
+var MY = Q0(rB, Xf, (C11) => {
   var { typed: j, matrix: q, sqrt: S, sum: U, add: P, subtract: $, multiply: Y, pow: X, divide: K } = C11;
-  return j(aB, { "Array, Array": function Z(W, G) {
+  return j(rB, { "Array, Array": function Z(W, G) {
     return Q(W, G);
   }, "Matrix, Matrix": function Z(W, G) {
     var H = Q(W.toArray(), G.toArray());
@@ -76879,16 +76883,16 @@ var MY = Q0(aB, Gf, (C11) => {
     return K(F, T);
   }
 });
-var tB = function(C11) {
+var eB = function(C11) {
   return C11.isInteger() && C11.gte(0);
 };
-var rB = "combinations";
-var Lf = ["typed"];
-var EY = Q0(rB, Lf, (C11) => {
+var tB = "combinations";
+var Df = ["typed"];
+var EY = Q0(tB, Df, (C11) => {
   var { typed: j } = C11;
-  return j(rB, { "number, number": mK, "BigNumber, BigNumber": function q(S, U) {
+  return j(tB, { "number, number": mK, "BigNumber, BigNumber": function q(S, U) {
     var P = S.constructor, $, Y, X = S.minus(U), K = new P(1);
-    if (!tB(S) || !tB(U))
+    if (!eB(S) || !eB(U))
       throw new TypeError("Positive integer value expected in function combinations");
     if (U.gt(S))
       throw new TypeError("k must be less than n in function combinations");
@@ -76901,14 +76905,14 @@ var EY = Q0(rB, Lf, (C11) => {
     return $;
   } });
 });
-var $T = function(C11) {
+var JT = function(C11) {
   return C11.isInteger() && C11.gte(0);
 };
-var eB = "combinationsWithRep";
-var Xf = ["typed"];
-var OY = Q0(eB, Xf, (C11) => {
+var $T = "combinationsWithRep";
+var Rf = ["typed"];
+var OY = Q0($T, Rf, (C11) => {
   var { typed: j } = C11;
-  return j(eB, { "number, number": function q(S, U) {
+  return j($T, { "number, number": function q(S, U) {
     if (!e0(S) || S < 0)
       throw new TypeError("Positive integer value expected in function combinationsWithRep");
     if (!e0(U) || U < 0)
@@ -76923,7 +76927,7 @@ var OY = Q0(eB, Xf, (C11) => {
     return $ / Y9(1, S - 1);
   }, "BigNumber, BigNumber": function q(S, U) {
     var P = S.constructor, $, Y, X = new P(1), K = S.minus(X);
-    if (!$T(S) || !$T(U))
+    if (!JT(S) || !JT(U))
       throw new TypeError("Positive integer value expected in function combinationsWithRep");
     if (S.lt(X))
       throw new TypeError("k must be less than or equal to n + k - 1 in function combinationsWithRep");
@@ -76936,9 +76940,9 @@ var OY = Q0(eB, Xf, (C11) => {
     return $;
   } });
 });
-var JT = "gamma";
-var Df = ["typed", "config", "multiplyScalar", "pow", "BigNumber", "Complex"];
-var NY = Q0(JT, Df, (C11) => {
+var QT = "gamma";
+var Vf = ["typed", "config", "multiplyScalar", "pow", "BigNumber", "Complex"];
+var NY = Q0(QT, Vf, (C11) => {
   var { typed: j, config: q, multiplyScalar: S, pow: U, BigNumber: P, Complex: $ } = C11;
   function Y(K) {
     if (K.im === 0)
@@ -76956,7 +76960,7 @@ var NY = Q0(JT, Df, (C11) => {
     var H = new $(K.re + lK + 0.5, K.im), L = Math.sqrt(2 * Math.PI), R = H.pow(K.add(0.5)), V = H.neg().exp();
     return Z.mul(L).mul(R).mul(V);
   }
-  return j(JT, { number: RJ, Complex: Y, BigNumber: function K(Q) {
+  return j(QT, { number: RJ, Complex: Y, BigNumber: function K(Q) {
     if (Q.isInteger())
       return Q.isNegative() || Q.isZero() ? new P(Infinity) : X(Q.minus(1));
     if (!Q.isFinite())
@@ -76975,11 +76979,11 @@ var NY = Q0(JT, Df, (C11) => {
     return new P(W.toPrecision(P.precision));
   }
 });
-var QT = "lgamma";
-var Rf = ["Complex", "typed"];
-var AY = Q0(QT, Rf, (C11) => {
+var ZT = "lgamma";
+var zf = ["Complex", "typed"];
+var AY = Q0(ZT, zf, (C11) => {
   var { Complex: j, typed: q } = C11, S = 7, U = 7, P = [-0.029550653594771242, 0.00641025641025641, -0.0019175269175269176, 0.0008417508417508417, -0.0005952380952380953, 0.0007936507936507937, -0.002777777777777778, 0.08333333333333333];
-  return q(QT, { number: VJ, Complex: $, BigNumber: function K() {
+  return q(ZT, { number: VJ, Complex: $, BigNumber: function K() {
     throw new Error("mathjs doesn't yet provide an implementation of the algorithm lgamma for BigNumber");
   } });
   function $(K) {
@@ -76991,7 +76995,7 @@ var AY = Q0(QT, Rf, (C11) => {
     else if (K.re >= S || Math.abs(K.im) >= U)
       return Y(K);
     else if (K.re <= Z) {
-      var W = hD(Q, K.im) * Math.floor(0.5 * K.re + 0.25), G = K.mul(Math.PI).sin().log(), H = $(new j(1 - K.re, -K.im));
+      var W = fD(Q, K.im) * Math.floor(0.5 * K.re + 0.25), G = K.mul(Math.PI).sin().log(), H = $(new j(1 - K.re, -K.im));
       return new j(J, W).sub(G).sub(H);
     } else if (K.im >= 0)
       return X(K);
@@ -77020,11 +77024,11 @@ var AY = Q0(QT, Rf, (C11) => {
     return Y(K).sub(Z.log()).sub(new j(0, Q * 2 * Math.PI * 1));
   }
 });
-var ZT = "factorial";
-var Vf = ["typed", "gamma"];
-var CY = Q0(ZT, Vf, (C11) => {
+var KT = "factorial";
+var Ff = ["typed", "gamma"];
+var CY = Q0(KT, Ff, (C11) => {
   var { typed: j, gamma: q } = C11;
-  return j(ZT, { number: function S(U) {
+  return j(KT, { number: function S(U) {
     if (U < 0)
       throw new Error("Value must be non-negative");
     return q(U + 1);
@@ -77034,11 +77038,11 @@ var CY = Q0(ZT, Vf, (C11) => {
     return q(U.plus(1));
   }, "Array | Matrix": j.referToSelf((S) => (U) => Z8(U, S)) });
 });
-var KT = "kldivergence";
-var zf = ["typed", "matrix", "divide", "sum", "multiply", "map", "dotDivide", "log", "isNumeric"];
-var jY = Q0(KT, zf, (C11) => {
+var HT = "kldivergence";
+var Pf = ["typed", "matrix", "divide", "sum", "multiply", "map", "dotDivide", "log", "isNumeric"];
+var jY = Q0(HT, Pf, (C11) => {
   var { typed: j, matrix: q, divide: S, sum: U, multiply: P, map: $, dotDivide: Y, log: X, isNumeric: K } = C11;
-  return j(KT, { "Array, Array": function J(Z, W) {
+  return j(HT, { "Array, Array": function J(Z, W) {
     return Q(q(Z), q(W));
   }, "Matrix, Array": function J(Z, W) {
     return Q(Z, q(W));
@@ -77068,11 +77072,11 @@ var jY = Q0(KT, zf, (C11) => {
       return Number.NaN;
   }
 });
-var HT = "multinomial";
-var Ff = ["typed", "add", "divide", "multiply", "factorial", "isInteger", "isPositive"];
-var SY = Q0(HT, Ff, (C11) => {
+var WT = "multinomial";
+var If = ["typed", "add", "divide", "multiply", "factorial", "isInteger", "isPositive"];
+var SY = Q0(WT, If, (C11) => {
   var { typed: j, add: q, divide: S, multiply: U, factorial: P, isInteger: $, isPositive: Y } = C11;
-  return j(HT, { "Array | Matrix": function X(K) {
+  return j(WT, { "Array | Matrix": function X(K) {
     var Q = 0, J = 1;
     return u6(K, function(Z) {
       if (!$(Z) || !Y(Z))
@@ -77081,14 +77085,14 @@ var SY = Q0(HT, Ff, (C11) => {
     }), S(P(Q), J);
   } });
 });
-var YT = function(C11) {
+var UT = function(C11) {
   return C11.isInteger() && C11.gte(0);
 };
-var WT = "permutations";
-var Pf = ["typed", "factorial"];
-var qY = Q0(WT, Pf, (C11) => {
+var YT = "permutations";
+var Bf = ["typed", "factorial"];
+var qY = Q0(YT, Bf, (C11) => {
   var { typed: j, factorial: q } = C11;
-  return j(WT, { "number | BigNumber": q, "number, number": function S(U, P) {
+  return j(YT, { "number | BigNumber": q, "number, number": function S(U, P) {
     if (!e0(U) || U < 0)
       throw new TypeError("Positive integer value expected in function permutations");
     if (!e0(P) || P < 0)
@@ -77098,7 +77102,7 @@ var qY = Q0(WT, Pf, (C11) => {
     return Y9(U - P + 1, U);
   }, "BigNumber, BigNumber": function S(U, P) {
     var $, Y;
-    if (!YT(U) || !YT(P))
+    if (!UT(U) || !UT(P))
       throw new TypeError("Positive integer value expected in function permutations");
     if (P.gt(U))
       throw new TypeError("second argument k must be less than or equal to first argument n");
@@ -77110,17 +77114,17 @@ var qY = Q0(WT, Pf, (C11) => {
   } });
 });
 var vY = C9(hZ(), 1);
-var If = vY.default(Date.now());
-var UT = "pickRandom";
-var Bf = ["typed", "config", "?on"];
-var wY = Q0(UT, Bf, (C11) => {
+var Tf = vY.default(Date.now());
+var GT = "pickRandom";
+var Mf = ["typed", "config", "?on"];
+var wY = Q0(GT, Mf, (C11) => {
   var { typed: j, config: q, on: S } = C11, U = W7(q.randomSeed);
   if (S)
     S("config", function($, Y) {
       if ($.randomSeed !== Y.randomSeed)
         U = W7($.randomSeed);
     });
-  return j(UT, { "Array | Matrix": function $(Y) {
+  return j(GT, { "Array | Matrix": function $(Y) {
     return P(Y, {});
   }, "Array | Matrix, Object": function $(Y, X) {
     return P(Y, X);
@@ -77169,27 +77173,9 @@ var wY = Q0(UT, Bf, (C11) => {
     return J ? R[0] : Z ? Z(R) : R;
   }
 });
-var GT = "random";
-var Tf = ["typed", "config", "?on"];
-var kY = Q0(GT, Tf, (C11) => {
-  var { typed: j, config: q, on: S } = C11, U = W7(q.randomSeed);
-  if (S)
-    S("config", function(Y, X) {
-      if (Y.randomSeed !== X.randomSeed)
-        U = W7(Y.randomSeed);
-    });
-  return j(GT, { "": () => $(0, 1), number: (Y) => $(0, Y), "number, number": (Y, X) => $(Y, X), "Array | Matrix": (Y) => P(Y, 0, 1), "Array | Matrix, number": (Y, X) => P(Y, 0, X), "Array | Matrix, number, number": (Y, X, K) => P(Y, X, K) });
-  function P(Y, X, K) {
-    var Q = pJ(Y.valueOf(), () => $(X, K));
-    return $8(Y) ? Y.create(Q) : Q;
-  }
-  function $(Y, X) {
-    return Y + U() * (X - Y);
-  }
-});
-var LT = "randomInt";
-var Mf = ["typed", "config", "?on"];
-var hY = Q0(LT, Mf, (C11) => {
+var LT = "random";
+var Ef = ["typed", "config", "?on"];
+var kY = Q0(LT, Ef, (C11) => {
   var { typed: j, config: q, on: S } = C11, U = W7(q.randomSeed);
   if (S)
     S("config", function(Y, X) {
@@ -77202,14 +77188,32 @@ var hY = Q0(LT, Mf, (C11) => {
     return $8(Y) ? Y.create(Q) : Q;
   }
   function $(Y, X) {
+    return Y + U() * (X - Y);
+  }
+});
+var XT = "randomInt";
+var Of = ["typed", "config", "?on"];
+var hY = Q0(XT, Of, (C11) => {
+  var { typed: j, config: q, on: S } = C11, U = W7(q.randomSeed);
+  if (S)
+    S("config", function(Y, X) {
+      if (Y.randomSeed !== X.randomSeed)
+        U = W7(Y.randomSeed);
+    });
+  return j(XT, { "": () => $(0, 1), number: (Y) => $(0, Y), "number, number": (Y, X) => $(Y, X), "Array | Matrix": (Y) => P(Y, 0, 1), "Array | Matrix, number": (Y, X) => P(Y, 0, X), "Array | Matrix, number, number": (Y, X, K) => P(Y, X, K) });
+  function P(Y, X, K) {
+    var Q = pJ(Y.valueOf(), () => $(X, K));
+    return $8(Y) ? Y.create(Q) : Q;
+  }
+  function $(Y, X) {
     return Math.floor(Y + U() * (X - Y));
   }
 });
-var XT = "stirlingS2";
-var Ef = ["typed", "addScalar", "subtractScalar", "multiplyScalar", "divideScalar", "pow", "factorial", "combinations", "isNegative", "isInteger", "number", "?bignumber", "larger"];
-var fY = Q0(XT, Ef, (C11) => {
+var DT = "stirlingS2";
+var Nf = ["typed", "addScalar", "subtractScalar", "multiplyScalar", "divideScalar", "pow", "factorial", "combinations", "isNegative", "isInteger", "number", "?bignumber", "larger"];
+var fY = Q0(DT, Nf, (C11) => {
   var { typed: j, addScalar: q, subtractScalar: S, multiplyScalar: U, divideScalar: P, pow: $, factorial: Y, combinations: X, isNegative: K, isInteger: Q, number: J, bignumber: Z, larger: W } = C11, G = [], H = [];
-  return j(XT, { "number | BigNumber, number | BigNumber": function L(R, V) {
+  return j(DT, { "number | BigNumber, number | BigNumber": function L(R, V) {
     if (!Q(R) || K(R) || !Q(V) || K(V))
       throw new TypeError("Non-negative integer value expected in function stirlingS2");
     else if (W(V, R))
@@ -77232,11 +77236,11 @@ var fY = Q0(XT, Ef, (C11) => {
     return F[E][N];
   } });
 });
-var DT = "bellNumbers";
-var Of = ["typed", "addScalar", "isNegative", "isInteger", "stirlingS2"];
-var xY = Q0(DT, Of, (C11) => {
+var RT = "bellNumbers";
+var Af = ["typed", "addScalar", "isNegative", "isInteger", "stirlingS2"];
+var xY = Q0(RT, Af, (C11) => {
   var { typed: j, addScalar: q, isNegative: S, isInteger: U, stirlingS2: P } = C11;
-  return j(DT, { "number | BigNumber": function $(Y) {
+  return j(RT, { "number | BigNumber": function $(Y) {
     if (!U(Y) || S(Y))
       throw new TypeError("Non-negative integer value expected in function bellNumbers");
     var X = 0;
@@ -77245,21 +77249,21 @@ var xY = Q0(DT, Of, (C11) => {
     return X;
   } });
 });
-var RT = "catalan";
-var Nf = ["typed", "addScalar", "divideScalar", "multiplyScalar", "combinations", "isNegative", "isInteger"];
-var gY = Q0(RT, Nf, (C11) => {
+var VT = "catalan";
+var Cf = ["typed", "addScalar", "divideScalar", "multiplyScalar", "combinations", "isNegative", "isInteger"];
+var gY = Q0(VT, Cf, (C11) => {
   var { typed: j, addScalar: q, divideScalar: S, multiplyScalar: U, combinations: P, isNegative: $, isInteger: Y } = C11;
-  return j(RT, { "number | BigNumber": function X(K) {
+  return j(VT, { "number | BigNumber": function X(K) {
     if (!Y(K) || $(K))
       throw new TypeError("Non-negative integer value expected in function catalan");
     return S(P(U(K, 2), K), q(K, 1));
   } });
 });
-var VT = "composition";
-var Af = ["typed", "addScalar", "combinations", "isNegative", "isPositive", "isInteger", "larger"];
-var yY = Q0(VT, Af, (C11) => {
+var zT = "composition";
+var jf = ["typed", "addScalar", "combinations", "isNegative", "isPositive", "isInteger", "larger"];
+var yY = Q0(zT, jf, (C11) => {
   var { typed: j, addScalar: q, combinations: S, isPositive: U, isNegative: P, isInteger: $, larger: Y } = C11;
-  return j(VT, { "number | BigNumber, number | BigNumber": function X(K, Q) {
+  return j(zT, { "number | BigNumber, number | BigNumber": function X(K, Q) {
     if (!$(K) || !U(K) || !$(Q) || !U(Q))
       throw new TypeError("Positive integer value expected in function composition");
     else if (Y(Q, K))
@@ -77267,9 +77271,9 @@ var yY = Q0(VT, Af, (C11) => {
     return S(q(K, -1), q(Q, -1));
   } });
 });
-var zT = "leafCount";
-var Cf = ["parse", "typed"];
-var bY = Q0(zT, Cf, (C11) => {
+var FT = "leafCount";
+var Sf = ["parse", "typed"];
+var bY = Q0(FT, Sf, (C11) => {
   var { parse: j, typed: q } = C11;
   function S(U) {
     var P = 0;
@@ -77277,11 +77281,11 @@ var bY = Q0(zT, Cf, (C11) => {
       P += S($);
     }), P || 1;
   }
-  return q(zT, { Node: function U(P) {
+  return q(FT, { Node: function U(P) {
     return S(P);
   } });
 });
-var FT = function(C11, j) {
+var PT = function(C11, j) {
   var q = Object.keys(C11);
   if (Object.getOwnPropertySymbols) {
     var S = Object.getOwnPropertySymbols(C11);
@@ -77294,17 +77298,17 @@ var FT = function(C11, j) {
 var pY = function(C11) {
   for (var j = 1;j < arguments.length; j++) {
     var q = arguments[j] != null ? arguments[j] : {};
-    j % 2 ? FT(Object(q), true).forEach(function(S) {
+    j % 2 ? PT(Object(q), true).forEach(function(S) {
       y8(C11, S, q[S]);
-    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(C11, Object.getOwnPropertyDescriptors(q)) : FT(Object(q)).forEach(function(S) {
+    }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(C11, Object.getOwnPropertyDescriptors(q)) : PT(Object(q)).forEach(function(S) {
       Object.defineProperty(C11, S, Object.getOwnPropertyDescriptor(q, S));
     });
   }
   return C11;
 };
-var jf = "simplifyUtil";
-var Sf = ["FunctionNode", "OperatorNode", "SymbolNode"];
-var x$ = Q0(jf, Sf, (C11) => {
+var qf = "simplifyUtil";
+var vf = ["FunctionNode", "OperatorNode", "SymbolNode"];
+var x$ = Q0(qf, vf, (C11) => {
   var { FunctionNode: j, OperatorNode: q, SymbolNode: S } = C11, U = true, P = false, $ = "defaultF", Y = { add: { trivial: U, total: U, commutative: U, associative: U }, unaryPlus: { trivial: U, total: U, commutative: U, associative: U }, subtract: { trivial: P, total: U, commutative: P, associative: P }, multiply: { trivial: U, total: U, commutative: U, associative: U }, divide: { trivial: P, total: U, commutative: P, associative: P }, paren: { trivial: U, total: U, commutative: U, associative: P }, defaultF: { trivial: P, total: U, commutative: P, associative: P } }, X = { divide: { total: P }, log: { total: P } }, K = { subtract: { total: P }, abs: { trivial: U }, log: { total: U } };
   function Q(D, F) {
     var T = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : Y, E = $;
@@ -77417,9 +77421,9 @@ var x$ = Q0(jf, Sf, (C11) => {
   }
   return { createMakeNodeFunction: V, hasProperty: Q, isCommutative: J, isAssociative: Z, mergeContext: W, flatten: G, allChildren: H, unflattenr: L, unflattenl: R, defaultContext: Y, realContext: X, positiveContext: K };
 });
-var qf = "simplify";
-var vf = ["config", "typed", "parse", "add", "subtract", "multiply", "divide", "pow", "isZero", "equal", "resolve", "simplifyConstant", "simplifyCore", "?fraction", "?bignumber", "mathWithTransform", "matrix", "AccessorNode", "ArrayNode", "ConstantNode", "FunctionNode", "IndexNode", "ObjectNode", "OperatorNode", "ParenthesisNode", "SymbolNode"];
-var dY = Q0(qf, vf, (C11) => {
+var wf = "simplify";
+var kf = ["config", "typed", "parse", "add", "subtract", "multiply", "divide", "pow", "isZero", "equal", "resolve", "simplifyConstant", "simplifyCore", "?fraction", "?bignumber", "mathWithTransform", "matrix", "AccessorNode", "ArrayNode", "ConstantNode", "FunctionNode", "IndexNode", "ObjectNode", "OperatorNode", "ParenthesisNode", "SymbolNode"];
+var dY = Q0(wf, kf, (C11) => {
   var { config: j, typed: q, parse: S, add: U, subtract: P, multiply: $, divide: Y, pow: X, isZero: K, equal: Q, resolve: J, simplifyConstant: Z, simplifyCore: W, fraction: G, bignumber: H, mathWithTransform: L, matrix: R, AccessorNode: V, ArrayNode: D, ConstantNode: F, FunctionNode: T, IndexNode: E, ObjectNode: N, OperatorNode: w, ParenthesisNode: h, SymbolNode: x } = C11, { hasProperty: b, isCommutative: z, isAssociative: I, mergeContext: A, flatten: M, unflattenr: O, unflattenl: v, createMakeNodeFunction: g, defaultContext: k, realContext: B, positiveContext: f } = x$({ FunctionNode: T, OperatorNode: w, SymbolNode: x });
   q.addConversion({ from: "Object", to: "Map", convert: J7 });
   var m = q("simplify", { Node: l, "Node, Map": (Z0, K0) => l(Z0, false, K0), "Node, Map, Object": (Z0, K0, D0) => l(Z0, false, K0, D0), "Node, Array": l, "Node, Array, Map": l, "Node, Array, Map, Object": l });
@@ -77778,9 +77782,9 @@ var dY = Q0(qf, vf, (C11) => {
   }
   return m;
 });
-var wf = "simplifyConstant";
-var kf = ["typed", "config", "mathWithTransform", "matrix", "?fraction", "?bignumber", "AccessorNode", "ArrayNode", "ConstantNode", "FunctionNode", "IndexNode", "ObjectNode", "OperatorNode", "SymbolNode"];
-var uY = Q0(wf, kf, (C11) => {
+var hf = "simplifyConstant";
+var ff = ["typed", "config", "mathWithTransform", "matrix", "?fraction", "?bignumber", "AccessorNode", "ArrayNode", "ConstantNode", "FunctionNode", "IndexNode", "ObjectNode", "OperatorNode", "SymbolNode"];
+var uY = Q0(hf, ff, (C11) => {
   var { typed: j, config: q, mathWithTransform: S, matrix: U, fraction: P, bignumber: $, AccessorNode: Y, ArrayNode: X, ConstantNode: K, FunctionNode: Q, IndexNode: J, ObjectNode: Z, OperatorNode: W, SymbolNode: G } = C11, { isCommutative: H, isAssociative: L, allChildren: R, createMakeNodeFunction: V } = x$({ FunctionNode: Q, OperatorNode: W, SymbolNode: G }), D = j("simplifyConstant", { Node: (M) => N(A(M, {})), "Node, Object": function M(O, v) {
     return N(A(O, v));
   } });
@@ -78025,9 +78029,9 @@ var uY = Q0(wf, kf, (C11) => {
   }
   return D;
 });
-var PT = "simplifyCore";
-var hf = ["typed", "parse", "equal", "isZero", "add", "subtract", "multiply", "divide", "pow", "AccessorNode", "ArrayNode", "ConstantNode", "FunctionNode", "IndexNode", "ObjectNode", "OperatorNode", "ParenthesisNode", "SymbolNode"];
-var _Y = Q0(PT, hf, (C11) => {
+var IT = "simplifyCore";
+var xf = ["typed", "parse", "equal", "isZero", "add", "subtract", "multiply", "divide", "pow", "AccessorNode", "ArrayNode", "ConstantNode", "FunctionNode", "IndexNode", "ObjectNode", "OperatorNode", "ParenthesisNode", "SymbolNode"];
+var _Y = Q0(IT, xf, (C11) => {
   var { typed: j, parse: q, equal: S, isZero: U, add: P, subtract: $, multiply: Y, divide: X, pow: K, AccessorNode: Q, ArrayNode: J, ConstantNode: Z, FunctionNode: W, IndexNode: G, ObjectNode: H, OperatorNode: L, ParenthesisNode: R, SymbolNode: V } = C11, D = new Z(0), F = new Z(1), T = new Z(true), E = new Z(false);
   function N(b) {
     return Y6(b) && ["and", "not", "or"].includes(b.op);
@@ -78047,7 +78051,7 @@ var _Y = Q0(PT, hf, (C11) => {
     }
     var O = b;
     if (r6(O)) {
-      var v = w2(O.name);
+      var v = k2(O.name);
       if (v) {
         if (O.args.length > 2 && w(O, "associative", I))
           while (O.args.length > 2) {
@@ -78181,11 +78185,11 @@ var _Y = Q0(PT, hf, (C11) => {
     }
     return O;
   }
-  return j(PT, { Node: x, "Node,Object": x });
+  return j(IT, { Node: x, "Node,Object": x });
 });
-var ff = "resolve";
-var xf = ["typed", "parse", "ConstantNode", "FunctionNode", "OperatorNode", "ParenthesisNode"];
-var cY = Q0(ff, xf, (C11) => {
+var gf = "resolve";
+var yf = ["typed", "parse", "ConstantNode", "FunctionNode", "OperatorNode", "ParenthesisNode"];
+var cY = Q0(gf, yf, (C11) => {
   var { typed: j, parse: q, ConstantNode: S, FunctionNode: U, OperatorNode: P, ParenthesisNode: $ } = C11;
   function Y(X, K) {
     var Q = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : new Set;
@@ -78223,19 +78227,19 @@ var cY = Q0(ff, xf, (C11) => {
   }
   return j("resolve", { Node: Y, "Node, Map | null | undefined": Y, "Node, Object": (X, K) => Y(X, J7(K)), "Array | Matrix": j.referToSelf((X) => (K) => K.map((Q) => X(Q))), "Array | Matrix, null | undefined": j.referToSelf((X) => (K) => K.map((Q) => X(Q))), "Array, Object": j.referTo("Array,Map", (X) => (K, Q) => X(K, J7(Q))), "Matrix, Object": j.referTo("Matrix,Map", (X) => (K, Q) => X(K, J7(Q))), "Array | Matrix, Map": j.referToSelf((X) => (K, Q) => K.map((J) => X(J, Q))) });
 });
-var IT = "symbolicEqual";
-var gf = ["parse", "simplify", "typed", "OperatorNode"];
-var lY = Q0(IT, gf, (C11) => {
+var BT = "symbolicEqual";
+var bf = ["parse", "simplify", "typed", "OperatorNode"];
+var lY = Q0(BT, bf, (C11) => {
   var { parse: j, simplify: q, typed: S, OperatorNode: U } = C11;
   function P($, Y) {
     var X = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {}, K = new U("-", "subtract", [$, Y]), Q = q(K, {}, X);
     return B8(Q) && !Q.value;
   }
-  return S(IT, { "Node, Node": P, "Node, Node, Object": P });
+  return S(BT, { "Node, Node": P, "Node, Node, Object": P });
 });
-var BT = "derivative";
-var yf = ["typed", "config", "parse", "simplify", "equal", "isZero", "numeric", "ConstantNode", "FunctionNode", "OperatorNode", "ParenthesisNode", "SymbolNode"];
-var sY = Q0(BT, yf, (C11) => {
+var TT = "derivative";
+var mf = ["typed", "config", "parse", "simplify", "equal", "isZero", "numeric", "ConstantNode", "FunctionNode", "OperatorNode", "ParenthesisNode", "SymbolNode"];
+var sY = Q0(TT, mf, (C11) => {
   var { typed: j, config: q, parse: S, simplify: U, equal: P, isZero: $, numeric: Y, ConstantNode: X, FunctionNode: K, OperatorNode: Q, ParenthesisNode: J, SymbolNode: Z } = C11;
   function W(D, F) {
     var T = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : { simplify: true }, E = {};
@@ -78244,7 +78248,7 @@ var sY = Q0(BT, yf, (C11) => {
     return T.simplify ? U(N) : N;
   }
   j.addConversion({ from: "identifier", to: "SymbolNode", convert: S });
-  var G = j(BT, { "Node, SymbolNode": W, "Node, SymbolNode, Object": W });
+  var G = j(TT, { "Node, SymbolNode": W, "Node, SymbolNode, Object": W });
   j.removeConversion({ from: "identifier", to: "SymbolNode", convert: S }), G._simplify = true, G.toTex = function(D) {
     return H.apply(null, D.args);
   };
@@ -78483,9 +78487,9 @@ var sY = Q0(BT, yf, (C11) => {
   }
   return G;
 });
-var TT = "rationalize";
-var bf = ["config", "typed", "equal", "isZero", "add", "subtract", "multiply", "divide", "pow", "parse", "simplifyConstant", "simplifyCore", "simplify", "?bignumber", "?fraction", "mathWithTransform", "matrix", "AccessorNode", "ArrayNode", "ConstantNode", "FunctionNode", "IndexNode", "ObjectNode", "OperatorNode", "SymbolNode", "ParenthesisNode"];
-var nY = Q0(TT, bf, (C11) => {
+var MT = "rationalize";
+var pf = ["config", "typed", "equal", "isZero", "add", "subtract", "multiply", "divide", "pow", "parse", "simplifyConstant", "simplifyCore", "simplify", "?bignumber", "?fraction", "mathWithTransform", "matrix", "AccessorNode", "ArrayNode", "ConstantNode", "FunctionNode", "IndexNode", "ObjectNode", "OperatorNode", "SymbolNode", "ParenthesisNode"];
+var nY = Q0(MT, pf, (C11) => {
   var { config: j, typed: q, equal: S, isZero: U, add: P, subtract: $, multiply: Y, divide: X, pow: K, parse: Q, simplifyConstant: J, simplifyCore: Z, simplify: W, fraction: G, bignumber: H, mathWithTransform: L, matrix: R, AccessorNode: V, ArrayNode: D, ConstantNode: F, FunctionNode: T, IndexNode: E, ObjectNode: N, OperatorNode: w, SymbolNode: h, ParenthesisNode: x } = C11;
   function b(O) {
     var v = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {}, g = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false, k = I(), B = z(O, v, true, k.firstRules), f = B.variables.length, m = { exactFractions: false }, y = { exactFractions: true };
@@ -78519,7 +78523,7 @@ var nY = Q0(TT, bf, (C11) => {
       return O;
     return e.coefficients = l, e.variables = B.variables, e.expression = O, e;
   }
-  return q(TT, { Node: b, "Node, boolean": (O, v) => b(O, {}, v), "Node, Object": b, "Node, Object, boolean": b });
+  return q(MT, { Node: b, "Node, boolean": (O, v) => b(O, {}, v), "Node, Object": b, "Node, Object, boolean": b });
   function z(O, v, g, k) {
     var B = [], f = W(O, k, v, { exactFractions: false });
     g = !!g;
@@ -78689,11 +78693,11 @@ var nY = Q0(TT, bf, (C11) => {
     }
   }
 });
-var MT = "zpk2tf";
-var mf = ["typed", "add", "multiply", "Complex", "number"];
-var oY = Q0(MT, mf, (C11) => {
+var ET = "zpk2tf";
+var df = ["typed", "add", "multiply", "Complex", "number"];
+var oY = Q0(ET, df, (C11) => {
   var { typed: j, add: q, multiply: S, Complex: U, number: P } = C11;
-  return j(MT, { "Array,Array,number": function X(K, Q, J) {
+  return j(ET, { "Array,Array,number": function X(K, Q, J) {
     return $(K, Q, J);
   }, "Array,Array": function X(K, Q) {
     return $(K, Q, 1);
@@ -78735,11 +78739,11 @@ var oY = Q0(MT, mf, (C11) => {
     return Q;
   }
 });
-var ET = "freqz";
-var pf = ["typed", "add", "multiply", "Complex", "divide", "matrix"];
-var iY = Q0(ET, pf, (C11) => {
+var OT = "freqz";
+var uf = ["typed", "add", "multiply", "Complex", "divide", "matrix"];
+var iY = Q0(OT, uf, (C11) => {
   var { typed: j, add: q, multiply: S, Complex: U, divide: P, matrix: $ } = C11;
-  return j(ET, { "Array, Array": function K(Q, J) {
+  return j(OT, { "Array, Array": function K(Q, J) {
     var Z = X(512);
     return Y(Q, J, Z);
   }, "Array, Array, Array": function K(Q, J, Z) {
@@ -78783,9 +78787,9 @@ var iY = Q0(ET, pf, (C11) => {
     return Q;
   }
 });
-var df = "reviver";
-var uf = ["classes"];
-var aY = Q0(df, uf, (C11) => {
+var _f = "reviver";
+var cf = ["classes"];
+var aY = Q0(_f, cf, (C11) => {
   var { classes: j } = C11;
   return function q(S, U) {
     var P = j[U && U.mathjs];
@@ -78794,16 +78798,16 @@ var aY = Q0(df, uf, (C11) => {
     return U;
   };
 });
-var _f = "replacer";
-var cf = [];
-var rY = Q0(_f, cf, () => {
+var lf = "replacer";
+var sf = [];
+var rY = Q0(lf, sf, () => {
   return function C(j, q) {
     if (typeof q === "number" && (!isFinite(q) || isNaN(q)))
       return { mathjs: "number", value: String(q) };
     return q;
   };
 });
-var OT = "12.4.2";
+var NT = "12.4.2";
 var U9 = function(C11, j, q) {
   return Q0(C11, j, q, { recreateOnConfigChange: true });
 };
@@ -78820,19 +78824,19 @@ var QU = U9("NaN", ["config", "?BigNumber"], (C11) => {
 });
 var ZU = U9("pi", ["config", "?BigNumber"], (C11) => {
   var { config: j, BigNumber: q } = C11;
-  return j.number === "BigNumber" ? kJ(q) : TR;
+  return j.number === "BigNumber" ? kJ(q) : MR;
 });
 var KU = U9("tau", ["config", "?BigNumber"], (C11) => {
   var { config: j, BigNumber: q } = C11;
-  return j.number === "BigNumber" ? uz(q) : MR;
+  return j.number === "BigNumber" ? _z(q) : ER;
 });
 var HU = U9("e", ["config", "?BigNumber"], (C11) => {
   var { config: j, BigNumber: q } = C11;
-  return j.number === "BigNumber" ? pz(q) : ER;
+  return j.number === "BigNumber" ? dz(q) : OR;
 });
 var WU = U9("phi", ["config", "?BigNumber"], (C11) => {
   var { config: j, BigNumber: q } = C11;
-  return j.number === "BigNumber" ? dz(q) : OR;
+  return j.number === "BigNumber" ? uz(q) : NR;
 });
 var YU = U9("LN2", ["config", "?BigNumber"], (C11) => {
   var { config: j, BigNumber: q } = C11;
@@ -78862,7 +78866,7 @@ var RU = U9("i", ["Complex"], (C11) => {
   var { Complex: j } = C11;
   return j.I;
 });
-var VU = Q0("version", [], () => OT);
+var VU = Q0("version", [], () => NT);
 var E8 = function(C11, j, q) {
   var S = ["config", "Unit", "BigNumber"];
   return Q0(C11, S, (U) => {
@@ -78927,9 +78931,9 @@ var YG = E8("planckMass", "2.176435e-8", "kg");
 var UG = E8("planckTime", "5.391245e-44", "s");
 var GG = E8("planckCharge", "1.87554603778e-18", "C");
 var LG = E8("planckTemperature", "1.416785e+32", "K");
-var lf = "apply";
-var sf = ["typed", "isInteger"];
-var XG = Q0(lf, sf, (C11) => {
+var nf = "apply";
+var of = ["typed", "isInteger"];
+var XG = Q0(nf, of, (C11) => {
   var { typed: j, isInteger: q } = C11, S = r7({ typed: j, isInteger: q });
   return j("apply", { "...any": function U(P) {
     var $ = P[1];
@@ -78944,9 +78948,9 @@ var XG = Q0(lf, sf, (C11) => {
     }
   } });
 }, { isTransformFunction: true });
-var nf = "column";
-var of = ["typed", "Index", "matrix", "range"];
-var DG = Q0(nf, of, (C11) => {
+var af = "column";
+var rf = ["typed", "Index", "matrix", "range"];
+var DG = Q0(af, rf, (C11) => {
   var { typed: j, Index: q, matrix: S, range: U } = C11, P = EJ({ typed: j, Index: q, matrix: S, range: U });
   return j("column", { "...any": function $(Y) {
     var X = Y.length - 1, K = Y[X];
@@ -78959,14 +78963,14 @@ var DG = Q0(nf, of, (C11) => {
     }
   } });
 }, { isTransformFunction: true });
-var NT = function(C11, j) {
+var AT = function(C11, j) {
   return O5(C11, function(q, S, U) {
     return B9(j, q, [S + 1], U, "filter");
   });
 };
-var af = "filter";
-var rf = ["typed"];
-var RG = Q0(af, rf, (C11) => {
+var tf = "filter";
+var ef = ["typed"];
+var RG = Q0(tf, ef, (C11) => {
   var { typed: j } = C11;
   function q(U, P, $) {
     var Y, X;
@@ -78980,16 +78984,16 @@ var RG = Q0(af, rf, (C11) => {
     return S(Y, X);
   }
   q.rawArgs = true;
-  var S = j("filter", { "Array, function": NT, "Matrix, function": function U(P, $) {
-    return P.create(NT(P.toArray(), $));
+  var S = j("filter", { "Array, function": AT, "Matrix, function": function U(P, $) {
+    return P.create(AT(P.toArray(), $));
   }, "Array, RegExp": B$, "Matrix, RegExp": function U(P, $) {
     return P.create(B$(P.toArray(), $));
   } });
   return q;
 }, { isTransformFunction: true });
-var tf = "forEach";
-var ef = ["typed"];
-var VG = Q0(tf, ef, (C11) => {
+var $x = "forEach";
+var Jx = ["typed"];
+var VG = Q0($x, Jx, (C11) => {
   var { typed: j } = C11;
   function q(U, P, $) {
     var Y, X;
@@ -79016,9 +79020,9 @@ var VG = Q0(tf, ef, (C11) => {
   } });
   return q;
 }, { isTransformFunction: true });
-var $x = "index";
-var Jx = ["Index", "getMatrixDataType"];
-var zG = Q0($x, Jx, (C11) => {
+var Qx = "index";
+var Zx = ["Index", "getMatrixDataType"];
+var zG = Q0(Qx, Zx, (C11) => {
   var { Index: j, getMatrixDataType: q } = C11;
   return function S() {
     var U = [];
@@ -79049,7 +79053,7 @@ var zG = Q0($x, Jx, (C11) => {
     return j.apply(X, U), X;
   };
 }, { isTransformFunction: true });
-var AT = function(C11, j, q) {
+var CT = function(C11, j, q) {
   function S(U, P) {
     if (Array.isArray(U))
       return $9(U, function($, Y) {
@@ -79060,9 +79064,9 @@ var AT = function(C11, j, q) {
   }
   return S(C11, []);
 };
-var Qx = "map";
-var Zx = ["typed"];
-var FG = Q0(Qx, Zx, (C11) => {
+var Kx = "map";
+var Hx = ["typed"];
+var FG = Q0(Kx, Hx, (C11) => {
   var { typed: j } = C11;
   function q(U, P, $) {
     var Y, X;
@@ -79077,15 +79081,15 @@ var FG = Q0(Qx, Zx, (C11) => {
   }
   q.rawArgs = true;
   var S = j("map", { "Array, function": function U(P, $) {
-    return AT(P, $, P);
+    return CT(P, $, P);
   }, "Matrix, function": function U(P, $) {
-    return P.create(AT(P.valueOf(), $, P));
+    return P.create(CT(P.valueOf(), $, P));
   } });
   return q;
 }, { isTransformFunction: true });
-var Kx = "max";
-var Hx = ["typed", "config", "numeric", "larger"];
-var PG = Q0(Kx, Hx, (C11) => {
+var Wx = "max";
+var Yx = ["typed", "config", "numeric", "larger"];
+var PG = Q0(Wx, Yx, (C11) => {
   var { typed: j, config: q, numeric: S, larger: U } = C11, P = vJ({ typed: j, config: q, numeric: S, larger: U });
   return j("max", { "...any": function $(Y) {
     Y = c6(Y);
@@ -79096,9 +79100,9 @@ var PG = Q0(Kx, Hx, (C11) => {
     }
   } });
 }, { isTransformFunction: true });
-var Wx = "mean";
-var Yx = ["typed", "add", "divide"];
-var IG = Q0(Wx, Yx, (C11) => {
+var Ux = "mean";
+var Gx = ["typed", "add", "divide"];
+var IG = Q0(Ux, Gx, (C11) => {
   var { typed: j, add: q, divide: S } = C11, U = gJ({ typed: j, add: q, divide: S });
   return j("mean", { "...any": function P($) {
     $ = c6($);
@@ -79109,9 +79113,9 @@ var IG = Q0(Wx, Yx, (C11) => {
     }
   } });
 }, { isTransformFunction: true });
-var Ux = "min";
-var Gx = ["typed", "config", "numeric", "smaller"];
-var BG = Q0(Ux, Gx, (C11) => {
+var Lx = "min";
+var Xx = ["typed", "config", "numeric", "smaller"];
+var BG = Q0(Lx, Xx, (C11) => {
   var { typed: j, config: q, numeric: S, smaller: U } = C11, P = wJ({ typed: j, config: q, numeric: S, smaller: U });
   return j("min", { "...any": function $(Y) {
     Y = c6(Y);
@@ -79122,9 +79126,9 @@ var BG = Q0(Ux, Gx, (C11) => {
     }
   } });
 }, { isTransformFunction: true });
-var Lx = "range";
-var Xx = ["typed", "config", "?matrix", "?bignumber", "smaller", "smallerEq", "larger", "largerEq", "add", "isPositive"];
-var TG = Q0(Lx, Xx, (C11) => {
+var Dx = "range";
+var Rx = ["typed", "config", "?matrix", "?bignumber", "smaller", "smallerEq", "larger", "largerEq", "add", "isPositive"];
+var TG = Q0(Dx, Rx, (C11) => {
   var { typed: j, config: q, matrix: S, bignumber: U, smaller: P, smallerEq: $, larger: Y, largerEq: X, add: K, isPositive: Q } = C11, J = AJ({ typed: j, config: q, matrix: S, bignumber: U, smaller: P, smallerEq: $, larger: Y, largerEq: X, add: K, isPositive: Q });
   return j("range", { "...any": function Z(W) {
     var G = W.length - 1, H = W[G];
@@ -79133,9 +79137,9 @@ var TG = Q0(Lx, Xx, (C11) => {
     return J.apply(null, W);
   } });
 }, { isTransformFunction: true });
-var Dx = "row";
-var Rx = ["typed", "Index", "matrix", "range"];
-var MG = Q0(Dx, Rx, (C11) => {
+var Vx = "row";
+var zx = ["typed", "Index", "matrix", "range"];
+var MG = Q0(Vx, zx, (C11) => {
   var { typed: j, Index: q, matrix: S, range: U } = C11, P = CJ({ typed: j, Index: q, matrix: S, range: U });
   return j("row", { "...any": function $(Y) {
     var X = Y.length - 1, K = Y[X];
@@ -79148,9 +79152,9 @@ var MG = Q0(Dx, Rx, (C11) => {
     }
   } });
 }, { isTransformFunction: true });
-var Vx = "subset";
-var zx = ["typed", "matrix", "zeros", "add"];
-var EG = Q0(Vx, zx, (C11) => {
+var Fx = "subset";
+var Px = ["typed", "matrix", "zeros", "add"];
+var EG = Q0(Fx, Px, (C11) => {
   var { typed: j, matrix: q, zeros: S, add: U } = C11, P = jJ({ typed: j, matrix: q, zeros: S, add: U });
   return j("subset", { "...any": function $(Y) {
     try {
@@ -79160,9 +79164,9 @@ var EG = Q0(Vx, zx, (C11) => {
     }
   } });
 }, { isTransformFunction: true });
-var Fx = "concat";
-var Px = ["typed", "matrix", "isInteger"];
-var OG = Q0(Fx, Px, (C11) => {
+var Ix = "concat";
+var Bx = ["typed", "matrix", "isInteger"];
+var OG = Q0(Ix, Bx, (C11) => {
   var { typed: j, matrix: q, isInteger: S } = C11, U = MJ({ typed: j, matrix: q, isInteger: S });
   return j("concat", { "...any": function P($) {
     var Y = $.length - 1, X = $[Y];
@@ -79177,11 +79181,11 @@ var OG = Q0(Fx, Px, (C11) => {
     }
   } });
 }, { isTransformFunction: true });
-var CT = "diff";
-var Ix = ["typed", "matrix", "subtract", "number", "bignumber"];
-var NG = Q0(CT, Ix, (C11) => {
+var jT = "diff";
+var Tx = ["typed", "matrix", "subtract", "number", "bignumber"];
+var NG = Q0(jT, Tx, (C11) => {
   var { typed: j, matrix: q, subtract: S, number: U, bignumber: P } = C11, $ = NJ({ typed: j, matrix: q, subtract: S, number: U, bignumber: P });
-  return j(CT, { "...any": function Y(X) {
+  return j(jT, { "...any": function Y(X) {
     X = c6(X);
     try {
       return $.apply(null, X);
@@ -79190,9 +79194,9 @@ var NG = Q0(CT, Ix, (C11) => {
     }
   } });
 }, { isTransformFunction: true });
-var Bx = "std";
-var Tx = ["typed", "map", "sqrt", "variance"];
-var AG = Q0(Bx, Tx, (C11) => {
+var Mx = "std";
+var Ex = ["typed", "map", "sqrt", "variance"];
+var AG = Q0(Mx, Ex, (C11) => {
   var { typed: j, map: q, sqrt: S, variance: U } = C11, P = mJ({ typed: j, map: q, sqrt: S, variance: U });
   return j("std", { "...any": function $(Y) {
     Y = c6(Y);
@@ -79203,11 +79207,11 @@ var AG = Q0(Bx, Tx, (C11) => {
     }
   } });
 }, { isTransformFunction: true });
-var jT = "sum";
-var Mx = ["typed", "config", "add", "numeric"];
-var CG = Q0(jT, Mx, (C11) => {
+var ST = "sum";
+var Ox = ["typed", "config", "add", "numeric"];
+var CG = Q0(ST, Ox, (C11) => {
   var { typed: j, config: q, add: S, numeric: U } = C11, P = fJ({ typed: j, config: q, add: S, numeric: U });
-  return j(jT, { "...any": function $(Y) {
+  return j(ST, { "...any": function $(Y) {
     Y = c6(Y);
     try {
       return P.apply(null, Y);
@@ -79216,20 +79220,20 @@ var CG = Q0(jT, Mx, (C11) => {
     }
   } });
 }, { isTransformFunction: true });
-var Ex = "quantileSeq";
-var Ox = ["typed", "bignumber", "add", "subtract", "divide", "multiply", "partitionSelect", "compare", "isInteger", "smaller", "smallerEq", "larger"];
-var jG = Q0(Ex, Ox, (C11) => {
+var Nx = "quantileSeq";
+var Ax = ["typed", "bignumber", "add", "subtract", "divide", "multiply", "partitionSelect", "compare", "isInteger", "smaller", "smallerEq", "larger"];
+var jG = Q0(Nx, Ax, (C11) => {
   var { typed: j, bignumber: q, add: S, subtract: U, divide: P, multiply: $, partitionSelect: Y, compare: X, isInteger: K, smaller: Q, smallerEq: J, larger: Z } = C11, W = bJ({ typed: j, bignumber: q, add: S, subtract: U, divide: P, multiply: $, partitionSelect: Y, compare: X, isInteger: K, smaller: Q, smallerEq: J, larger: Z });
   return j("quantileSeq", { "Array | Matrix, number | BigNumber": W, "Array | Matrix, number | BigNumber, number": (H, L, R) => W(H, L, G(R)), "Array | Matrix, number | BigNumber, boolean": W, "Array | Matrix, number | BigNumber, boolean, number": (H, L, R, V) => W(H, L, R, G(V)), "Array | Matrix, Array | Matrix": W, "Array | Matrix, Array | Matrix, number": (H, L, R) => W(H, L, G(R)), "Array | Matrix, Array | Matrix, boolean": W, "Array | Matrix, Array | Matrix, boolean, number": (H, L, R, V) => W(H, L, R, G(V)) });
   function G(H) {
     return c6([[], H])[1];
   }
 }, { isTransformFunction: true });
-var ST = "cumsum";
-var Nx = ["typed", "add", "unaryPlus"];
-var SG = Q0(ST, Nx, (C11) => {
+var qT = "cumsum";
+var Cx = ["typed", "add", "unaryPlus"];
+var SG = Q0(qT, Cx, (C11) => {
   var { typed: j, add: q, unaryPlus: S } = C11, U = xJ({ typed: j, add: q, unaryPlus: S });
-  return j(ST, { "...any": function P($) {
+  return j(qT, { "...any": function P($) {
     if ($.length === 2 && I6($[0])) {
       var Y = $[1];
       if (U8(Y))
@@ -79244,11 +79248,11 @@ var SG = Q0(ST, Nx, (C11) => {
     }
   } });
 }, { isTransformFunction: true });
-var qT = "variance";
-var Ax = ["typed", "add", "subtract", "multiply", "divide", "apply", "isNaN"];
-var qG = Q0(qT, Ax, (C11) => {
+var vT = "variance";
+var jx = ["typed", "add", "subtract", "multiply", "divide", "apply", "isNaN"];
+var qG = Q0(vT, jx, (C11) => {
   var { typed: j, add: q, subtract: S, multiply: U, divide: P, apply: $, isNaN: Y } = C11, X = yJ({ typed: j, add: q, subtract: S, multiply: U, divide: P, apply: $, isNaN: Y });
-  return j(qT, { "...any": function K(Q) {
+  return j(vT, { "...any": function K(Q) {
     Q = c6(Q);
     try {
       return X.apply(null, Q);
@@ -79257,11 +79261,11 @@ var qG = Q0(qT, Ax, (C11) => {
     }
   } });
 }, { isTransformFunction: true });
-var vT = "print";
-var Cx = ["typed", "matrix", "zeros", "add"];
-var vG = Q0(vT, Cx, (C11) => {
+var wT = "print";
+var Sx = ["typed", "matrix", "zeros", "add"];
+var vG = Q0(wT, Sx, (C11) => {
   var { typed: j, matrix: q, zeros: S, add: U } = C11, P = SJ({ typed: j, matrix: q, zeros: S, add: U });
-  return j(vT, { "string, Object | Array": function Y(X, K) {
+  return j(wT, { "string, Object | Array": function Y(X, K) {
     return P($(X), K);
   }, "string, Object | Array, number | Object": function Y(X, K, Q) {
     return P($(X), K, Q);
@@ -79278,9 +79282,9 @@ var vG = Q0(vT, Cx, (C11) => {
     });
   }
 }, { isTransformFunction: true });
-var jx = "and";
-var Sx = ["typed", "matrix", "zeros", "add", "equalScalar", "not", "concat"];
-var wG = Q0(jx, Sx, (C11) => {
+var qx = "and";
+var vx = ["typed", "matrix", "zeros", "add", "equalScalar", "not", "concat"];
+var wG = Q0(qx, vx, (C11) => {
   var { typed: j, matrix: q, equalScalar: S, zeros: U, not: P, concat: $ } = C11, Y = qJ({ typed: j, matrix: q, equalScalar: S, zeros: U, not: P, concat: $ });
   function X(K, Q, J) {
     var Z = K[0].compile().evaluate(J);
@@ -79291,9 +79295,9 @@ var wG = Q0(jx, Sx, (C11) => {
   }
   return X.rawArgs = true, X;
 }, { isTransformFunction: true });
-var qx = "or";
-var vx = ["typed", "matrix", "equalScalar", "DenseMatrix", "concat"];
-var kG = Q0(qx, vx, (C11) => {
+var wx = "or";
+var kx = ["typed", "matrix", "equalScalar", "DenseMatrix", "concat"];
+var kG = Q0(wx, kx, (C11) => {
   var { typed: j, matrix: q, equalScalar: S, DenseMatrix: U, concat: P } = C11, $ = TJ({ typed: j, matrix: q, equalScalar: S, DenseMatrix: U, concat: P });
   function Y(X, K, Q) {
     var J = X[0].compile().evaluate(Q);
@@ -79304,9 +79308,9 @@ var kG = Q0(qx, vx, (C11) => {
   }
   return Y.rawArgs = true, Y;
 }, { isTransformFunction: true });
-var wx = "bitAnd";
-var kx = ["typed", "matrix", "zeros", "add", "equalScalar", "not", "concat"];
-var hG = Q0(wx, kx, (C11) => {
+var hx = "bitAnd";
+var fx = ["typed", "matrix", "zeros", "add", "equalScalar", "not", "concat"];
+var hG = Q0(hx, fx, (C11) => {
   var { typed: j, matrix: q, equalScalar: S, zeros: U, not: P, concat: $ } = C11, Y = IJ({ typed: j, matrix: q, equalScalar: S, zeros: U, not: P, concat: $ });
   function X(K, Q, J) {
     var Z = K[0].compile().evaluate(J);
@@ -79321,9 +79325,9 @@ var hG = Q0(wx, kx, (C11) => {
   }
   return X.rawArgs = true, X;
 }, { isTransformFunction: true });
-var hx = "bitOr";
-var fx = ["typed", "matrix", "equalScalar", "DenseMatrix", "concat"];
-var fG = Q0(hx, fx, (C11) => {
+var xx = "bitOr";
+var gx = ["typed", "matrix", "equalScalar", "DenseMatrix", "concat"];
+var fG = Q0(xx, gx, (C11) => {
   var { typed: j, matrix: q, equalScalar: S, DenseMatrix: U, concat: P } = C11, $ = BJ({ typed: j, matrix: q, equalScalar: S, DenseMatrix: U, concat: P });
   function Y(X, K, Q) {
     var J = X[0].compile().evaluate(Q);
@@ -79343,346 +79347,346 @@ var fG = Q0(hx, fx, (C11) => {
 var r0 = HK({ config: l0 });
 var r8 = YK({});
 var xG = HU({ BigNumber: r0, config: l0 });
-var wT = eY({});
-var kT = fU({ BigNumber: r0, config: l0 });
+var kT = eY({});
+var hT = fU({ BigNumber: r0, config: l0 });
 var C72 = GK({});
 var gG = RU({ Complex: r8 });
-var hT = JU({ BigNumber: r0, config: l0 });
-var fT = UU({ BigNumber: r0, config: l0 });
-var xT = LU({ BigNumber: r0, config: l0 });
+var fT = JU({ BigNumber: r0, config: l0 });
+var xT = UU({ BigNumber: r0, config: l0 });
+var gT = LU({ BigNumber: r0, config: l0 });
 var uJ = XK({});
-var gT = QU({ BigNumber: r0, config: l0 });
-var yT = $U({});
-var bT = WU({ BigNumber: r0, config: l0 });
-var mT = LK({});
+var yT = QU({ BigNumber: r0, config: l0 });
+var bT = $U({});
+var mT = WU({ BigNumber: r0, config: l0 });
+var pT = LK({});
 var yG = tZ({});
-var pT = XU({ BigNumber: r0, config: l0 });
-var dT = eU({ BigNumber: r0, config: l0 });
+var dT = XU({ BigNumber: r0, config: l0 });
+var uT = eU({ BigNumber: r0, config: l0 });
 var bG = KU({ BigNumber: r0, config: l0 });
-var uT = tY({});
-var _T = VU({});
+var _T = tY({});
+var cT = VU({});
 var N8 = DK({ Matrix: uJ });
-var cT = _U({ BigNumber: r0, config: l0 });
-var lT = YU({ BigNumber: r0, config: l0 });
+var lT = _U({ BigNumber: r0, config: l0 });
+var sT = YU({ BigNumber: r0, config: l0 });
 var EQ = ZU({ BigNumber: r0, config: l0 });
-var sT = rY({});
-var nT = DU({ BigNumber: r0, config: l0 });
+var nT = rY({});
+var oT = DU({ BigNumber: r0, config: l0 });
 var v0 = rZ({ BigNumber: r0, Complex: r8, DenseMatrix: N8, Fraction: C72 });
 var OQ = f4({ BigNumber: r0, config: l0, typed: v0 });
-var oT = uU({ BigNumber: r0, config: l0 });
+var iT = uU({ BigNumber: r0, config: l0 });
 var l6 = x4({ typed: v0 });
-var iT = gW({ Complex: r8, config: l0, typed: v0 });
-var aT = bW({ BigNumber: r0, typed: v0 });
-var rT = pW({ BigNumber: r0, Complex: r8, config: l0, typed: v0 });
+var aT = gW({ Complex: r8, config: l0, typed: v0 });
+var rT = bW({ BigNumber: r0, typed: v0 });
+var tT = pW({ BigNumber: r0, Complex: r8, config: l0, typed: v0 });
 var C62 = g4({ typed: v0 });
-var tT = XH({ typed: v0 });
-var eT = _W({ BigNumber: r0, Complex: r8, config: l0, typed: v0 });
-var $M = lW({ typed: v0 });
+var eT = XH({ typed: v0 });
+var $M = _W({ BigNumber: r0, Complex: r8, config: l0, typed: v0 });
+var JM = lW({ typed: v0 });
 var mG = sW({ typed: v0 });
-var JM = oW({ Complex: r8, config: l0, typed: v0 });
+var QM = oW({ Complex: r8, config: l0, typed: v0 });
 var K9 = A4({ BigNumber: r0, typed: v0 });
-var QM = GH({ typed: v0 });
-var ZM = N4({ typed: v0 });
-var KM = RK({ typed: v0 });
+var ZM = GH({ typed: v0 });
+var KM = N4({ typed: v0 });
+var HM = RK({ typed: v0 });
 var _J = EY({ typed: v0 });
 var cJ = C42({ Complex: r8, typed: v0 });
 var j7 = DH({ typed: v0 });
 var NQ = iW({ typed: v0 });
-var HM = rW({ BigNumber: r0, typed: v0 });
-var WM = eW({ BigNumber: r0, typed: v0 });
-var YM = d4({ typed: v0 });
+var WM = rW({ BigNumber: r0, typed: v0 });
+var YM = eW({ BigNumber: r0, typed: v0 });
+var UM = d4({ typed: v0 });
 var v8 = T4({ config: l0, typed: v0 });
-var UM = uH({ typed: v0 });
+var GM = uH({ typed: v0 });
 var pG = u4({ typed: v0 });
-var GM = _4({ Complex: r8, typed: v0 });
-var LM = TH({ typed: v0 });
-var XM = EH({ typed: v0 });
+var LM = _4({ Complex: r8, typed: v0 });
+var XM = TH({ typed: v0 });
+var DM = EH({ typed: v0 });
 var y$ = sH({ typed: v0 });
 var AQ = OH({ typed: v0 });
-var DM = iH({ format: y$, typed: v0 });
+var RM = iH({ format: y$, typed: v0 });
 var CQ = RH({ typed: v0 });
 var t6 = zK({ typed: v0 });
 var Y7 = R4({ typed: v0 });
 var S7 = F4({ typed: v0 });
 var E9 = P4({ typed: v0 });
-var RM = GU({ BigNumber: r0, config: l0 });
-var VM = AY({ Complex: r8, typed: v0 });
-var zM = a4({ Complex: r8, config: l0, typed: v0 });
+var VM = GU({ BigNumber: r0, config: l0 });
+var zM = AY({ Complex: r8, typed: v0 });
+var FM = a4({ Complex: r8, config: l0, typed: v0 });
 var dG = r4({ Complex: r8, config: l0, typed: v0 });
 var q7 = CH({ typed: v0 });
 var B6 = t4({ typed: v0 });
 var lJ = zH({ typed: v0 });
 var _9 = E4({ typed: v0 });
-var FM = oH({ format: y$, typed: v0 });
-var PM = wY({ config: l0, typed: v0 });
-var IM = SJ({ typed: v0 });
-var BM = kY({ config: l0, typed: v0 });
+var PM = oH({ format: y$, typed: v0 });
+var IM = wY({ config: l0, typed: v0 });
+var BM = SJ({ typed: v0 });
+var TM = kY({ config: l0, typed: v0 });
 var jQ = VH({ typed: v0 });
-var TM = J1({ BigNumber: r0, typed: v0 });
+var MM = J1({ BigNumber: r0, typed: v0 });
 var uG = JH({ BigNumber: r0, Fraction: C72, complex: cJ, typed: v0 });
 var sJ = Z1({ typed: v0 });
 var c9 = M4({ Matrix: uJ, equalScalar: v8, typed: v0 });
-var MM = k4({ typed: v0 });
-var EM = ZH({ typed: v0 });
-var OM = O4({ typed: v0 });
+var EM = k4({ typed: v0 });
+var OM = ZH({ typed: v0 });
+var NM = O4({ typed: v0 });
 var G9 = y4({ typed: v0 });
-var NM = H1({ typed: v0 });
+var AM = H1({ typed: v0 });
 var _G = B4({ typed: v0 });
-var AM = yW({ Complex: r8, config: l0, typed: v0 });
-var CM = dW({ BigNumber: r0, typed: v0 });
+var CM = yW({ Complex: r8, config: l0, typed: v0 });
+var jM = dW({ BigNumber: r0, typed: v0 });
 var SQ = r7({ isInteger: t6, typed: v0 });
-var jM = uW({ BigNumber: r0, Complex: r8, config: l0, typed: v0 });
-var SM = nH({ format: y$, typed: v0 });
-var qM = OY({ typed: v0 });
-var vM = aW({ typed: v0 });
-var wM = $1({ BigNumber: r0, typed: v0 });
+var SM = uW({ BigNumber: r0, Complex: r8, config: l0, typed: v0 });
+var qM = nH({ format: y$, typed: v0 });
+var vM = OY({ typed: v0 });
+var wM = aW({ typed: v0 });
+var kM = $1({ BigNumber: r0, typed: v0 });
 var b$ = I4({ typed: v0 });
-var kM = rH({ typed: v0 });
-var hM = hY({ config: l0, typed: v0 });
-var fM = Q1({ BigNumber: r0, typed: v0 });
-var xM = K1({ typed: v0 });
-var gM = fW({ SparseMatrix: c9, typed: v0 });
+var hM = rH({ typed: v0 });
+var fM = hY({ config: l0, typed: v0 });
+var xM = Q1({ BigNumber: r0, typed: v0 });
+var gM = K1({ typed: v0 });
+var yM = fW({ SparseMatrix: c9, typed: v0 });
 var O9 = QH({ Complex: r8, config: l0, typed: v0 });
-var yM = W1({ typed: v0 });
+var bM = W1({ typed: v0 });
 var f9 = h4({ typed: v0 });
-var bM = mW({ BigNumber: r0, Complex: r8, config: l0, typed: v0 });
-var mM = tW({ BigNumber: r0, typed: v0 });
+var mM = mW({ BigNumber: r0, Complex: r8, config: l0, typed: v0 });
+var pM = tW({ BigNumber: r0, typed: v0 });
 var $$ = j4({ Fraction: C72, typed: v0 });
 var v7 = V4({ typed: v0 });
 var a0 = S4({ DenseMatrix: N8, Matrix: uJ, SparseMatrix: c9, typed: v0 });
-var pM = q4({ isZero: E9, matrix: a0, typed: v0 });
-var dM = cH({ isNaN: b$, isNumeric: v7, typed: v0 });
+var dM = q4({ isZero: E9, matrix: a0, typed: v0 });
+var uM = cH({ isNaN: b$, isNumeric: v7, typed: v0 });
 var N9 = tH({ bignumber: K9, fraction: $$, number: _9 });
 var cG = lH({ config: l0, multiplyScalar: B6, numeric: N9, typed: v0 });
 var lG = SH({ isInteger: t6, matrix: a0, typed: v0 });
 var k6 = kH({ matrix: a0, config: l0, typed: v0 });
-var uM = hH({ matrix: a0, typed: v0 });
+var _M = hH({ matrix: a0, typed: v0 });
 var m$ = fH({ matrix: a0, typed: v0 });
 var sG = HH({ BigNumber: r0, config: l0, matrix: a0, typed: v0 });
 var h6 = gH({ BigNumber: r0, config: l0, matrix: a0, typed: v0 });
-var _M = cW({ Complex: r8, config: l0, typed: v0 });
+var cM = cW({ Complex: r8, config: l0, typed: v0 });
 var nG = b4({ BigNumber: r0, Complex: r8, Fraction: C72, config: l0, isNegative: Y7, matrix: a0, typed: v0, unaryMinus: f9 });
 var m8 = MJ({ isInteger: t6, matrix: a0, typed: v0 });
-var cM = PH({ prod: cG, size: k6, typed: v0 });
+var lM = PH({ prod: cG, size: k6, typed: v0 });
 var qQ = xH({ conj: j7, transpose: m$, typed: v0 });
 var oG = BH({ DenseMatrix: N8, SparseMatrix: c9, matrix: a0, typed: v0 });
 var V6 = eH({ numeric: N9, typed: v0 });
 var p$ = WW({ DenseMatrix: N8, concat: m8, divideScalar: V6, equalScalar: v8, matrix: a0, typed: v0 });
 var L9 = PW({ DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, typed: v0 });
 var d$ = MH({ matrix: a0, typed: v0 });
-var lM = z4({ isNumeric: v7, typed: v0 });
+var sM = z4({ isNumeric: v7, typed: v0 });
 var U7 = NH({ BigNumber: r0, DenseMatrix: N8, SparseMatrix: c9, config: l0, matrix: a0, typed: v0 });
-var sM = AH({ matrix: a0, multiplyScalar: B6, typed: v0 });
+var nM = AH({ matrix: a0, multiplyScalar: B6, typed: v0 });
 var nJ = EW({ DenseMatrix: N8, concat: m8, config: l0, matrix: a0, typed: v0 });
-var nM = XW({ DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, typed: v0, zeros: h6 });
+var oM = XW({ DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, typed: v0, zeros: h6 });
 var iG = YW({ DenseMatrix: N8, divideScalar: V6, equalScalar: v8, matrix: a0, multiplyScalar: B6, subtractScalar: G9, typed: v0 });
 var vQ = w4({ flatten: d$, matrix: a0, size: k6, typed: v0 });
-var oM = $H({ BigNumber: r0, concat: m8, equalScalar: v8, matrix: a0, typed: v0 });
-var iM = jH({ BigNumber: r0, config: l0, matrix: a0, typed: v0 });
+var iM = $H({ BigNumber: r0, concat: m8, equalScalar: v8, matrix: a0, typed: v0 });
+var aM = jH({ BigNumber: r0, config: l0, matrix: a0, typed: v0 });
 var wQ = o1({ addScalar: C62, complex: cJ, conj: j7, divideScalar: V6, equal: L9, identity: U7, isZero: E9, matrix: a0, multiplyScalar: B6, sign: uG, sqrt: O9, subtractScalar: G9, typed: v0, unaryMinus: f9, zeros: h6 });
-var aM = qH({ config: l0, matrix: a0 });
-var rM = DW({ DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, typed: v0, zeros: h6 });
+var rM = qH({ config: l0, matrix: a0 });
+var tM = DW({ DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, typed: v0, zeros: h6 });
 var J$ = JW({ BigNumber: r0, DenseMatrix: N8, config: l0, equalScalar: v8, matrix: a0, typed: v0, zeros: h6 });
 var s6 = BW({ DenseMatrix: N8, concat: m8, config: l0, matrix: a0, typed: v0 });
 var T6 = KH({ DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, subtractScalar: G9, typed: v0, unaryMinus: f9 });
-var tM = aH({ concat: m8, matrix: a0, typed: v0 });
-var eM = NW({ DenseMatrix: N8, concat: m8, config: l0, equalScalar: v8, matrix: a0, typed: v0 });
+var eM = aH({ concat: m8, matrix: a0, typed: v0 });
+var $E = NW({ DenseMatrix: N8, concat: m8, config: l0, equalScalar: v8, matrix: a0, typed: v0 });
 var kQ = UW({ DenseMatrix: N8, divideScalar: V6, equalScalar: v8, matrix: a0, multiplyScalar: B6, subtractScalar: G9, typed: v0 });
-var $E = FH({ DenseMatrix: N8, concat: m8, matrix: a0, typed: v0 });
+var JE = FH({ DenseMatrix: N8, concat: m8, matrix: a0, typed: v0 });
 var w8 = P1({ DenseMatrix: N8, SparseMatrix: c9, addScalar: C62, concat: m8, equalScalar: v8, matrix: a0, typed: v0 });
-var JE = nW({ BigNumber: r0, DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, typed: v0 });
-var QE = IJ({ concat: m8, equalScalar: v8, matrix: a0, typed: v0 });
-var ZE = BJ({ DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, typed: v0 });
-var KE = LH({ DenseMatrix: N8, concat: m8, matrix: a0, typed: v0 });
-var HE = gY({ addScalar: C62, combinations: _J, divideScalar: V6, isInteger: t6, isNegative: Y7, multiplyScalar: B6, typed: v0 });
+var QE = nW({ BigNumber: r0, DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, typed: v0 });
+var ZE = IJ({ concat: m8, equalScalar: v8, matrix: a0, typed: v0 });
+var KE = BJ({ DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, typed: v0 });
+var HE = LH({ DenseMatrix: N8, concat: m8, matrix: a0, typed: v0 });
+var WE = gY({ addScalar: C62, combinations: _J, divideScalar: V6, isInteger: t6, isNegative: Y7, multiplyScalar: B6, typed: v0 });
 var w7 = VW({ BigNumber: r0, DenseMatrix: N8, Fraction: C72, concat: m8, config: l0, equalScalar: v8, matrix: a0, typed: v0 });
 var aG = FW({ concat: m8, matrix: a0, typed: v0 });
-var WE = xJ({ add: w8, typed: v0, unaryPlus: OQ });
+var YE = xJ({ add: w8, typed: v0, unaryPlus: OQ });
 var hQ = OW({ equal: L9, typed: v0 });
-var YE = NJ({ matrix: a0, number: _9, subtract: T6, typed: v0 });
-var UE = FY({ abs: l6, addScalar: C62, deepEqual: hQ, divideScalar: V6, multiplyScalar: B6, sqrt: O9, subtractScalar: G9, typed: v0 });
+var UE = NJ({ matrix: a0, number: _9, subtract: T6, typed: v0 });
+var GE = FY({ abs: l6, addScalar: C62, deepEqual: hQ, divideScalar: V6, multiplyScalar: B6, sqrt: O9, subtractScalar: G9, typed: v0 });
 var oJ = T1({ addScalar: C62, conj: j7, multiplyScalar: B6, size: k6, typed: v0 });
-var GE = IW({ compareText: aG, isZero: E9, typed: v0 });
+var LE = IW({ compareText: aG, isZero: E9, typed: v0 });
 var rG = FJ({ DenseMatrix: N8, config: l0, equalScalar: v8, matrix: a0, round: J$, typed: v0, zeros: h6 });
-var LE = o4({ BigNumber: r0, DenseMatrix: N8, concat: m8, config: l0, equalScalar: v8, matrix: a0, round: J$, typed: v0, zeros: h6 });
-var XE = I1({ abs: l6, addScalar: C62, divideScalar: V6, isPositive: S7, multiplyScalar: B6, smaller: s6, sqrt: O9, typed: v0 });
+var XE = o4({ BigNumber: r0, DenseMatrix: N8, concat: m8, config: l0, equalScalar: v8, matrix: a0, round: J$, typed: v0, zeros: h6 });
+var DE = I1({ abs: l6, addScalar: C62, divideScalar: V6, isPositive: S7, multiplyScalar: B6, smaller: s6, sqrt: O9, typed: v0 });
 var tG = jW({ DenseMatrix: N8, smaller: s6 });
 var m6 = SW({ ImmutableDenseMatrix: tG, getMatrixDataType: AQ });
 var n6 = MW({ DenseMatrix: N8, concat: m8, config: l0, matrix: a0, typed: v0 });
 var fQ = QW({ Complex: r8, config: l0, divideScalar: V6, typed: v0 });
-var DE = GW({ DenseMatrix: N8, divideScalar: V6, equalScalar: v8, matrix: a0, multiplyScalar: B6, subtractScalar: G9, typed: v0 });
-var RE = v4({ flatten: d$, matrix: a0, size: k6, typed: v0 });
-var VE = wJ({ config: l0, numeric: N9, smaller: s6, typed: v0 });
+var RE = GW({ DenseMatrix: N8, divideScalar: V6, equalScalar: v8, matrix: a0, multiplyScalar: B6, subtractScalar: G9, typed: v0 });
+var VE = v4({ flatten: d$, matrix: a0, size: k6, typed: v0 });
+var zE = wJ({ config: l0, numeric: N9, smaller: s6, typed: v0 });
 var eG = PJ({ DenseMatrix: N8, concat: m8, config: l0, equalScalar: v8, matrix: a0, round: J$, typed: v0, zeros: h6 });
 var l8 = e4({ addScalar: C62, dot: oJ, equalScalar: v8, matrix: a0, multiplyScalar: B6, typed: v0 });
-var zE = KW({ Complex: r8, config: l0, divideScalar: V6, typed: v0 });
-var FE = TJ({ DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, typed: v0 });
+var FE = KW({ Complex: r8, config: l0, divideScalar: V6, typed: v0 });
+var PE = TJ({ DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, typed: v0 });
 var iJ = AW({ compare: w7, isNaN: b$, isNumeric: v7, typed: v0 });
-var PE = RW({ DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, typed: v0, zeros: h6 });
+var IE = RW({ DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, typed: v0, zeros: h6 });
 var $L = a1({ SparseMatrix: c9, abs: l6, add: w8, divideScalar: V6, larger: n6, largerEq: nJ, multiply: l8, subtract: T6, transpose: m$, typed: v0 });
 var H9 = jJ({ add: w8, matrix: a0, typed: v0, zeros: h6 });
 var xQ = fJ({ add: w8, config: l0, numeric: N9, typed: v0 });
-var IE = M1({ add: w8, matrix: a0, typed: v0 });
+var BE = M1({ add: w8, matrix: a0, typed: v0 });
 var JL = LW({ DenseMatrix: N8, divideScalar: V6, equalScalar: v8, matrix: a0, multiplyScalar: B6, subtractScalar: G9, typed: v0 });
-var BE = oY({ Complex: r8, add: w8, multiply: l8, number: _9, typed: v0 });
+var TE = oY({ Complex: r8, add: w8, multiply: l8, number: _9, typed: v0 });
 var gQ = p4({ DenseMatrix: N8, config: l0, equalScalar: v8, matrix: a0, round: J$, typed: v0, zeros: h6 });
 var x9 = zW({ compare: w7, typed: v0 });
-var TE = yY({ addScalar: C62, combinations: _J, isInteger: t6, isNegative: Y7, isPositive: S7, larger: n6, typed: v0 });
-var ME = IH({ matrix: a0, multiply: l8, subtract: T6, typed: v0 });
+var ME = yY({ addScalar: C62, combinations: _J, isInteger: t6, isNegative: Y7, isPositive: S7, larger: n6, typed: v0 });
+var EE = IH({ matrix: a0, multiply: l8, subtract: T6, typed: v0 });
 var QL = WY({ divideScalar: V6, isZero: E9, matrix: a0, multiply: l8, subtractScalar: G9, typed: v0, unaryMinus: f9 });
-var EE = YH({ concat: m8, equalScalar: v8, matrix: a0, multiplyScalar: B6, typed: v0 });
+var OE = YH({ concat: m8, equalScalar: v8, matrix: a0, multiplyScalar: B6, typed: v0 });
 var ZL = qW({ larger: n6, smaller: s6 });
 var KL = l4({ Complex: r8, DenseMatrix: N8, ceil: gQ, equalScalar: v8, floor: rG, matrix: a0, typed: v0, zeros: h6 });
 var HL = E1({ Index: m6, typed: v0 });
-var OE = PY({ abs: l6, add: w8, addScalar: C62, config: l0, divideScalar: V6, equalScalar: v8, flatten: d$, isNumeric: v7, isZero: E9, matrix: a0, multiply: l8, multiplyScalar: B6, smaller: s6, subtract: T6, typed: v0 });
-var NE = WH({ BigNumber: r0, add: w8, config: l0, equal: L9, isInteger: t6, mod: eG, smaller: s6, typed: v0, xgcd: sG });
-var AE = i4({ concat: m8, equalScalar: v8, matrix: a0, typed: v0 });
-var CE = ZW({ Complex: r8, config: l0, divideScalar: V6, log: fQ, typed: v0 });
+var NE = PY({ abs: l6, add: w8, addScalar: C62, config: l0, divideScalar: V6, equalScalar: v8, flatten: d$, isNumeric: v7, isZero: E9, matrix: a0, multiply: l8, multiplyScalar: B6, smaller: s6, subtract: T6, typed: v0 });
+var AE = WH({ BigNumber: r0, add: w8, config: l0, equal: L9, isInteger: t6, mod: eG, smaller: s6, typed: v0, xgcd: sG });
+var CE = i4({ concat: m8, equalScalar: v8, matrix: a0, typed: v0 });
+var jE = ZW({ Complex: r8, config: l0, divideScalar: V6, log: fQ, typed: v0 });
 var yQ = vJ({ config: l0, larger: n6, numeric: N9, typed: v0 });
-var jE = Y1({ DenseMatrix: N8, Index: m6, compareNatural: x9, size: k6, subset: H9, typed: v0 });
-var SE = G1({ DenseMatrix: N8, Index: m6, compareNatural: x9, size: k6, subset: H9, typed: v0 });
-var qE = X1({ Index: m6, compareNatural: x9, size: k6, subset: H9, typed: v0 });
-var vE = R1({ Index: m6, compareNatural: x9, size: k6, subset: H9, typed: v0 });
+var SE = Y1({ DenseMatrix: N8, Index: m6, compareNatural: x9, size: k6, subset: H9, typed: v0 });
+var qE = G1({ DenseMatrix: N8, Index: m6, compareNatural: x9, size: k6, subset: H9, typed: v0 });
+var vE = X1({ Index: m6, compareNatural: x9, size: k6, subset: H9, typed: v0 });
+var wE = R1({ Index: m6, compareNatural: x9, size: k6, subset: H9, typed: v0 });
 var Q$ = TW({ DenseMatrix: N8, concat: m8, config: l0, matrix: a0, typed: v0 });
-var wE = CW({ compare: w7, compareNatural: x9, matrix: a0, typed: v0 });
-var kE = qJ({ concat: m8, equalScalar: v8, matrix: a0, not: lJ, typed: v0, zeros: h6 });
+var kE = CW({ compare: w7, compareNatural: x9, matrix: a0, typed: v0 });
+var hE = qJ({ concat: m8, equalScalar: v8, matrix: a0, not: lJ, typed: v0, zeros: h6 });
 var Z$ = AJ({ bignumber: K9, matrix: a0, add: w8, config: l0, isPositive: S7, larger: n6, largerEq: nJ, smaller: s6, smallerEq: Q$, typed: v0 });
-var hE = CJ({ Index: m6, matrix: a0, range: Z$, typed: v0 });
+var fE = CJ({ Index: m6, matrix: a0, range: Z$, typed: v0 });
 var WL = U1({ DenseMatrix: N8, Index: m6, compareNatural: x9, size: k6, subset: H9, typed: v0 });
-var fE = D1({ Index: m6, compareNatural: x9, size: k6, subset: H9, typed: v0 });
+var xE = D1({ Index: m6, compareNatural: x9, size: k6, subset: H9, typed: v0 });
 var YL = z1({ Index: m6, concat: m8, setDifference: WL, size: k6, subset: H9, typed: v0 });
 var UL = vW({ FibonacciHeap: ZL, addScalar: C62, equalScalar: v8 });
 var GL = EJ({ Index: m6, matrix: a0, range: Z$, typed: v0 });
 var k7 = YY({ abs: l6, addScalar: C62, det: QL, divideScalar: V6, identity: U7, matrix: a0, multiply: l8, typed: v0, unaryMinus: f9 });
 var LL = n1({ DenseMatrix: N8, Spa: UL, SparseMatrix: c9, abs: l6, addScalar: C62, divideScalar: V6, equalScalar: v8, larger: n6, matrix: a0, multiplyScalar: B6, subtractScalar: G9, typed: v0, unaryMinus: f9 });
-var xE = UY({ Complex: r8, add: w8, ctranspose: qQ, deepEqual: hQ, divideScalar: V6, dot: oJ, dotDivide: p$, equal: L9, inv: k7, matrix: a0, multiply: l8, typed: v0 });
+var gE = UY({ Complex: r8, add: w8, ctranspose: qQ, deepEqual: hQ, divideScalar: V6, dot: oJ, dotDivide: p$, equal: L9, inv: k7, matrix: a0, multiply: l8, typed: v0 });
 var X9 = $W({ Complex: r8, config: l0, fraction: $$, identity: U7, inv: k7, matrix: a0, multiply: l8, number: _9, typed: v0 });
 var XL = L1({ DenseMatrix: N8, Index: m6, compareNatural: x9, size: k6, subset: H9, typed: v0 });
-var gE = F1({ Index: m6, concat: m8, setIntersect: XL, setSymDifference: YL, size: k6, subset: H9, typed: v0 });
-var yE = XY({ abs: l6, add: w8, identity: U7, inv: k7, map: q7, max: yQ, multiply: l8, size: k6, sqrt: O9, subtract: T6, typed: v0 });
+var yE = F1({ Index: m6, concat: m8, setIntersect: XL, setSymDifference: YL, size: k6, subset: H9, typed: v0 });
+var bE = XY({ abs: l6, add: w8, identity: U7, inv: k7, map: q7, max: yQ, multiply: l8, size: k6, sqrt: O9, subtract: T6, typed: v0 });
 var I8 = kW({ BigNumber: r0, Complex: r8, Fraction: C72, abs: l6, addScalar: C62, config: l0, divideScalar: V6, equal: L9, fix: KL, format: y$, isNumeric: v7, multiplyScalar: B6, number: _9, pow: X9, round: J$, subtractScalar: G9 });
-var bE = MU({ BigNumber: r0, Unit: I8, config: l0 });
-var mE = QG({ BigNumber: r0, Unit: I8, config: l0 });
-var pE = cU({ BigNumber: r0, Unit: I8, config: l0 });
-var dE = NU({ BigNumber: r0, Unit: I8, config: l0 });
-var uE = sU({ BigNumber: r0, Unit: I8, config: l0 });
-var _E = AU({ BigNumber: r0, Unit: I8, config: l0 });
-var cE = EU({ BigNumber: r0, Unit: I8, config: l0 });
-var lE = yU({ BigNumber: r0, Unit: I8, config: l0 });
-var sE = HW({ DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, pow: X9, typed: v0 });
-var nE = TU({ BigNumber: r0, Unit: I8, config: l0 });
-var oE = OU({ BigNumber: r0, Unit: I8, config: l0 });
-var iE = LY({ abs: l6, add: w8, identity: U7, inv: k7, multiply: l8, typed: v0 });
-var aE = nU({ BigNumber: r0, Unit: I8, config: l0 });
+var mE = MU({ BigNumber: r0, Unit: I8, config: l0 });
+var pE = QG({ BigNumber: r0, Unit: I8, config: l0 });
+var dE = cU({ BigNumber: r0, Unit: I8, config: l0 });
+var uE = NU({ BigNumber: r0, Unit: I8, config: l0 });
+var _E = sU({ BigNumber: r0, Unit: I8, config: l0 });
+var cE = AU({ BigNumber: r0, Unit: I8, config: l0 });
+var lE = EU({ BigNumber: r0, Unit: I8, config: l0 });
+var sE = yU({ BigNumber: r0, Unit: I8, config: l0 });
+var nE = HW({ DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, pow: X9, typed: v0 });
+var oE = TU({ BigNumber: r0, Unit: I8, config: l0 });
+var iE = OU({ BigNumber: r0, Unit: I8, config: l0 });
+var aE = LY({ abs: l6, add: w8, identity: U7, inv: k7, multiply: l8, typed: v0 });
+var rE = nU({ BigNumber: r0, Unit: I8, config: l0 });
 var DL = yH({ addScalar: C62, ceil: gQ, conj: j7, divideScalar: V6, dotDivide: p$, exp: pG, i: gG, log2: dG, matrix: a0, multiplyScalar: B6, pow: X9, tau: bG, typed: v0 });
 var bQ = NY({ BigNumber: r0, Complex: r8, config: l0, multiplyScalar: B6, pow: X9, typed: v0 });
-var rE = FU({ BigNumber: r0, Unit: I8, config: l0 });
-var tE = xU({ BigNumber: r0, Unit: I8, config: l0 });
-var eE = bH({ conj: j7, dotDivide: p$, fft: DL, typed: v0 });
-var $O = qU({ BigNumber: r0, Unit: I8, config: l0 });
-var JO = iU({ BigNumber: r0, Unit: I8, config: l0 });
-var QO = BU({ BigNumber: r0, Unit: I8, config: l0 });
-var ZO = ZG({ BigNumber: r0, Unit: I8, config: l0 });
-var KO = rU({ BigNumber: r0, Unit: I8, config: l0 });
-var HO = bU({ BigNumber: r0, Unit: I8, config: l0 });
-var WO = SU({ BigNumber: r0, Unit: I8, config: l0 });
-var YO = GG({ BigNumber: r0, Unit: I8, config: l0 });
-var UO = WG({ BigNumber: r0, Unit: I8, config: l0 });
-var GO = LG({ BigNumber: r0, Unit: I8, config: l0 });
-var LO = gU({ BigNumber: r0, Unit: I8, config: l0 });
-var XO = mU({ BigNumber: r0, Unit: I8, config: l0 });
-var DO = IU({ BigNumber: r0, Unit: I8, config: l0 });
-var RO = pU({ BigNumber: r0, Unit: I8, config: l0 });
-var VO = $G({ BigNumber: r0, Unit: I8, config: l0 });
-var zO = zU({ BigNumber: r0, Unit: I8, config: l0 });
-var FO = JG({ BigNumber: r0, Unit: I8, config: l0 });
-var PO = dU({ BigNumber: r0, Unit: I8, config: l0 });
-var IO = lU({ BigNumber: r0, Unit: I8, config: l0 });
-var BO = vU({ BigNumber: r0, Unit: I8, config: l0 });
-var TO = xW({ Unit: I8, typed: v0 });
+var tE = FU({ BigNumber: r0, Unit: I8, config: l0 });
+var eE = xU({ BigNumber: r0, Unit: I8, config: l0 });
+var $O = bH({ conj: j7, dotDivide: p$, fft: DL, typed: v0 });
+var JO = qU({ BigNumber: r0, Unit: I8, config: l0 });
+var QO = iU({ BigNumber: r0, Unit: I8, config: l0 });
+var ZO = BU({ BigNumber: r0, Unit: I8, config: l0 });
+var KO = ZG({ BigNumber: r0, Unit: I8, config: l0 });
+var HO = rU({ BigNumber: r0, Unit: I8, config: l0 });
+var WO = bU({ BigNumber: r0, Unit: I8, config: l0 });
+var YO = SU({ BigNumber: r0, Unit: I8, config: l0 });
+var UO = GG({ BigNumber: r0, Unit: I8, config: l0 });
+var GO = WG({ BigNumber: r0, Unit: I8, config: l0 });
+var LO = LG({ BigNumber: r0, Unit: I8, config: l0 });
+var XO = gU({ BigNumber: r0, Unit: I8, config: l0 });
+var DO = mU({ BigNumber: r0, Unit: I8, config: l0 });
+var RO = IU({ BigNumber: r0, Unit: I8, config: l0 });
+var VO = pU({ BigNumber: r0, Unit: I8, config: l0 });
+var zO = $G({ BigNumber: r0, Unit: I8, config: l0 });
+var FO = zU({ BigNumber: r0, Unit: I8, config: l0 });
+var PO = JG({ BigNumber: r0, Unit: I8, config: l0 });
+var IO = dU({ BigNumber: r0, Unit: I8, config: l0 });
+var BO = lU({ BigNumber: r0, Unit: I8, config: l0 });
+var TO = vU({ BigNumber: r0, Unit: I8, config: l0 });
+var MO = xW({ Unit: I8, typed: v0 });
 var v6 = zY({ divideScalar: V6, equalScalar: v8, inv: k7, matrix: a0, multiply: l8, typed: v0 });
-var MO = kU({ BigNumber: r0, Unit: I8, config: l0 });
+var EO = kU({ BigNumber: r0, Unit: I8, config: l0 });
 var u$ = CY({ gamma: bQ, typed: v0 });
-var EO = oU({ BigNumber: r0, Unit: I8, config: l0 });
-var OO = HG({ BigNumber: r0, Unit: I8, config: l0 });
-var NO = CU({ BigNumber: r0, Unit: I8, config: l0 });
+var OO = oU({ BigNumber: r0, Unit: I8, config: l0 });
+var NO = HG({ BigNumber: r0, Unit: I8, config: l0 });
+var AO = CU({ BigNumber: r0, Unit: I8, config: l0 });
 var RL = t1({ DenseMatrix: N8, lsolve: iG, lup: LL, matrix: a0, slu: $L, typed: v0, usolve: kQ });
-var AO = jU({ BigNumber: r0, Unit: I8, config: l0 });
-var CO = KG({ BigNumber: r0, Unit: I8, config: l0 });
-var jO = SY({ add: w8, divide: v6, factorial: u$, isInteger: t6, isPositive: S7, multiply: l8, typed: v0 });
-var SO = qY({ factorial: u$, typed: v0 });
-var qO = YG({ BigNumber: r0, Unit: I8, config: l0 });
-var vO = e1({ add: w8, cbrt: nG, divide: v6, equalScalar: v8, im: CQ, isZero: E9, multiply: l8, re: jQ, sqrt: O9, subtract: T6, typeOf: _G, typed: v0, unaryMinus: f9 });
-var wO = V1({ compareNatural: x9, typed: v0 });
-var kO = dH({ abs: l6, add: w8, bignumber: K9, divide: v6, isNegative: Y7, isPositive: S7, larger: n6, map: q7, matrix: a0, max: yQ, multiply: l8, smaller: s6, subtract: T6, typed: v0, unaryMinus: f9 });
+var CO = jU({ BigNumber: r0, Unit: I8, config: l0 });
+var jO = KG({ BigNumber: r0, Unit: I8, config: l0 });
+var SO = SY({ add: w8, divide: v6, factorial: u$, isInteger: t6, isPositive: S7, multiply: l8, typed: v0 });
+var qO = qY({ factorial: u$, typed: v0 });
+var vO = YG({ BigNumber: r0, Unit: I8, config: l0 });
+var wO = e1({ add: w8, cbrt: nG, divide: v6, equalScalar: v8, im: CQ, isZero: E9, multiply: l8, re: jQ, sqrt: O9, subtract: T6, typeOf: _G, typed: v0, unaryMinus: f9 });
+var kO = V1({ compareNatural: x9, typed: v0 });
+var hO = dH({ abs: l6, add: w8, bignumber: K9, divide: v6, isNegative: Y7, isPositive: S7, larger: n6, map: q7, matrix: a0, max: yQ, multiply: l8, smaller: s6, subtract: T6, typed: v0, unaryMinus: f9 });
 var VL = fY({ bignumber: K9, addScalar: C62, combinations: _J, divideScalar: V6, factorial: u$, isInteger: t6, isNegative: Y7, larger: n6, multiplyScalar: B6, number: _9, pow: X9, subtractScalar: G9, typed: v0 });
-var hO = hW({ Unit: I8, typed: v0 });
-var fO = xY({ addScalar: C62, isInteger: t6, isNegative: Y7, stirlingS2: VL, typed: v0 });
+var fO = hW({ Unit: I8, typed: v0 });
+var xO = xY({ addScalar: C62, isInteger: t6, isNegative: Y7, stirlingS2: VL, typed: v0 });
 var zL = GY({ abs: l6, add: w8, addScalar: C62, atan: mG, bignumber: K9, column: GL, complex: cJ, config: l0, cos: NQ, diag: oG, divideScalar: V6, dot: oJ, equal: L9, flatten: d$, im: CQ, inv: k7, larger: n6, matrix: a0, matrixFromColumns: vQ, multiply: l8, multiplyScalar: B6, number: _9, qr: wQ, re: jQ, reshape: lG, sin: sJ, size: k6, smaller: s6, sqrt: O9, subtract: T6, typed: v0, usolve: kQ, usolveAll: JL });
-var xO = hU({ BigNumber: r0, Unit: I8, config: l0 });
-var gO = aU({ BigNumber: r0, Unit: I8, config: l0 });
-var yO = jY({ divide: v6, dotDivide: p$, isNumeric: v7, log: fQ, map: q7, matrix: a0, multiply: l8, sum: xQ, typed: v0 });
+var gO = hU({ BigNumber: r0, Unit: I8, config: l0 });
+var yO = aU({ BigNumber: r0, Unit: I8, config: l0 });
+var bO = jY({ divide: v6, dotDivide: p$, isNumeric: v7, log: fQ, map: q7, matrix: a0, multiply: l8, sum: xQ, typed: v0 });
 var FL = gJ({ add: w8, divide: v6, typed: v0 });
-var bO = tU({ BigNumber: r0, Unit: I8, config: l0 });
-var mO = PU({ BigNumber: r0, Unit: I8, config: l0 });
-var pO = bJ({ bignumber: K9, add: w8, compare: w7, divide: v6, isInteger: t6, larger: n6, multiply: l8, partitionSelect: iJ, smaller: s6, smallerEq: Q$, subtract: T6, typed: v0 });
+var mO = tU({ BigNumber: r0, Unit: I8, config: l0 });
+var pO = PU({ BigNumber: r0, Unit: I8, config: l0 });
+var dO = bJ({ bignumber: K9, add: w8, compare: w7, divide: v6, isInteger: t6, larger: n6, multiply: l8, partitionSelect: iJ, smaller: s6, smallerEq: Q$, subtract: T6, typed: v0 });
 var mQ = yJ({ add: w8, apply: SQ, divide: v6, isNaN: b$, multiply: l8, subtract: T6, typed: v0 });
-var dO = wU({ BigNumber: r0, Unit: I8, config: l0 });
+var uO = wU({ BigNumber: r0, Unit: I8, config: l0 });
 var PL = IY({ add: w8, compare: w7, divide: v6, partitionSelect: iJ, typed: v0 });
-var uO = MY({ add: w8, divide: v6, matrix: a0, mean: FL, multiply: l8, pow: X9, sqrt: O9, subtract: T6, sum: xQ, typed: v0 });
-var _O = iY({ Complex: r8, add: w8, divide: v6, matrix: a0, multiply: l8, typed: v0 });
-var cO = BY({ abs: l6, map: q7, median: PL, subtract: T6, typed: v0 });
-var lO = mJ({ map: q7, sqrt: O9, typed: v0, variance: mQ });
-var sO = _H({ BigNumber: r0, Complex: r8, add: w8, config: l0, divide: v6, equal: L9, factorial: u$, gamma: bQ, isNegative: Y7, multiply: l8, pi: EQ, pow: X9, sin: sJ, smallerEq: Q$, subtract: T6, typed: v0 });
+var _O = MY({ add: w8, divide: v6, matrix: a0, mean: FL, multiply: l8, pow: X9, sqrt: O9, subtract: T6, sum: xQ, typed: v0 });
+var cO = iY({ Complex: r8, add: w8, divide: v6, matrix: a0, multiply: l8, typed: v0 });
+var lO = BY({ abs: l6, map: q7, median: PL, subtract: T6, typed: v0 });
+var sO = mJ({ map: q7, sqrt: O9, typed: v0, variance: mQ });
+var nO = _H({ BigNumber: r0, Complex: r8, add: w8, config: l0, divide: v6, equal: L9, factorial: u$, gamma: bQ, isNegative: Y7, multiply: l8, pi: EQ, pow: X9, sin: sJ, smallerEq: Q$, subtract: T6, typed: v0 });
 var pQ = B1({ abs: l6, add: w8, conj: j7, ctranspose: qQ, eigs: zL, equalScalar: v8, larger: n6, matrix: a0, multiply: l8, pow: X9, smaller: s6, sqrt: O9, typed: v0 });
 var IL = wH({ BigNumber: r0, DenseMatrix: N8, SparseMatrix: c9, addScalar: C62, config: l0, cos: NQ, matrix: a0, multiplyScalar: B6, norm: pQ, sin: sJ, typed: v0, unaryMinus: f9 });
-var nO = UG({ BigNumber: r0, Unit: I8, config: l0 });
+var oO = UG({ BigNumber: r0, Unit: I8, config: l0 });
 var BL = RY({ identity: U7, matrix: a0, multiply: l8, norm: pQ, qr: wQ, subtract: T6, typed: v0 });
-var oO = vH({ multiply: l8, rotationMatrix: IL, typed: v0 });
+var iO = vH({ multiply: l8, rotationMatrix: IL, typed: v0 });
 var TL = DY({ abs: l6, add: w8, concat: m8, identity: U7, index: HL, lusolve: RL, matrix: a0, matrixFromColumns: vQ, multiply: l8, range: Z$, schur: BL, subset: H9, subtract: T6, transpose: m$, typed: v0 });
-var iO = VY({ matrix: a0, multiply: l8, sylvester: TL, transpose: m$, typed: v0 });
+var aO = VY({ matrix: a0, multiply: l8, sylvester: TL, transpose: m$, typed: v0 });
 var _$ = {};
 var c$ = {};
-var aO = {};
+var rO = {};
 var o6 = O1({ mathWithTransform: c$ });
 var l$ = x1({ Node: o6 });
 var G7 = g1({ Node: o6 });
 var K$ = y1({ Node: o6 });
-var rO = m1({ Node: o6 });
+var tO = m1({ Node: o6 });
 var s$ = A1({ Node: o6 });
-var tO = j1({ Node: o6, ResultSet: yG });
-var eO = S1({ Node: o6 });
+var eO = j1({ Node: o6, ResultSet: yG });
+var $N = S1({ Node: o6 });
 var h7 = k1({ Node: o6 });
-var $N = b1({ Node: o6 });
-var xx = aY({ classes: aO });
+var JN = b1({ Node: o6 });
+var yx = aY({ classes: rO });
 var ML = JY({ math: _$, typed: v0 });
-var JN = h1({ Node: o6, typed: v0 });
-var gx = HY({ Chain: ML, typed: v0 });
+var QN = h1({ Node: o6, typed: v0 });
+var bx = HY({ Chain: ML, typed: v0 });
 var n$ = f1({ Node: o6, size: k6 });
 var o$ = N1({ Node: o6, subset: H9 });
-var QN = C1({ matrix: a0, Node: o6, subset: H9 });
+var ZN = C1({ matrix: a0, Node: o6, subset: H9 });
 var f7 = p1({ Unit: I8, Node: o6, math: _$ });
 var x7 = d1({ Node: o6, SymbolNode: f7, math: _$ });
-var l9 = u1({ AccessorNode: o$, ArrayNode: s$, AssignmentNode: QN, BlockNode: tO, ConditionalNode: eO, ConstantNode: h7, FunctionAssignmentNode: JN, FunctionNode: x7, IndexNode: n$, ObjectNode: l$, OperatorNode: G7, ParenthesisNode: K$, RangeNode: $N, RelationalNode: rO, SymbolNode: f7, config: l0, numeric: N9, typed: v0 });
-var ZN = cY({ ConstantNode: h7, FunctionNode: x7, OperatorNode: G7, ParenthesisNode: K$, parse: l9, typed: v0 });
+var l9 = u1({ AccessorNode: o$, ArrayNode: s$, AssignmentNode: ZN, BlockNode: eO, ConditionalNode: $N, ConstantNode: h7, FunctionAssignmentNode: QN, FunctionNode: x7, IndexNode: n$, ObjectNode: l$, OperatorNode: G7, ParenthesisNode: K$, RangeNode: JN, RelationalNode: tO, SymbolNode: f7, config: l0, numeric: N9, typed: v0 });
+var KN = cY({ ConstantNode: h7, FunctionNode: x7, OperatorNode: G7, ParenthesisNode: K$, parse: l9, typed: v0 });
 var EL = uY({ bignumber: K9, fraction: $$, AccessorNode: o$, ArrayNode: s$, ConstantNode: h7, FunctionNode: x7, IndexNode: n$, ObjectNode: l$, OperatorNode: G7, SymbolNode: f7, config: l0, mathWithTransform: c$, matrix: a0, typed: v0 });
-var yx = _1({ parse: l9, typed: v0 });
+var mx = _1({ parse: l9, typed: v0 });
 var OL = _Y({ AccessorNode: o$, ArrayNode: s$, ConstantNode: h7, FunctionNode: x7, IndexNode: n$, ObjectNode: l$, OperatorNode: G7, ParenthesisNode: K$, SymbolNode: f7, add: w8, divide: v6, equal: L9, isZero: E9, multiply: l8, parse: l9, pow: X9, subtract: T6, typed: v0 });
 var aJ = c1({ parse: l9, typed: v0 });
-var KN = $Y({ evaluate: aJ });
-var HN = l1({ evaluate: aJ });
-var dQ = dY({ bignumber: K9, fraction: $$, AccessorNode: o$, ArrayNode: s$, ConstantNode: h7, FunctionNode: x7, IndexNode: n$, ObjectNode: l$, OperatorNode: G7, ParenthesisNode: K$, SymbolNode: f7, add: w8, config: l0, divide: v6, equal: L9, isZero: E9, mathWithTransform: c$, matrix: a0, multiply: l8, parse: l9, pow: X9, resolve: ZN, simplifyConstant: EL, simplifyCore: OL, subtract: T6, typed: v0 });
-var bx = lY({ OperatorNode: G7, parse: l9, simplify: dQ, typed: v0 });
-var mx = bY({ parse: l9, typed: v0 });
-var px = s1({ Parser: HN, typed: v0 });
-var dx = nY({ bignumber: K9, fraction: $$, AccessorNode: o$, ArrayNode: s$, ConstantNode: h7, FunctionNode: x7, IndexNode: n$, ObjectNode: l$, OperatorNode: G7, ParenthesisNode: K$, SymbolNode: f7, add: w8, config: l0, divide: v6, equal: L9, isZero: E9, mathWithTransform: c$, matrix: a0, multiply: l8, parse: l9, pow: X9, simplify: dQ, simplifyConstant: EL, simplifyCore: OL, subtract: T6, typed: v0 });
-var ux = sY({ ConstantNode: h7, FunctionNode: x7, OperatorNode: G7, ParenthesisNode: K$, SymbolNode: f7, config: l0, equal: L9, isZero: E9, numeric: N9, parse: l9, simplify: dQ, typed: v0 });
-var _x = KY({ Help: KN, mathWithTransform: c$, typed: v0 });
-G6(_$, { e: xG, false: wT, fineStructure: kT, i: gG, Infinity: hT, LN10: fT, LOG10E: xT, NaN: gT, null: yT, phi: bT, SQRT1_2: pT, sackurTetrode: dT, tau: bG, true: uT, E: xG, version: _T, efimovFactor: cT, LN2: lT, pi: EQ, replacer: sT, reviver: xx, SQRT2: nT, typed: v0, unaryPlus: OQ, PI: EQ, weakMixingAngle: oT, abs: l6, acos: iT, acot: aT, acsc: rT, addScalar: C62, arg: tT, asech: eT, asinh: $M, atan: mG, atanh: JM, bignumber: K9, bitNot: QM, boolean: ZM, clone: KM, combinations: _J, complex: cJ, conj: j7, cos: NQ, cot: HM, csc: WM, cube: YM, equalScalar: v8, erf: UM, exp: pG, expm1: GM, filter: LM, forEach: XM, format: y$, getMatrixDataType: AQ, hex: DM, im: CQ, isInteger: t6, isNegative: Y7, isPositive: S7, isZero: E9, LOG2E: RM, lgamma: VM, log10: zM, log2: dG, map: q7, multiplyScalar: B6, not: lJ, number: _9, oct: FM, pickRandom: PM, print: IM, random: BM, re: jQ, sec: TM, sign: uG, sin: sJ, splitUnit: MM, square: EM, string: OM, subtractScalar: G9, tan: NM, typeOf: _G, acosh: AM, acsch: CM, apply: SQ, asec: jM, bin: SM, chain: gx, combinationsWithRep: qM, cosh: vM, csch: wM, isNaN: b$, isPrime: kM, randomInt: hM, sech: fM, sinh: xM, sparse: gM, sqrt: O9, tanh: yM, unaryMinus: f9, acoth: bM, coth: mM, fraction: $$, isNumeric: v7, matrix: a0, matrixFromFunction: pM, mode: dM, numeric: N9, prod: cG, reshape: lG, size: k6, squeeze: uM, transpose: m$, xgcd: sG, zeros: h6, asin: _M, cbrt: nG, concat: m8, count: cM, ctranspose: qQ, diag: oG, divideScalar: V6, dotDivide: p$, equal: L9, flatten: d$, hasNumericValue: lM, identity: U7, kron: sM, largerEq: nJ, leftShift: nM, lsolve: iG, matrixFromColumns: vQ, nthRoot: oM, ones: iM, qr: wQ, resize: aM, rightArithShift: rM, round: J$, smaller: s6, subtract: T6, to: tM, unequal: eM, usolve: kQ, xor: $E, add: w8, atan2: JE, bitAnd: QE, bitOr: ZE, bitXor: KE, catalan: HE, compare: w7, compareText: aG, cumsum: WE, deepEqual: hQ, diff: YE, distance: UE, dot: oJ, equalText: GE, floor: rG, gcd: LE, hypot: XE, larger: n6, log: fQ, lsolveAll: DE, matrixFromRows: RE, min: VE, mod: eG, multiply: l8, nthRoots: zE, or: FE, partitionSelect: iJ, rightLogShift: PE, slu: $L, subset: H9, sum: xQ, trace: IE, usolveAll: JL, zpk2tf: BE, ceil: gQ, compareNatural: x9, composition: TE, cross: ME, det: QL, dotMultiply: EE, fix: KL, index: HL, intersect: OE, invmod: NE, lcm: AE, log1p: CE, max: yQ, setCartesian: jE, setDistinct: SE, setIsSubset: qE, setPowerset: vE, smallerEq: Q$, sort: wE, and: kE, range: Z$, row: hE, setDifference: WL, setMultiplicity: fE, setSymDifference: YL, column: GL, inv: k7, lup: LL, pinv: xE, pow: X9, setIntersect: XL, setUnion: gE, sqrtm: yE, vacuumImpedance: bE, wienDisplacement: mE, atomicMass: pE, bohrMagneton: dE, boltzmann: uE, conductanceQuantum: _E, coulomb: cE, deuteronMass: lE, dotPow: sE, electricConstant: nE, elementaryCharge: oE, expm: iE, faraday: aE, fft: DL, gamma: bQ, gravitationConstant: rE, hartreeEnergy: tE, ifft: eE, klitzing: $O, loschmidt: JO, magneticConstant: QO, molarMass: ZO, molarPlanckConstant: KO, neutronMass: HO, nuclearMagneton: WO, planckCharge: YO, planckLength: UO, planckTemperature: GO, protonMass: LO, quantumOfCirculation: XO, reducedPlanckConstant: DO, rydberg: RO, secondRadiation: VO, speedOfLight: zO, stefanBoltzmann: FO, thomsonCrossSection: PO, avogadro: IO, bohrRadius: BO, createUnit: TO, divide: v6, electronMass: MO, factorial: u$, firstRadiation: EO, gravity: OO, inverseConductanceQuantum: NO, lusolve: RL, magneticFluxQuantum: AO, molarMassC12: CO, multinomial: jO, parse: l9, permutations: SO, planckMass: qO, polynomialRoot: vO, resolve: ZN, setSize: wO, simplifyConstant: EL, solveODE: kO, stirlingS2: VL, unit: hO, bellNumbers: fO, compile: yx, eigs: zL, fermiCoupling: xO, gasConstant: gO, kldivergence: yO, mean: FL, molarVolume: bO, planckConstant: mO, quantileSeq: pO, simplifyCore: OL, variance: mQ, classicalElectronRadius: dO, evaluate: aJ, median: PL, simplify: dQ, symbolicEqual: bx, corr: uO, freqz: _O, leafCount: mx, mad: cO, parser: px, rationalize: dx, std: lO, zeta: sO, derivative: ux, norm: pQ, rotationMatrix: IL, help: _x, planckTime: nO, schur: BL, rotate: oO, sylvester: TL, lyap: iO, config: l0 });
+var HN = $Y({ evaluate: aJ });
+var WN = l1({ evaluate: aJ });
+var dQ = dY({ bignumber: K9, fraction: $$, AccessorNode: o$, ArrayNode: s$, ConstantNode: h7, FunctionNode: x7, IndexNode: n$, ObjectNode: l$, OperatorNode: G7, ParenthesisNode: K$, SymbolNode: f7, add: w8, config: l0, divide: v6, equal: L9, isZero: E9, mathWithTransform: c$, matrix: a0, multiply: l8, parse: l9, pow: X9, resolve: KN, simplifyConstant: EL, simplifyCore: OL, subtract: T6, typed: v0 });
+var px = lY({ OperatorNode: G7, parse: l9, simplify: dQ, typed: v0 });
+var dx = bY({ parse: l9, typed: v0 });
+var ux = s1({ Parser: WN, typed: v0 });
+var _x = nY({ bignumber: K9, fraction: $$, AccessorNode: o$, ArrayNode: s$, ConstantNode: h7, FunctionNode: x7, IndexNode: n$, ObjectNode: l$, OperatorNode: G7, ParenthesisNode: K$, SymbolNode: f7, add: w8, config: l0, divide: v6, equal: L9, isZero: E9, mathWithTransform: c$, matrix: a0, multiply: l8, parse: l9, pow: X9, simplify: dQ, simplifyConstant: EL, simplifyCore: OL, subtract: T6, typed: v0 });
+var cx = sY({ ConstantNode: h7, FunctionNode: x7, OperatorNode: G7, ParenthesisNode: K$, SymbolNode: f7, config: l0, equal: L9, isZero: E9, numeric: N9, parse: l9, simplify: dQ, typed: v0 });
+var lx = KY({ Help: HN, mathWithTransform: c$, typed: v0 });
+G6(_$, { e: xG, false: kT, fineStructure: hT, i: gG, Infinity: fT, LN10: xT, LOG10E: gT, NaN: yT, null: bT, phi: mT, SQRT1_2: dT, sackurTetrode: uT, tau: bG, true: _T, E: xG, version: cT, efimovFactor: lT, LN2: sT, pi: EQ, replacer: nT, reviver: yx, SQRT2: oT, typed: v0, unaryPlus: OQ, PI: EQ, weakMixingAngle: iT, abs: l6, acos: aT, acot: rT, acsc: tT, addScalar: C62, arg: eT, asech: $M, asinh: JM, atan: mG, atanh: QM, bignumber: K9, bitNot: ZM, boolean: KM, clone: HM, combinations: _J, complex: cJ, conj: j7, cos: NQ, cot: WM, csc: YM, cube: UM, equalScalar: v8, erf: GM, exp: pG, expm1: LM, filter: XM, forEach: DM, format: y$, getMatrixDataType: AQ, hex: RM, im: CQ, isInteger: t6, isNegative: Y7, isPositive: S7, isZero: E9, LOG2E: VM, lgamma: zM, log10: FM, log2: dG, map: q7, multiplyScalar: B6, not: lJ, number: _9, oct: PM, pickRandom: IM, print: BM, random: TM, re: jQ, sec: MM, sign: uG, sin: sJ, splitUnit: EM, square: OM, string: NM, subtractScalar: G9, tan: AM, typeOf: _G, acosh: CM, acsch: jM, apply: SQ, asec: SM, bin: qM, chain: bx, combinationsWithRep: vM, cosh: wM, csch: kM, isNaN: b$, isPrime: hM, randomInt: fM, sech: xM, sinh: gM, sparse: yM, sqrt: O9, tanh: bM, unaryMinus: f9, acoth: mM, coth: pM, fraction: $$, isNumeric: v7, matrix: a0, matrixFromFunction: dM, mode: uM, numeric: N9, prod: cG, reshape: lG, size: k6, squeeze: _M, transpose: m$, xgcd: sG, zeros: h6, asin: cM, cbrt: nG, concat: m8, count: lM, ctranspose: qQ, diag: oG, divideScalar: V6, dotDivide: p$, equal: L9, flatten: d$, hasNumericValue: sM, identity: U7, kron: nM, largerEq: nJ, leftShift: oM, lsolve: iG, matrixFromColumns: vQ, nthRoot: iM, ones: aM, qr: wQ, resize: rM, rightArithShift: tM, round: J$, smaller: s6, subtract: T6, to: eM, unequal: $E, usolve: kQ, xor: JE, add: w8, atan2: QE, bitAnd: ZE, bitOr: KE, bitXor: HE, catalan: WE, compare: w7, compareText: aG, cumsum: YE, deepEqual: hQ, diff: UE, distance: GE, dot: oJ, equalText: LE, floor: rG, gcd: XE, hypot: DE, larger: n6, log: fQ, lsolveAll: RE, matrixFromRows: VE, min: zE, mod: eG, multiply: l8, nthRoots: FE, or: PE, partitionSelect: iJ, rightLogShift: IE, slu: $L, subset: H9, sum: xQ, trace: BE, usolveAll: JL, zpk2tf: TE, ceil: gQ, compareNatural: x9, composition: ME, cross: EE, det: QL, dotMultiply: OE, fix: KL, index: HL, intersect: NE, invmod: AE, lcm: CE, log1p: jE, max: yQ, setCartesian: SE, setDistinct: qE, setIsSubset: vE, setPowerset: wE, smallerEq: Q$, sort: kE, and: hE, range: Z$, row: fE, setDifference: WL, setMultiplicity: xE, setSymDifference: YL, column: GL, inv: k7, lup: LL, pinv: gE, pow: X9, setIntersect: XL, setUnion: yE, sqrtm: bE, vacuumImpedance: mE, wienDisplacement: pE, atomicMass: dE, bohrMagneton: uE, boltzmann: _E, conductanceQuantum: cE, coulomb: lE, deuteronMass: sE, dotPow: nE, electricConstant: oE, elementaryCharge: iE, expm: aE, faraday: rE, fft: DL, gamma: bQ, gravitationConstant: tE, hartreeEnergy: eE, ifft: $O, klitzing: JO, loschmidt: QO, magneticConstant: ZO, molarMass: KO, molarPlanckConstant: HO, neutronMass: WO, nuclearMagneton: YO, planckCharge: UO, planckLength: GO, planckTemperature: LO, protonMass: XO, quantumOfCirculation: DO, reducedPlanckConstant: RO, rydberg: VO, secondRadiation: zO, speedOfLight: FO, stefanBoltzmann: PO, thomsonCrossSection: IO, avogadro: BO, bohrRadius: TO, createUnit: MO, divide: v6, electronMass: EO, factorial: u$, firstRadiation: OO, gravity: NO, inverseConductanceQuantum: AO, lusolve: RL, magneticFluxQuantum: CO, molarMassC12: jO, multinomial: SO, parse: l9, permutations: qO, planckMass: vO, polynomialRoot: wO, resolve: KN, setSize: kO, simplifyConstant: EL, solveODE: hO, stirlingS2: VL, unit: fO, bellNumbers: xO, compile: mx, eigs: zL, fermiCoupling: gO, gasConstant: yO, kldivergence: bO, mean: FL, molarVolume: mO, planckConstant: pO, quantileSeq: dO, simplifyCore: OL, variance: mQ, classicalElectronRadius: uO, evaluate: aJ, median: PL, simplify: dQ, symbolicEqual: px, corr: _O, freqz: cO, leafCount: dx, mad: lO, parser: ux, rationalize: _x, std: sO, zeta: nO, derivative: cx, norm: pQ, rotationMatrix: IL, help: lx, planckTime: oO, schur: BL, rotate: iO, sylvester: TL, lyap: aO, config: l0 });
 G6(c$, _$, { filter: RG({ typed: v0 }), forEach: VG({ typed: v0 }), map: FG({ typed: v0 }), apply: XG({ isInteger: t6, typed: v0 }), or: kG({ DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, typed: v0 }), and: wG({ add: w8, concat: m8, equalScalar: v8, matrix: a0, not: lJ, typed: v0, zeros: h6 }), concat: OG({ isInteger: t6, matrix: a0, typed: v0 }), max: PG({ config: l0, larger: n6, numeric: N9, typed: v0 }), print: vG({ add: w8, matrix: a0, typed: v0, zeros: h6 }), bitAnd: hG({ add: w8, concat: m8, equalScalar: v8, matrix: a0, not: lJ, typed: v0, zeros: h6 }), diff: NG({ bignumber: K9, matrix: a0, number: _9, subtract: T6, typed: v0 }), min: BG({ config: l0, numeric: N9, smaller: s6, typed: v0 }), subset: EG({ add: w8, matrix: a0, typed: v0, zeros: h6 }), bitOr: fG({ DenseMatrix: N8, concat: m8, equalScalar: v8, matrix: a0, typed: v0 }), cumsum: SG({ add: w8, typed: v0, unaryPlus: OQ }), index: zG({ Index: m6, getMatrixDataType: AQ }), sum: CG({ add: w8, config: l0, numeric: N9, typed: v0 }), range: TG({ bignumber: K9, matrix: a0, add: w8, config: l0, isPositive: S7, larger: n6, largerEq: nJ, smaller: s6, smallerEq: Q$, typed: v0 }), row: MG({ Index: m6, matrix: a0, range: Z$, typed: v0 }), column: DG({ Index: m6, matrix: a0, range: Z$, typed: v0 }), mean: IG({ add: w8, divide: v6, typed: v0 }), quantileSeq: jG({ add: w8, bignumber: K9, compare: w7, divide: v6, isInteger: t6, larger: n6, multiply: l8, partitionSelect: iJ, smaller: s6, smallerEq: Q$, subtract: T6, typed: v0 }), variance: qG({ add: w8, apply: SQ, divide: v6, isNaN: b$, multiply: l8, subtract: T6, typed: v0 }), std: AG({ map: q7, sqrt: O9, typed: v0, variance: mQ }) });
-G6(aO, { BigNumber: r0, Complex: r8, Fraction: C72, Matrix: uJ, Node: o6, ObjectNode: l$, OperatorNode: G7, ParenthesisNode: K$, Range: mT, RelationalNode: rO, ResultSet: yG, ArrayNode: s$, BlockNode: tO, ConditionalNode: eO, ConstantNode: h7, DenseMatrix: N8, RangeNode: $N, Chain: ML, FunctionAssignmentNode: JN, SparseMatrix: c9, IndexNode: n$, ImmutableDenseMatrix: tG, Index: m6, AccessorNode: o$, AssignmentNode: QN, FibonacciHeap: ZL, Spa: UL, Unit: I8, SymbolNode: f7, FunctionNode: x7, Help: KN, Parser: HN });
+G6(rO, { BigNumber: r0, Complex: r8, Fraction: C72, Matrix: uJ, Node: o6, ObjectNode: l$, OperatorNode: G7, ParenthesisNode: K$, Range: pT, RelationalNode: tO, ResultSet: yG, ArrayNode: s$, BlockNode: eO, ConditionalNode: $N, ConstantNode: h7, DenseMatrix: N8, RangeNode: JN, Chain: ML, FunctionAssignmentNode: QN, SparseMatrix: c9, IndexNode: n$, ImmutableDenseMatrix: tG, Index: m6, AccessorNode: o$, AssignmentNode: ZN, FibonacciHeap: ZL, Spa: UL, Unit: I8, SymbolNode: f7, FunctionNode: x7, Help: HN, Parser: WN });
 ML.createProxy(_$);
-var FN = C9(YN(), 1);
+var IN = C9(UN(), 1);
 var n0;
 (function(B0) {
   B0[B0["LANG"] = 0] = "LANG";
@@ -79745,7 +79749,7 @@ var n0;
   B0[B0["TROLL_BRAIN"] = 57] = "TROLL_BRAIN";
   B0[B0["RESTORED_HUMAN_BRAIN"] = 58] = "RESTORED_HUMAN_BRAIN";
 })(n0 || (n0 = {}));
-var UN = { [n0.LANG]: "The human's native language is <nativeLang>. All replies from this human must mix some words from the native language and words from the following language: <lang>", [n0.HAT]: "The human is wearing a hat.", [n0.WALKING]: "The human is walking back and forth on a platform.", [n0.SAW_TROLL]: "The human thinks they saw a troll passing by, but the troll disappeared.", [n0.ACQUIRE_SUPER_JUMP]: "The human just acquired the power of super jump, but doesn't know it yet. They just feel weird.", [n0.ACQUIRE_SUPER_STRENGTH]: "The human just acquired the power of super strength, but doesn't know it yet. They feel stronger.", [n0.SUPER_JUMP]: "The human makes a giant leap, using the power of super jump.", [n0.FLY]: "The human starts to levitate a few meters in the air, and now floats around.", [n0.DROP_DOWN]: "The human just lost the ability to fly and just falls down.", [n0.MEET_ANOTHER_HUMAN]: "The human meets another human, and greets the other person.", [n0.SAW_SNAIL]: "The human saw a snail, doesn't want to get too close.", [n0.PUSHED_ROCK]: "The human pushes a heavy rock, and realizes they have super strength.", [n0.SAW_CAT]: "The human sees a cat, doesn't want to get close.", [n0.GOLD_CITY]: "The human is walking around a mysterious place where floors, walls and ceiling are covered with solid gold.", [n0.STRANGE_WRITING]: "The human sees strange writing on the wall.", [n0.SHRUNK]: "The human shrunk down the size of a small rat. Everything around looks so big.", [n0.EXPAND]: "The human's size is restored from small back to normal.", [n0.PIZZA]: "The human is walking around a trippy place where floors, walls and ceiling are made of pizza.", [n0.WEIRD_GREEN_SLIMY_CREATURE]: "The human sees a green slimy creature, doesn't like to get close.", [n0.DRUNK_YELLOW_CREATURE]: "The human sees a weird drunk yellow creature, doesn't like to get close.", [n0.ACQUIRE_FREEZE]: "The human acquire the power to freeze but doesn't know it yet. Feels a little chill.", [n0.FREEZE]: "The human accidentally uses its supernatural power to freeze on another human upon touching them, completely freezing that person.", [n0.MET_FREEZE]: "The human meets another human who's completely ice frozen.", [n0.GOT_UNFROZEN]: "The human was magically ice frozen for a few minutes by another human, but now got unfrozen and is able to move.", [n0.CHAT]: "The human just had an inner monologue.", [n0.LOW_BATTERY]: "The human notices that the game they're in is slow, because the laptop where the game is running on is low on battery. The human advice to plug in the power cord.", [n0.NORMAL_BATTERY]: "The human notices that the framerate of the game they're in is now back to normal.", [n0.FOUND_KEY]: "The human finds a key, but is not sure where it fits.", [n0.FOUND_DOOR_CLOSED]: "The human finds a door that is closed, and doesn't know what's on the other side.", [n0.FOUND_DOOR_OPENED]: "The human finds a door that is opened, leading to a new world.", [n0.BLUE]: "The human's skin turned completely blue.", [n0.SWIM]: "The human accidentally fell into the water and is now swimming.", [n0.MATH_WIZ]: "The human acquired the useless power to recite all digits of PI indefinitely.", [n0.MASTER_CHEF]: "The human acquired the useless power to cook delicious meal with snails.", [n0.NOSHIT]: "The human acquired the useless power to go several months without the need to go to the toilet.", [n0.UPSIDE_DOWN]: "The human is now upside down, walking feet on the ceiling. They see the whole world upside down.", [n0.NOT_UPSIDE_DOWN]: "The human is no longer upside down, feet on the ceiling. Gravity is restored back to normal.", [n0.BURBERRY_MAN]: "The human's clothes instantly disappear. The human is now in their underwear.", [n0.WEATHER_MAN]: "The human acquired the useless power to predict the weather exactly one year from now.", [n0.INSECT_MAN]: "The human acquired the useless power to read the mind of an insect.", [n0.TELEPORT]: "The human just instantly teleported to another location, along with all their clothes.", [n0.HELL]: "The human is walking around a scary looking place they looks like hell, with rocky red walls and intense heat.", [n0.RED_VELVET]: "The human is walking around a strangely deliciously looking place, where the walls look like red velvet cake with icing on top.", [n0.INVISIBLE_MAN]: "The human's body is invisible, but their clothes they are wearing are still visible.", [n0.SAW_FLYING_HUMAN]: "The human saw another human flying around.", [n0.BIB]: "The human is wearing a bib.", [n0.GOLD_CHAIN]: "The human is wearing a gold chain.", [n0.SCARF]: "The human is wearing a scarf.", [n0.HEADPHONES]: "The human is wearing earmuffs.", [n0.BUNNY_EAR]: "The human is wearing bunny ear.", [n0.FLOWER]: "The human is wearing a flower on their head.", [n0.RETRO_SHUTTER_SHADES]: "The human is wearing retro shutter shades.", [n0.EYE_PATCH]: "The human is wearing a black eye patch like a pirate.", [n0.GLASSES]: "The human is wearing glasses.", [n0.VR_HEADSET]: "The human is wearing a VR headset.", [n0.TWIN]: "The human just met another human that looks exactly like them, the twin they never new existed. They greet.", [n0.DANGEROUS_CRAB]: "The human sees a dangerous looking crab, doesn't want to get close.", [n0.TROLL_BRAIN]: "The human's mind is now inside the body of a troll.", [n0.RESTORED_HUMAN_BRAIN]: "The human is now restored back into their human body." };
+var GN = { [n0.LANG]: "The human's native language is <nativeLang>. All replies from this human must mix some words from the native language and words from the following language: <lang>", [n0.HAT]: "The human is wearing a hat.", [n0.WALKING]: "The human is walking back and forth on a platform.", [n0.SAW_TROLL]: "The human thinks they saw a troll passing by, but the troll disappeared.", [n0.ACQUIRE_SUPER_JUMP]: "The human just acquired the power of super jump, but doesn't know it yet. They just feel weird.", [n0.ACQUIRE_SUPER_STRENGTH]: "The human just acquired the power of super strength, but doesn't know it yet. They feel stronger.", [n0.SUPER_JUMP]: "The human makes a giant leap, using the power of super jump.", [n0.FLY]: "The human starts to levitate a few meters in the air, and now floats around.", [n0.DROP_DOWN]: "The human just lost the ability to fly and just falls down.", [n0.MEET_ANOTHER_HUMAN]: "The human meets another human, and greets the other person.", [n0.SAW_SNAIL]: "The human saw a snail, doesn't want to get too close.", [n0.PUSHED_ROCK]: "The human pushes a heavy rock, and realizes they have super strength.", [n0.SAW_CAT]: "The human sees a cat, doesn't want to get close.", [n0.GOLD_CITY]: "The human is walking around a mysterious place where floors, walls and ceiling are covered with solid gold.", [n0.STRANGE_WRITING]: "The human sees strange writing on the wall.", [n0.SHRUNK]: "The human shrunk down the size of a small rat. Everything around looks so big.", [n0.EXPAND]: "The human's size is restored from small back to normal.", [n0.PIZZA]: "The human is walking around a trippy place where floors, walls and ceiling are made of pizza.", [n0.WEIRD_GREEN_SLIMY_CREATURE]: "The human sees a green slimy creature, doesn't like to get close.", [n0.DRUNK_YELLOW_CREATURE]: "The human sees a weird drunk yellow creature, doesn't like to get close.", [n0.ACQUIRE_FREEZE]: "The human acquire the power to freeze but doesn't know it yet. Feels a little chill.", [n0.FREEZE]: "The human accidentally uses its supernatural power to freeze on another human upon touching them, completely freezing that person.", [n0.MET_FREEZE]: "The human meets another human who's completely ice frozen.", [n0.GOT_UNFROZEN]: "The human was magically ice frozen for a few minutes by another human, but now got unfrozen and is able to move.", [n0.CHAT]: "The human just had an inner monologue.", [n0.LOW_BATTERY]: "The human notices that the game they're in is slow, because the laptop where the game is running on is low on battery. The human advice to plug in the power cord.", [n0.NORMAL_BATTERY]: "The human notices that the framerate of the game they're in is now back to normal.", [n0.FOUND_KEY]: "The human finds a key, but is not sure where it fits.", [n0.FOUND_DOOR_CLOSED]: "The human finds a door that is closed, and doesn't know what's on the other side.", [n0.FOUND_DOOR_OPENED]: "The human finds a door that is opened, leading to a new world.", [n0.BLUE]: "The human's skin turned completely blue.", [n0.SWIM]: "The human accidentally fell into the water and is now swimming.", [n0.MATH_WIZ]: "The human acquired the useless power to recite all digits of PI indefinitely.", [n0.MASTER_CHEF]: "The human acquired the useless power to cook delicious meal with snails.", [n0.NOSHIT]: "The human acquired the useless power to go several months without the need to go to the toilet.", [n0.UPSIDE_DOWN]: "The human is now upside down, walking feet on the ceiling. They see the whole world upside down.", [n0.NOT_UPSIDE_DOWN]: "The human is no longer upside down, feet on the ceiling. Gravity is restored back to normal.", [n0.BURBERRY_MAN]: "The human's clothes instantly disappear. The human is now in their underwear.", [n0.WEATHER_MAN]: "The human acquired the useless power to predict the weather exactly one year from now.", [n0.INSECT_MAN]: "The human acquired the useless power to read the mind of an insect.", [n0.TELEPORT]: "The human just instantly teleported to another location, along with all their clothes.", [n0.HELL]: "The human is walking around a scary looking place they looks like hell, with rocky red walls and intense heat.", [n0.RED_VELVET]: "The human is walking around a strangely deliciously looking place, where the walls look like red velvet cake with icing on top.", [n0.INVISIBLE_MAN]: "The human's body is invisible, but their clothes they are wearing are still visible.", [n0.SAW_FLYING_HUMAN]: "The human saw another human flying around.", [n0.BIB]: "The human is wearing a bib.", [n0.GOLD_CHAIN]: "The human is wearing a gold chain.", [n0.SCARF]: "The human is wearing a scarf.", [n0.HEADPHONES]: "The human is wearing earmuffs.", [n0.BUNNY_EAR]: "The human is wearing bunny ear.", [n0.FLOWER]: "The human is wearing a flower on their head.", [n0.RETRO_SHUTTER_SHADES]: "The human is wearing retro shutter shades.", [n0.EYE_PATCH]: "The human is wearing a black eye patch like a pirate.", [n0.GLASSES]: "The human is wearing glasses.", [n0.VR_HEADSET]: "The human is wearing a VR headset.", [n0.TWIN]: "The human just met another human that looks exactly like them, the twin they never new existed. They greet.", [n0.DANGEROUS_CRAB]: "The human sees a dangerous looking crab, doesn't want to get close.", [n0.TROLL_BRAIN]: "The human's mind is now inside the body of a troll.", [n0.RESTORED_HUMAN_BRAIN]: "The human is now restored back into their human body." };
 var h0 = {};
 h0.io = { GATEWAY_URI: "//newgrounds.io/gateway_v3.php" };
 h0.io.events = {};
@@ -81182,7 +81186,7 @@ g9.lib.Cipher || function(C11) {
   }, keySize: 8 });
   C11.AES = j._createHelper(E);
 })();
-var nx = { game: "Divine Techno Run", url: "https://www.newgrounds.com/portal/view/628667", key: "34685:cxZQ5a1E", skey: "aBuRcFJLqDmPe3Gb0uultA==" };
+var ix = { game: "Divine Techno Run", url: "https://www.newgrounds.com/portal/view/628667", key: "34685:cxZQ5a1E", skey: "aBuRcFJLqDmPe3Gb0uultA==" };
 
 class NL {
   #$;
@@ -81203,7 +81207,7 @@ class NL {
   addUnlockListener(C11) {
     this.#L.add(C11);
   }
-  constructor(C11 = nx) {
+  constructor(C11 = ix) {
     this.#$ = new h0.io.core(C11.key, C11.skey), this.#U = C11.debug, this.initSession(), this.audio = new Audio(C11.audioIn ?? "https://jacklehamster.github.io/medal-popup/example/sounds/ng-sound.ogg"), this.audioOut = new Audio(C11.audioOut ?? "https://jacklehamster.github.io/medal-popup/example/sounds/ng-sound-out.ogg"), this.gameUrl = C11.url;
   }
   get loggedIn() {
@@ -81352,10 +81356,10 @@ class NL {
     });
   }
 }
-var GN = function() {
+var LN = function() {
   return JSON.parse(localStorage.getItem("troll-levels-unlocked") ?? "{}");
 };
-var ox = function(C11) {
+var ax = function(C11) {
   const j = document.getElementById("progress");
   if (j) {
     const q = `${(C11 * 100).toFixed(0)}%`;
@@ -81363,7 +81367,11 @@ var ox = function(C11) {
   }
 };
 var AL = {};
-var V20 = window.location.search.indexOf("debug") >= 0;
+var P20 = window.location.search.indexOf("debug") >= 0;
+var tx = window.location.search.indexOf("web-config") >= 0;
+var zN = window.location.search.indexOf("serverless-edit") >= 0;
+var qL = "config.json" + (tx ? "?web-config=true" : "");
+console.log(qL);
 var i$ = 1.8;
 var s8;
 (function(Q) {
@@ -81438,13 +81446,13 @@ var A8;
   H[H["FLOWER"] = 14] = "FLOWER";
 })(A8 || (A8 = {}));
 var jL = [A8.BIB, A8.GOLD_CHAIN, A8.SCARF, A8.HEADPHONES_RIGHT, A8.HEADPHONES_LEFT, A8.BUNNY_EAR, A8.FLOWER];
-var ax = { [A8.BIB]: n0.BIB, [A8.GOLD_CHAIN]: n0.GOLD_CHAIN, [A8.SCARF]: n0.SCARF, [A8.HEADPHONES_LEFT]: n0.HEADPHONES, [A8.BUNNY_EAR]: n0.BUNNY_EAR, [A8.FLOWER]: n0.FLOWER };
+var ex = { [A8.BIB]: n0.BIB, [A8.GOLD_CHAIN]: n0.GOLD_CHAIN, [A8.SCARF]: n0.SCARF, [A8.HEADPHONES_LEFT]: n0.HEADPHONES, [A8.BUNNY_EAR]: n0.BUNNY_EAR, [A8.FLOWER]: n0.FLOWER };
 var _Q = new Set;
 var W$ = new Set;
 var g7 = { BODY_RAW: [10, 13], PANTS: [15, 18], SKIRT: [19, 22], SMALL_SHOE: [23, 26], BIG_SHOE: [27, 30], SHIRT: [31, 34], FACE_SHAPE: [36, 40], FACE_MOUTH: [41, 45], FACE_MOUTH_OPENED: [44], FACE_MOUTH_SMILE: [45], FACE_MOUTH_NEUTRAL: [42], FACE_NOSE: [46, 50], FACE_EYES: [51, 55], EMPTY: [56] };
 var SL = g7.FACE_MOUTH_OPENED[0];
 var L7 = g7.EMPTY[0];
-var VN = { [g8.BODY]: { walk: [10, 13], still: [10, 10] }, [g8.UNDERWEAR]: { walk: [71, 74], still: [71, 71] }, [g8.SHIRT]: { walk: [31, 34], still: [31, 31] }, [g8.PANTS]: { walk: [15, 18], still: [15, 15] }, [g8.SKIRT]: { walk: [19, 22], still: [19, 19] }, [g8.SMALLSHOES]: { walk: [23, 26], still: [23, 23] }, [g8.SHOES]: { walk: [27, 30], still: [27, 27] } };
+var FN = { [g8.BODY]: { walk: [10, 13], still: [10, 10] }, [g8.UNDERWEAR]: { walk: [71, 74], still: [71, 71] }, [g8.SHIRT]: { walk: [31, 34], still: [31, 31] }, [g8.PANTS]: { walk: [15, 18], still: [15, 15] }, [g8.SKIRT]: { walk: [19, 22], still: [19, 19] }, [g8.SMALLSHOES]: { walk: [23, 26], still: [23, 23] }, [g8.SHOES]: { walk: [27, 30], still: [27, 27] } };
 var n9;
 (function(X) {
   X[X["MATH_WIZ"] = 0] = "MATH_WIZ";
@@ -81459,17 +81467,17 @@ var n9;
 var s9 = ["Math Wiz: The power to recite all digits of PI indefinitely.", "MasterChef: The power to cook delicious meals with snails.", "NoShit: The power to go several months without the need to go to the toilet.", "I'm blue: The power to turn completely blue.", "Burberry Man: The power to make their clothes disappear.", "Weather Man: The power to predict the weather exactly one year from now.", "Insect Man: The power to read the mind of an insect.", "Invisible Man: The power to turn invisible"];
 var eJ = new NL({ game: "The Supernatural Power Troll", url: "https://www.newgrounds.com/projects/games/5648862/preview", key: "58158:bSvU8TQ3", skey: "eguVfU6jxSWQKxgYbSV8FA==" });
 var A9 = 40;
-var zN = 12;
+var PN = 12;
 var rJ;
 speechSynthesis.getVoices();
 window.addEventListener("beforeunload", function(C11) {
   this.speechSynthesis.cancel();
 });
-var vL = "https://open-ai-npc.onrender.com/comment/";
+var wL = "https://open-ai-npc.onrender.com/comment/";
 export {
   U6 as u,
   CL as revoke,
   uQ as prepareUrls,
   eJ as newgrounds,
-  qL as createHighSchoolGame
+  vL as createHighSchoolGame
 };
