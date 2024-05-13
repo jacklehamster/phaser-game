@@ -166,7 +166,7 @@ Pressing SHIFT + Clicking duplicates an element, allowing the editor to place mo
 Pressing DELETE after selecting an item removes it.
 
 
-Some level configurations are also set manually in the json files: Decor overlay, if the level has pizza, gold walls, snail or cat, if it's locked (editor OFF), and what's the next level after completing it.
+Some level configurations are set manually in the json files: Decor overlay, if the level has pizza, gold walls, snail or cat, if it's locked (editor OFF), and what's the next level after completing it.
 
 #### Demo
 
