@@ -139,9 +139,9 @@ The NPC voice is chosen at random at the beginning of each level. It doesn't alw
 
 ### Level editor
 
-[![Level editor](screenshots/editor-mode.png)](https://jacklehamster.github.io/phaser-game/example/?web-config=true&serverless-edit=true#map=json/map13.5.json)
+[![Level editor](screenshots/editor-mode.png)](https://jacklehamster.github.io/phaser-game/example/?serverless-edit=true#map=json/map13.5.json)
 
-[Try it here!](https://jacklehamster.github.io/phaser-game/example/?web-config=true&serverless-edit=true#map=json/map13.5.json)
+[Try it here!](https://jacklehamster.github.io/phaser-game/example/?serverless-edit=true#map=json/map13.5.json)
 
 
 Each level is composed of several unique tiles, ranging from:
@@ -170,7 +170,7 @@ Some level configurations are also set manually in the json files: Decor overlay
 
 #### Demo
 
-[Test the level editor](https://jacklehamster.github.io/phaser-game/example/?web-config=true&serverless-edit=true#map=json/map13.5.json)
+[Test the level editor](https://jacklehamster.github.io/phaser-game/example/?serverless-edit=true#map=json/map13.5.json)
 
 
 # Implementation details
