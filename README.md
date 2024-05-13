@@ -158,13 +158,13 @@ Each level is composed of several unique tiles, ranging from:
 The level editor enables level editing while the game is running, to allow immediate adjustments.
 - platforms: static. Can be moved around and resized.
 - door, water, triggers: static, cannot be resized.
-- rock, key, NPC, troll: Only the initial position of the character can be moved, since those are all dynamic elements. Note: As soon as an initial position is moved, the corresponding element in the game moves there.
+- bonus: switch bonus using the arrow key
+- rock, water, key, NPC, troll: Only the initial position of the character can be moved, since those are all dynamic elements. Note: As soon as an initial position is moved, the corresponding element in the game moves there.
 
 Pressing SHIFT + Clicking duplicates an element, allowing the editor to place more elements.
 
-The editor is limited, so some actions can only be done by modifying the JSON file:
-- Deleting elements.
-- Changing the bonus types of elements.
+Pressing DELETE after selecting an item removes it.
+
 
 Some level configurations are also set manually in the json files: Decor overlay, if the level has pizza, gold walls, snail or cat, if it's locked (editor OFF), and what's the next level after completing it.
 
