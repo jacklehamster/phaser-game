@@ -139,7 +139,10 @@ The NPC voice is chosen at random at the beginning of each level. It doesn't alw
 
 ### Level editor
 
-![](screenshots/editor-mode.png)
+[![Level editor](screenshots/editor-mode.png)](https://jacklehamster.github.io/phaser-game/example/?web-config=true&serverless-edit=true#map=json/map13.5.json)
+
+[Try it here!](https://jacklehamster.github.io/phaser-game/example/?web-config=true&serverless-edit=true#map=json/map13.5.json)
+
 
 Each level is composed of several unique tiles, ranging from:
 - platform: no gravity
