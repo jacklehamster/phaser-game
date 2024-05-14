@@ -34,7 +34,7 @@
 			"height": 64,
 			"frame": 4,
 			"label": "2",
-			"lockedByLevel": "2",
+			"_lockedByLevel": "2",
 			"nextLevel": "json/map2.json"
 		},
 		"door3": {
@@ -44,7 +44,7 @@
 			"height": 64,
 			"frame": 4,
 			"label": "3",
-			"lockedByLevel": "3",
+			"_lockedByLevel": "3",
 			"nextLevel": "json/map3.json"
 		},
 		"door4": {
@@ -54,7 +54,7 @@
 			"height": 64,
 			"frame": 4,
 			"label": "4",
-			"lockedByLevel": "4",
+			"_lockedByLevel": "4",
 			"nextLevel": "json/map4.json"
 		},
 		"door5": {
@@ -64,7 +64,7 @@
 			"height": 64,
 			"frame": 4,
 			"label": "5",
-			"lockedByLevel": "5",
+			"_lockedByLevel": "5",
 			"nextLevel": "json/map5.json"
 		},
 		"door6": {
@@ -74,7 +74,7 @@
 			"height": 64,
 			"frame": 4,
 			"label": "6",
-			"lockedByLevel": "6",
+			"_lockedByLevel": "6",
 			"nextLevel": "json/map6.json"
 		},
 		"door7": {
@@ -84,7 +84,7 @@
 			"height": 64,
 			"frame": 4,
 			"label": "7",
-			"lockedByLevel": "7",
+			"_lockedByLevel": "7",
 			"nextLevel": "json/map7.json"
 		},
 		"door8": {
@@ -94,7 +94,7 @@
 			"height": 64,
 			"frame": 4,
 			"label": "8",
-			"lockedByLevel": "8",
+			"_lockedByLevel": "8",
 			"nextLevel": "json/map8.json"
 		},
 		"door9": {
@@ -104,7 +104,7 @@
 			"height": 64,
 			"frame": 4,
 			"label": "9",
-			"lockedByLevel": "9",
+			"_lockedByLevel": "9",
 			"nextLevel": "json/map9.json"
 		},
 		"door10": {
@@ -114,7 +114,7 @@
 			"height": 64,
 			"frame": 4,
 			"label": "10",
-			"lockedByLevel": "10",
+			"_lockedByLevel": "10",
 			"nextLevel": "json/map10.json"
 		},
 		"door11": {
@@ -255,7 +255,7 @@
 			"width": 223,
 			"height": 26,
 			"frame": null,
-			"lockedByLevel": "2"
+			"_lockedByLevel": "2"
 		},
 		"ground2": {
 			"x": 382.5,
@@ -263,7 +263,7 @@
 			"width": 223,
 			"height": 24,
 			"frame": null,
-			"lockedByLevel": "4"
+			"_lockedByLevel": "4"
 		},
 		"ground3": {
 			"x": 598.5,
@@ -271,7 +271,7 @@
 			"width": 269,
 			"height": 26,
 			"frame": null,
-			"lockedByLevel": "6"
+			"_lockedByLevel": "6"
 		},
 		"ground4": {
 			"x": 889.5,
@@ -279,7 +279,7 @@
 			"width": 223,
 			"height": 26,
 			"frame": null,
-			"lockedByLevel": "9"
+			"_lockedByLevel": "9"
 		},
 		"ground5": {
 			"x": 510.5,

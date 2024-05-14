@@ -2150,27 +2150,27 @@ export async function createHighSchoolGame(
         this.timerText?.setX(GAMEWIDTH - this.timerText.width - 10);
       }
 
-      if (game.loop.actualFps < 35) {
-        if (!this.warningTime) {
-          this.warningTime = Date.now();
-        }
-        if (Date.now() - this.warningTime < 20000) {
-          if (!this.warningText?.visible) {
-            this.warningText?.setVisible(true);
-            humans.forEach(human => human.addHistory(HumanEvent.LOW_BATTERY));
-          }
-          const newFPSText = `Warning: The game has issues when running at low frame rate (${game.loop.actualFps.toFixed(1)} fps).\nThis could happen if your computer is low on battery.`;
-          this.warningText?.setText(newFPSText);
-        } else {
-          this.warningText?.setVisible(false);
-        }
-      } else {
-        if (this.warningText?.visible) {
-          this.warningText?.setVisible(false);
-          humans.forEach(human => human.addHistory(HumanEvent.NORMAL_BATTERY));
-          this.warningTime = 0;
-        }
-      }
+      // if (game.loop.actualFps < 35) {
+      //   if (!this.warningTime) {
+      //     this.warningTime = Date.now();
+      //   }
+      //   if (Date.now() - this.warningTime < 20000) {
+      //     if (!this.warningText?.visible) {
+      //       this.warningText?.setVisible(true);
+      //       humans.forEach(human => human.addHistory(HumanEvent.LOW_BATTERY));
+      //     }
+      //     const newFPSText = `Warning: The game has issues when running at low frame rate (${game.loop.actualFps.toFixed(1)} fps).\nThis could happen if your computer is low on battery.`;
+      //     this.warningText?.setText(newFPSText);
+      //   } else {
+      //     this.warningText?.setVisible(false);
+      //   }
+      // } else {
+      //   if (this.warningText?.visible) {
+      //     this.warningText?.setVisible(false);
+      //     humans.forEach(human => human.addHistory(HumanEvent.NORMAL_BATTERY));
+      //     this.warningTime = 0;
+      //   }
+      // }
       if (this.chatFollow) {
         this.chatText?.setPosition(Math.min(GAMEWIDTH - this.chatText.width, Math.max(0, this.chatFollow.x - this.chatText.width / 2)), Math.max(30, this.chatFollow.y - 50 - this.chatText.height));
       }
