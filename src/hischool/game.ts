@@ -2365,7 +2365,6 @@ export async function createHighSchoolGame(
 
           loopy.play();
         }, 1000);
-        Uint8ClampedArray
         try {
           this.add.text(250, 200, 'POWER TROLL!', { fontSize: '64px', color: '#0f0' })
             .setShadow(5, 5, 'rgba(0,0,0,0.5)', 15)
