@@ -753,6 +753,10 @@ export async function createHighSchoolGame(
     }
 
     destroy() {
+      if (this.holdingBonus) {
+        this.releaseHoldingBonus(this.holdingBonus);
+        this.holdingBonus = undefined;
+      }
       if (this.humanBrain) {
         this.humanBrain.trollBrain = undefined;
         this.humanBrain = undefined;
@@ -962,6 +966,17 @@ export async function createHighSchoolGame(
 
     get tossKey() {
       return this.playerId === 2 || trolls.length === 1 ? 'P' : 'F';
+    }
+
+    releaseHoldingBonus(holdingBonus: any) {
+      if (holdingBonus) {
+        const dx = this.player.flipX ? -1 : 1;
+        const gameObject = holdingBonus.body?.gameObject;
+        (gameObject as any).enableBody(true, this.player.x - dx * 5, this.player.y - 25, true, true);
+        (holdingBonus.body as any).setVelocityX(dx * 1500);
+        (holdingBonus.body as any).setBounce(.1);
+        (holdingBonus as any).debugShowBody = true;
+      }
     }
 
     hold(group: Phaser.Physics.Arcade.Group, zzfx: any, ui?: UI, { isKey, isTroll, isHuman, condition }: {
@@ -1353,8 +1368,11 @@ export async function createHighSchoolGame(
 
       if (this.acquiringPower()) {
         this.setTint(Math.floor(0xffffff * Math.random()));
+        this.setRotation(Math.random() * Math.PI * 2);
         this.bodySprites.forEach((sprite, index) => sprite.anims.pause());
       } else if (this.powerAcquired) {
+        this.setRotation(0);
+
         this.lastStill = now;
         this.clearTint();
         this.randomize(this.seed);
@@ -2330,11 +2348,6 @@ export async function createHighSchoolGame(
         if (mapJson.theEnd) {
           this.theEnd();
         }
-        this.add.text(250, 200, 'POWER TROLL!', { fontSize: '64px', color: '#0f0' })
-          .setShadow(5, 5, 'rgba(0,0,0,0.5)', 15)
-          .postFX.addGlow();
-
-        sound.play();
         setTimeout(() => {
           if (!mapJson.theEnd) {
             this.add.text(250, 300, 'press space to continue', { fontSize: '32px', color: '#fff' });
@@ -2352,6 +2365,16 @@ export async function createHighSchoolGame(
 
           loopy.play();
         }, 1000);
+        Uint8ClampedArray
+        try {
+          this.add.text(250, 200, 'POWER TROLL!', { fontSize: '64px', color: '#0f0' })
+            .setShadow(5, 5, 'rgba(0,0,0,0.5)', 15)
+            .postFX.addGlow();
+        } catch (e) {
+          console.warn("Warning:", e);
+        }
+
+        sound.play();
       }, 2000);
     }
 
