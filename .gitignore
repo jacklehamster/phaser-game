@@ -176,3 +176,5 @@ dist/
 
 # Not needed since we use bun
 package-lock.json
+
+*.zip
