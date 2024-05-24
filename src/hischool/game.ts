@@ -4179,8 +4179,12 @@ export async function createHighSchoolGame(
           (window as any).fetchAIResponse = () => { };
         }
         const url = `${OPEN_AI_URL}?dictionary=${JSON.stringify(dico)}&situation=${HumanEvent.LANG}.${situation}&seed=${seed ?? ""}${customFieldsParams}&jsonp=fetchAIResponse`;
-        const sc = document.body.appendChild(document.createElement("script"));
+        const parent = document.head;
+        const sc = parent.appendChild(document.createElement("script"));
         sc.src = url;
+        setTimeout(() => {
+          parent.removeChild(sc);
+        }, 1000);
       });
     }
   }
