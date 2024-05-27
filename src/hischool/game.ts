@@ -339,8 +339,11 @@ export async function createHighSchoolGame(
     return id;
   }
 
+  const TEST_NO_VOICE = false;
+  const TEST_SPEECH_NOT_AVAILABLE = false;
+  let cachedVoices: SpeechSynthesisVoice[] = [];
   function getVoices() {
-    return speechSynthesis.getVoices().filter(v => v.name.indexOf("Google") !== 0);
+    return cachedVoices.length ? cachedVoices : TEST_NO_VOICE ? [] : (cachedVoices = speechSynthesis.getVoices().filter(v => v.name.indexOf("Google") !== 0));
   }
 
   let selectedElement: Phaser.GameObjects.GameObject | undefined;
@@ -1529,7 +1532,7 @@ export async function createHighSchoolGame(
         const rng = alea(this?.seed + "");
         const voices = getVoices();
         const voice = voices[Math.floor(rng() * voices.length)];
-        fetchAI(this.history.join("."), DICO, this.speakSeed, voice.lang, true).then(result => {
+        fetchAI(this.history.join("."), DICO, this.speakSeed, voice?.lang, true).then(result => {
           //          console.log("Speak", result);
           this.speak(result.response);
         });
@@ -2054,7 +2057,11 @@ export async function createHighSchoolGame(
     chatTimeout?: Timer;
     chat(msg: string, human?: Human, troll?: Troll) {
       clearTimeout(this.chatTimeout);
-      speechSynthesis.cancel();
+      try {
+        speechSynthesis.cancel();
+      } catch(e) {
+        console.warn("speechSynthesis not available");
+      }
       if (msg?.length) {
         const message = wrap(msg, {
           width: 30,
@@ -2067,61 +2074,72 @@ export async function createHighSchoolGame(
         someoneSpeaking = Date.now();
         const rng = alea(human?.seed + "");
         this.chatText?.setText("");
-        const utterance = new SpeechSynthesisUtterance(message);
-        utterance.volume = game.sound.mute ? 0 : !mapJson.locked ? 0.2 : 1;
-        const voices = getVoices();
-        utterance.voice = voices[Math.floor(rng() * voices.length)];
-        console.log("VOICE", utterance.voice.name, utterance.voice.lang);
-        if (!human?.lang && human) {
-          human.lang = utterance.voice.lang;
-        }
-        human?.randomize(human.seed);
-        const preFrame = human?.faceSprites[FaceEnum.MOUTH].frame.name ?? "";
-        this.tt = setTimeout(() => {
-          this.chatText?.setText(message);
-        }, 1000);
-        utterance.addEventListener("boundary", (e) => {
-          clearTimeout(this.tt);
-          if (this.chatText?.active) {
-            this.chatText?.setText(message.slice(0, e.charIndex + e.charLength));
+        try {
+          if (TEST_SPEECH_NOT_AVAILABLE) {
+            throw new Error();
           }
-          if (troll) {
-            troll?.mouthSprites.forEach(sprite => sprite.setVisible(true));
-          } else {
-            if (human?.faceSprites[FaceEnum.MOUTH].active) {
-              human?.faceSprites[FaceEnum.MOUTH].setFrame(
-                preFrame != OPEN_MOUTH.toString()
-                  ? OPEN_MOUTH
-                  : HUMAN_ANIM.FACE_MOUTH[0] + Math.floor(Math.random() * (HUMAN_ANIM.FACE_MOUTH[1] - HUMAN_ANIM.FACE_MOUTH[0])),
-              );
+          const utterance = new SpeechSynthesisUtterance(message);
+          utterance.volume = game.sound.mute ? 0 : !mapJson.locked ? 0.2 : 1;
+          const voices = getVoices();
+          utterance.voice = voices[Math.floor(rng() * voices.length)];
+          console.log("VOICE", utterance.voice.name, utterance.voice.lang);
+          if (human && !human.lang) {
+            human.lang = utterance.voice?.lang ?? "en-US";
+          }
+          human?.randomize(human.seed);
+          const preFrame = human?.faceSprites[FaceEnum.MOUTH].frame.name ?? "";
+          this.tt = setTimeout(() => {
+            this.chatText?.setText(message);
+          }, 1000);
+          utterance.addEventListener("boundary", (e) => {
+            clearTimeout(this.tt);
+            if (this.chatText?.active) {
+              this.chatText?.setText(message.slice(0, e.charIndex + e.charLength));
             }
-          }
-          setTimeout(() => {
             if (troll) {
-              troll?.mouthSprites.forEach(sprite => sprite.setVisible(false));
+              troll?.mouthSprites.forEach(sprite => sprite.setVisible(true));
             } else {
               if (human?.faceSprites[FaceEnum.MOUTH].active) {
-                human?.faceSprites[FaceEnum.MOUTH].setFrame(preFrame);
+                human?.faceSprites[FaceEnum.MOUTH].setFrame(
+                  preFrame != OPEN_MOUTH.toString()
+                    ? OPEN_MOUTH
+                    : HUMAN_ANIM.FACE_MOUTH[0] + Math.floor(Math.random() * (HUMAN_ANIM.FACE_MOUTH[1] - HUMAN_ANIM.FACE_MOUTH[0])),
+                );
               }
             }
-          }, 200);
-          this.tt = setTimeout(() => {
-            if (this.chatText?.active) {
-              this.chatText?.setText(message);
+            setTimeout(() => {
+              if (troll) {
+                troll?.mouthSprites.forEach(sprite => sprite.setVisible(false));
+              } else {
+                if (human?.faceSprites[FaceEnum.MOUTH].active) {
+                  human?.faceSprites[FaceEnum.MOUTH].setFrame(preFrame);
+                }
+              }
+            }, 200);
+            this.tt = setTimeout(() => {
+              if (this.chatText?.active) {
+                this.chatText?.setText(message);
+              }
+            }, 2000);
+          });
+          utterance.addEventListener("end", () => {
+            this.chatText?.setText(message);
+            if (human) {
+              human.speaking = 0;
             }
-          }, 2000);
-        });
-        utterance.addEventListener("end", () => {
+            someoneSpeaking = 0;
+            this.chatTimeout = setTimeout(() => {
+              this.chat("");
+            }, 3000);
+          });
+          speechSynthesis.speak(utterance)  
+        } catch (e) {
           this.chatText?.setText(message);
-          if (human) {
-            human.speaking = 0;
-          }
-          someoneSpeaking = 0;
           this.chatTimeout = setTimeout(() => {
+            someoneSpeaking = 0;
             this.chat("");
-          }, 3000);
-        });
-        speechSynthesis.speak(utterance)
+          }, 8000);
+        }
 
         if (troll) {
           this.chatText?.setPosition(troll.player.x, troll.player.y);
