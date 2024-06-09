@@ -5,9 +5,10 @@
 ![phaser icon](https://jacklehamster.github.io/phaser-game/icon.png)
 
 This is the repo for the game:
+
 ## [The Supernatural Power Troll](https://jacklehamster.itch.io/power-troll)
 
-[![](https://img.itch.zone/aW1hZ2UvMjY2NDY2Ny8xNTkxNTgyNS5qcGc=/250x600/ixSuyA.jpg)](https://jacklehamster.itch.io/power-troll)
+[![Screenshot](https://img.itch.zone/aW1hZ2UvMjY2NDY2Ny8xNTkxNTgyNS5qcGc=/250x600/ixSuyA.jpg)](https://jacklehamster.itch.io/power-troll)
 
 Produced for [Gamedev.js Jam 2024](https://itch.io/jam/gamedevjs-2024)
 
@@ -23,7 +24,7 @@ Produced for [Gamedev.js Jam 2024](https://itch.io/jam/gamedevjs-2024)
 
 ## Project's layout
 
-```
+```text
 .
 ├── asprite: Asesprite files used to produce art assets like spritesheets.
 ├── beepbox: Links to all beepbox songs.
@@ -47,7 +48,6 @@ The repo follows the [bun-template](https://github.com/jacklehamster/bun-templat
 
 In this case, the core logic is in the "src" directory, while the rest of the game including the assets are all in the example directory.
 
-
 ## Start the project
 
 ### First install bun
@@ -59,6 +59,7 @@ curl -fsSL https://bun.sh/install | bash
 ```
 
 Then run:
+
 ```bash
 bun i
 ```
@@ -66,12 +67,14 @@ bun i
 ### Execute the game
 
 Execute:
+
 ```bash
 ./sample.sh
 ```
+
 This builds the necessary file and start the server hosting the game, then starts the server from the "example" folder.
 
-Then open the page in a browser "http://localhost:3000".
+Then open the page in a browser "<http://localhost:3000>".
 
 ## GameJam
 
@@ -87,18 +90,18 @@ The game has various features detailed below. Furtherdowm, I will explain the im
 
 ### Custom NPC look
 
-![](example/assets/hischooler.png)
+![NPC spritesheet](example/assets/hischooler.png)
 
 Each NPC is composed of various body parts that are randomized at the start of each level. As such, every NPC look different. They can be male or female, wear hat or not, have different hairstyles, wear skirt, pants, or just underwear. They also have different skin colors.
 
 ### Powerups
 
-
-![](example/assets/bonus.png)
+![Powerups spritesheet](example/assets/bonus.png)
 
 Each powerup is acquired by a human one at a time. Acquiring a new powerup cancels the effect of a previous one.
 
 Here are the different powerups available:
+
 - **Super Jump**: Give the NPC the ability to do a high jump. A NPC will decide to high jump if they're on the edge of a platform. An NPC without super jump availability will generally drop off the platform, or turn back if there's an undesire creature at the end of it (snail, cat, slime...).
 - **Levitate**: The NPC levitate a few meters up in the air, then floats above empty space. The leviation can stack to make the NPC levitate a few meters higher.
 - **Super Strength**: The NPC has super strength, which in this game just means they're able to push heavy rocks.
@@ -119,7 +122,7 @@ Here are the different powerups available:
 
 ### AI Generated NPC dialog
 
-![](screenshots/AI-talking.png)
+![Screenshot AI talking](screenshots/AI-talking.png)
 
 Every few seconds, a random NPC makes a comment. It is most likely related to a recent event: Just saw the troll come and disappear, did a high jump, pushed a heavy rock, shrunk down, fell into the water, etc...
 
@@ -143,8 +146,8 @@ The NPC voice is chosen at random at the beginning of each level. It doesn't alw
 
 [Try it here!](https://jacklehamster.github.io/phaser-game/example/?serverless-edit=true#map=json/map13.5.json)
 
-
 Each level is composed of several unique tiles, ranging from:
+
 - platform: no gravity
 - rock: has gravity, can be walked on, can be pushed by NPCs with super strength.
 - key: has gravity, must be picked up and thrown at a door to open it.
@@ -156,6 +159,7 @@ Each level is composed of several unique tiles, ranging from:
 - Troll: The troll
 
 The level editor enables level editing while the game is running, to allow immediate adjustments.
+
 - platforms: static. Can be moved around and resized.
 - door, water, triggers: static, cannot be resized.
 - bonus: switch bonus using the arrow key
@@ -165,20 +169,20 @@ Pressing SHIFT + Clicking duplicates an element, allowing the editor to place mo
 
 Pressing DELETE after selecting an item removes it.
 
-
 Some level configurations are set manually in the json files: Decor overlay, if the level has pizza, gold walls, snail or cat, if it's locked (editor OFF), and what's the next level after completing it.
 
 #### Demo
 
 [Test the level editor](https://jacklehamster.github.io/phaser-game/example/?serverless-edit=true#map=json/map13.5.json)
 
+## Implementation details
 
-# Implementation details
-
-## Custom NPC look
+### Custom NPC look Implementation
 
 NPCs are composed of two categories of elements:
+
 - Face elements: Nose, eyes, mouth, hair, hat, shape.
+
 ```typescript
 enum FaceEnum {
   SHAPE = 0,
@@ -197,6 +201,7 @@ Each of those elements is overlayed on top of each other to produce a unique fac
 When the NPC needs to talk, we alternate between the NPC's mouth, and the graphics showing the mouth opened. If the NPC's default mouth is opened, we alternate with a random mouth.
 
 - Body elements: Each of those elements have an animation for still and walking, using ~5 frames. Body elements are just different types of clothings that can be included or ommited. Some clothings are exclusive (small and big shoes). A tint is applied to provide variety to the clothing colors.
+
 ```typescript
 enum BodyEnum {
   BODY = 0,
@@ -208,15 +213,17 @@ enum BodyEnum {
   SHOES = 6,
 };
 ```
+
 Body and underwear will always be present. The tint of face's shape is applied to the body for consistency of the skin color.
 
 Each body part is animated in sync, when the character is walking or standing still.
 
 The function that sets up the look is `function randomSprite()`. We pass a seed, stored on each NPC, which will ensure the same seed passed will result to the same character customization. This is needed because we apply random tint when a character acquires a power-up, then we need to restore to normal once its done.
 
-### Powerups
+### Powerups implementation
 
 When a NPC collides with a power up, that powerup is attached to the NPC (shown over the head). The NPC's various behavior is then modified depending on the powerup. This is done through custom code applied throughout.
+
 - SuperJump: When collide with trigger or when NPC goes from touching ground to not-touching grown, set VelocityY to -1000
 - Levitate: Set "flyingLevel" as the current Y position - 50. The NPCs gravity is turned off, and the NPC will always move towards that flying level. Note: Due to the implementation, if "levitate" is acquired when the character is jumping, the character might fly higher than expected.
 - SuperStrength: This powerup doesn't have the best implementation, but it's one that works enough. This simply causes a rock to become "pushable" if an NPC with superstrength comes in contact with that rock. Once the rock stop being touched, the pushable flag is turned off. Note that this sometimes causes a problem: If two NPCs are pushing a rock against each other, sometimes the NPC without superstrength pushes the rock further. Another problem is that an NPC with superstrength could land on top of the rock, and another NPC without superstrength collides with that rock, the rock gets pushed.
@@ -238,6 +245,7 @@ The implementation of that API is at [https://github.com/jacklehamster/open-ai-n
 ```typescript
   const url = `${OPEN_AI_URL}?dictionary=${JSON.stringify(dico)}&situation=${HumanEvent.LANG}.${situation}&seed=${seed ?? ""}&jsonp=fetchAIResponse`;
 ```
+
 - **situation**: This is one long string, with sentences connected with "." They correspond to different events or description about the environment. The situation uses all the phrases from `DICO` in `human-events.ts`. The enums from `HumanEvent` is mapped to each phrase, then a history of what happened is composed and passed to the API.
 - **DICO** (optional): Instead of passing each phrase strings into `situation`, we pass the entire dictionary of phrases, and situations will simply be a series of numbers (still separated with dots), corresponding to the index in the dictionary.
 There's a specific reason for doing that, but it has not been yet implemented.
@@ -260,9 +268,9 @@ We also use utterance ["boundary" event](https://developer.mozilla.org/en-US/doc
 
 Fetch the source from: [https://github.com/jacklehamster/open-ai-npc](https://github.com/jacklehamster/open-ai-npc)
 
-Then start the server using the `./start.sh` command, which will run the server locally on http://localhost:3001
+Then start the server using the `./start.sh` command, which will run the server locally on <http://localhost:3001>
 
-Then change the OpenAI URL from https://open-ai-npc.onrender.com/comment/ to http://localhost:3001/comment/.
+Then change the OpenAI URL from <https://open-ai-npc.onrender.com/comment/> to <http://localhost:3001/comment/>.
 
 There's two locations to change `OPEN_AI_URL`. One in `constants.ts` and one in `example/index.ts`.
 
@@ -284,11 +292,11 @@ The game has unique art for each level. While it's time consuming, it does make 
 
 The way each level is designed, is that I first remove the "overlay" from a map, then place the elements around to make the level solvable. Afterwards, once the platforms are clearly defined, I dump a screenshot of it into "Aseprite", then draw some art on top of the platform. Then I save that as a PNG. I then set that as the overlay of the level, so every piece of art will just cover the platforms in the game.
 
-![](screenshots/overlay.png)
+![overlay](screenshots/overlay.png)
 
 ```json
 {
-	"overlay": "assets/overlay1.png",
+ "overlay": "assets/overlay1.png",
   ...
 }
 ```
@@ -296,6 +304,7 @@ The way each level is designed, is that I first remove the "overlay" from a map,
 ### Music and sound
 
 Each level song is an mp3 played by phaser, depending on the level:
+
 ```typescript
     preload() {
       this.load.audio('main', ['assets/troll-song.mp3']);
@@ -316,16 +325,18 @@ For sound effect, the zzfx is called directly from the code provided from the [w
 ```typescript
   zzfx(...[1.52, , 1177, .23, .09, .09, 1, 1.41, 12, , , , , .4, , , .06, .25, .11, .11]); // Random 348
 ```
+
 ### Cut scene
 
-![](example/assets/cutscene/cutscene2.jpg)
-![](example/assets/cutscene/cutscene4.jpg)
+![cutscene knight](example/assets/cutscene/cutscene2.jpg)
+![cutscene merlot](example/assets/cutscene/cutscene4.jpg)
 
 Cut scenes are implemented outside of Phaser, for simplicity.
 The code is in `example/index.html`.
 
 The cutscene is defined within the structure in variable `CUT_SCENES`.
 Each element is a string with:
+
 ```typescript
 [
   imageUrl,
@@ -363,7 +374,7 @@ The "node_modules" must be deleted before zipping the "example" folder because t
 
 ## Run game on Itch.io
 
-[![](https://img.itch.zone/aW1nLzE1OTE1ODc0LnBuZw==/315x250%23c/Wgzvtq.png)](https://jacklehamster.itch.io/power-troll)
+[![game thumbnail](https://img.itch.zone/aW1nLzE1OTE1ODc0LnBuZw==/315x250%23c/Wgzvtq.png)](https://jacklehamster.itch.io/power-troll)
 
 [https://jacklehamster.itch.io/power-troll](https://jacklehamster.itch.io/power-troll)
 

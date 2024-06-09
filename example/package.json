@@ -10,12 +10,10 @@
     "typescript": "^5.0.0",
     "@dobuki/phaser-game": "link:@dobuki/phaser-game"
   },
-  "dependencies": {
+  "devDependencies": {
     "baojs": "^0.2.1",
     "node-persist": "^4.0.1",
-    "serve-static-bun": "^0.5.3"
-  },
-  "devDependencies": {
+    "serve-static-bun": "^0.5.3",
     "@types/node-persist": "^3.1.8"
   }
 }
